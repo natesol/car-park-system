@@ -1,61 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
-<?import io.github.palexdev.materialfx.layout.ScalableContentPane?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" stylesheets="@../styles/pc-login.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.cps.client.controllers.PCLoginController">
-    <children>
-        <AnchorPane layoutX="112.0" layoutY="109.0" minHeight="550.0" minWidth="800.0" style="-fx-background-color: #fff; -fx-border-radius: 16px; -fx-background-radius: 16px;">
-            <children>
-                <VBox layoutX="150.0" layoutY="14.0" prefHeight="105.0" prefWidth="500.0">
-                    <children>
-                        <Text fill="#00a160" strokeType="OUTSIDE" strokeWidth="0.0" text="Remote PC" textAlignment="CENTER" wrappingWidth="500.0">
-                            <font>
-                                <Font name="System Bold" size="48.0" />
-                            </font>
-                        </Text>
-                        <Text fill="#0c373c" strokeType="OUTSIDE" strokeWidth="0.0" text="Home" textAlignment="CENTER" wrappingWidth="500.0">
-                            <font>
-                                <Font name="System Bold" size="24.0" />
-                            </font>
-                        </Text>
-                    </children>
-                </VBox>
-                <VBox alignment="CENTER" layoutX="88.0" layoutY="216.0" prefHeight="149.0" prefWidth="272.0" spacing="16.0">
-                    <children>
-                        <MFXButton fx:id="loginBtn" onAction="#loginBtnClickHandler" prefHeight="39.0" prefWidth="335.0" style="-fx-background-color: #00a160;" text="Login" textFill="WHITE">
-                            <font>
-                                <Font name="System Bold" size="18.0" />
-                            </font>
-                            <cursor>
-                                <Cursor fx:constant="HAND" />
-                            </cursor>
-                        </MFXButton>
-                  <MFXButton fx:id="loginBtn1" onAction="#loginBtnClickHandler" prefHeight="39.0" prefWidth="319.0" style="-fx-background-color: #00a160;" text="Login" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </MFXButton>
-                  <MFXButton fx:id="loginBtn2" onAction="#loginBtnClickHandler" prefHeight="39.0" prefWidth="350.0" style="-fx-background-color: #00a160;" text="Login" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </MFXButton>
-                    </children>
-                </VBox>
-            </children>
-        </AnchorPane>
-      <ScalableContentPane />
-    </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" stylesheets="@../styles/pc-login.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.cps.client.controllers.PCHomeController">
+    <AnchorPane layoutX="37.0" layoutY="59.0" minHeight="650.0" minWidth="950.0" style="-fx-background-color: #fff; -fx-border-radius: 16px; -fx-background-radius: 16px;">
+        <children>
+            <VBox layoutX="225.0" layoutY="14.0" prefHeight="105.0" prefWidth="500.0">
+                <children>
+                    <Text fill="#00a160" strokeType="OUTSIDE" strokeWidth="0.0" text="Remote PC" textAlignment="CENTER" wrappingWidth="500.0">
+                        <font>
+                            <Font name="System Bold" size="48.0" />
+                        </font>
+                    </Text>
+                    <Text fill="#0c373c" strokeType="OUTSIDE" strokeWidth="0.0" text="Home" textAlignment="CENTER" wrappingWidth="500.0">
+                        <font>
+                            <Font name="System Bold" size="24.0" />
+                        </font>
+                    </Text>
+                </children>
+            </VBox>
+            <VBox alignment="CENTER" layoutX="14.0" layoutY="119.0" prefHeight="80.0" prefWidth="165.0" spacing="8.0">
+                <children>
+                    <MFXButton fx:id="showParkingLotsBtn" onAction="#showParkingLotsBtnClickHandler" prefHeight="35.0" prefWidth="165.0" style="-fx-background-color: #00a160;" text="Show ParkingLots" textFill="WHITE">
+                        <font>
+                            <Font name="System Bold" size="14.0" />
+                        </font>
+                        <cursor>
+                            <Cursor fx:constant="HAND" />
+                        </cursor>
+                    </MFXButton>
+                    <MFXButton fx:id="showRatesBtn" onAction="#showRatesBtnClickHandler" prefHeight="35.0" prefWidth="165.0" style="-fx-background-color: #00a160;" text="Show Rates" textFill="WHITE">
+                        <font>
+                            <Font name="System Bold" size="14.0" />
+                        </font>
+                        <cursor>
+                            <Cursor fx:constant="HAND" />
+                        </cursor>
+                    </MFXButton>
+                </children>
+            </VBox>
+        </children>
+    </AnchorPane>
 </AnchorPane>

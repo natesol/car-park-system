@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ed8cb49b-a025-4283-88e1-12c248f2abe5" name="Default Changelist" comment="add .run configurations.">
+    <list default="true" id="ed8cb49b-a025-4283-88e1-12c248f2abe5" name="Default Changelist" comment="---">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/net/cps/client/controllers/PCLoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/net/cps/client/controllers/PCLoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/resources/net/cps/client/fxml/pc-login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/resources/net/cps/client/fxml/pc-login.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/resources/net/cps/client/styles/pc-login.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/resources/net/cps/client/styles/pc-login.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/resources/net/cps/client/fxml/kiosk-home.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/resources/net/cps/client/fxml/kiosk-home.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/resources/net/cps/client/fxml/pc-home.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/resources/net/cps/client/fxml/pc-home.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/server.log" beforeDir="false" afterPath="$PROJECT_DIR$/server/server.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -98,23 +98,13 @@
       <recent name="D:\Repositories\0000-java\00-cps-project\car-park-system\client\src\main\resources\net\cps\client\views" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="net.cps.client.controllers" />
       <recent name="net.cps.client" />
       <recent name="net.cps.entities.hibernate" />
       <recent name="net.cps.entities" />
     </key>
   </component>
   <component name="RunManager" selected="Maven.CPS-Client [run]">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <list>
       <item itemvalue="Maven.CPS-Client [run]" />
       <item itemvalue="Maven.CPS-Server [run]" />
@@ -153,7 +143,7 @@
       <workItem from="1671372007821" duration="79000" />
       <workItem from="1671372251253" duration="8366000" />
       <workItem from="1671389901534" duration="256000" />
-      <workItem from="1671390193322" duration="3870000" />
+      <workItem from="1671390193322" duration="5590000" />
     </task>
     <task id="LOCAL-00001" summary="Added task 4 methods.">
       <created>1670638636432</created>
@@ -253,7 +243,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671390420507</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="---">
+      <created>1671394217909</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1671394217909</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -281,6 +278,7 @@
     <MESSAGE value="initial commit - project base structure" />
     <MESSAGE value="start page and configurations." />
     <MESSAGE value="add .run configurations." />
-    <option name="LAST_COMMIT_MESSAGE" value="add .run configurations." />
+    <MESSAGE value="---" />
+    <option name="LAST_COMMIT_MESSAGE" value="---" />
   </component>
 </project>
