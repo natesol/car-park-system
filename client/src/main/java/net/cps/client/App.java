@@ -1,28 +1,22 @@
 package net.cps.client;
 
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
-
-import java.io.IOException;
-import java.time.format.DateTimeFormatter;
-
 import net.cps.client.events.MessageEvent;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.io.IOException;
+
 /**
- * JavaFX App
- */
+ * JavaFX GUI Application.
+**/
 public class App extends Application {
-    
     private static Scene scene;
-    private CPSClient client;
+    private static CPSClient client;
     
     public static void setScene(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
@@ -33,13 +27,15 @@ public class App extends Application {
         return fxmlLoader.load();
     }
     
-    public static void main(String[] args) {
+    public static void run(CPSClient client) {
+        App.client = client;
         launch();
     }
     
     @Override
     public void start(Stage stage) throws IOException {
         EventBus.getDefault().register(this);
+        
         client = CPSClient.getClient();
         client.openConnection();
         scene = new Scene(loadFXML("start"));
@@ -55,17 +51,17 @@ public class App extends Application {
     
     @Subscribe
     public void onMessageEvent(MessageEvent message) {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
-        Platform.runLater(() -> {
-            Alert alert = new Alert(AlertType.INFORMATION,
-                    String.format("Message:\nId: %d\nData: %s\nTimestamp: %s\n",
-                            message.getMessage().getId(),
-                            message.getMessage().getMessage(),
-                            message.getMessage().getTimeStamp().format(dtf))
-            );
-            alert.setTitle("new message");
-            alert.setHeaderText("New Message:");
-            alert.show();
-        });
+        //DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+        //Platform.runLater(() -> {
+        //    Alert alert = new Alert(AlertType.INFORMATION,
+        //            String.format("Message:\nId: %d\nData: %s\nTimestamp: %s\n",
+        //                    message.getMessage().getId(),
+        //                    message.getMessage().getMessage(),
+        //                    message.getMessage().getTimeStamp().format(dtf))
+        //    );
+        //    alert.setTitle("new message");
+        //    alert.setHeaderText("New Message:");
+        //    alert.show();
+        //});
     }
 }

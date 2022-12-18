@@ -27,5 +27,7 @@ public class ParkingLot implements Serializable {
         this.address = s;
     }
     
-    // Getters and setters for the fields go here...
+    public void setRates(String s) {
+        this.rates = s;
+    }
 }

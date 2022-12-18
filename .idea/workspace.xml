@@ -6,10 +6,17 @@
   <component name="ChangeListManager">
     <list default="true" id="ed8cb49b-a025-4283-88e1-12c248f2abe5" name="Default Changelist" comment="---">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/net/cps/client/controllers/PCLoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/net/cps/client/controllers/PCLoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/resources/net/cps/client/fxml/kiosk-home.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/resources/net/cps/client/fxml/kiosk-home.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/net/cps/client/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/net/cps/client/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/net/cps/client/CPSClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/net/cps/client/CPSClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/net/cps/client/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/net/cps/client/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/net/cps/client/controllers/PCHomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/net/cps/client/controllers/PCHomeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/net/cps/client/controllers/PrimaryController.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/resources/net/cps/client/fxml/pc-home.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/resources/net/cps/client/fxml/pc-home.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/resources/net/cps/client/fxml/primary.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/entities/src/main/java/net/cps/entities/hibernate/ParkingLot.java" beforeDir="false" afterPath="$PROJECT_DIR$/entities/src/main/java/net/cps/entities/hibernate/ParkingLot.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/server.log" beforeDir="false" afterPath="$PROJECT_DIR$/server/server.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/net/cps/server/CPSServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/net/cps/server/CPSServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/net/cps/server/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/net/cps/server/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,6 +105,7 @@
       <recent name="D:\Repositories\0000-java\00-cps-project\car-park-system\client\src\main\resources\net\cps\client\views" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="net.cps.client.events" />
       <recent name="net.cps.client.controllers" />
       <recent name="net.cps.client" />
       <recent name="net.cps.entities.hibernate" />
@@ -105,6 +113,19 @@
     </key>
   </component>
   <component name="RunManager" selected="Maven.CPS-Client [run]">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="Maven.CPS-Client [run]" />
       <item itemvalue="Maven.CPS-Server [run]" />
@@ -144,6 +165,7 @@
       <workItem from="1671372251253" duration="8366000" />
       <workItem from="1671389901534" duration="256000" />
       <workItem from="1671390193322" duration="5590000" />
+      <workItem from="1671396153672" duration="9379000" />
     </task>
     <task id="LOCAL-00001" summary="Added task 4 methods.">
       <created>1670638636432</created>
@@ -250,7 +272,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671394217909</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="---">
+      <created>1671396341752</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1671396341752</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

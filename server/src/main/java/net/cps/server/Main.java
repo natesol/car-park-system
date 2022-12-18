@@ -17,27 +17,32 @@ public class Main {
         
         server = new CPSServer(port);
         server.listen();
-        ServerLogger.log("Starting server...");
+        //ServerLogger.log("Starting server...");
         System.out.println("[SERVER] server is listening on port: " + port + ".");
-    
+        
         dbSession = HibernateUtils.getSessionFactory().openSession();
         dbSession.beginTransaction();
         System.out.println("[SERVER] server connected to database session successfully.");
         
         
-        //    // Save a parking lot
-        //    ParkingLot parkingLot = new ParkingLot();
-        //    parkingLot.setName("Parking Lot 1");
-        //    parkingLot.setAddress("123 Main Street");
-        //    session.save(parkingLot);
-        //
-        //    // Commit the transaction
-        //    session.getTransaction().commit();
-        //
-        //    // Close the session
-        //    session.close();
-        //
-        //    // Shutdown the session factory
-        //    HibernateUtils.shutdown();
+//        // Save a parking lot
+//        ParkingLot parkingLot = new ParkingLot();
+//        parkingLot.setName("Parking Lot 2");
+//        parkingLot.setAddress("99 Amir Street");
+////        parkingLot.setRates("90$ for 1 hour");
+//        dbSession.save(parkingLot);
+//
+//        // Commit the transaction
+//        dbSession.getTransaction().commit();
+//
+//        // Close the session
+//        dbSession.close();
+//
+//        // Shutdown the session factory
+//        HibernateUtils.shutdownSession();
+    }
+    
+    public static Session getDbSession() {
+        return dbSession;
     }
 }
