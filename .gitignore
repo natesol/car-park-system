@@ -1,13 +1,3 @@
-#
-# Project specific excludes
-#
-
-tomcat
-
-#
-# Default excludes
-#
-
 # Binaries
 *.7z
 *.dmg
@@ -22,14 +12,14 @@ tomcat
 *.sar
 *.class
 
-# Maven 
+# Maven
 target/
 
-# IntelliJ project files 
+# IntelliJ project files
 *.iml
 *.iws
 *.ipr
-.idea/
+#.idea/
 
 # eclipse project file
 .settings/
@@ -44,7 +34,6 @@ dist/
 nbdist/
 nbactions.xml
 nb-configuration.xml
-
 
 # OS
 .DS_Store

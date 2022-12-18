@@ -42,14 +42,13 @@ public class App extends Application {
         EventBus.getDefault().register(this);
         client = CPSClient.getClient();
         client.openConnection();
-        scene = new Scene(loadFXML("primary"), 640, 480);
+        scene = new Scene(loadFXML("start"));
         stage.setScene(scene);
         stage.show();
     }
     
     @Override
     public void stop() throws Exception {
-        // TODO Auto-generated method stub
         EventBus.getDefault().unregister(this);
         super.stop();
     }

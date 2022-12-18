@@ -8,7 +8,8 @@ Pay attention to the three modules:
 3. **entities** - a shared module where all the entities of the project live.
 
 ## Running
-1. Run Maven install **in the parent project**.
-2. Run the server using the exec:java goal in the server module.
-3. Run the client using the javafx:run goal in the client module.
-4. Press the button and see what happens!
+Project created and maintained using 'Maven'.
+1. Build the project using `clean install` via 'Maven' in the project **root** directory.
+2. Run the server using the `exec:java` 'Maven' goal in the **server** module.
+3. Run the client using the `javafx:run` 'Maven' goal in the **client** module.
+4. The application is up and running!
