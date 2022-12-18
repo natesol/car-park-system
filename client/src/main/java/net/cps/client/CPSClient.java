@@ -1,5 +1,9 @@
 package net.cps.client;
 
+import net.cps.client.events.ErrorEvent;
+import net.cps.client.events.MessageEvent;
+import net.cps.client.events.NewSubscriberEvent;
+import net.cps.client.events.UpdateMessageEvent;
 import net.cps.entities.Message;
 import org.greenrobot.eventbus.EventBus;
 

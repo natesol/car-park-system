@@ -4,6 +4,7 @@ import net.cps.entities.Message;
 import net.cps.server.ocsf.AbstractServer;
 import net.cps.server.ocsf.ConnectionToClient;
 import net.cps.server.ocsf.SubscribedClient;
+import net.cps.server.utils.ServerLogger;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -12,6 +13,8 @@ import java.util.ArrayList;
 
 public class CPSServer extends AbstractServer {
     private static ArrayList<SubscribedClient> SubscribersList = new ArrayList<>();
+    
+    public static final ServerLogger logger = new ServerLogger();
     
     public CPSServer(int port) {
         super(port);

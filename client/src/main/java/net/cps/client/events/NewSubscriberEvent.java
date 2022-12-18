@@ -1,4 +1,4 @@
-package net.cps.client;
+package net.cps.client.events;
 
 import net.cps.entities.Message;
 

@@ -1,9 +1,9 @@
-package net.cps.client;
+package net.cps.client.controllers;
 
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import net.cps.entities.Message;
+import net.cps.client.App;
 
 import java.io.IOException;
 
@@ -22,7 +22,8 @@ public class StartController {
     }
     
     @FXML
-    void remotePCBtnClickHandler(ActionEvent event) {
+    void remotePCBtnClickHandler(ActionEvent event) throws IOException {
         System.out.println("remote PC !");
+        App.setScene("pc-login");
     }
 }

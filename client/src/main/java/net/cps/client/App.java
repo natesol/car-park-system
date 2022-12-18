@@ -7,12 +7,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 
+import net.cps.client.events.MessageEvent;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -24,7 +24,7 @@ public class App extends Application {
     private static Scene scene;
     private CPSClient client;
     
-    static void setRoot(String fxml) throws IOException {
+    public static void setScene(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
     }
     

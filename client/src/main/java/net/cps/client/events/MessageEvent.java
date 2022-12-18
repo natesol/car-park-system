@@ -1,15 +1,15 @@
-package net.cps.client;
+package net.cps.client.events;
 
 import net.cps.entities.Message;
 
-public class ErrorEvent {
+public class MessageEvent {
     private Message message;
 
     public Message getMessage() {
         return message;
     }
 
-    public ErrorEvent(Message message) {
+    public MessageEvent(Message message) {
         this.message = message;
     }
 }

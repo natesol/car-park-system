@@ -2,6 +2,7 @@ package net.cps.server;
 
 import net.cps.entities.hibernate.ParkingLot;
 import net.cps.server.utils.HibernateUtils;
+import net.cps.server.utils.ServerLogger;
 import org.hibernate.Session;
 
 import java.io.IOException;
@@ -16,6 +17,7 @@ public class Main {
         
         server = new CPSServer(port);
         server.listen();
+        ServerLogger.log("Starting server...");
         System.out.println("[SERVER] server is listening on port: " + port + ".");
     
         dbSession = HibernateUtils.getSessionFactory().openSession();

@@ -4,70 +4,48 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ed8cb49b-a025-4283-88e1-12c248f2abe5" name="Default Changelist" comment="initial commit - project base structure">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jpa-buddy.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__antlr_antlr_2_7_7.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_classmate_1_5_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_protobuf_protobuf_java_3_11_4.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_sun_istack_istack_commons_runtime_3_0_7.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_sun_xml_fastinfoset_FastInfoset_1_2_15.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_github_palexdev_materialfx_11_13_5.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_github_palexdev_virtualizedfx_11_2_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_activation_javax_activation_api_1_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_persistence_javax_persistence_api_2_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_xml_bind_jaxb_api_2_3_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_4_13_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__mysql_mysql_connector_java_8_0_25.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_bytebuddy_byte_buddy_1_10_7.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_cps_entities_0_0_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_dom4j_dom4j_2_1_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_jaxb_jaxb_runtime_2_3_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_jaxb_txw2_2_3_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_greenrobot_eventbus_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_core_1_3.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_hibernate_common_hibernate_commons_annotations_5_1_0_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_hibernate_hibernate_core_5_4_12_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_javassist_javassist_3_24_0_GA.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jboss_jandex_2_1_1_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jboss_logging_jboss_logging_3_3_2_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jboss_spec_javax_transaction_jboss_transaction_api_1_2_spec_1_1_1_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jvnet_staxex_stax_ex_1_8.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_base_19.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_base_win_19.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_controls_19.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_controls_win_19.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_fxml_19.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_fxml_win_19.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_graphics_19.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_graphics_win_19.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/resources/net/cps/client/fxml/start.fxml" afterDir="false" />
+    <list default="true" id="ed8cb49b-a025-4283-88e1-12c248f2abe5" name="Default Changelist" comment="start page and configurations.">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/client/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/net.cps.client/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/net.cps.client/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/net.cps.client/App.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/net.cps.client/CPSClient.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/net.cps.client/ErrorEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/net/cps/client/events/ErrorEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/net.cps.client/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/net.cps.client/MessageEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/net/cps/client/events/MessageEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/net.cps.client/NewSubscriberEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/net/cps/client/events/NewSubscriberEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/net.cps.client/PrimaryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/net/cps/client/controllers/PrimaryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/net.cps.client/StartController.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/net/cps/client/controllers/StartController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/net.cps.client/UpdateMessageEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/net/cps/client/events/UpdateMessageEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/net.cps.client/ocsf/AbstractClient.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/net.cps.client/ocsf/AdaptableClient.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/net.cps.client/ocsf/ObservableClient.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/net.cps.client/ocsf/ObservableSWRClient.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/resources/net/cps/client/fxml/primary.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/resources/net/cps/client/fxml/primary.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/entities/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/resources/net/cps/client/fxml/start.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/resources/net/cps/client/fxml/start.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/net/cps/server/CPSServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/net/cps/server/CPSServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/net/cps/server/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/net/cps/server/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view />
+      </state>
+    </system>
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -96,7 +74,9 @@
     </option>
   </component>
   <component name="ProjectId" id="2IfU9KI6qT5udCCm7Tx4kjw1beo" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -106,7 +86,8 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/client/src/main/resources/net/cps/client/fxml" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/.run" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
@@ -118,6 +99,7 @@
       <recent name="" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Repositories\0000-java\00-cps-project\car-park-system\.run" />
       <recent name="D:\Repositories\0000-java\00-cps-project\car-park-system\client\src\main\resources\net\cps\client\fxml" />
       <recent name="D:\Repositories\0000-java\00-cps-project\car-park-system\client\src\main\resources\net.cps.client\fxml" />
       <recent name="D:\Repositories\0000-java\00-cps-project\car-park-system\client\src\main\java\net.cps.client" />
@@ -135,132 +117,13 @@
       <recent name="net.cps.entities" />
     </key>
   </component>
-  <component name="RunManager" selected="Maven.Run Client">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Build Project" type="MavenRunConfiguration" factoryName="Maven" singleton="false">
-      <MavenSettings>
-        <option name="myGeneralSettings" />
-        <option name="myRunnerSettings" />
-        <option name="myRunnerParameters">
-          <MavenRunnerParameters>
-            <option name="profiles">
-              <set />
-            </option>
-            <option name="goals">
-              <list>
-                <option value="clean" />
-                <option value="install" />
-              </list>
-            </option>
-            <option name="pomFileName" />
-            <option name="profilesMap">
-              <map />
-            </option>
-            <option name="resolveToWorkspace" value="false" />
-            <option name="workingDirPath" value="$PROJECT_DIR$" />
-          </MavenRunnerParameters>
-        </option>
-      </MavenSettings>
-      <method v="2" />
-    </configuration>
-    <configuration name="Run Client" type="MavenRunConfiguration" factoryName="Maven" singleton="false">
-      <MavenSettings>
-        <option name="myGeneralSettings" />
-        <option name="myRunnerSettings">
-          <MavenRunnerSettings>
-            <option name="delegateBuildToMaven" value="false" />
-            <option name="environmentProperties">
-              <map />
-            </option>
-            <option name="jreName" value="#USE_PROJECT_JDK" />
-            <option name="mavenProperties">
-              <map>
-                <entry key="exec:args" value="localhost 3000" />
-              </map>
-            </option>
-            <option name="passParentEnv" value="true" />
-            <option name="runMavenInBackground" value="true" />
-            <option name="skipTests" value="false" />
-            <option name="vmOptions" value="" />
-          </MavenRunnerSettings>
-        </option>
-        <option name="myRunnerParameters">
-          <MavenRunnerParameters>
-            <option name="profiles">
-              <set />
-            </option>
-            <option name="goals">
-              <list>
-                <option value="javafx:run" />
-              </list>
-            </option>
-            <option name="pomFileName" />
-            <option name="profilesMap">
-              <map />
-            </option>
-            <option name="resolveToWorkspace" value="false" />
-            <option name="workingDirPath" value="$PROJECT_DIR$/client" />
-          </MavenRunnerParameters>
-        </option>
-      </MavenSettings>
-      <method v="2" />
-    </configuration>
-    <configuration name="Run Server" type="MavenRunConfiguration" factoryName="Maven" singleton="false">
-      <MavenSettings>
-        <option name="myGeneralSettings" />
-        <option name="myRunnerSettings">
-          <MavenRunnerSettings>
-            <option name="delegateBuildToMaven" value="false" />
-            <option name="environmentProperties">
-              <map />
-            </option>
-            <option name="jreName" value="#USE_PROJECT_JDK" />
-            <option name="mavenProperties">
-              <map>
-                <entry key="exec:args" value="3000" />
-              </map>
-            </option>
-            <option name="passParentEnv" value="true" />
-            <option name="runMavenInBackground" value="true" />
-            <option name="skipTests" value="false" />
-            <option name="vmOptions" value="" />
-          </MavenRunnerSettings>
-        </option>
-        <option name="myRunnerParameters">
-          <MavenRunnerParameters>
-            <option name="profiles">
-              <set />
-            </option>
-            <option name="goals">
-              <list>
-                <option value="exec:java" />
-              </list>
-            </option>
-            <option name="pomFileName" />
-            <option name="profilesMap">
-              <map />
-            </option>
-            <option name="resolveToWorkspace" value="false" />
-            <option name="workingDirPath" value="$PROJECT_DIR$/server" />
-          </MavenRunnerParameters>
-        </option>
-      </MavenSettings>
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Maven.CPS-Client [run]">
     <list>
-      <item itemvalue="Maven.Build Project" />
-      <item itemvalue="Maven.Run Server" />
-      <item itemvalue="Maven.Run Client" />
+      <item itemvalue="Maven.CPS-Client [run]" />
+      <item itemvalue="Maven.CPS-Server [run]" />
+      <item itemvalue="Maven.CPS [clean build]" />
+      <item itemvalue="Maven.CPS-Client [clean build]" />
+      <item itemvalue="Maven.CPS-Server [clean build]" />
     </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -291,7 +154,9 @@
       <workItem from="1671354638219" duration="427000" />
       <workItem from="1671355113529" duration="5164000" />
       <workItem from="1671372007821" duration="79000" />
-      <workItem from="1671372251253" duration="3215000" />
+      <workItem from="1671372251253" duration="8366000" />
+      <workItem from="1671389901534" duration="256000" />
+      <workItem from="1671390193322" duration="166000" />
     </task>
     <task id="LOCAL-00001" summary="Added task 4 methods.">
       <created>1670638636432</created>
@@ -370,7 +235,21 @@
       <option name="project" value="LOCAL" />
       <updated>1671372363158</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="start page and configurations.">
+      <created>1671375943071</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1671375943071</updated>
+    </task>
+    <task id="LOCAL-00013" summary="start page and configurations.">
+      <created>1671375956979</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1671375956979</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -396,6 +275,7 @@
     <MESSAGE value="fixed " />
     <MESSAGE value="" />
     <MESSAGE value="initial commit - project base structure" />
-    <option name="LAST_COMMIT_MESSAGE" value="initial commit - project base structure" />
+    <MESSAGE value="start page and configurations." />
+    <option name="LAST_COMMIT_MESSAGE" value="start page and configurations." />
   </component>
 </project>

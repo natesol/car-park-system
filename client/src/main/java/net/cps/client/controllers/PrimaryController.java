@@ -1,10 +1,13 @@
-package net.cps.client;
+package net.cps.client.controllers;
 
 import java.io.IOException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
-import javafx.scene.control.cell.PropertyValueFactory;
+import net.cps.client.CPSClient;
+import net.cps.client.events.ErrorEvent;
+import net.cps.client.events.MessageEvent;
+import net.cps.client.events.NewSubscriberEvent;
 import net.cps.entities.Message;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
