@@ -4,27 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ed8cb49b-a025-4283-88e1-12c248f2abe5" name="Default Changelist" comment="start page and configurations.">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+    <list default="true" id="ed8cb49b-a025-4283-88e1-12c248f2abe5" name="Default Changelist" comment="add .run configurations.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/net.cps.client/App.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/net.cps.client/CPSClient.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/net.cps.client/ErrorEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/net/cps/client/events/ErrorEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/net.cps.client/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/net.cps.client/MessageEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/net/cps/client/events/MessageEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/net.cps.client/NewSubscriberEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/net/cps/client/events/NewSubscriberEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/net.cps.client/PrimaryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/net/cps/client/controllers/PrimaryController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/net.cps.client/StartController.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/net/cps/client/controllers/StartController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/net.cps.client/UpdateMessageEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/net/cps/client/events/UpdateMessageEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/net.cps.client/ocsf/AbstractClient.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/net.cps.client/ocsf/AdaptableClient.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/net.cps.client/ocsf/ObservableClient.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/net.cps.client/ocsf/ObservableSWRClient.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/resources/net/cps/client/fxml/primary.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/resources/net/cps/client/fxml/primary.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/resources/net/cps/client/fxml/start.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/resources/net/cps/client/fxml/start.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/net/cps/server/CPSServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/net/cps/server/CPSServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/net/cps/server/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/net/cps/server/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/net/cps/client/controllers/PCLoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/net/cps/client/controllers/PCLoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/resources/net/cps/client/fxml/pc-login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/resources/net/cps/client/fxml/pc-login.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/resources/net/cps/client/styles/pc-login.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/resources/net/cps/client/styles/pc-login.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/server.log" beforeDir="false" afterPath="$PROJECT_DIR$/server/server.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,7 +71,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/.run" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/client/src/main/java/net/cps/client/utils" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Modules" />
@@ -99,8 +84,9 @@
       <recent name="" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Repositories\0000-java\00-cps-project\car-park-system\.run" />
+      <recent name="D:\Repositories\0000-java\00-cps-project\car-park-system\client\src\main\java\net\cps\client\utils" />
       <recent name="D:\Repositories\0000-java\00-cps-project\car-park-system\client\src\main\resources\net\cps\client\fxml" />
+      <recent name="D:\Repositories\0000-java\00-cps-project\car-park-system\.run" />
       <recent name="D:\Repositories\0000-java\00-cps-project\car-park-system\client\src\main\resources\net.cps.client\fxml" />
       <recent name="D:\Repositories\0000-java\00-cps-project\car-park-system\client\src\main\java\net.cps.client" />
     </key>
@@ -118,6 +104,17 @@
     </key>
   </component>
   <component name="RunManager" selected="Maven.CPS-Client [run]">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="Maven.CPS-Client [run]" />
       <item itemvalue="Maven.CPS-Server [run]" />
@@ -156,7 +153,7 @@
       <workItem from="1671372007821" duration="79000" />
       <workItem from="1671372251253" duration="8366000" />
       <workItem from="1671389901534" duration="256000" />
-      <workItem from="1671390193322" duration="166000" />
+      <workItem from="1671390193322" duration="3870000" />
     </task>
     <task id="LOCAL-00001" summary="Added task 4 methods.">
       <created>1670638636432</created>
@@ -249,7 +246,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671375956979</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="add .run configurations.">
+      <created>1671390420506</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1671390420507</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -276,6 +280,7 @@
     <MESSAGE value="" />
     <MESSAGE value="initial commit - project base structure" />
     <MESSAGE value="start page and configurations." />
-    <option name="LAST_COMMIT_MESSAGE" value="start page and configurations." />
+    <MESSAGE value="add .run configurations." />
+    <option name="LAST_COMMIT_MESSAGE" value="add .run configurations." />
   </component>
 </project>

@@ -1,3 +1,25 @@
+* {
+    -mfx-blue: #2196f3;
+    -mfx-charcoal: #445055;
+    -mfx-green: #4caf50;
+    -mfx-onyx: #353935;
+    -mfx-orange: #ff9800;
+    -mfx-purple: #7a0ed9;
+    -mfx-red: #EF6E6B;
+    -mfx-yellow: #FFEA00;
+
+
+    -mfx-text-he: rgba(0, 0, 0, 0.87); /* High Emphasis */
+    -mfx-text-me: rgba(0, 0, 0, 0.60); /* Medium Emphasis*/
+    -mfx-text-disabled: rgba(0, 0, 0, 0.38); /* Disabled */
+
+    -common-gradient: linear-gradient(to right bottom, #c4008b, #d00085, #dc007f, #e60b79, #ef1872, #f5276b, #fa3564, #fe415e, #ff5158, #ff5f52, #ff6c4e, #ff794b);
+    -secondary-gradient: linear-gradient(to right bottom, #1ec400, #00bd3a, #00b654, #00ae67, #00a574, #00a280, #009e8a, #009a91, #009b9d, #009ba8, #009bb2, #009abb);
+
+    -test-testy1: #00a160;
+    -test-testy: -test-testy1;
+}
+
 /**************************************************
  * Text Fields
 **************************************************/
@@ -11,54 +33,40 @@
 }
 
 
-#customField {
-    -fx-border-color: -common-gradient;
+#emailField {
+    /*-fx-border-color: -common-gradient;*/
+    -fx-border-color: -test-testy;
 }
 
-#customField .floating-text {
-    -fx-text-fill: -mfx-red;
+#emailField .floating-text {
+    /*-fx-text-fill: -mfx-red;*/
+    -fx-text-fill: -test-testy;
 }
 
 /**************************************************
  * Password Fields
 **************************************************/
-#customPassword {
-    -fx-border-color: -secondary-gradient;
+#passwordField {
+    /*-fx-border-color: -secondary-gradient;*/
+    -fx-border-color: -test-testy;
 }
 
-#customPassword:masked {
-    -fx-text-fill: -mfx-blue;
+#passwordField:masked {
+    /*-fx-text-fill: -mfx-blue;*/
+    -fx-text-fill: -test-testy;
 }
 
-#customPassword .mfx-font-icon {
-    -mfx-color: -mfx-blue;
+#passwordField .mfx-font-icon {
+    /*-mfx-color: -mfx-blue;*/
+    -mfx-color: -test-testy;
 }
 
-#customPassword .mfx-context-menu .mfx-menu-item:disabled .mfx-font-icon {
-    -mfx-color: #bcbcbc;
+#passwordField .mfx-context-menu .mfx-menu-item:disabled .mfx-font-icon {
+    /*-mfx-color: #bcbcbc;*/
+    -mfx-color: -test-testy;
 }
 
-#customPassword .floating-text {
-    -fx-text-fill: -mfx-blue;
-}
-
-#validatedField {
-    -mfx-hide-character: '?';
-}
-
-#validatedField:invalid {
-    -fx-border-color: -mfx-red;
-}
-
-#validatedField:invalid .floating-text {
-    -fx-text-fill: -mfx-red;
-}
-
-#validatedField:invalid .mfx-font-icon {
-    -mfx-color: -mfx-red;
-}
-
-#validationLabel {
-    -fx-font-family: 'Visby Round CF Demi Bold';
-    -fx-font-size: 11;
+#passwordField .floating-text {
+    /*-fx-text-fill: -mfx-blue;*/
+    -fx-text-fill: -test-testy;
 }
