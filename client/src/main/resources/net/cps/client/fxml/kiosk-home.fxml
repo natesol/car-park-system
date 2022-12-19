@@ -1,72 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
-<?import io.github.palexdev.materialfx.layout.ScalableContentPane?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0"
-            prefWidth="1024.0" stylesheets="@../styles/pc-login.css" xmlns="http://javafx.com/javafx/19"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.cps.client.controllers.KioskHomeController">
-   <children>
-      <AnchorPane layoutX="112.0" layoutY="109.0" minHeight="550.0" minWidth="800.0"
-                  style="-fx-background-color: #fff; -fx-border-radius: 16px; -fx-background-radius: 16px;">
-         <children>
-            <VBox layoutX="150.0" layoutY="14.0" prefHeight="105.0" prefWidth="500.0">
-               <children>
-                  <Text fill="#00a160" strokeType="OUTSIDE" strokeWidth="0.0" text="Remote PC"
-                        textAlignment="CENTER" wrappingWidth="500.0">
-                     <font>
-                        <Font name="System Bold" size="48.0"/>
-                     </font>
-                  </Text>
-                  <Text fill="#0c373c" strokeType="OUTSIDE" strokeWidth="0.0" text="Home" textAlignment="CENTER"
-                        wrappingWidth="500.0">
-                     <font>
-                        <Font name="System Bold" size="24.0"/>
-                     </font>
-                  </Text>
-               </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="960.0" stylesheets="@../styles/pc-login.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.cps.client.controllers.KioskHomeController">
+    <AnchorPane layoutX="10.0" layoutY="10.0" minHeight="580.0" minWidth="940.0" style="-fx-background-color: #fff; -fx-border-radius: 16px; -fx-background-radius: 16px;">
+        <children>
+            <VBox layoutX="220.0" prefHeight="105.0" prefWidth="500.0">
+                <children>
+                    <Text fill="#00a160" strokeType="OUTSIDE" strokeWidth="0.0" text="Kiosk" textAlignment="CENTER" wrappingWidth="500.0">
+                        <font>
+                            <Font name="System Bold" size="48.0" />
+                        </font>
+                    </Text>
+                    <Text fill="#0c373c" strokeType="OUTSIDE" strokeWidth="0.0" text="Home" textAlignment="CENTER" wrappingWidth="500.0">
+                        <font>
+                            <Font name="System Bold" size="24.0" />
+                        </font>
+                    </Text>
+                </children>
             </VBox>
-            <VBox alignment="CENTER" layoutX="88.0" layoutY="216.0" prefHeight="149.0" prefWidth="272.0"
-                  spacing="16.0">
-               <children>
-                  <MFXButton fx:id="loginBtn" onAction="#loginBtnClickHandler" prefHeight="39.0" prefWidth="335.0"
-                             style="-fx-background-color: #00a160;" text="Login" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="18.0"/>
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND"/>
-                     </cursor>
-                  </MFXButton>
-                  <MFXButton fx:id="loginBtn1" onAction="#loginBtnClickHandler" prefHeight="39.0"
-                             prefWidth="319.0" style="-fx-background-color: #00a160;" text="Login"
-                             textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="18.0"/>
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND"/>
-                     </cursor>
-                  </MFXButton>
-                  <MFXButton fx:id="loginBtn2" onAction="#loginBtnClickHandler" prefHeight="39.0"
-                             prefWidth="350.0" style="-fx-background-color: #00a160;" text="Login"
-                             textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="18.0"/>
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND"/>
-                     </cursor>
-                  </MFXButton>
-               </children>
+            <VBox alignment="CENTER" layoutX="14.0" layoutY="115.0" prefHeight="80.0" prefWidth="165.0" spacing="8.0">
+                <children>
+                    <MFXButton fx:id="showParkingLotsBtn" prefHeight="35.0" prefWidth="165.0" style="-fx-background-color: #00a160;" text="Test" textFill="WHITE">
+                        <font>
+                            <Font name="System Bold" size="14.0" />
+                        </font>
+                        <cursor>
+                            <Cursor fx:constant="HAND" />
+                        </cursor>
+                    </MFXButton>
+                    <MFXButton fx:id="showRatesBtn" prefHeight="35.0" prefWidth="165.0" style="-fx-background-color: #00a160;" text="Test2" textFill="WHITE">
+                        <font>
+                            <Font name="System Bold" size="14.0" />
+                        </font>
+                        <cursor>
+                            <Cursor fx:constant="HAND" />
+                        </cursor>
+                    </MFXButton>
+                </children>
             </VBox>
-         </children>
-      </AnchorPane>
-      <ScalableContentPane/>
-   </children>
+         <VBox layoutX="196.0" layoutY="115.05078125" spacing="16.0">
+            <children>
+               <Text lineSpacing="2.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam laoreet erat diam, vitae porta lectus gravida sed. Duis porta lacinia libero vehicula imperdiet. In efficitur lectus a mi sagittis vestibulum. Proin libero dui, elementum et convallis vel, sodales et velit. Nullam vitae turpis porta, finibus neque id, cursus tellus. Morbi luctus, risus in sagittis volutpat, erat nisi condimentum ex, nec bibendum mauris ante et quam. Ut sed aliquet ligula. Vivamus imperdiet metus ex. Sed hendrerit, felis sit amet tempor rutrum, nibh augue tempus ligula, vel hendrerit enim tellus ac dolor. Cras nibh quam, faucibus vitae porta eget, tristique in tellus. Donec imperdiet at nibh sit amet maximus." wrappingWidth="730.0" />
+               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Quisque a nisl finibus, sagittis velit nec, sodales felis. Aliquam erat volutpat. Donec scelerisque laoreet facilisis. Curabitur pharetra erat quis ex interdum elementum. Sed dapibus condimentum odio nec molestie. Curabitur tincidunt facilisis mattis. Curabitur dictum dapibus nibh, at ultricies nulla malesuada et. Fusce bibendum elementum ante. Etiam volutpat vehicula aliquam." wrappingWidth="730.0" />
+               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Cras tortor libero, facilisis quis aliquet eu, tempus vel nulla. Nullam pretium ultrices urna, at luctus lorem sodales et. Nunc ornare volutpat diam vel rhoncus. Nunc blandit accumsan erat nec placerat. Proin nec velit ultricies, blandit urna sit amet, congue massa. Nulla fermentum eros ac mi facilisis aliquam. Pellentesque nec nulla et nulla dictum vehicula eget sit amet nunc." wrappingWidth="730.0" />
+            </children>
+         </VBox>
+        </children>
+    </AnchorPane>
 </AnchorPane>

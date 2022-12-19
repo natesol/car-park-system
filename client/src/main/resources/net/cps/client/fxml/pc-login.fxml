@@ -9,9 +9,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" stylesheets="@../styles/pc-login.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.cps.client.controllers.PCLoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="960.0" stylesheets="@../styles/pc-login.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.cps.client.controllers.PCLoginController">
     <children>
-        <AnchorPane layoutX="262.0" layoutY="184.0" minHeight="400.0" minWidth="500.0" style="-fx-background-color: #fff; -fx-border-radius: 16px; -fx-background-radius: 16px;">
+        <AnchorPane layoutX="230.0" layoutY="100.0" minHeight="400.0" minWidth="500.0" style="-fx-background-color: #fff; -fx-border-radius: 16px; -fx-background-radius: 16px;">
             <children>
                 <VBox layoutX="1.0" layoutY="53.0" prefHeight="105.0" prefWidth="500.0">
                     <children>

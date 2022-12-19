@@ -6,15 +6,14 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane fx:controller="net.cps.client.controllers.StartController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.cps.client.controllers.StartController">
    <children>
-      <Text fill="#00a160" layoutX="349.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose Client" textAlignment="CENTER" wrappingWidth="325.13671875">
+      <Text fill="#00a160" layoutX="317.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose Client" textAlignment="CENTER" wrappingWidth="325.13671875">
          <font>
             <Font name="System Bold" size="48.0" />
          </font>
       </Text>
-      <MFXButton fx:id="kioskBtn" onAction="#kioskBtnClickHandler" layoutX="256.0" layoutY="359.0" prefHeight="51.0" prefWidth="187.0" style="-fx-background-color: #00a160;" text="Kiosk" textFill="WHITE">
+      <MFXButton fx:id="kioskBtn" layoutX="273.0" layoutY="300.0" onAction="#kioskBtnClickHandler" prefHeight="51.0" prefWidth="187.0" style="-fx-background-color: #00a160;" text="Kiosk" textFill="WHITE">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
@@ -22,7 +21,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </MFXButton>
-      <MFXButton fx:id="remotePCBtn" onAction="#remotePCBtnClickHandler" layoutX="586.0" layoutY="359.0" prefHeight="51.0" prefWidth="177.0" style="-fx-background-color: #00a160;" text="Remote PC" textFill="WHITE">
+      <MFXButton fx:id="remotePCBtn" layoutX="500.0" layoutY="300.0" onAction="#remotePCBtnClickHandler" prefHeight="51.0" prefWidth="177.0" style="-fx-background-color: #00a160;" text="Remote PC" textFill="WHITE">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>

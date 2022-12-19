@@ -10,21 +10,22 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
 public class HibernateUtils {
-    private static final SessionFactory SESSION_FACTORY = buildSessionFactory();
+    private static final SessionFactory SESSION_FACTORY = createSessionFactory();
     
-    private static SessionFactory buildSessionFactory() {
+    private static SessionFactory createSessionFactory() {
         try {
             Configuration configuration = new Configuration();
             configuration.addAnnotatedClass(ParkingLot.class);
             configuration.addAnnotatedClass(Employee.class);
             configuration.addAnnotatedClass(Customer.class);
+//            configuration.addPackage("net.cps.entities.hibernate");
             ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
             
             return configuration.buildSessionFactory(serviceRegistry);
         }
-        catch (Throwable ex) {
-            System.err.println("Initial SessionFactory creation failed. " + ex);
-            throw new ExceptionInInitializerError(ex);
+        catch (Throwable e) {
+            System.err.println("[SERVER] initial 'SessionFactory' creation failed.\n[SERVER] ended with the exception trace:" + e);
+            throw new ExceptionInInitializerError(e);
         }
     }
     

@@ -9,10 +9,10 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" stylesheets="@../styles/pc-login.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.cps.client.controllers.PCHomeController">
-    <AnchorPane layoutX="37.0" layoutY="59.0" minHeight="650.0" minWidth="950.0" style="-fx-background-color: #fff; -fx-border-radius: 16px; -fx-background-radius: 16px;">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="960.0" stylesheets="@../styles/pc-login.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.cps.client.controllers.PCHomeController">
+    <AnchorPane layoutX="10.0" layoutY="10.0" minHeight="580.0" minWidth="940.0" style="-fx-background-color: #fff; -fx-border-radius: 16px; -fx-background-radius: 16px;">
         <children>
-            <VBox layoutX="225.0" layoutY="14.0" prefHeight="105.0" prefWidth="500.0">
+            <VBox layoutX="220.0" prefHeight="105.0" prefWidth="500.0">
                 <children>
                     <Text fill="#00a160" strokeType="OUTSIDE" strokeWidth="0.0" text="Remote PC" textAlignment="CENTER" wrappingWidth="500.0">
                         <font>
@@ -26,7 +26,7 @@
                     </Text>
                 </children>
             </VBox>
-            <VBox alignment="CENTER" layoutX="14.0" layoutY="159.0" prefHeight="80.0" prefWidth="165.0" spacing="8.0">
+            <VBox alignment="CENTER" layoutX="14.0" layoutY="115.0" prefHeight="80.0" prefWidth="165.0" spacing="8.0">
                 <children>
                     <MFXButton fx:id="showParkingLotsBtn" onAction="#showParkingLotsBtnClickHandler" prefHeight="35.0" prefWidth="165.0" style="-fx-background-color: #00a160;" text="Show ParkingLots" textFill="WHITE">
                         <font>
@@ -46,7 +46,7 @@
                     </MFXButton>
                 </children>
             </VBox>
-         <MFXLegacyTableView fx:id="parkingLotTable" layoutX="194.0" layoutY="159.0" prefHeight="477.0" prefWidth="742.0">
+         <MFXLegacyTableView fx:id="parkingLotTable" layoutX="196.0" layoutY="115.0" prefHeight="450.0" prefWidth="730.0" style="-fx-border-radius: 4px;">
             <columns>
                <TableColumn fx:id="parkingLotTableNameCol" prefWidth="204.0" text="Name" />
                <TableColumn fx:id="parkingLotTableLocationCol" prefWidth="370.0" text="Location" />
