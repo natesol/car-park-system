@@ -6,29 +6,37 @@ import java.io.Serializable;
 @Entity
 @Table(name = "parking_lots")
 public class ParkingLot implements Serializable {
+    public static final int floorLength = 3; // x axes
+    public static final int numOfFloors = 3; // y axes
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(updatable = false, nullable = false)
     private int id;
     
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
     
-    @Column(name = "address")
+    @Column(name = "address", nullable = false)
     private String address;
     
-    @Column(name = "rates")
-    private String rates;
+    @Column(name = "floor_width", nullable = false)
+    private int floorWidth; // z axes
     
-    public void setName(String s) {
-        this.name = s;
+    @OneToOne(mappedBy = "parkingLot", cascade = CascadeType.ALL)
+    private Rates rates;
+    
+    public ParkingLot() {}
+    
+    public ParkingLot(String name, String address, int floorWidth) {
+        this.name = name;
+        this.address = address;
+        this.floorWidth = floorWidth;
+        this.rates = new Rates(this);
     }
     
-    public void setAddress(String s) {
-        this.address = s;
-    }
-    
-    public void setRates(String s) {
-        this.rates = s;
+    public int getId() {
+        return this.id;
     }
     
     public String getName() {
@@ -37,10 +45,34 @@ public class ParkingLot implements Serializable {
     
     public String getAddress() {
         return this.address;
-    
     }
     
-    public String getRates() {
+    public int getFloorWidth() {
+        return this.floorWidth;
+    }
+    
+    public Rates getRates() {
         return this.rates;
     }
+    
+    public int getTotalSpace() {
+        return this.floorWidth * floorLength * numOfFloors;
+    }
+    
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    public void setAddress(String address) {
+        this.address = address;
+    }
+    
+    public void setFloorWidth(int floorWidth) {
+        this.floorWidth = floorWidth;
+    }
+    
+    public void setRates(Rates rates) {
+        this.rates = rates;
+    }
 }
+

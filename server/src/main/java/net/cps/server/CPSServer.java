@@ -2,25 +2,22 @@ package net.cps.server;
 
 import net.cps.entities.Message;
 import net.cps.entities.hibernate.ParkingLot;
+import net.cps.entities.hibernate.Rates;
 import net.cps.server.ocsf.AbstractServer;
 import net.cps.server.ocsf.ConnectionToClient;
 import net.cps.server.ocsf.SubscribedClient;
+import net.cps.server.utils.HibernateUtils;
 import net.cps.server.utils.ServerLogger;
 import org.hibernate.Session;
-import org.hibernate.query.Query;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CPSServer extends AbstractServer {
     private static ArrayList<SubscribedClient> SubscribersList = new ArrayList<>();
-    
-    public static final ServerLogger logger = new ServerLogger();
+    private static final ServerLogger logger = new ServerLogger();
+    private static Session dbSession;
     
     public CPSServer(int port) {
         super(port);
@@ -31,29 +28,41 @@ public class CPSServer extends AbstractServer {
     protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
         Message message = (Message) msg;
         String request = message.getMessage();
+        dbSession = HibernateUtils.getSessionFactory().openSession();
+        dbSession.beginTransaction();
+        
         try {
             if (request.isBlank()) {
                 message.setMessage("Error! we got an empty message");
                 client.sendToClient(message);
             }
-            else if (request.startsWith("get parking-lots")) {
-                message.setMessage("get parking-lots");
-                System.out.println("get parking-lots");
+            else if (request.equals("get-parking-lots")) {
+                System.out.println("get-parking-lots");
                 
-                Session session = Main.getDbSession();
-                CriteriaBuilder builder = session.getCriteriaBuilder();
-                CriteriaQuery<ParkingLot> query = builder.createQuery(ParkingLot.class);
-                query.from(ParkingLot.class);
-                List<ParkingLot> data = session.createQuery(query).getResultList();
-
-                client.sendToClient(data);
+                List<ParkingLot> data = HibernateUtils.getAllEntities(dbSession, ParkingLot.class);
+                message.setMessage("get-parking-lots");
+                message.setData(data);
+                client.sendToClient(message);
+            }
+            else if (request.equals("get-rates")) {
+                System.out.println("get-rates");
+                
+                List<Rates> data = HibernateUtils.getAllEntities(dbSession, Rates.class);
+                message.setMessage("get-rates");
+                message.setData(data);
+                client.sendToClient(message);
             }
             else {
                 message.setMessage(request);
                 sendToAllClients(message);
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
+        }
+        finally {
+            assert dbSession != null;
+            dbSession.close();
         }
     }
     

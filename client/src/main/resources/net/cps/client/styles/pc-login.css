@@ -16,7 +16,7 @@
     -common-gradient: linear-gradient(to right bottom, #c4008b, #d00085, #dc007f, #e60b79, #ef1872, #f5276b, #fa3564, #fe415e, #ff5158, #ff5f52, #ff6c4e, #ff794b);
     -secondary-gradient: linear-gradient(to right bottom, #1ec400, #00bd3a, #00b654, #00ae67, #00a574, #00a280, #009e8a, #009a91, #009b9d, #009ba8, #009bb2, #009abb);
 
-    -test-testy1: #00a160;
+    -test-testy1: #007ae4;
     -test-testy: -test-testy1;
 }
 
@@ -35,10 +35,15 @@
 
 #emailField {
     /*-fx-border-color: -common-gradient;*/
+    /*-fx-border-color: -test-testy;*/
+}
+
+#emailField:focus-within {
+    /*-fx-border-color: -common-gradient;*/
     -fx-border-color: -test-testy;
 }
 
-#emailField .floating-text {
+#emailField:focus-within .floating-text {
     /*-fx-text-fill: -mfx-red;*/
     -fx-text-fill: -test-testy;
 }
@@ -46,27 +51,27 @@
 /**************************************************
  * Password Fields
 **************************************************/
-#passwordField {
+#passwordField:focus-within {
     /*-fx-border-color: -secondary-gradient;*/
     -fx-border-color: -test-testy;
 }
 
 #passwordField:masked {
     /*-fx-text-fill: -mfx-blue;*/
-    -fx-text-fill: -test-testy;
+    /*-fx-text-fill: -test-testy;*/
 }
 
 #passwordField .mfx-font-icon {
     /*-mfx-color: -mfx-blue;*/
-    -mfx-color: -test-testy;
+    /*-mfx-color: -test-testy;*/
 }
 
 #passwordField .mfx-context-menu .mfx-menu-item:disabled .mfx-font-icon {
     /*-mfx-color: #bcbcbc;*/
-    -mfx-color: -test-testy;
+    /*-mfx-color: -test-testy;*/
 }
 
-#passwordField .floating-text {
+#passwordField:focus-within .floating-text {
     /*-fx-text-fill: -mfx-blue;*/
     -fx-text-fill: -test-testy;
 }

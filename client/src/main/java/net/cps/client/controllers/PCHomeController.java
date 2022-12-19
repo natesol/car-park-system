@@ -1,29 +1,23 @@
 package net.cps.client.controllers;
 
 import io.github.palexdev.materialfx.controls.MFXButton;
-import io.github.palexdev.materialfx.controls.MFXTableView;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.Duration;
 import net.cps.client.CPSClient;
 import net.cps.client.events.ParkingLotDataTmpEvent;
+import net.cps.client.events.RatesDataTmpEvent;
 import net.cps.entities.hibernate.ParkingLot;
+import net.cps.entities.hibernate.Rates;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Collection;
-import java.util.List;
 
 public class PCHomeController {
     
@@ -31,48 +25,83 @@ public class PCHomeController {
     private MFXButton showParkingLotsBtn;
     
     @FXML
-    private MFXButton showRatesBtn;
+    private MFXButton refreshBtn;
     
     @FXML
     private MFXLegacyTableView<ParkingLot> parkingLotTable;
+    @FXML
+    private TableColumn<ParkingLot, String> parkingLotTableIDCol;
     @FXML
     private TableColumn<ParkingLot, String> parkingLotTableNameCol;
     @FXML
     private TableColumn<ParkingLot, String> parkingLotTableLocationCol;
     @FXML
-    private TableColumn<ParkingLot, String> parkingLotTableSpaceCol;
-
+    private TableColumn<ParkingLot, String> parkingLotTableRowWidthCol;
+    @FXML
+    private TableColumn<ParkingLot, String> parkingLotTableTotalSpaceCol;
     
     @FXML
-    void showParkingLotsBtnClickHandler(ActionEvent event) throws IOException {
-        System.out.println("show ParkingLots !");
+    private MFXLegacyTableView<Rates> ratesTable;
+    @FXML
+    private TableColumn<Rates, String> ratesTableIDCol;
+    @FXML
+    private TableColumn<Rates, String> ratesTableHOPPCol;
+    @FXML
+    private TableColumn<Rates, String> ratesTableHOTPPCol;
+    @FXML
+    private TableColumn<Rates, String> ratesTableRSSVPPCol;
+    @FXML
+    private TableColumn<Rates, String> ratesTableRSMVPPCol;
+    @FXML
+    private TableColumn<Rates, String> ratesTableFSSVPPCol;
+    
+    @FXML
+    void initialize() {
+        EventBus.getDefault().register(this);
         
-        CPSClient.sendMessageToServer("get parking-lots");
+        CPSClient.sendMessageToServer("get-parking-lots");
+        CPSClient.sendMessageToServer("get-rates");
     }
     
     @FXML
-    void showRatesBtnClickHandler(ActionEvent event) throws IOException {
-        System.out.println("show Rates !");
+    void showParkingLotsBtnClickHandler(ActionEvent event) throws IOException {
+        System.out.println("show btn blaalala...");
+    }
+    
+    @FXML
+    public void refreshBtnClickHandler(ActionEvent event) {
+        System.out.println("refresh tables...");
+        
+        CPSClient.sendMessageToServer("get-parking-lots");
+        CPSClient.sendMessageToServer("get-rates");
     }
     
     @Subscribe
     public void parkingLotDataTmpEventHandler(ParkingLotDataTmpEvent event) {
         ObservableList<ParkingLot> parkingLots = FXCollections.observableArrayList();
-        parkingLots.addAll((Collection<? extends ParkingLot>) event.getMessage());
+        parkingLots.addAll((Collection<? extends ParkingLot>) event.getData());
     
-        for (ParkingLot parkingLot : parkingLots) {
-            System.out.println(parkingLot.getName() + " " + parkingLot.getAddress());
-        }
-    
+        parkingLotTableIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         parkingLotTableNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         parkingLotTableLocationCol.setCellValueFactory(new PropertyValueFactory<>("address"));
-        parkingLotTableSpaceCol.setCellValueFactory(new PropertyValueFactory<>("rates"));
+        parkingLotTableRowWidthCol.setCellValueFactory(new PropertyValueFactory<>("floorWidth"));
+        parkingLotTableTotalSpaceCol.setCellValueFactory(new PropertyValueFactory<>("totalSpace"));
     
         parkingLotTable.setItems(parkingLots);
     }
     
-    @FXML
-    void initialize() {
-        EventBus.getDefault().register(this);
+    @Subscribe
+    public void ratesDataTmpEventHandler(RatesDataTmpEvent event) {
+        ObservableList<Rates> rates = FXCollections.observableArrayList();
+        rates.addAll((Collection<? extends Rates>) event.getData());
+        
+        ratesTableIDCol.setCellValueFactory(new PropertyValueFactory<>("parkingLotId"));
+        ratesTableHOPPCol.setCellValueFactory(new PropertyValueFactory<>("hourlyOccasionalParking"));
+        ratesTableHOTPPCol.setCellValueFactory(new PropertyValueFactory<>("hourlyOnetimeParking"));
+        ratesTableRSSVPPCol.setCellValueFactory(new PropertyValueFactory<>("regularSubscriptionSingleVehicle"));
+        ratesTableRSMVPPCol.setCellValueFactory(new PropertyValueFactory<>("regularSubscriptionMultipleVehicles"));
+        ratesTableFSSVPPCol.setCellValueFactory(new PropertyValueFactory<>("fullSubscriptionSingleVehicle"));
+        
+        ratesTable.setItems(rates);
     }
 }

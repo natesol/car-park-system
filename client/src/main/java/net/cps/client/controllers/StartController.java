@@ -17,8 +17,9 @@ public class StartController {
     private MFXButton remotePCBtn;
     
     @FXML
-    void kioskBtnClickHandler(ActionEvent event) {
+    void kioskBtnClickHandler(ActionEvent event) throws IOException {
         System.out.println("kiosk !");
+        App.setScene("kiosk-home");
     }
     
     @FXML

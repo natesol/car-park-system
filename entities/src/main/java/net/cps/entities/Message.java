@@ -7,7 +7,7 @@ public class Message implements Serializable {
     int id;
     LocalDateTime timeStamp;
     String message;
-    String data;
+    Object data;
 
     public Message(int id, LocalDateTime timeStamp, String message) {
         this.id = id;
@@ -22,7 +22,7 @@ public class Message implements Serializable {
         this.data = null;
     }
 
-    public Message(int id, String message, String data) {
+    public Message(int id, String message, Object data) {
         this.id = id;
         this.timeStamp = LocalDateTime.now();
         this.message = message;
@@ -53,11 +53,11 @@ public class Message implements Serializable {
         this.message = message;
     }
 
-    public String getData() {
+    public Object getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(Object data) {
         this.data = data;
     }
 }

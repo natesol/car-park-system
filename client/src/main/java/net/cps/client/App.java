@@ -5,9 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import net.cps.client.events.MessageEvent;
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
 
@@ -39,7 +36,7 @@ public class App extends Application {
         
         client = CPSClient.getClient();
         client.openConnection();
-        scene = new Scene(loadFXML("start"));
+        scene = new Scene(loadFXML("index"));
         stage.setScene(scene);
         stage.show();
     }
