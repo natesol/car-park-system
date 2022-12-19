@@ -30,11 +30,12 @@ public class App extends Application {
     public static void run(CPSClient client) {
         App.client = client;
         launch();
+        System.out.println("[CLIENT] application lunched successfully.");
     }
     
     @Override
     public void start(Stage stage) throws IOException {
-        EventBus.getDefault().register(this);
+        // EventBus.getDefault().register(this);
         
         client = CPSClient.getClient();
         client.openConnection();
@@ -45,23 +46,8 @@ public class App extends Application {
     
     @Override
     public void stop() throws Exception {
-        EventBus.getDefault().unregister(this);
+        // EventBus.getDefault().unregister(this);
         super.stop();
     }
-    
-    @Subscribe
-    public void onMessageEvent(MessageEvent message) {
-        //DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
-        //Platform.runLater(() -> {
-        //    Alert alert = new Alert(AlertType.INFORMATION,
-        //            String.format("Message:\nId: %d\nData: %s\nTimestamp: %s\n",
-        //                    message.getMessage().getId(),
-        //                    message.getMessage().getMessage(),
-        //                    message.getMessage().getTimeStamp().format(dtf))
-        //    );
-        //    alert.setTitle("new message");
-        //    alert.setHeaderText("New Message:");
-        //    alert.show();
-        //});
-    }
+  
 }

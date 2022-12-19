@@ -30,4 +30,17 @@ public class ParkingLot implements Serializable {
     public void setRates(String s) {
         this.rates = s;
     }
+    
+    public String getName() {
+        return this.name;
+    }
+    
+    public String getAddress() {
+        return this.address;
+    
+    }
+    
+    public String getRates() {
+        return this.rates;
+    }
 }

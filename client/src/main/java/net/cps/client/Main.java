@@ -11,9 +11,8 @@ public class Main {
         int port = args.length > 0 ? Integer.parseInt(args[1]) : DEFAULT_PORT;
         
         client = CPSClient.getClient(host, port);
-        System.out.println("[CLIENT] client connected to- host: " + host + " port: " + port + ".");
+        System.out.println("[CLIENT] client connected to- host: '" + host + "', port: '" + port + "'.");
 
         App.run(client);
-        System.out.println("[CLIENT] application lunched successfully.");
     }
 }

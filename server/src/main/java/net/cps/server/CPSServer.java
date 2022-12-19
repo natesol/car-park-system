@@ -37,7 +37,7 @@ public class CPSServer extends AbstractServer {
                 client.sendToClient(message);
             }
             else if (request.startsWith("get parking-lots")) {
-                message.setMessage("update submitters IDs");
+                message.setMessage("get parking-lots");
                 System.out.println("get parking-lots");
                 
                 Session session = Main.getDbSession();
