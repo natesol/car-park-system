@@ -1,6 +1,7 @@
 package net.cps.client.controllers;
 
 import io.github.palexdev.materialfx.controls.MFXButton;
+import io.github.palexdev.materialfx.controls.MFXComboBox;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -8,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import net.cps.client.CPSClient;
 import net.cps.client.events.ParkingLotDataTmpEvent;
 import net.cps.client.events.RatesDataTmpEvent;
@@ -20,13 +22,13 @@ import java.io.IOException;
 import java.util.Collection;
 
 public class PCHomeController {
-    
+    // Base elements.
     @FXML
-    private MFXButton showParkingLotsBtn;
-    
+    private MFXButton editDataBtn;
     @FXML
     private MFXButton refreshBtn;
     
+    // ParkingLot table elements.
     @FXML
     private MFXLegacyTableView<ParkingLot> parkingLotTable;
     @FXML
@@ -40,6 +42,7 @@ public class PCHomeController {
     @FXML
     private TableColumn<ParkingLot, String> parkingLotTableTotalSpaceCol;
     
+    // Rates table elements.
     @FXML
     private MFXLegacyTableView<Rates> ratesTable;
     @FXML
@@ -55,12 +58,31 @@ public class PCHomeController {
     @FXML
     private TableColumn<Rates, String> ratesTableFSSVPPCol;
     
+    // Dialog elements.
+    @FXML
+    private AnchorPane dialogWrapper;
+    @FXML
+    private MFXComboBox ratesComboBox;
+    @FXML
+    private MFXButton dialogCancelBtn;
+    @FXML
+    private MFXButton dialogEditBtn;
+    
     @FXML
     void initialize() {
         EventBus.getDefault().register(this);
-        
+    
         CPSClient.sendMessageToServer("get-parking-lots");
         CPSClient.sendMessageToServer("get-rates");
+        
+        ObservableList<String> strings = FXCollections.observableArrayList(
+                "Hourly Occasional Parking Price",
+                "Hourly Onetime Parking Price",
+                "Regular Subscription Single Vehicle",
+                "Regular Subscription Multiple Vehicles",
+                "Full Subscription Single Vehicle"
+        );;
+        ratesComboBox.setItems(strings);
     }
     
     @FXML
@@ -104,4 +126,23 @@ public class PCHomeController {
         
         ratesTable.setItems(rates);
     }
+    
+    public void editDataBtnClickHandler(ActionEvent actionEvent) {
+        openDialog();
+    }
+    
+    // -----------------
+    private void openDialog() {
+        dialogWrapper.setVisible(true);
+        dialogWrapper.setDisable(false);
+    
+        
+    }
+    
+    private void closeDialog() {
+        dialogWrapper.setVisible(false);
+        dialogWrapper.setDisable(true);
+        
+    }
+    
 }
