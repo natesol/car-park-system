@@ -19,13 +19,12 @@ import net.cps.entities.hibernate.Rates;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.io.IOException;
 import java.util.Collection;
 
 public class PCHomeController {
     // Base elements.
     @FXML
-    private MFXButton editDataBtn;
+    private MFXButton editRatesBtn;
     @FXML
     private MFXButton refreshBtn;
     
@@ -93,7 +92,6 @@ public class PCHomeController {
         ratesComboBox.selectIndex(1);
     }
     
-    
     @FXML
     public void refreshBtnClickHandler(ActionEvent event) {
         CPSClient.sendMessageToServer("get-parking-lots");
@@ -101,7 +99,7 @@ public class PCHomeController {
     }
     
     @FXML
-    public void editDataBtnClickHandler(ActionEvent actionEvent) {
+    public void editRatesBtnClickHandler(ActionEvent actionEvent) {
         openDialog();
     }
     
@@ -146,6 +144,8 @@ public class PCHomeController {
         System.out.println("edit: " + id + ", " + rates + ", " + value);
     
         CPSClient.sendMessageToServer("update-rates", obj);
+        CPSClient.sendMessageToServer("get-parking-lots");
+        CPSClient.sendMessageToServer("get-rates");
     }
     
     @Subscribe
