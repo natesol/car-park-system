@@ -28,6 +28,17 @@ public class CPSClient extends AbstractClient {
         return client;
     }
     
+    public static void sendMessageToServer(String data, Object obj) {
+        try {
+            Message message = new Message(msgId++, data);
+            message.setData(obj);
+            CPSClient.getClient().sendToServer(message);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
     public static void sendMessageToServer(String data) {
         try {
             Message message = new Message(msgId++, data);

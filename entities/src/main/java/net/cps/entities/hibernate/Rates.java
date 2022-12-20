@@ -52,6 +52,16 @@ public class Rates implements Serializable {
         this.fullSubscriptionSingleVehicle = DEFAULT_FULL_SUBSCRIPTION_SINGLE_VEHICLE;
     }
     
+    public Rates(int id) {
+        this.id = id;
+        this.parkingLot = parkingLot;
+        this.hourlyOccasionalParking = DEFAULT_HOURLY_OCCASIONAL_PARKING;
+        this.hourlyOnetimeParking = DEFAULT_HOURLY_ONETIME_PARKING;
+        this.regularSubscriptionSingleVehicle = DEFAULT_REGULAR_SUBSCRIPTION_SINGLE_VEHICLE;
+        this.regularSubscriptionMultipleVehicles = DEFAULT_REGULAR_SUBSCRIPTION_MULTIPLE_VEHICLE;
+        this.fullSubscriptionSingleVehicle = DEFAULT_FULL_SUBSCRIPTION_SINGLE_VEHICLE;
+    }
+    
     public ParkingLot getParkingLot() {
         return this.parkingLot;
     }

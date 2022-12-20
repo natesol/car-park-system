@@ -2,6 +2,7 @@ package net.cps.client.controllers;
 
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
+import io.github.palexdev.materialfx.controls.MFXTextField;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -62,11 +63,17 @@ public class PCHomeController {
     @FXML
     private AnchorPane dialogWrapper;
     @FXML
+    private MFXTextField idTextField;
+    @FXML
     private MFXComboBox ratesComboBox;
+    @FXML
+    private MFXTextField valueTextField;
     @FXML
     private MFXButton dialogCancelBtn;
     @FXML
     private MFXButton dialogEditBtn;
+    
+    //-----------
     
     @FXML
     void initialize() {
@@ -83,6 +90,7 @@ public class PCHomeController {
                 "Full Subscription Single Vehicle"
         );;
         ratesComboBox.setItems(strings);
+        ratesComboBox.selectIndex(1);
     }
     
     @FXML
@@ -98,17 +106,57 @@ public class PCHomeController {
         CPSClient.sendMessageToServer("get-rates");
     }
     
+    @FXML
+    public void editDataBtnClickHandler(ActionEvent actionEvent) {
+        openDialog();
+    }
+    
+    @FXML
+    public void dialogCancelBtnClickHandler(ActionEvent actionEvent) {
+        closeDialog();
+    }
+    
+    @FXML
+    public void dialogEditBtnClickHandler(ActionEvent actionEvent) {
+        int id = Integer.parseInt(idTextField.getText());
+        String rates = ratesComboBox.getText();
+        double value = Double.parseDouble(valueTextField.getText());
+        
+        closeDialog();
+        
+        Rates obj = new Rates(id);
+        if (rates.equals("Hourly Occasional Parking Price")) {
+            obj.setHourlyOccasionalParking(value);
+        }
+        else if (rates.equals("Hourly Onetime Parking Price")) {
+            obj.setHourlyOnetimeParking(value);
+        }
+        else if (rates.equals("Regular Subscription Single Vehicle")) {
+            obj.setRegularSubscriptionSingleVehicle(value);
+        }
+        else if (rates.equals("Regular Subscription Multiple Vehicles")) {
+            obj.setRegularSubscriptionMultipleVehicles(value);
+        }
+        else if (rates.equals("Full Subscription Single Vehicle")) {
+            obj.setFullSubscriptionSingleVehicle(value);
+        }
+        
+        System.out.println("edit: " + id + ", " + rates + ", " + value);
+    
+        CPSClient.sendMessageToServer("update-rates", obj);
+    }
+    
     @Subscribe
     public void parkingLotDataTmpEventHandler(ParkingLotDataTmpEvent event) {
         ObservableList<ParkingLot> parkingLots = FXCollections.observableArrayList();
         parkingLots.addAll((Collection<? extends ParkingLot>) event.getData());
-    
+        
         parkingLotTableIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         parkingLotTableNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         parkingLotTableLocationCol.setCellValueFactory(new PropertyValueFactory<>("address"));
         parkingLotTableRowWidthCol.setCellValueFactory(new PropertyValueFactory<>("floorWidth"));
         parkingLotTableTotalSpaceCol.setCellValueFactory(new PropertyValueFactory<>("totalSpace"));
-    
+        
         parkingLotTable.setItems(parkingLots);
     }
     
@@ -127,22 +175,15 @@ public class PCHomeController {
         ratesTable.setItems(rates);
     }
     
-    public void editDataBtnClickHandler(ActionEvent actionEvent) {
-        openDialog();
-    }
-    
     // -----------------
     private void openDialog() {
         dialogWrapper.setVisible(true);
         dialogWrapper.setDisable(false);
-    
-        
     }
     
+    @FXML
     private void closeDialog() {
         dialogWrapper.setVisible(false);
         dialogWrapper.setDisable(true);
-        
     }
-    
 }

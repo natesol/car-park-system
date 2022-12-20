@@ -52,6 +52,16 @@ public class CPSServer extends AbstractServer {
                 message.setData(data);
                 client.sendToClient(message);
             }
+            else if (request.equals("update-rates")) {
+                System.out.println("update-rates");
+    
+                Rates rates = (Rates) message.getData();
+                
+                HibernateUtils.updateEntity(dbSession, rates);
+                message.setMessage("update-rates");
+                // message.setData(data);
+                // client.sendToClient(message);
+            }
             else {
                 message.setMessage(request);
                 sendToAllClients(message);

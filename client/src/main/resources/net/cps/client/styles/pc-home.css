@@ -1,0 +1,37 @@
+* {
+    -test-testy1: #007ae4;
+    -test-testy: -test-testy1;
+}
+
+/**************************************************
+ * Text Fields
+**************************************************/
+.mfx-text-field {
+    -fx-min-width: 130;
+    -fx-font-family: 'Visby Round CF Medium';
+}
+
+.mfx-combo-box:focus-within,
+.mfx-text-field:focus-within,
+.mfx-password-field:focus-within {
+    -fx-border-color: -test-testy;
+}
+
+.mfx-combo-box:focus-within .caret {
+    -fx-stroke: -test-testy;
+}
+.mfx-combo-box .combo-popup .virtual-flow .mfx-combo-box-cell:focus-within {
+    -fx-background-color: -test-testy;
+}
+
+.mfx-text-field .floating-text {
+    -fx-font-family: 'Visby Round CF Medium';
+}
+
+#emailField:focus-within .floating-text {
+    -fx-text-fill: -test-testy;
+}
+
+#passwordField:focus-within .floating-text {
+    -fx-text-fill: -test-testy;
+}
