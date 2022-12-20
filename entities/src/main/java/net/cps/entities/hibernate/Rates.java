@@ -13,7 +13,8 @@ public class Rates implements Serializable {
     public static final double DEFAULT_FULL_SUBSCRIPTION_SINGLE_VEHICLE = 72;
     
     @Id
-    @Column(name = "parking_lot_id")
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="parkingId", nullable = false)
     private int id;
     
     // ILS per Hour.
@@ -37,24 +38,13 @@ public class Rates implements Serializable {
     private double fullSubscriptionSingleVehicle;
     
     @OneToOne
-    @JoinColumn(name = "parking_lot_id", referencedColumnName = "id")
+    @JoinColumn(name = "parkingId", referencedColumnName = "id")
     private ParkingLot parkingLot;
     
     public Rates() {}
     
-    public Rates(ParkingLot parkingLot) {
-        this.id = parkingLot.getId();
-        this.parkingLot = parkingLot;
-        this.hourlyOccasionalParking = DEFAULT_HOURLY_OCCASIONAL_PARKING;
-        this.hourlyOnetimeParking = DEFAULT_HOURLY_ONETIME_PARKING;
-        this.regularSubscriptionSingleVehicle = DEFAULT_REGULAR_SUBSCRIPTION_SINGLE_VEHICLE;
-        this.regularSubscriptionMultipleVehicles = DEFAULT_REGULAR_SUBSCRIPTION_MULTIPLE_VEHICLE;
-        this.fullSubscriptionSingleVehicle = DEFAULT_FULL_SUBSCRIPTION_SINGLE_VEHICLE;
-    }
-    
     public Rates(int id) {
         this.id = id;
-        this.parkingLot = parkingLot;
         this.hourlyOccasionalParking = DEFAULT_HOURLY_OCCASIONAL_PARKING;
         this.hourlyOnetimeParking = DEFAULT_HOURLY_ONETIME_PARKING;
         this.regularSubscriptionSingleVehicle = DEFAULT_REGULAR_SUBSCRIPTION_SINGLE_VEHICLE;
@@ -90,8 +80,8 @@ public class Rates implements Serializable {
         return this.fullSubscriptionSingleVehicle;
     }
     
-    public void setParkingLot(ParkingLot parkingLot) {
-        this.parkingLot = parkingLot;
+    public void setId(int id) {
+        this.id = id;
     }
     
     public void setHourlyOccasionalParking(double hourlyOccasionalParking) {

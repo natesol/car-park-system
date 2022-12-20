@@ -93,15 +93,9 @@ public class PCHomeController {
         ratesComboBox.selectIndex(1);
     }
     
-    @FXML
-    void showParkingLotsBtnClickHandler(ActionEvent event) throws IOException {
-        System.out.println("show btn blaalala...");
-    }
     
     @FXML
     public void refreshBtnClickHandler(ActionEvent event) {
-        System.out.println("refresh tables...");
-        
         CPSClient.sendMessageToServer("get-parking-lots");
         CPSClient.sendMessageToServer("get-rates");
     }
@@ -121,10 +115,18 @@ public class PCHomeController {
         int id = Integer.parseInt(idTextField.getText());
         String rates = ratesComboBox.getText();
         double value = Double.parseDouble(valueTextField.getText());
-        
+        Rates obj = null;
+    
         closeDialog();
         
-        Rates obj = new Rates(id);
+        ObservableList<Rates> ratesList = ratesTable.getItems();
+        for (Rates rate: ratesList) {
+            if (rate.getId() == id) {
+                obj = rate;
+                break;
+            }
+        }
+        
         if (rates.equals("Hourly Occasional Parking Price")) {
             obj.setHourlyOccasionalParking(value);
         }
@@ -165,7 +167,7 @@ public class PCHomeController {
         ObservableList<Rates> rates = FXCollections.observableArrayList();
         rates.addAll((Collection<? extends Rates>) event.getData());
         
-        ratesTableIDCol.setCellValueFactory(new PropertyValueFactory<>("parkingLotId"));
+        ratesTableIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         ratesTableHOPPCol.setCellValueFactory(new PropertyValueFactory<>("hourlyOccasionalParking"));
         ratesTableHOTPPCol.setCellValueFactory(new PropertyValueFactory<>("hourlyOnetimeParking"));
         ratesTableRSSVPPCol.setCellValueFactory(new PropertyValueFactory<>("regularSubscriptionSingleVehicle"));

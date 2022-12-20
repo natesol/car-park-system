@@ -54,7 +54,8 @@ public class CPSServer extends AbstractServer {
             }
             else if (request.equals("update-rates")) {
                 System.out.println("update-rates");
-    
+                
+                
                 Rates rates = (Rates) message.getData();
                 
                 HibernateUtils.updateEntity(dbSession, rates);

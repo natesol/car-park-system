@@ -35,7 +35,7 @@ public class Main {
             dbSessionFactory = HibernateUtils.getSessionFactory();
             Session dbSession = dbSessionFactory.openSession();
             dbSession.beginTransaction();
-            createDummyDB(dbSession);
+//            createDummyDB(dbSession);
             dbSession.close();
             System.out.println("[SERVER] server created database session successfully.");
         }
@@ -63,13 +63,13 @@ public class Main {
             """).executeUpdate();
             session.createNativeQuery("""
             CREATE TABLE rates (
-              id INT NOT NULL PRIMARY KEY,
+              parkingId INT NOT NULL PRIMARY KEY,
               hourly_occasional_parking DOUBLE NOT NULL,
               hourly_onetime_parking DOUBLE NOT NULL,
               regular_subscription_single_vehicle DOUBLE NOT NULL,
               regular_subscription_multiple_vehicles DOUBLE NOT NULL,
               full_subscription_single_vehicle DOUBLE NOT NULL,
-              FOREIGN KEY (id) REFERENCES parking_lots(id)
+              FOREIGN KEY (parkingId) REFERENCES parking_lots(id)
             )
             """).executeUpdate();
             session.createNativeQuery("""
