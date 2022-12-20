@@ -26,8 +26,7 @@ public class Main {
             server = new CPSServer(port);
             server.listen();
             System.out.println("[SERVER] server is listening on port: " + port + ".");
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         
@@ -35,74 +34,91 @@ public class Main {
             dbSessionFactory = HibernateUtils.getSessionFactory();
             Session dbSession = dbSessionFactory.openSession();
             dbSession.beginTransaction();
-//            createDummyDB(dbSession);
+            createDummyDB(dbSession);
             dbSession.close();
             System.out.println("[SERVER] server created database session successfully.");
-        }
-        catch (HibernateException e) {
+        } catch (HibernateException e) {
             e.printStackTrace();
         }
     }
     
     /**
      * clear all tables from 'cps_db' and creating a new dummy data.
-    **/
+     **/
     private static void createDummyDB(Session session) {
         try {
             session.createNativeQuery("DROP DATABASE IF EXISTS cps_db").executeUpdate();
             session.createNativeQuery("CREATE DATABASE cps_db").executeUpdate();
             session.createNativeQuery("USE cps_db").executeUpdate();
-    
-            session.createNativeQuery("""
-            CREATE TABLE parking_lots (
-              id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-              name VARCHAR(255) NOT NULL,
-              address VARCHAR(255) NOT NULL,
-              floor_width INT NOT NULL
-            )
-            """).executeUpdate();
-            session.createNativeQuery("""
-            CREATE TABLE rates (
-              parkingId INT NOT NULL PRIMARY KEY,
-              hourly_occasional_parking DOUBLE NOT NULL,
-              hourly_onetime_parking DOUBLE NOT NULL,
-              regular_subscription_single_vehicle DOUBLE NOT NULL,
-              regular_subscription_multiple_vehicles DOUBLE NOT NULL,
-              full_subscription_single_vehicle DOUBLE NOT NULL,
-              FOREIGN KEY (parkingId) REFERENCES parking_lots(id)
-            )
-            """).executeUpdate();
-            session.createNativeQuery("""
-            CREATE TABLE employees (
-              id INT PRIMARY KEY AUTO_INCREMENT,
-              first_name VARCHAR(255),
-              last_name VARCHAR(255),
-              role VARCHAR(255)
-            )
-            """).executeUpdate();
-            session.createNativeQuery("""
-            CREATE TABLE customers (
-              id INT PRIMARY KEY AUTO_INCREMENT,
-              first_name VARCHAR(255),
-              last_name VARCHAR(255),
-              email VARCHAR(255)
-            )
-            """).executeUpdate();
-    
-            session.save(new ParkingLot("parking #1", "haifa 123", 5));
-            session.save(new ParkingLot("parking #2", "haifa 61/4", 1));
-            session.save(new ParkingLot("parking #3", "tel-aviv 99", 2));
-            session.save(new ParkingLot("parking #4", "eilat 7", 11));
-    
-            Rates rates2 = session.get(Rates.class, 2);
-            rates2.setHourlyOccasionalParking(6);
-            rates2.setHourlyOnetimeParking(5);
-            session.save(rates2);
             
+            session.createNativeQuery("""
+                CREATE TABLE parking_lots (
+                  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+                  name VARCHAR(255) NOT NULL,
+                  address VARCHAR(255) NOT NULL,
+                  floor_width INT NOT NULL
+                )
+            """).executeUpdate();
+            session.createNativeQuery("""
+                CREATE TABLE rates (
+                  id INT NOT NULL PRIMARY KEY,
+                  hourly_occasional_parking DOUBLE NOT NULL,
+                  hourly_onetime_parking DOUBLE NOT NULL,
+                  regular_subscription_single_vehicle DOUBLE NOT NULL,
+                  regular_subscription_multiple_vehicles DOUBLE NOT NULL,
+                  full_subscription_single_vehicle DOUBLE NOT NULL,
+                  FOREIGN KEY (id) REFERENCES parking_lots(id)
+                )
+            """).executeUpdate();
+            session.createNativeQuery("""
+                CREATE TABLE employees (
+                  id INT PRIMARY KEY AUTO_INCREMENT,
+                  first_name VARCHAR(255),
+                  last_name VARCHAR(255),
+                  role VARCHAR(255)
+                )
+            """).executeUpdate();
+            session.createNativeQuery("""
+                CREATE TABLE customers (
+                  id INT PRIMARY KEY AUTO_INCREMENT,
+                  first_name VARCHAR(255),
+                  last_name VARCHAR(255),
+                  email VARCHAR(255)
+                )
+            """).executeUpdate();
+            
+            session.createNativeQuery("""
+                INSERT INTO parking_lots (name, address, floor_width)
+                VALUES
+                    ("parking #1", "haifa 123", 5),
+                    ("parking #2", "haifa 61/4", 1),
+                    ("parking #3", "tel-aviv 99", 2),
+                    ("parking #4", "eilat 7", 11);
+            """).executeUpdate();
+            session.createNativeQuery("""
+                INSERT INTO rates (
+                    id,
+                    hourly_occasional_parking,
+                    hourly_onetime_parking,
+                    regular_subscription_single_vehicle,
+                    regular_subscription_multiple_vehicles,
+                    full_subscription_single_vehicle
+                )
+                VALUES
+                    (1, 8, 7, 60, 54, 72),
+                    (2, 8, 7, 60, 54, 72),
+                    (3, 8, 7, 60, 54, 72),
+                    (4, 8, 7, 60, 54, 72);
+            """).executeUpdate();
+            
+            Rates rates2 = session.get(Rates.class, 2);
+            rates2.setHourlyOccasionalParking(5.5);
+            rates2.setHourlyOnetimeParking(3.5);
+            session.update(rates2);
             Rates rates3 = session.get(Rates.class, 3);
-            rates2.setHourlyOccasionalParking(12);
-            rates2.setHourlyOnetimeParking(10);
-            session.save(rates3);
+            rates3.setHourlyOccasionalParking(12);
+            rates3.setHourlyOnetimeParking(10);
+            session.update(rates3);
             
             session.save(new Employee("test", "test", "test"));
             session.save(new Employee("netanel", "shlomo", "admin"));
@@ -112,11 +128,9 @@ public class Main {
             session.flush();
             session.getTransaction().commit();
             session.clear();
-        }
-        catch (Throwable e) {
+        } catch (Throwable e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             assert session != null;
             session.close();
         }

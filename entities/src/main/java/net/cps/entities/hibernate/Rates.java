@@ -1,5 +1,7 @@
 package net.cps.entities.hibernate;
 
+import org.jetbrains.annotations.NotNull;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -13,8 +15,8 @@ public class Rates implements Serializable {
     public static final double DEFAULT_FULL_SUBSCRIPTION_SINGLE_VEHICLE = 72;
     
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="parkingId", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id", nullable = false)
     private int id;
     
     // ILS per Hour.
@@ -38,13 +40,24 @@ public class Rates implements Serializable {
     private double fullSubscriptionSingleVehicle;
     
     @OneToOne
-    @JoinColumn(name = "parkingId", referencedColumnName = "id")
+    @NotNull
+    @JoinColumn(name = "id", referencedColumnName = "id", nullable = false)
     private ParkingLot parkingLot;
     
     public Rates() {}
     
     public Rates(int id) {
         this.id = id;
+        this.hourlyOccasionalParking = DEFAULT_HOURLY_OCCASIONAL_PARKING;
+        this.hourlyOnetimeParking = DEFAULT_HOURLY_ONETIME_PARKING;
+        this.regularSubscriptionSingleVehicle = DEFAULT_REGULAR_SUBSCRIPTION_SINGLE_VEHICLE;
+        this.regularSubscriptionMultipleVehicles = DEFAULT_REGULAR_SUBSCRIPTION_MULTIPLE_VEHICLE;
+        this.fullSubscriptionSingleVehicle = DEFAULT_FULL_SUBSCRIPTION_SINGLE_VEHICLE;
+    }
+    
+    public Rates(ParkingLot parkingLot) {
+        this.id = parkingLot.getId();
+        this.parkingLot = parkingLot;
         this.hourlyOccasionalParking = DEFAULT_HOURLY_OCCASIONAL_PARKING;
         this.hourlyOnetimeParking = DEFAULT_HOURLY_ONETIME_PARKING;
         this.regularSubscriptionSingleVehicle = DEFAULT_REGULAR_SUBSCRIPTION_SINGLE_VEHICLE;
@@ -104,3 +117,6 @@ public class Rates implements Serializable {
         this.fullSubscriptionSingleVehicle = fullSubscriptionSingleVehicle;
     }
 }
+
+
+
