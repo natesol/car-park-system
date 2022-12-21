@@ -12,8 +12,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import net.cps.client.CPSClient;
-import net.cps.client.events.ParkingLotDataTmpEvent;
-import net.cps.client.events.RatesDataTmpEvent;
+import net.cps.client.events.ParkingLotDataChangeEvent;
+import net.cps.client.events.RatesDataChangeEvent;
 import net.cps.entities.hibernate.ParkingLot;
 import net.cps.entities.hibernate.Rates;
 import org.greenrobot.eventbus.EventBus;
@@ -72,7 +72,7 @@ public class PCHomeController {
     @FXML
     private MFXButton dialogEditBtn;
     
-    //-----------
+    // ----- Action Handlers Methods ----------------------
     
     @FXML
     void initialize() {
@@ -149,7 +149,7 @@ public class PCHomeController {
     }
     
     @Subscribe
-    public void parkingLotDataTmpEventHandler(ParkingLotDataTmpEvent event) {
+    public void parkingLotDataTmpEventHandler(ParkingLotDataChangeEvent event) {
         ObservableList<ParkingLot> parkingLots = FXCollections.observableArrayList();
         parkingLots.addAll((Collection<? extends ParkingLot>) event.getData());
         
@@ -163,7 +163,7 @@ public class PCHomeController {
     }
     
     @Subscribe
-    public void ratesDataTmpEventHandler(RatesDataTmpEvent event) {
+    public void ratesDataTmpEventHandler(RatesDataChangeEvent event) {
         ObservableList<Rates> rates = FXCollections.observableArrayList();
         rates.addAll((Collection<? extends Rates>) event.getData());
         
@@ -177,7 +177,8 @@ public class PCHomeController {
         ratesTable.setItems(rates);
     }
     
-    // -----------------
+    // ----- Utility Methods ------------------------------
+    
     private void openDialog() {
         dialogWrapper.setVisible(true);
         dialogWrapper.setDisable(false);

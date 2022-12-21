@@ -33,19 +33,18 @@ public class PCLoginController {
     
     @FXML
     private MFXTextField emailField;
-    
     @FXML
     private MFXPasswordField passwordField;
-    
     @FXML
     private MFXButton loginBtn;
     
+    // ----- Action Handlers Methods ----------------------
+    
     @FXML
     void loginBtnClickHandler(ActionEvent event) throws IOException {
-        System.out.println("login !");
-        
         if (emailField.getText().equals("test") && passwordField.getText().equals("test")) {
             App.setScene("pc-home");
+            System.out.println("login !");
         }
         else {
             System.out.println("wrong email/password.");

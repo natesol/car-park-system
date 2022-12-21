@@ -16,7 +16,11 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
 
-public class HibernateUtils {
+/**
+ * static class that handle all database related functions.
+ * - mainly a 'Hibernate' utilities wrapper.
+**/
+public class DataBase {
     private static final SessionFactory SESSION_FACTORY = createSessionFactory();
     
     private static SessionFactory createSessionFactory() {
@@ -42,16 +46,22 @@ public class HibernateUtils {
         return SESSION_FACTORY;
     }
     
+    public static Session createSession() {
+        return SESSION_FACTORY.openSession();
+    }
+    
     public static void endSession() {
-        // Close caches and connection pools
+        // Close all caches and connection pools
         SESSION_FACTORY.close();
     }
     
     /**
      * add an entity as a new row to the entity-related-table in the database.
      * - Create method
+     *
+     * @return the new entity given id.
      **/
-    public static <T> void addEntity(Session session, T entityObject) {
+    public static <T> Integer addEntity(Session session, T entityObject) {
         Transaction transaction = session.getTransaction();
         Integer id = null;
         
@@ -70,7 +80,7 @@ public class HibernateUtils {
         finally {
             session.close();
         }
-        // return id;
+         return id;
     }
     
     /**

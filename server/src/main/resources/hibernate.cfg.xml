@@ -9,14 +9,5 @@
         <property name="hibernate.connection.driver_class">
             com.mysql.cj.jdbc.Driver
         </property>
-<!--        <property name="hibernate.connection.url">-->
-<!--            jdbc:mysql://localhost/test-->
-<!--        </property>-->
-<!--        <property name="hibernate.connection.username">-->
-<!--            root-->
-<!--        </property>-->
-<!--        <property name="hibernate.connection.password">-->
-<!--            cohondob-->
-<!--        </property>-->
     </session-factory>
 </hibernate-configuration>

@@ -2,17 +2,13 @@ package net.cps.server;
 
 import net.cps.entities.hibernate.Customer;
 import net.cps.entities.hibernate.Employee;
-import net.cps.entities.hibernate.ParkingLot;
 import net.cps.entities.hibernate.Rates;
-import net.cps.server.utils.HibernateUtils;
+import net.cps.server.utils.DataBase;
 import org.hibernate.HibernateException;
-import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
 
 import java.io.IOException;
-import java.util.List;
 
 public class Main {
     private static final int DEFAULT_PORT = 3000;
@@ -26,18 +22,20 @@ public class Main {
             server = new CPSServer(port);
             server.listen();
             System.out.println("[SERVER] server is listening on port: " + port + ".");
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
         }
         
         try {
-            dbSessionFactory = HibernateUtils.getSessionFactory();
+            dbSessionFactory = DataBase.getSessionFactory();
             Session dbSession = dbSessionFactory.openSession();
             dbSession.beginTransaction();
             createDummyDB(dbSession);
             dbSession.close();
             System.out.println("[SERVER] server created database session successfully.");
-        } catch (HibernateException e) {
+        }
+        catch (HibernateException e) {
             e.printStackTrace();
         }
     }
@@ -128,9 +126,11 @@ public class Main {
             session.flush();
             session.getTransaction().commit();
             session.clear();
-        } catch (Throwable e) {
+        }
+        catch (Throwable e) {
             e.printStackTrace();
-        } finally {
+        }
+        finally {
             assert session != null;
             session.close();
         }

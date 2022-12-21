@@ -1,7 +1,4 @@
-* {
-    -test-testy1: #007ae4;
-    -test-testy: -test-testy1;
-}
+@import url("./config/base.css");
 
 /**************************************************
  * Text Fields
@@ -14,14 +11,14 @@
 .mfx-combo-box:focus-within,
 .mfx-text-field:focus-within,
 .mfx-password-field:focus-within {
-    -fx-border-color: -test-testy;
+    -fx-border-color: -cps-blue;
 }
 
 .mfx-combo-box:focus-within .caret {
-    -fx-stroke: -test-testy;
+    -fx-stroke: -cps-blue;
 }
 .mfx-combo-box .combo-popup .virtual-flow .mfx-combo-box-cell:focus-within {
-    -fx-background-color: -test-testy;
+    -fx-background-color: -cps-blue;
 }
 
 .mfx-text-field .floating-text {
@@ -29,9 +26,9 @@
 }
 
 #emailField:focus-within .floating-text {
-    -fx-text-fill: -test-testy;
+    -fx-text-fill: -cps-blue;
 }
 
 #passwordField:focus-within .floating-text {
-    -fx-text-fill: -test-testy;
+    -fx-text-fill: -cps-blue;
 }

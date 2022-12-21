@@ -20,12 +20,12 @@ public class ServerLogger {
         }
     }
     
-    // Log a message
+    // Log a message to system standard output stream.
     public static void print(String message) {
         System.out.println("[SERVER] " + message + ".");
     }
     
-    // Log a message
+    // Log a message to the log file.
     public static void log(String message) {
         logger.info(message);
     }

@@ -8,8 +8,7 @@ import net.cps.client.App;
 import java.io.IOException;
 
 
-public class StartController {
-    
+public class IndexController {
     @FXML
     private MFXButton kioskBtn;
     

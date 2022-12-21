@@ -1,7 +1,7 @@
 package net.cps.client;
 
-import net.cps.client.events.ParkingLotDataTmpEvent;
-import net.cps.client.events.RatesDataTmpEvent;
+import net.cps.client.events.ParkingLotDataChangeEvent;
+import net.cps.client.events.RatesDataChangeEvent;
 import net.cps.client.ocsf.AbstractClient;
 import net.cps.entities.Message;
 import org.greenrobot.eventbus.EventBus;
@@ -56,13 +56,12 @@ public class CPSClient extends AbstractClient {
         if (message.getMessage().equals("get-parking-lots")) {
             System.out.println("get-parking-lots");
             
-            EventBus.getDefault().post(new ParkingLotDataTmpEvent(message.getData()));
+            EventBus.getDefault().post(new ParkingLotDataChangeEvent(message.getData()));
         }
         else if (message.getMessage().equals("get-rates")) {
             System.out.println("get-rates");
             
-            EventBus.getDefault().post(new RatesDataTmpEvent(message.getData()));
+            EventBus.getDefault().post(new RatesDataChangeEvent(message.getData()));
         }
     }
-    
 }

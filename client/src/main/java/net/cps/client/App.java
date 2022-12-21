@@ -4,12 +4,14 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 /**
- * JavaFX GUI Application.
+ * Main JavaFX GUI Application.
 **/
 public class App extends Application {
     private static Scene scene;
@@ -27,24 +29,24 @@ public class App extends Application {
     public static void run(CPSClient client) {
         App.client = client;
         launch();
-        System.out.println("[CLIENT] application lunched successfully.");
     }
     
     @Override
     public void start(Stage stage) throws IOException {
-        // EventBus.getDefault().register(this);
-        
         client = CPSClient.getClient();
         client.openConnection();
         scene = new Scene(loadFXML("index"));
+        stage.getIcons().add(new Image(Objects.requireNonNull(App.class.getResourceAsStream("images/parking-icon.png"))));
+        stage.setTitle("CityPark");
         stage.setScene(scene);
         stage.show();
+        System.out.println("[CLIENT] application lunched successfully.");
     }
     
     @Override
     public void stop() throws Exception {
-        // EventBus.getDefault().unregister(this);
         super.stop();
+        client.closeConnection();
+        System.out.println("[CLIENT] application closed successfully.");
     }
-  
 }

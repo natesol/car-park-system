@@ -1,35 +1,24 @@
 package net.cps.client.controllers;
 
 import io.github.palexdev.materialfx.controls.MFXButton;
-import io.github.palexdev.materialfx.controls.MFXPasswordField;
-import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import net.cps.client.App;
-
-import java.io.IOException;
-
 
 public class KioskHomeController {
+    @FXML
+    private MFXButton testBtn;
+    @FXML
+    private MFXButton test2Btn;
+    
+    // ----- Action Handlers Methods ----------------------
     
     @FXML
-    private MFXTextField emailField;
+    public void testBtnClickHandler(ActionEvent actionEvent) {
+        System.out.println("Test Button !");
+    }
     
     @FXML
-    private MFXPasswordField passwordField;
-    
-    @FXML
-    private MFXButton loginBtn;
-    
-    @FXML
-    void loginBtnClickHandler(ActionEvent event) throws IOException {
-        System.out.println("login !");
-        
-        if (emailField.getText().equals("test") && passwordField.getText().equals("test")) {
-            App.setScene("pc-home");
-        }
-        else {
-            System.out.println("wrong email/password.");
-        }
+    public void test2BtnClickHandler(ActionEvent actionEvent) {
+        System.out.println("Test 2 Button !");
     }
 }
