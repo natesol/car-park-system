@@ -11,6 +11,9 @@
 *.ear
 *.sar
 *.class
+*.log
+/*.log
+*/*.log
 
 # Maven
 target/
@@ -21,8 +24,6 @@ target/
 *.ipr
 .idea/
 /.idea/
-#/.run/CPS-Client [clean build].run.xml
-#/.run/CPS-Server [Clean Build].run.xml
 
 # eclipse project file
 .settings/
