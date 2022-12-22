@@ -8,6 +8,10 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 
+/**
+ *
+ * singleton
+ */
 public class CPSClient extends AbstractClient {
     private static CPSClient client = null;
     

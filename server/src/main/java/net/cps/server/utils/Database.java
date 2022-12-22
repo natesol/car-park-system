@@ -20,7 +20,7 @@ import java.util.List;
  * static class that handle all database related functions.
  * - mainly a 'Hibernate' utilities wrapper.
 **/
-public class DataBase {
+public class Database {
     private static final SessionFactory SESSION_FACTORY = createSessionFactory();
     
     private static SessionFactory createSessionFactory() {
@@ -51,7 +51,6 @@ public class DataBase {
     }
     
     public static void endSession() {
-        // Close all caches and connection pools
         SESSION_FACTORY.close();
     }
     

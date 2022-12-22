@@ -3,7 +3,8 @@ package net.cps.server;
 import net.cps.entities.hibernate.Customer;
 import net.cps.entities.hibernate.Employee;
 import net.cps.entities.hibernate.Rates;
-import net.cps.server.utils.DataBase;
+import net.cps.server.utils.Database;
+import net.cps.server.utils.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -19,16 +20,26 @@ public class Main {
         int port = args.length > 0 ? Integer.parseInt(args[0]) : DEFAULT_PORT;
         
         try {
-            server = new CPSServer(port);
-            server.listen();
-            System.out.println("[SERVER] server is listening on port: " + port + ".");
+            Logger.init("./server.log");
+            
+            Logger.print("logger initialized successfully.");
         }
         catch (IOException e) {
             e.printStackTrace();
         }
         
         try {
-            dbSessionFactory = DataBase.getSessionFactory();
+            server = CPSServer.getServer(port);
+            server.listen();
+            
+            Logger.print("server created successfully.", "listening on port: " + port + ".");
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        try {
+            dbSessionFactory = Database.getSessionFactory();
             Session dbSession = dbSessionFactory.openSession();
             dbSession.beginTransaction();
             createDummyDB(dbSession);
