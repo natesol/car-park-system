@@ -4,10 +4,12 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.lang.reflect.Array;
+import java.util.List;
 
 @Entity
 @Table(name = "parking_lots")
-public class ParkingLot implements Serializable {
+public class ParkingLot {
     public static final int floorLength = 3; // x axes
     public static final int numOfFloors = 3; // y axes
     
@@ -18,33 +20,61 @@ public class ParkingLot implements Serializable {
     
     @Column(name = "name", nullable = false)
     private String name;
-    
-    @Column(name = "address", nullable = false)
-    private String address;
-    
-    @Column(name = "floor_width", nullable = false)
-    private int floorWidth; // z axes
-    
+
+    @Column(name = "location", nullable = false)
+    private String location;
+
+    //@Column(name = size, nullable = false)
+    //private Integer[] size;
+
+    @Column(name = "maxCapacity", nullable = false)
+    private Long maxCapacity;
+
+    @Column(name = "currentCapacity", nullable = false)
+    private Long currentCapacity;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Kiosk kiosk;
+
+    @NotNull
+    @OneToOne(cascade = CascadeType.ALL)
+    private Robot robot;
+
+    @Column(name = "carId")
+    private Long carId;
+
     @NotNull
     @OneToOne(mappedBy = "parkingLot", cascade = CascadeType.ALL)
     private Rates rates;
-    
+
     public ParkingLot() {}
-    
-    public ParkingLot(Rates rates) {
+
+    //@Column(name = "rates")
+    //private List<Rates>rates;
+
+    //@Column(name = "robot")
+    //private Robot robot;
+
+    //@Column(name = "address", nullable = false)
+    //private String address;
+    //@Column(name = "floor_width", nullable = false)
+    //private int floorWidth; // z axes
+
+
+   /* public ParkingLot(Rates rates) {
         this.name = "parking-lot name";
         this.address = "parking-lot address";
         this.floorWidth = 1;
         this.rates = rates;
-    }
+    }*/
     
-    public ParkingLot(String name, String address, int floorWidth) {
+   /* public ParkingLot(String name, String address, int floorWidth) {
         this.name = name;
         this.address = address;
         this.floorWidth = floorWidth;
         
         this.rates = new Rates(this);
-    }
+    }*/
     
     public int getId() {
         return this.id;
@@ -54,37 +84,42 @@ public class ParkingLot implements Serializable {
         return this.name;
     }
     
-    public String getAddress() {
+   /* public String getAddress() {
         return this.address;
     }
     
     public int getFloorWidth() {
         return this.floorWidth;
-    }
+    }*/
     
     public Rates getRates() {
         return this.rates;
     }
     
-    public int getTotalSpace() {
+  /*  public int getTotalSpace() {
         return this.floorWidth * floorLength * numOfFloors;
-    }
+    }*/
     
     public void setName(String name) {
         this.name = name;
     }
     
-    public void setAddress(String address) {
+    /*public void setAddress(String address) {
         this.address = address;
     }
     
     public void setFloorWidth(int floorWidth) {
         this.floorWidth = floorWidth;
-    }
+    }*/
     
     public void setRates(Rates rates) {
         this.rates = rates;
     }
+
+    public void locatParkingSpot(){}
+
+    public void locatVehicle(){}
+
 }
 
 //@Entity
