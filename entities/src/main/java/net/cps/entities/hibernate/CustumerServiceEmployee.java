@@ -13,4 +13,11 @@ public class CustumerServiceEmployee extends AbstractEmployee{
 
     public String respondeToCustumer(Customer customer, Complaint complaint){return "0";}
 
+    public List<Complaint> getComplaints() {
+        return complaints;
+    }
+
+    public void setComplaints(List<Complaint> complaints) {
+        this.complaints = complaints;
+    }
 }

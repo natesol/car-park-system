@@ -19,6 +19,8 @@ public class Employee implements Serializable {
     
     @Column(name = "role")
     private String role;
+
+    private String organization;
     
     public Employee() {}
     
@@ -54,5 +56,13 @@ public class Employee implements Serializable {
     
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(String organization) {
+        this.organization = organization;
     }
 }

@@ -8,6 +8,7 @@ public class Message implements Serializable {
     LocalDateTime timeStamp;
     String message;
     Object data;
+    /*recieved, expected*/
 
     public Message(int id, LocalDateTime timeStamp, String message) {
         this.id = id;

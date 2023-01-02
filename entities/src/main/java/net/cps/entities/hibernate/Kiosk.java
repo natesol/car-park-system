@@ -8,6 +8,16 @@ public class Kiosk {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Long id;
+    private String parkingLotId;
+
+    public String getParkingLotId() {
+        return parkingLotId;
+    }
+
+    public void setParkingLotId(String parkingLotId) {
+        this.parkingLotId = parkingLotId;
+    }
+
 
     public Long getId() {
         return id;

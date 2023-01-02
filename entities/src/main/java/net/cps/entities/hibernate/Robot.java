@@ -8,6 +8,21 @@ public class Robot {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     private Long id;
+    private String parkingLotId;
+    public Robot(){}
+    public Robot(Long id, String parkingLotId) {
+        this.id = id;
+        this.parkingLotId = parkingLotId;
+    }
+
+    public String getParkingLotId() {
+        return parkingLotId;
+    }
+
+    public void setParkingLotId(String parkingLotId) {
+        this.parkingLotId = parkingLotId;
+    }
+
 
 
 
