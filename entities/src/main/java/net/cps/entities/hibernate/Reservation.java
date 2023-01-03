@@ -3,31 +3,31 @@ package net.cps.entities.hibernate;
 import java.util.Date;
 
 public class Reservation {
-    private String customerId;
-    private String reservationId;
+    private Long customerId;
+    private Long reservationId;
     private ParkingLot parkingLot;
     private Date arrivalDate;
     private Date departureTime;
 
-    public Reservation(String customerId, String reservationId, ParkingLot parkingLot) {
+    public Reservation(Long customerId, Long reservationId, ParkingLot parkingLot) {
         this.customerId = customerId;
         this.reservationId = reservationId;
         this.parkingLot = parkingLot;
     }
 
-    public String getCustomerId() {
+    public Long getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(String customerId) {
+    public void setCustomerId(Long customerId) {
         this.customerId = customerId;
     }
 
-    public String getReservationId() {
+    public Long getReservationId() {
         return reservationId;
     }
 
-    public void setReservationId(String reservationId) {
+    public void setReservationId(Long reservationId) {
         this.reservationId = reservationId;
     }
 

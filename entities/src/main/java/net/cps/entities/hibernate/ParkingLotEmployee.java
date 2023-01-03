@@ -4,9 +4,9 @@ import java.util.List;
 
 public class ParkingLotEmployee extends AbstractEmployee{
 
-    private String id;
+    private Long id;
 
-    public ParkingLotEmployee(String id) {
+    public ParkingLotEmployee(Long id) {
         this.id = id;
     }
 
@@ -16,13 +16,13 @@ public class ParkingLotEmployee extends AbstractEmployee{
 
     public void setParkingLotInformation(List<Long>somthing){}
 
-    public void saveParkingSpace(Integer id, String parkingLot){}
+    public void saveParkingSpace(Long id, Long parkingLot){}
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 }

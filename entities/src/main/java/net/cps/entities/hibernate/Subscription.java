@@ -3,14 +3,14 @@ package net.cps.entities.hibernate;
 import java.util.Date;
 
 public class Subscription {
-    private String customerId;
-    private String carId;
+    private Long customerId;
+    private Long carId;
     private String parkingLot;
     private Vehicle vehicle;
     private String subscriptionType;
     private Date startDate;
 
-    public Subscription(String customerId, String carId, String parkingLot, Vehicle vehicle, String subscriptionType) {
+    public Subscription(Long customerId, Long carId, String parkingLot, Vehicle vehicle, String subscriptionType) {
         this.customerId = customerId;
         this.carId = carId;
         this.parkingLot = parkingLot;
@@ -18,19 +18,19 @@ public class Subscription {
         this.subscriptionType = subscriptionType;
     }
 
-    public String getCustomerId() {
+    public Long getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(String customerId) {
+    public void setCustomerId(Long customerId) {
         this.customerId = customerId;
     }
 
-    public String getCarId() {
+    public Long getCarId() {
         return carId;
     }
 
-    public void setCarId(String carId) {
+    public void setCarId(Long carId) {
         this.carId = carId;
     }
 

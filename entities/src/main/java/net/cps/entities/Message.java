@@ -4,33 +4,33 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public class Message implements Serializable {
-    int id;
+    Long id;
     LocalDateTime timeStamp;
     String message;
     Object data;
     /*recieved, expected*/
 
-    public Message(int id, LocalDateTime timeStamp, String message) {
+    public Message(Long id, LocalDateTime timeStamp, String message) {
         this.id = id;
         this.timeStamp = timeStamp;
         this.message = message;
     }
 
-    public Message(int id, String message) {
+    public Message(Long id, String message) {
         this.id = id;
         this.timeStamp = LocalDateTime.now();
         this.message = message;
         this.data = null;
     }
 
-    public Message(int id, String message, Object data) {
+    public Message(Long id, String message, Object data) {
         this.id = id;
         this.timeStamp = LocalDateTime.now();
         this.message = message;
         this.data = data;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
@@ -42,7 +42,7 @@ public class Message implements Serializable {
         return message;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

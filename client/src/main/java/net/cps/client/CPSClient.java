@@ -15,8 +15,7 @@ import java.io.IOException;
 public class CPSClient extends AbstractClient {
     private static CPSClient client = null;
     
-    private static int msgId = 0;
-
+    private static long msgId = 0;
     private CPSClient(String host, int port) {
         super(host, port);
     }

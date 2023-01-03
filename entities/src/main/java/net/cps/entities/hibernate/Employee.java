@@ -2,22 +2,22 @@ package net.cps.entities.hibernate;
 
 import javax.persistence.*;
 import java.io.Serializable;
-
+/*
 @Entity
-@Table(name = "employees")
+@Table(name = "employees")*/
 public class Employee implements Serializable {
-    @Id
+/*    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
+    @Column(name = "id")*/
+    private Long id;
     
-    @Column(name = "first_name")
+  //  @Column(name = "first_name")
     private String firstName;
     
-    @Column(name = "last_name")
+   // @Column(name = "last_name")
     private String lastName;
     
-    @Column(name = "role")
+    //@Column(name = "role")
     private String role;
 
     private String organization;
@@ -30,7 +30,7 @@ public class Employee implements Serializable {
         this.role = role;
     }
     
-    public int getId() {
+    public Long getId() {
         return id;
     }
     

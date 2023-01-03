@@ -1,20 +1,20 @@
 package net.cps.entities.hibernate;
 import javax.persistence.*;
-
+/*
 @Entity
-@Table(name = "Kiosk")
+@Table(name = "Kiosk")*/
 public class Kiosk {
-    @Id
+ /*   @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    private Long id;
-    private String parkingLotId;
+   */ private Long id;
+    private Long parkingLotId;
 
-    public String getParkingLotId() {
+    public Long getParkingLotId() {
         return parkingLotId;
     }
 
-    public void setParkingLotId(String parkingLotId) {
+    public void setParkingLotId(Long parkingLotId) {
         this.parkingLotId = parkingLotId;
     }
 

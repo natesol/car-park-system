@@ -5,7 +5,7 @@ import java.util.List;
 
 public class SubscribedCustumer extends AbstractCostumer{
 
-    private String id;
+    private Long id;
     private String email;
     private List<Vehicle> vehicleNumbers;
     private List<Reservation> reservations;

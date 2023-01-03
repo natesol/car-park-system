@@ -4,14 +4,14 @@ import java.util.Date;
 
 public class Complaint {
 
-    private String customerId;
+    private Long customerId;
     private String status;
     private String content;
     private Date submissionDate;
     private String assignedEmployeeId;
     private String notes;
 
-    public Complaint(String customerId, String status, String content, String assignedEmployeeId, String notes) {
+    public Complaint(Long customerId, String status, String content, String assignedEmployeeId, String notes) {
         this.customerId = customerId;
         this.status = status;
         this.content = content;
@@ -19,11 +19,11 @@ public class Complaint {
         this.notes = notes;
     }
 
-    public String getCustomerId() {
+    public Long getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(String customerId) {
+    public void setCustomerId(Long customerId) {
         this.customerId = customerId;
     }
 

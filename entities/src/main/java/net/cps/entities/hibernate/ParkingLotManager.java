@@ -1,22 +1,23 @@
 package net.cps.entities.hibernate;
 
 public class ParkingLotManager extends AbstractEmployee{
-    private String id;
+    private Long id;
 
-    public ParkingLotManager(String id) {
+    public ParkingLotManager(Long id) {
         this.id = id;
     }
 
-    public ParkingLotManager(String id, String emailAddress, String firstName, String lastName, String role, String organization, String id1) {
+    public ParkingLotManager(Long id, String emailAddress, String firstName, String lastName, String role, String organization, Long id1) {
         super(id, emailAddress, firstName, lastName, role, organization);
         this.id = id1;
     }
 
-    public String getId() {
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

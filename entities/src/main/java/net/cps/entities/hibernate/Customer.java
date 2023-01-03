@@ -2,21 +2,21 @@ package net.cps.entities.hibernate;
 
 import javax.persistence.*;
 import java.io.Serializable;
-
+/*
 @Entity
-@Table(name = "customers")
+@Table(name = "customers")*/
 public class Customer implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+  //  @Id
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     
-    @Column(name = "first_name")
+    //@Column(name = "first_name")
     private String firstName;
     
-    @Column(name = "last_name")
+    //@Column(name = "last_name")
     private String lastName;
     
-    @Column(name = "email")
+    //@Column(name = "email")
     private String email;
     
     public Customer() {}
@@ -27,7 +27,7 @@ public class Customer implements Serializable {
         this.email = email;
     }
     
-    public int getId() {
+    public Long getId() {
         return id;
     }
     

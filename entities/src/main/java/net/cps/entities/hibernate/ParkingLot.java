@@ -6,46 +6,46 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.List;
-
+/*
 @Entity
-@Table(name = "parking_lots")
+@Table(name = "parking_lots")*/
 public class ParkingLot {
     public static final int floorLength = 3; // x axes
     public static final int numOfFloors = 3; // y axes
     
-    @Id
+ /*   @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id", updatable = false, nullable = false)
-    private int id;
+ */   private Long id;
     
-    @Column(name = "name", nullable = false)
+   // @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "location", nullable = false)
+    //@Column(name = "location", nullable = false)
     private String location;
 
     //@Column(name = size, nullable = false)
     //private Integer[] size;
 
-    @Column(name = "maxCapacity", nullable = false)
+    //@Column(name = "maxCapacity", nullable = false)
     private Long maxCapacity;
 
-    @Column(name = "currentCapacity", nullable = false)
+    //@Column(name = "currentCapacity", nullable = false)
     private Long currentCapacity;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    //@OneToOne(cascade = CascadeType.ALL)
     private Kiosk kiosk;
 
-    @NotNull
+   /* @NotNull
     @OneToOne(cascade = CascadeType.ALL)
-    private Robot robot;
+    */private Robot robot;
 
-    @Column(name = "carId")
+  //  @Column(name = "carId")
     private Long carId;
 
-    @NotNull
+ /*   @NotNull
     @OneToOne(mappedBy = "parkingLot", cascade = CascadeType.ALL)
-    private Rates rates;
+  */  private Rates rates;
 
     public ParkingLot() {}
 
@@ -76,7 +76,7 @@ public class ParkingLot {
         this.rates = new Rates(this);
     }*/
     
-    public int getId() {
+    public Long getId() {
         return this.id;
     }
     

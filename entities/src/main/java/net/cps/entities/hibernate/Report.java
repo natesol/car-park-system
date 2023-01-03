@@ -1,15 +1,15 @@
 package net.cps.entities.hibernate;
 
 public class Report {
-    private String id;
-    private String parkingLotId;
+    private Long id;
+    private Long parkingLotId;
     private String title;
     private String period;
     private String type;
     private String status;
 
     public Report(){}
-    public Report(String id, String parkingLotId, String title, String period, String type, String status) {
+    public Report(Long id, Long parkingLotId, String title, String period, String type, String status) {
         this.id = id;
         this.parkingLotId = parkingLotId;
         this.title = title;
@@ -18,19 +18,19 @@ public class Report {
         this.status = status;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getParkingLotId() {
+    public Long getParkingLotId() {
         return parkingLotId;
     }
 
-    public void setParkingLotId(String parkingLotId) {
+    public void setParkingLotId(Long parkingLotId) {
         this.parkingLotId = parkingLotId;
     }
 

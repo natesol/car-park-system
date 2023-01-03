@@ -5,7 +5,7 @@ import java.util.List;
 public class CustumerServiceEmployee extends AbstractEmployee{
     private List<Complaint>complaints;
 
-    public void saveParkingSpace(Integer id, String parkingLot){}
+    public void saveParkingSpace(Long id, String parkingLot){}
 
     public void handleComplaint(Complaint complaint){}
 

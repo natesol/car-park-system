@@ -1,7 +1,7 @@
 package net.cps.entities.hibernate;
 
 public abstract class AbstractEmployee {
-    private String id;
+    private Long id;
     private String emailAddress;
     private String firstName;
     private String lastName;
@@ -9,7 +9,7 @@ public abstract class AbstractEmployee {
     private String organization;
 
     public AbstractEmployee(){}
-    public AbstractEmployee(String id, String emailAddress, String firstName, String lastName, String role, String organization) {
+    public AbstractEmployee(Long id, String emailAddress, String firstName, String lastName, String role, String organization) {
         this.id = id;
         this.emailAddress = emailAddress;
         this.firstName = firstName;
@@ -25,11 +25,11 @@ public abstract class AbstractEmployee {
 
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
