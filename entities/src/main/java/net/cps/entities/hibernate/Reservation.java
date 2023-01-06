@@ -1,59 +1,53 @@
 package net.cps.entities.hibernate;
 
+import org.jetbrains.annotations.NotNull;
+
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
+
+@Entity
+@Table(name = "reservation")
 public class Reservation {
-    private Long customerId;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="reservationId", updatable = false, nullable = false)
     private Long reservationId;
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "parking_lot_id",referencedColumnName = "id")
     private ParkingLot parkingLot;
-    private Date arrivalDate;
-    private Date departureTime;
+    @NotNull
+    private LocalDateTime arrivalDate;
+    @NotNull
+    private LocalDateTime departureTime;
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "vehicle_number", referencedColumnName = "id")
+    private Vehicle vehicle;
+    @OneToOne
+    private ParkingSpace parkingSpace;
 
-    public Reservation(Long customerId, Long reservationId, ParkingLot parkingLot) {
-        this.customerId = customerId;
-        this.reservationId = reservationId;
+    //use if the car already entered the parking lot
+    public Reservation(@NotNull ParkingLot parkingLot, @NotNull LocalDateTime arrivalDate,
+                       @NotNull LocalDateTime departureTime, @NotNull Vehicle vehicle, ParkingSpace parkingSpace) {
         this.parkingLot = parkingLot;
-    }
-
-    public Long getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
-    }
-
-    public Long getReservationId() {
-        return reservationId;
-    }
-
-    public void setReservationId(Long reservationId) {
-        this.reservationId = reservationId;
-    }
-
-    public ParkingLot getParkingLot() {
-        return parkingLot;
-    }
-
-    public void setParkingLot(ParkingLot parkingLot) {
-        this.parkingLot = parkingLot;
-    }
-
-    public Date getArrivalDate() {
-        return arrivalDate;
-    }
-
-    public void setArrivalDate(Date arrivalDate) {
         this.arrivalDate = arrivalDate;
-    }
-
-    public Date getDepartureTime() {
-        return departureTime;
-    }
-
-    public void setDepartureTime(Date departureTime) {
         this.departureTime = departureTime;
+        this.vehicle = vehicle;
+        this.parkingSpace = parkingSpace;
+    }
+    public Reservation(@NotNull ParkingLot parkingLot, @NotNull LocalDateTime arrivalDate, @NotNull LocalDateTime departureTime, @NotNull Vehicle vehicle) {
+        this.parkingLot = parkingLot;
+        this.arrivalDate = arrivalDate;
+        this.departureTime = departureTime;
+        this.vehicle = vehicle;
     }
 
+    public Reservation() {
 
+    }
 }

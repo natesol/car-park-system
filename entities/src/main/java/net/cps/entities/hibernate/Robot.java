@@ -1,36 +1,33 @@
 package net.cps.entities.hibernate;
 import javax.persistence.*;
-
-//@Entity
-//@Table(name = "Robot")
+//optional
+@Entity
+@Table(name = "robot")
 public class Robot {
-  //  @Id
-   // @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    //@Column(name = "id", nullable = false)
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name="id", updatable = false, nullable = false)
     private Long id;
-    private Long parkingLotId;
-    public Robot(){}
-    public Robot(Long id, Long parkingLotId) {
-        this.id = id;
-        this.parkingLotId = parkingLotId;
+    @OneToOne(mappedBy = "robot")
+    private ParkingLot parkingLot;
+
+    public Robot(ParkingLot parkingLot) {
+        this.parkingLot = parkingLot;
     }
 
-    public Long getParkingLotId() {
-        return parkingLotId;
+    public Robot() {
+
     }
-
-    public void setParkingLotId(Long parkingLotId) {
-        this.parkingLotId = parkingLotId;
-    }
-
-
-
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public ParkingLot getParkingLot() {
+        return parkingLot;
+    }
+
+    public void setParkingLot(ParkingLot parkingLot) {
+        this.parkingLot = parkingLot;
     }
 }

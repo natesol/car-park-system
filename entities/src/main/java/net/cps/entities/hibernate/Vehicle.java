@@ -1,33 +1,65 @@
 package net.cps.entities.hibernate;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import org.jetbrains.annotations.NotNull;
 
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Table(name = "vehicle")
 public class Vehicle {
-    private Long num;
-    private Long ownerId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id", updatable = false, nullable = false)
+    private Long id;
+    @NotNull
+    Long vehicleNumber;
+    @NotNull
+    @ManyToOne
+    AbstractCostumer customer;
+    @OneToMany(mappedBy = "vehicle")
+    List <Reservation> reservations = new ArrayList<>();
 
-    public Vehicle(Long num, Long ownerId) {
-        this.num = num;
-        this.ownerId = ownerId;
+    public Vehicle(@NotNull Long vehicleNumber, @NotNull AbstractCostumer customer, Reservation reservation) {
+        this.vehicleNumber = vehicleNumber;
+        this.customer = customer;
+        this.reservations.add(reservation);
     }
 
-    public Long getNum() {
-        return num;
+    public Vehicle(@NotNull Long vehicleNumber, @NotNull AbstractCostumer customer) {
+        this.vehicleNumber = vehicleNumber;
+        this.customer = customer;
     }
 
-    public void setNum(Long num) {
-        this.num = num;
+    public Vehicle() {
+
     }
 
-    public Long getOwnerId() {
-        return ownerId;
+    public Long getVehicleNumber() {
+        return vehicleNumber;
     }
 
-    public void setOwnerId(Long ownerId) {
-        this.ownerId = ownerId;
+    public AbstractCostumer getCustomer() {
+        return customer;
     }
 
+    public List<Reservation> getReservations() {
+        return reservations;
+    }
 
+    public void setVehicleNumber(Long vehicleNumber) {
+        this.vehicleNumber = vehicleNumber;
+    }
+
+    public void setCustomer(AbstractCostumer customer) {
+        this.customer = customer;
+    }
+
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
+    }
+    public void addReservation (Reservation reservation){
+        reservations.add(reservation);
+    }
 }

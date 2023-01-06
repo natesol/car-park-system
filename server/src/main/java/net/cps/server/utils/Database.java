@@ -1,9 +1,6 @@
 package net.cps.server.utils;
 
-import net.cps.entities.hibernate.Customer;
-import net.cps.entities.hibernate.Employee;
-import net.cps.entities.hibernate.ParkingLot;
-import net.cps.entities.hibernate.Rates;
+import net.cps.entities.hibernate.*;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -26,11 +23,18 @@ public class Database {
     private static SessionFactory createSessionFactory() {
         try {
             Configuration configuration = new Configuration()
-                    .configure()
-                    .addAnnotatedClass(ParkingLot.class)
-                    .addAnnotatedClass(Rates.class)
-                    .addAnnotatedClass(Employee.class)
-                    .addAnnotatedClass(Customer.class);
+                    .configure();
+            configuration.addAnnotatedClass(AbstractCostumer.class);
+            configuration.addAnnotatedClass(Complaint.class);
+            configuration.addAnnotatedClass(Employee.class);
+            configuration.addAnnotatedClass(ParkingLot.class);
+            configuration.addAnnotatedClass(ParkingSpace.class);
+            configuration.addAnnotatedClass(Rates.class);
+            configuration.addAnnotatedClass(Reservation.class);
+            configuration.addAnnotatedClass(Robot.class);
+            configuration.addAnnotatedClass(SubscribedCustomer.class);
+            configuration.addAnnotatedClass(UnsubscribedCustomer.class);
+            configuration.addAnnotatedClass(Vehicle.class);
             
             ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
             return configuration.buildSessionFactory(serviceRegistry);
