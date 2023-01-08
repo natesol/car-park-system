@@ -1,0 +1,468 @@
+/* ------------------------------------------------------------------------------------------------ */
+/* ---- Global Styles Configurations - Barrel ----------------------------------------------------- */
+/* - Base Configurations - */
+/* ------------------------------------------------------------------------------------------------ */
+/* ---- Global Styles Configurations - Barrel ----------------------------------------------------- */
+/*
+ * This file is the barrel for all the application global styles configurations.
+ * This file is meant to be imported in any LESS file that style a page or a component through the "GlobalStyles" file.
+ *
+ * currently used configurations:
+ *      - Typography (all the fonts configurations)
+ *      - Custom Properties (all the LESS variables)
+ *      - ColorSchemes (all the colors configurations structured via themes)
+ *      - MaterialFX Resets (all the MaterialFX library style resets)
+ */
+/* ------------------------------------------------------------------------------------------------ */
+/* ---- Global CSS Typography --------------------------------------------------------------------- */
+/*
+ * Fonts configuration for the whole application.
+ *
+ * currently used fonts:
+ *      - Poppins (titles & extras)
+ *      - Roboto (body)
+ *      - Fira Code (code)
+ *      - FontAwesome (icons)
+ */
+/* ------ 'Poppins' Configurations ---------------------------------- */
+@font-face {
+  font-family: 'Poppins Light';
+  src: url('../../../fonts/Poppins/Poppins-Thin.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url('../../../fonts/Poppins/Poppins-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: 'Poppins Italic';
+  src: url('../../../fonts/Poppins/Poppins-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: block;
+}
+@font-face {
+  font-family: 'Poppins Bold';
+  src: url('../../../fonts/Poppins/Poppins-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: 'Poppins Black';
+  src: url('../../../fonts/Poppins/Poppins-Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: block;
+}
+/* ----- 'Roboto' Configurations ------------------------------------ */
+@font-face {
+  font-family: 'Roboto Light';
+  src: url('../../../fonts/Roboto/Roboto-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: 'Roboto Light Italic';
+  src: url('../../../fonts/Roboto/Roboto-LightItalic.ttf') format('truetype');
+  font-weight: 300;
+  font-style: italic;
+  font-display: block;
+}
+@font-face {
+  font-family: 'Roboto';
+  src: url('../../../fonts/Roboto/Roboto-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: 'Roboto Italic';
+  src: url('../../../fonts/Roboto/Roboto-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: block;
+}
+@font-face {
+  font-family: 'Roboto Bold';
+  src: url('../../../fonts/Roboto/Roboto-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: 'Roboto Bold Italic';
+  src: url('../../../fonts/Roboto/Roboto-BoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: block;
+}
+@font-face {
+  font-family: 'Roboto Black';
+  src: url('../../../fonts/Roboto/Roboto-Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: 'Roboto Black Italic';
+  src: url('../../../fonts/Roboto/Roboto-BlackItalic.ttf') format('truetype');
+  font-weight: 900;
+  font-style: italic;
+  font-display: block;
+}
+/* ----- 'FiraCode' Configurations ---------------------------------- */
+@font-face {
+  font-family: 'Fira Code Light';
+  src: url('../../../fonts/FiraCode/FiraCode-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: 'Fira Code';
+  src: url('../../../fonts/FiraCode/FiraCode-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: 'Fira Code Bold';
+  src: url('../../../fonts/FiraCode/FiraCode-SemiBold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: 'Fira Code Black';
+  src: url('../../../fonts/FiraCode/FiraCode-Bold.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: block;
+}
+/* ----- 'FontAwesome' Configurations ---------------------------------- */
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('../../../fonts/FontAwesome/fa-regular-400.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: 'FontAwesome Brands';
+  src: url('../../../fonts/FontAwesome/fa-brands-400.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: 'FontAwesome Solid';
+  src: url('../../../fonts/FontAwesome/fa-solid-900.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: block;
+}
+/* ------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------ */
+/* ---- Global LESS Custom Properties ------------------------------------------------------------- */
+/* ----- Spacings --------------------------------------------------- */
+/* ----- Breakpoints ------------------------------------------------ */
+/* ----- Typography ------------------------------------------------- */
+/* ----- Border Radius ---------------------------------------------- */
+/* ----- Color Pallet ----------------------------------------------- */
+/* ----- Shadows ---------------------------------------------------- */
+/* ------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------ */
+/* ---- Application Color Schemes ----------------------------------------------------------------- */
+/* ----- General Colors --------------------------------------------- */
+/* ----- Light Color Scheme ----------------------------------------- */
+/* - App Colors - */
+/* - Components Colors - */
+/* Buttons */
+/* ------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------ */
+/* ---- Global MaterialFX Custom Styles ----------------------------------------------------------- */
+* {
+  -mfx-blue: #2196f3 !important;
+  -mfx-charcoal: #32383f !important;
+  -mfx-green: #4caf50 !important;
+  -mfx-onyx: #25262b !important;
+  -mfx-orange: #ff9800 !important;
+  -mfx-purple: #2196f3 !important;
+  -mfx-red: #f44336 !important;
+  -mfx-yellow: #ffeb3b !important;
+  -mfx-text-he: #32383f !important;
+  /* High Emphasis */
+  -mfx-text-me: #57606a !important;
+  /* Medium Emphasis */
+  -mfx-text-disabled: #afb8c1 !important;
+  /* Disabled */
+}
+.mfx-text-field,
+.mfx-password-field {
+  -fx-background-radius: 16px !important;
+  -fx-border-radius: 16px !important;
+  -fx-padding: 0.4em 0.8em !important;
+}
+.mfx-text-field .floating-text,
+.mfx-password-field .floating-text {
+  -fx-padding: 0 2 0 2;
+}
+.mfx-password-field .mfx-icon-wrapper {
+  -fx-cursor: hand;
+}
+.mfx-checkbox {
+  -mfx-main: #2196f3 !important;
+  -mfx-secondary: #57606a !important;
+  -fx-font-family: 'Poppins', system-ui, -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Ubuntu', 'Bitstream Vera Sans', 'Liberation Sans', Arial, sans-serif !important;
+  -fx-text-fill: #424a53 !important;
+  -fx-cursor: hand !important;
+}
+.mfx-checkbox .box .mark {
+  -mfx-color: white;
+}
+.mfx-checkbox .ripple-container .mfx-ripple-generator {
+  -mfx-ripple-color: rgba(0, 0, 0, 0.2);
+}
+.mfx-checkbox:selected .box,
+.mfx-checkbox:indeterminate .box {
+  -fx-background-color: -mfx-main;
+  -fx-border-color: -mfx-main;
+}
+.mfx-checkbox:selected:disabled .box,
+.mfx-checkbox:indeterminate:disabled .box {
+  -fx-background-color: #afb8c1;
+  -fx-border-color: #afb8c1;
+}
+/* ------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------ */
+/* - Base Components Styles (All Pages Base Controls) - */
+/* ------------------------------------------------------------------------------------------------ */
+/* ---- Global Component Style - Root (Every Page Scene Base Control) ----------------------------- */
+* {
+  -track-color: #afb8c1 !important;
+  -thumb-color: #6e7781 !important;
+  -thumb-hover-color: #424a53 !important;
+}
+#root {
+  -fx-accent: #64b5f6;
+  -fx-focus-color: #64b5f6;
+  -fx-background-color: #f6f8fa !important;
+}
+#root ScrollPane,
+#root MFXScrollPane,
+#root .root-scroll.mfx-scroll-pane {
+  -fx-background-color: #f6f8fa !important;
+}
+#root .root-scroll.mfx-scroll-pane:focused {
+  -fx-background-color: #f6f8fa !important;
+}
+#root .root-scroll:fitToWidth:fitToHeight .vBar:vertical {
+  -fx-background-color: #afb8c1 !important;
+}
+#root .root-scroll.mfx-scroll-pane .scroll-bar:horizontal .track {
+  -fx-background-color: #afb8c1 !important;
+}
+#root .root-scroll.mfx-scroll-pane .scroll-bar:vertical .track {
+  -fx-background-color: #afb8c1 !important;
+}
+#root .root-scroll.mfx-scroll-pane .scroll-bar:horizontal .thumb,
+#root .root-scroll.mfx-scroll-pane .scroll-bar:vertical .thumb {
+  -fx-background-color: #6e7781 !important;
+}
+#root .root-scroll.mfx-scroll-pane .scroll-bar:horizontal .thumb:hover,
+#root .root-scroll.mfx-scroll-pane .scroll-bar:vertical .thumb:hover {
+  -fx-background-color: #424a53 !important;
+}
+/* ------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------ */
+/* ---- Global Component Style - Body ------------------------------------------------------------- */
+.body {
+  -fx-background-color: #f6f8fa !important;
+}
+.body .body-container {
+  -fx-max-width: 1024px !important;
+  -fx-padding: 64px 24px !important;
+}
+.body .body-text {
+  -fx-font-family: 'Poppins', system-ui, -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Ubuntu', 'Bitstream Vera Sans', 'Liberation Sans', Arial, sans-serif;
+  -fx-text-fill: #32383f;
+  -fx-fill: #32383f;
+}
+/* ------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------ */
+/* ---- Component Style - Sheet ------------------------------------------------------------------- */
+/* ------------------------------------------------------------------------------------------------ */
+/* ---- Component Style - Sheet ------------------------------------------------------------------- */
+.sheet {
+  -fx-background-color: #ffffff !important;
+  -fx-border-color: #eaeef2 !important;
+  -fx-border-width: 1px !important;
+  -fx-border-style: solid !important;
+  -fx-text-fill: #424a53 !important;
+  -fx-fill: #424a53 !important;
+  -fx-background-radius: 16px !important;
+  -fx-border-radius: 16px !important;
+  -fx-padding: 20px !important;
+}
+.sheet .sheet-text {
+  -fx-font-family: 'Poppins', system-ui, -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Ubuntu', 'Bitstream Vera Sans', 'Liberation Sans', Arial, sans-serif;
+}
+/* ------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------ */
+.dialog-root {
+  -fx-background-color: rgba(18, 28, 42, 0.5) !important;
+  -fx-padding: 64px;
+}
+.dialog-root .dialog ScrollPane,
+.dialog-root .dialog MFXScrollPane,
+.dialog-root .dialog .dialog-content-scroll.mfx-scroll-pane,
+.dialog-root .dialog .dialog-content-scroll:fitToWidth:fitToHeight {
+  -fx-background-color: #ffffff !important;
+}
+.dialog-root .dialog #dialogContent {
+  -fx-background-color: #ffffff !important;
+}
+.dialog {
+  -fx-max-width: 768px !important;
+  -fx-pref-width: 576px !important;
+  -fx-padding: 16px !important;
+  -fx-background-color: #ffffff !important;
+  -fx-background-radius: 16px !important;
+  -fx-border-radius: 16px !important;
+  -fx-border-color: #eaeef2 !important;
+  -fx-border-width: 1px !important;
+  -fx-border-style: solid !important;
+  -fx-text-fill: #424a53 !important;
+  -fx-fill: #424a53 !important;
+}
+.dialog .mfx-icon-wrapper {
+  -fx-cursor: hand !important;
+}
+.dialog .mfx-font-icon {
+  -fx-cursor: hand !important;
+  -fx-fill: #424a53 !important;
+  -fx-text-fill: #424a53 !important;
+}
+.dialog Text {
+  -fx-text-fill: #424a53 !important;
+  -fx-fill: #424a53 !important;
+  -fx-font-family: 'Poppins', system-ui, -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Ubuntu', 'Bitstream Vera Sans', 'Liberation Sans', Arial, sans-serif !important;
+}
+.dialog .header-label .text {
+  -fx-fill: #424a53 !important;
+  -fx-text-fill: #424a53 !important;
+  -fx-font-size: 20px !important;
+  -fx-font-family: 'Poppins Bold', system-ui, -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Ubuntu', 'Bitstream Vera Sans', 'Liberation Sans', Arial, sans-serif !important;
+  -fx-font-weight: 700 !important;
+}
+.dialog .dialog-content {
+  -fx-padding: 8px 0 0 0 !important;
+}
+.dialog .dialog-content Text {
+  -fx-font-size: 16px !important;
+}
+.dialog .dialog-action {
+  -fx-spacing: 16px !important;
+  -fx-alignment: center-right !important;
+}
+.dialog.dialog-w-xs {
+  -fx-max-width: 360px !important;
+  -fx-pref-width: 360px !important;
+}
+.dialog.dialog-w-sm {
+  -fx-max-width: 576px !important;
+  -fx-pref-width: 576px !important;
+}
+.dialog.dialog-w-md {
+  -fx-max-width: 768px !important;
+  -fx-pref-width: 768px !important;
+}
+.dialog.dialog-w-lg {
+  -fx-max-width: 1024px !important;
+  -fx-pref-width: 1024px !important;
+}
+.dialog.dialog-w-xl {
+  -fx-max-width: 1440px !important;
+  -fx-pref-width: 1440px !important;
+}
+/* ------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------ */
+/* - Basic Styles Reset - */
+* {
+  -fx-accent: #64b5f6;
+  -fx-focus-color: #64b5f6;
+  -fx-highlight-text-fill: #64b5f6;
+}
+/* - Global Styles - */
+Text,
+Label,
+TextField,
+PasswordField,
+TextArea,
+ListView,
+TreeView,
+TableView,
+TabPane,
+SplitPane,
+ScrollPane,
+MFXTextField,
+MFXPasswordField,
+MFXTextField .floating-text,
+MFXTextField .text-field {
+  -fx-font-family: 'Poppins', system-ui, -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Ubuntu', 'Bitstream Vera Sans', 'Liberation Sans', Arial, sans-serif;
+  -fx-text-fill: #32383f;
+  -fx-fill: #32383f;
+  -fx-smooth: true;
+  -fx-font-smoothing-type: gray;
+}
+Hyperlink,
+Hyperlink:visited {
+  -fx-text-fill: #2196f3;
+  -fx-fill: #2196f3;
+  -fx-border-width: 0;
+  -fx-border-style: none;
+  -fx-underline: false;
+}
+Hyperlink:hover,
+Hyperlink:visited:hover,
+Hyperlink:focused,
+Hyperlink:visited:focused,
+Hyperlink:focus-within,
+Hyperlink:visited:focus-within {
+  -fx-text-fill: #1565c0;
+  -fx-fill: #1565c0;
+  -fx-underline: true;
+  -fx-border-width: 0;
+  -fx-border-style: none;
+}
+Hyperlink:hover .text,
+Hyperlink:visited:hover .text,
+Hyperlink:focused .text,
+Hyperlink:visited:focused .text,
+Hyperlink:focus-within .text,
+Hyperlink:visited:focus-within .text {
+  -fx-text-fill: inherit !important;
+  -fx-fill: inherit !important;
+}
+Hyperlink .text,
+Hyperlink:visited .text {
+  -fx-text-fill: inherit !important;
+  -fx-fill: inherit !important;
+}
+/* ------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------ */
+

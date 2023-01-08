@@ -1,0 +1,141 @@
+/* ------------------------------------------------------------------------------------------------ */
+/* ---- Component Style - Dashboard --------------------------------------------------------------- */
+
+@import "../config/CustomProperties.less";
+@import "../config/ColorSchemes.less";
+
+@import "../components/Logo.less";
+@import "../components/Button.less";
+
+@button-radius: @radius-base;
+@button-padding-x: 1.3em;
+@button-padding-y: 0.5em;
+@border-width: 1px;
+@border-color: @gray-1;
+@menu-width: 200px;
+
+.dashboard {
+    -fx-min-height: 550px;
+
+    &.sheet {
+        -fx-padding: 0 !important;
+    }
+
+    .sheet-text {
+        -fx-font-family: @font-family-body-normal !important;
+        -fx-font-weight: @font-weight-normal !important;
+        -fx-text-fill: @sheet-text-color !important;
+        -fx-fill: @sheet-text-color !important;
+    }
+
+    .dashboard-top {
+        -fx-padding: @spacing-xs @spacing-md;
+        -fx-border-width: 0 0 @border-width 0;
+        -fx-border-color: @border-color;
+        -fx-border-style: solid;
+
+        .dashboard-logo-wrapper {
+            -fx-min-width: @menu-width - @spacing-md;
+
+            .logo {
+                -fx-font-size: @font-size-xl;
+            }
+        }
+
+        .dashboard-user-message {
+            -fx-font-size: @font-size-md;
+            -fx-text-alignment: baseline;
+        }
+
+        .dashboard-user-menu {
+            -fx-font-size: @font-size-md !important;
+            -fx-fill: @sheet-text-color-dim !important;
+            -fx-text-fill: @sheet-text-color-dim !important;
+            -fx-min-width: @menu-width - @spacing-md;
+            -fx-alignment: top-right;
+
+            .button-icon {
+                .glyph-icon {
+                    -fx-font-size: @font-size-lg !important;
+                    -fx-fill: @sheet-text-color-dim !important;
+                    -fx-text-fill: @sheet-text-color-dim !important;
+                    -fx-padding: 0 !important;
+                }
+            }
+        }
+    }
+
+    .dashboard-left {
+        -fx-padding: @spacing-lg @spacing-md;
+        -fx-min-width: @menu-width;
+        -fx-max-width: @menu-width;
+        -fx-border-width: 0 @border-width 0 0;
+        -fx-border-color: @border-color;
+        -fx-border-style: solid;
+
+        .dashboard-menu-title {
+            -fx-font-family: @font-family-body-bold !important;
+            -fx-font-weight: @font-weight-bold !important;
+            -fx-font-size: @font-size-sm;
+            -fx-padding: 0 0 @spacing-sm 0;
+
+            Text {
+                -fx-text-fill: @sheet-text-color-disabled !important;
+                -fx-fill: @sheet-text-color-disabled !important;
+            }
+        }
+
+        .dashboard-menu-button {
+            -fx-min-width: @menu-width - (@spacing-md * 2);
+
+            -fx-border-radius: @radius-sm !important;
+            -fx-background-radius: @radius-sm !important;
+            -fx-border-width: 0 !important;
+            -fx-border-color: transparent !important;
+
+            -fx-alignment: center-left;
+            -fx-text-alignment: left;
+
+            -fx-font-size: @font-size-sm;
+            -fx-font-family: @font-family-extra-normal !important;
+            -fx-font-weight: @font-weight-normal !important;
+
+            &.active {
+                -fx-background-color: @gray-5 !important;
+                -fx-text-fill: @white !important;
+                -fx-fill: @white !important;
+            }
+        }
+    }
+
+
+    //-fx-font-family: @font-family-extra-bold !important;
+    //-fx-font-weight: @font-weight-bold !important;
+    //-fx-font-size: @font-size-base;
+    //
+    //-fx-padding: @button-padding-y @button-padding-x !important;
+    //
+    //-fx-background-radius: @button-radius !important;
+    //-fx-border-radius: @button-radius !important;
+    //
+    //-fx-cursor: hand;
+
+    //Text,
+    //.text {
+    //
+    //    &:not(.mfx-font-icon) {
+    //        -fx-font-family: @font-family-extra-bold !important;
+    //    }
+    //
+    //    -fx-font-weight: @font-weight-bold !important;
+    //    -fx-font-size: 1em !important;
+    //    -fx-text-fill: inherit !important;
+    //    -fx-fill: inherit !important;
+    //    -fx-font-smoothing-type: black !important;
+    //}
+
+}
+
+
+/* ------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------ */

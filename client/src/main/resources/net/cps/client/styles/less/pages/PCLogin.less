@@ -1,0 +1,97 @@
+/* ------------------------------------------------------------------------------------------------ */
+/* ---- PC Application Login Page - Page Styles --------------------------------------------------- */
+
+@import "../config/Config.less";
+
+@import "../components/Sheet.less";
+@import "../components/Logo.less";
+@import "../components/Button.less";
+
+
+@content-width: 500px;
+@login-form-width: 280px;
+
+.body {
+
+    .go-back-button {
+        .button-icon {
+            -fx-font-size: @font-size-lg;
+        }
+    }
+
+    .logo {
+        -fx-font-size: @font-size-4xl;
+    }
+
+    .text {
+        -fx-font-family: @font-family-body-normal;
+    }
+
+    .wrapper-slogan-text {
+        -fx-pref-width: @content-width !important;
+        -fx-max-width: @content-width !important;
+        -fx-text-alignment: center;
+        -fx-padding: 0 @spacing-md;
+
+        .slogan-text {
+            -fx-font-size: @font-size-sm;
+        }
+    }
+
+    .sheet {
+        -fx-pref-width: @content-width !important;
+        -fx-max-width: @content-width !important;
+        -fx-alignment: center;
+        -fx-text-alignment: center;
+
+        .button {
+            -fx-font-size: @font-size-md;
+            .mfx-font-icon {
+                -mfx-size: @font-size-md;
+            }
+        }
+
+        .login-title {
+            -fx-font-family: @font-family-titles-bold;
+            -fx-font-size: @font-size-xl;
+        }
+
+        .sheet-text {
+            -fx-font-size: @font-size-sm;
+        }
+
+        .login-div {
+
+            .sheet-text {
+                -fx-text-fill: @sheet-text-color-disabled;
+                -fx-fill: @sheet-text-color-disabled;
+            }
+
+            Line {
+                -fx-stroke: @sheet-text-color-disabled;
+            }
+        }
+
+        .login-form > * {
+            -fx-pref-width: @login-form-width;
+            -fx-max-width: @login-form-width;
+        }
+
+        .forgot-password-link {
+            -fx-font-size: @font-size-xs;
+        }
+
+        .login-wrapper {
+            -fx-text-fill: @sheet-text-color-dim;
+            -fx-fill: @sheet-text-color-dim;
+
+            & > * {
+                -fx-font-size: @font-size-xs;
+            }
+        }
+    }
+}
+
+
+/* ------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------ */

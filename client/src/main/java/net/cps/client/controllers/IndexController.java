@@ -8,22 +8,23 @@ import net.cps.client.App;
 import java.io.IOException;
 
 
-public class IndexController {
+public class IndexController extends PageController {
     @FXML
     private MFXButton kioskBtn;
+    @FXML
+    public MFXButton pcAppBtn;
+    
+    /* ----- Event Handlers ----- */
     
     @FXML
-    private MFXButton remotePCBtn;
-    
-    @FXML
-    void kioskBtnClickHandler(ActionEvent event) throws IOException {
+    void kioskBtnClickHandler (ActionEvent event) throws IOException {
         System.out.println("kiosk !");
-        App.setScene("kiosk-home");
+        App.setScene("KioskHome.fxml");
     }
     
     @FXML
-    void remotePCBtnClickHandler(ActionEvent event) throws IOException {
+    public void pcAppBtnClickHandler (ActionEvent event) throws IOException {
         System.out.println("remote PC !");
-        App.setScene("pc-login");
+        App.setScene("PCLogin.fxml");
     }
 }

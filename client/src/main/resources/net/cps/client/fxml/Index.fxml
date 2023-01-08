@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXScrollPane?>
+<?import io.github.palexdev.materialfx.dialogs.MFXGenericDialog?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+<?import java.lang.*?>
+<?import java.net.URL?>
+
+<AnchorPane fx:id="root" maxHeight="600.0" maxWidth="960.0" minHeight="400.0" minWidth="800.0" prefHeight="600.0"
+            prefWidth="960.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="net.cps.client.controllers.IndexController">
+    <stylesheets>
+        <URL value="@../styles/css/GlobalStyles.css"/>
+        <URL value="@../styles/css/pages/Index.css"/>
+    </stylesheets>
+    <styleClass>
+        <String fx:value="root"/>
+        <String fx:value="color-scheme-light"/>
+    </styleClass>
+
+    <Hyperlink maxHeight="0.0" maxWidth="0.0" styleClass="focus-fix" text="focus-fix" textFill="TRANSPARENT"/>
+
+    <MFXScrollPane fitToHeight="true" fitToWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                   AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+
+        <VBox fx:id="body" alignment="TOP_CENTER" styleClass="body">
+            <VBox alignment="TOP_CENTER" styleClass="body-container">
+
+
+                <VBox alignment="CENTER">
+                    <VBox.margin>
+                        <Insets top="50.0"/>
+                    </VBox.margin>
+                    <AnchorPane styleClass="logo">
+                        <VBox styleClass="logo-wrapper">
+                            <Text styleClass="logo-top" text="CITY" textAlignment="CENTER">
+                            </Text>
+                            <Text styleClass="logo-bottom" text="PARK" textAlignment="CENTER">
+                            </Text>
+                        </VBox>
+                    </AnchorPane>
+                </VBox>
+
+                <TextFlow>
+                    <styleClass>
+                        <String fx:value="main-text"/>
+                    </styleClass>
+                    <VBox.margin>
+                        <Insets bottom="30.0" top="50.0"/>
+                    </VBox.margin>
+                    <Text text="Select the type of client application you would like to use:">
+                    </Text>
+                </TextFlow>
+
+                <VBox alignment="CENTER" spacing="15.0">
+                    <MFXButton fx:id="kioskBtn" onAction="#kioskBtnClickHandler" text="Parking Lot Kiosk">
+                        <styleClass>
+                            <String fx:value="button"/>
+                            <String fx:value="button-primary"/>
+                        </styleClass>
+                    </MFXButton>
+                    <MFXButton fx:id="pcAppBtn" onAction="#pcAppBtnClickHandler" text="PC Application">
+                        <styleClass>
+                            <String fx:value="button"/>
+                            <String fx:value="button-primary"/>
+                        </styleClass>
+                    </MFXButton>
+                </VBox>
+
+
+            </VBox> <!-- /body-container -->
+        </VBox> <!-- /body -->
+    </MFXScrollPane> <!-- /(root)scrollPane -->
+
+    <VBox fx:id="dialogRoot" alignment="CENTER" disable="true" styleClass="dialog-root" visible="false"
+          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+          AnchorPane.topAnchor="0.0">
+        <MFXGenericDialog fx:id="dialogControl" actionsOrientation="VERTICAL" contentText="..."
+                          headerText="Dialog Title" onClose="#closeDialog" showAlwaysOnTop="false" showMinimize="false">
+            <styleClass>
+                <String fx:value="dialog"/>
+                <String fx:value="dialog-w-xs"/>
+            </styleClass>
+            <center>
+                <MFXScrollPane fitToHeight="true" fitToWidth="true" styleClass="dialog-content-scroll"
+                               BorderPane.alignment="CENTER">
+                    <TextFlow fx:id="dialogContent" styleClass="dialog-content"/>
+                </MFXScrollPane>
+            </center>
+            <bottom>
+                <HBox fx:id="dialogAction" alignment="CENTER_RIGHT" styleClass="dialog-action"
+                      BorderPane.alignment="CENTER"/>
+            </bottom>
+        </MFXGenericDialog>
+    </VBox>
+
+</AnchorPane>

@@ -10,11 +10,11 @@
     <artifactId>car-park-system</artifactId>
     <name>car-park-system</name>
     <packaging>pom</packaging>
-    <version>0.0.1</version>
+    <version>0.2.1</version>
 
     <modules>
         <module>server</module>
-        <module>entities</module>
+        <module>common</module>
         <module>client</module>
     </modules>
 

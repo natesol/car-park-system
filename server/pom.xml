@@ -10,7 +10,7 @@
     <parent>
         <groupId>net.cps</groupId>
         <artifactId>car-park-system</artifactId>
-        <version>0.0.1</version>
+        <version>0.2.1</version>
     </parent>
 
     <artifactId>server</artifactId>
@@ -20,19 +20,29 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>entities</artifactId>
+            <artifactId>common</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId> mysql </groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.25</version>
+            <version>8.0.28</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>5.4.12.Final</version>
+            <version>5.4.24.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-model</artifactId>
+            <version>3.6.1</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

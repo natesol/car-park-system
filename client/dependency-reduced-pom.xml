@@ -27,6 +27,23 @@
         </configuration>
       </plugin>
       <plugin>
+        <groupId>biz.gabrys.maven.plugins</groupId>
+        <artifactId>lesscss-maven-plugin</artifactId>
+        <version>1.2.1</version>
+        <executions>
+          <execution>
+            <id>compile-less</id>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+            <configuration>
+              <sourceDirectory>${project.basedir}/src/main/resources/net/cps/client/styles/less</sourceDirectory>
+              <outputDirectory>${project.basedir}/src/main/resources/net/cps/client/styles/css</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <artifactId>maven-shade-plugin</artifactId>
         <version>3.2.3</version>
         <executions>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+<?import java.lang.String?>
+<?import java.net.URL?>
+<HBox fx:id="subPageBody" maxWidth="1024.0" minHeight="400.0" minWidth="600.0" prefWidth="1024.0"
+      xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="net.cps.client.controllers.PCGuestMainController">
+    <stylesheets>
+        <URL value="@../styles/css/GlobalStyles.css"/>
+        <URL value="@../styles/css/pages/PCCustomerMain.css" />
+        <URL value="@../styles/css/pages/PCCustomerMainSubPage.css"/>
+    </stylesheets>
+    <styleClass>
+        <String fx:value="sub-page-body"/>
+        <String fx:value="color-scheme-light"/>
+    </styleClass>
+    <VBox alignment="TOP_CENTER" minHeight="400.0" prefHeight="Infinity" minWidth="600.0" prefWidth="1024.0"  maxWidth="1024.0">
+
+        <Text fx:id="subPageTitle" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sub-page-title" text="Customer Home">
+        </Text>
+        <VBox maxWidth="600.0">
+            <VBox.margin>
+                <Insets top="30.0"/>
+            </VBox.margin>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to the 'CityPark' Guest Portal!"/>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0"
+                  text="You can choose an action from the menu on the left - and continue from there."/>
+        </VBox>
+    </VBox>
+</HBox>

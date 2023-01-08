@@ -1,0 +1,53 @@
+/* ------------------------------------------------------------------------------------------------ */
+/* ---- Component Style - Logo -------------------------------------------------------------------- */
+
+@import "../config/CustomProperties.less";
+@import "../config/ColorSchemes.less";
+
+.logo {
+    -fx-alignment: center;
+    -fx-max-width: 100%;
+    -fx-font-family: @font-family-titles-black !important;
+    -fx-font-weight: @font-weight-black !important;
+    //-fx-font-size: @font-size-xl;
+
+    -fx-min-height: 1.8em !important;
+    -fx-pef-height: 1.8em !important;
+    -fx-max-height: 1.8em !important;
+
+
+    .logo-wrapper {
+        -fx-alignment: center;
+
+        -fx-min-height: 1.8em !important;
+        -fx-pef-height: 1.8em !important;
+        -fx-max-height: 1.8em !important;
+    }
+
+    .logo-top,
+    .logo-bottom {
+        -fx-alignment: center;
+
+        -fx-font-family: @font-family-titles-black !important;
+        -fx-font-weight: @font-weight-black !important;
+
+        -fx-min-height: 0.9em !important;
+        -fx-pef-height: 0.9em !important;
+        -fx-max-height: 0.9em !important;
+        -fx-translate-y: -0.45em;
+    }
+
+    .logo-top {
+        -fx-fill: @logo-top-color !important;
+        -fx-translate-y: 0.33em;
+    }
+
+    .logo-bottom {
+        -fx-fill: @logo-bottom-color !important;
+        -fx-translate-y: -0.33em;
+    }
+}
+
+
+/* ------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------ */

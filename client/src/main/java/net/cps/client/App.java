@@ -1,14 +1,11 @@
 package net.cps.client;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import net.cps.client.utils.ResourcesLoader;
 
 import java.io.IOException;
-import java.util.Objects;
 
 /**
  * Main JavaFX GUI Application.
@@ -18,12 +15,7 @@ public class App extends Application {
     private static CPSClient client;
     
     public static void setScene(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
-    }
-    
-    private static Parent loadFXML(String fileName) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("fxml/" + fileName + ".fxml"));
-        return fxmlLoader.load();
+        scene.setRoot(ResourcesLoader.loadFXML(fxml));
     }
     
     public static void run(CPSClient client) {
@@ -35,10 +27,14 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         client = CPSClient.getClient();
         client.openConnection();
-        scene = new Scene(loadFXML("index"));
-        stage.getIcons().add(new Image(Objects.requireNonNull(App.class.getResourceAsStream("images/parking-icon.png"))));
+        
+        scene = new Scene(ResourcesLoader.loadFXML("Index.fxml"));
+        stage.getIcons().add(ResourcesLoader.loadImage("parking-icon.png"));
         stage.setTitle("CityPark");
         stage.setScene(scene);
+        stage.setMinWidth(800);
+        stage.setMinHeight(400);
+        //stage.setMaximized(true);
         stage.show();
         System.out.println("[CLIENT] application lunched successfully.");
     }

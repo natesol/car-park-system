@@ -312,7 +312,17 @@ public abstract class AbstractServer implements Runnable
   {
     return clientThreadGroup.activeCount();
   }
-
+  
+  /**
+   * Returns the server socket.
+   *
+   * @return the server socket.
+   */
+  final public ServerSocket getServerSocket()
+  {
+    return serverSocket;
+  }
+  
   /**
    * Returns the port number.
    *
@@ -467,8 +477,7 @@ public abstract class AbstractServer implements Runnable
    *
    * @param client the connection with the client.
    */
-  synchronized protected void clientDisconnected(
-    ConnectionToClient client) {}
+  synchronized protected void clientDisconnected(ConnectionToClient client) {}
 
   /**
    * Hook method called each time an exception is thrown in a
@@ -483,8 +492,7 @@ public abstract class AbstractServer implements Runnable
    * @param client the client that raised the exception.
    * @param Throwable the exception thrown.
    */
-  synchronized protected void clientException(
-    ConnectionToClient client, Throwable exception) {}
+  synchronized protected void clientException(ConnectionToClient client, Throwable exception) {}
 
   /**
    * Hook method called when the server stops accepting
