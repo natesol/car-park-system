@@ -1,7 +1,9 @@
 package net.cps.server;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Timer;
 
 import net.cps.common.utils.EmployeeRole;
 import net.cps.server.utils.MySQLQueries;
@@ -64,6 +66,12 @@ public class Main {
             e.printStackTrace();
         }
         
+        // !!!!!!!!!!!!!!!!!!!!!!!!
+        // !!! v Test Methods v !!!
+        sendEmail("test@tset", "test", "test message");
+        printMessageOnGivenTime("test message", LocalDateTime.now().plusSeconds(10));
+        // !!! ^ Test Methods ^ !!!
+        // !!!!!!!!!!!!!!!!!!!!
     }
     
     /**
@@ -193,4 +201,21 @@ public class Main {
             e.printStackTrace();
         }
     }
+    
+    
+    /* -------------------------------------------------------------------------------------------- */
+    /* ------- v Test Methods v ------------------------------------------------------------------- */
+    
+    private static void sendEmail (String to, String subject, String body) {
+        // TODO: implement...
+    }
+    
+    private static void printMessageOnGivenTime (String message, LocalDateTime time) {
+        // TODO: implement...
+        Timer timer = new Timer();
+    }
+    
+    /* ------- ^ Test Methods ^ ------------------------------------------------------------------- */
+    /* -------------------------------------------------------------------------------------------- */
+    
 }

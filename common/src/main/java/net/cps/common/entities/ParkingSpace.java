@@ -1,19 +1,33 @@
 package net.cps.common.entities;
 
+import net.cps.common.utils.ParkingSpaceCondition;
+
 // maybe not nessecarry, can be included as a field at ParkingLot
 public class ParkingSpace  {
-    private Integer availibility;
+    private ParkingSpaceCondition condition;
+    
+    private String vehicleId;
 
-    public ParkingSpace(Integer availibility) {
-        this.availibility = availibility;
+    public ParkingSpace(ParkingSpaceCondition condition) {
+        this.condition = condition;
+        this.vehicleId = null;
+    }
+    public ParkingSpace(String vehicleId) {
+        this.condition = ParkingSpaceCondition.OCCUPIED;
+        this.vehicleId = vehicleId;
     }
 
-    public Integer getAvailibility() {
-        return availibility;
+    public ParkingSpaceCondition getCondition() {
+        return condition;
     }
-
-    public void setAvailibility(Integer availibility) {
-        this.availibility = availibility;
+    public void setCondition(ParkingSpaceCondition condition) {
+        this.condition = condition;
     }
-
+    
+    public String getVehicleId() {
+        return vehicleId;
+    }
+    public void setVehicleId(String vehicleId) {
+        this.vehicleId = vehicleId;
+    }
 }
