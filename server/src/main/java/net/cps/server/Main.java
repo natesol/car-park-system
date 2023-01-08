@@ -67,6 +67,7 @@ public class Main {
         // !!! v Test Methods v !!!
         sendEmail("test@tset", "test", "test message");
         printMessageOnGivenTime("test message", LocalDateTime.now().plusSeconds(10));
+        testRobot();
         // !!! ^ Test Methods ^ !!!
         // !!!!!!!!!!!!!!!!!!!!
     }
@@ -206,7 +207,7 @@ public class Main {
     private static void testRobot () {
         Robot robot = new Robot();
         
-        
+        // do prints after each step to see the robot's progress.
     }
     
     private static void sendEmail (String to, String subject, String body) {
