@@ -5,16 +5,13 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Timer;
 
+import net.cps.common.entities.*;
 import net.cps.common.utils.EmployeeRole;
 import net.cps.server.utils.MySQLQueries;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-import net.cps.common.entities.Customer;
-import net.cps.common.entities.Employee;
-import net.cps.common.entities.ParkingLot;
-import net.cps.common.entities.Rates;
 import net.cps.server.utils.Logger;
 
 
@@ -205,6 +202,12 @@ public class Main {
     
     /* -------------------------------------------------------------------------------------------- */
     /* ------- v Test Methods v ------------------------------------------------------------------- */
+    
+    private static void testRobot () {
+        Robot robot = new Robot();
+        
+        
+    }
     
     private static void sendEmail (String to, String subject, String body) {
         // TODO: implement...
