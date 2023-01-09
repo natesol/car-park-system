@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------------------------------ */
-/* ---- Component Style - Dialog ------------------------------------------------------------------ */
+/* ---- Component Style - Sheet ------------------------------------------------------------------- */
 
 @import "../../config/CustomProperties.less";
 @import "../../config/ColorSchemes.less";
@@ -7,189 +7,100 @@
 
 
 .dialog-root {
+    -fx-background-color: @body-overlay-color !important;
     -fx-padding: @spacing-3xl;
 
     .dialog {
-        -fx-max-width: @screen-md !important;
-        -fx-pref-width: @screen-sm !important;
-        -fx-padding: @spacing-md !important;
-
-        -fx-background-radius: @sheet-radius !important;
-        -fx-border-radius: @sheet-radius !important;
-        -fx-border-width: 1px !important;
-        -fx-border-style: solid !important;
-
-        .mfx-icon-wrapper {
-            -fx-cursor: hand !important;
+        ScrollPane,
+        MFXScrollPane,
+        .dialog-content-scroll.mfx-scroll-pane,
+        .dialog-content-scroll:fitToWidth:fitToHeight {
+            -fx-background-color: @sheet-bg-color !important;
         }
 
-        .mfx-font-icon {
-            -fx-cursor: hand !important;
+        .dialog-content-scroll:fitToWidth:fitToHeight .viewport {
+            -fx-background-color: @sheet-bg-color !important;
         }
+
+        #dialogContent {
+            -fx-background-color: @sheet-bg-color !important;
+        }
+    }
+}
+
+.dialog {
+    -fx-max-width: @screen-md !important;
+    -fx-pref-width: @screen-sm !important;
+    -fx-padding: @spacing-md !important;
+
+    -fx-background-color: @sheet-bg-color !important;
+    -fx-background-radius: @sheet-radius !important;
+    -fx-border-radius: @sheet-radius !important;
+    -fx-border-color: @sheet-border-color !important;
+    -fx-border-width: 1px !important;
+    -fx-border-style: solid !important;
+
+    -fx-text-fill: @sheet-text-color !important;
+    -fx-fill: @sheet-text-color !important;
+
+    .mfx-icon-wrapper {
+        -fx-cursor: hand !important;
+    }
+
+    .mfx-font-icon {
+        -fx-cursor: hand !important;
+        -fx-fill: @sheet-text-color !important;
+        -fx-text-fill: @sheet-text-color !important;
+    }
+
+    Text {
+        -fx-text-fill: @sheet-text-color !important;
+        -fx-fill: @sheet-text-color !important;
+        -fx-font-family: @font-family-body !important;
+    }
+
+    .header-label .text {
+        -fx-fill: @sheet-text-color !important;
+        -fx-text-fill: @sheet-text-color !important;
+
+        -fx-font-size: @font-size-lg !important;
+
+        -fx-font-family: @font-family-body-bold !important;
+        -fx-font-weight: @font-weight-bold !important;
+    }
+
+    .dialog-content {
+        -fx-padding: @spacing-xs 0 0 0 !important;
 
         Text {
-            -fx-font-family: @font-family-body !important;
-        }
-
-        .header-label .text {
-            -fx-font-family: @font-family-body-bold !important;
-            -fx-font-weight: @font-weight-bold !important;
-            -fx-font-size: @font-size-lg !important;
-        }
-
-        .dialog-content {
-            -fx-padding: @spacing-xs 0 0 0 !important;
-
-            Text {
-                -fx-font-size: @font-size-sm !important;
-            }
-        }
-
-        .dialog-action {
-            -fx-spacing: @spacing-md !important;
-            -fx-alignment: center-right !important;
-        }
-
-        &.dialog-w-xs {
-            -fx-max-width: @screen-xs !important;
-            -fx-pref-width: @screen-xs !important;
-        }
-
-        &.dialog-w-sm {
-            -fx-max-width: @screen-sm !important;
-            -fx-pref-width: @screen-sm !important;
-        }
-
-        &.dialog-w-md {
-            -fx-max-width: @screen-md !important;
-            -fx-pref-width: @screen-md !important;
-        }
-
-        &.dialog-w-lg {
-            -fx-max-width: @screen-lg !important;
-            -fx-pref-width: @screen-lg !important;
-        }
-
-        &.dialog-w-xl {
-            -fx-max-width: @screen-xl !important;
-            -fx-pref-width: @screen-xl !important;
-        }
-    }
-}
-
-.theme-light .dialog-root {
-    -fx-background-color: @light-sheet-overlay-color !important;
-
-    .dialog {
-        -fx-background-color: @light-sheet-bg-color !important;
-        -fx-border-color: @light-sheet-border-color !important;
-
-        -fx-text-fill: @light-sheet-text-color !important;
-        -fx-fill: @light-sheet-text-color !important;
-
-        .mfx-icon-wrapper {
-
-            .mfx-font-icon {
-                -fx-text-fill: @light-sheet-text-color !important;
-                -fx-fill: @light-sheet-text-color !important;
-            }
-
-            &:hover {
-                -fx-background-color: fade(@danger-6, 10%) !important;
-
-                .mfx-font-icon {
-                    -fx-text-fill: @danger-6 !important;
-                    -fx-fill: @danger-6 !important;
-                }
-            }
-        }
-
-        Text:not(.text-primary, .text-success, .text-warning, .text-danger) {
-            -fx-text-fill: @light-sheet-text-color !important;
-            -fx-fill: @light-sheet-text-color !important;
-        }
-
-        .header-label .text:not(.text-primary, .text-success, .text-warning, .text-danger) {
-            -fx-text-fill: @light-sheet-text-color !important;
-            -fx-fill: @light-sheet-text-color !important;
-        }
-
-        ScrollPane,
-        MFXScrollPane,
-        .dialog-content-scroll.mfx-scroll-pane,
-        .dialog-content-scroll:fitToWidth:fitToHeight {
-            -fx-background-color: @light-sheet-bg-color !important;
-        }
-
-        .dialog-content-scroll:fitToWidth:fitToHeight .viewport {
-            -fx-background-color: @light-sheet-bg-color !important;
-        }
-
-        #dialogContent {
-            -fx-background-color: @light-sheet-bg-color !important;
+            -fx-font-size: @font-size-md !important;
         }
     }
 
-    .dialog-form {
-        -fx-background-color: @light-sheet-bg-color !important;
-    }
-}
-
-.theme-dark .dialog-root {
-    -fx-background-color: @dark-sheet-overlay-color !important;
-
-    .dialog {
-        -fx-background-color: @dark-sheet-bg-color !important;
-        -fx-border-color: @dark-sheet-border-color !important;
-
-        -fx-text-fill: @dark-sheet-text-color !important;
-        -fx-fill: @dark-sheet-text-color !important;
-
-        .mfx-icon-wrapper {
-
-            .mfx-font-icon {
-                -fx-text-fill: @dark-sheet-text-color !important;
-                -fx-fill: @dark-sheet-text-color !important;
-            }
-
-            &:hover {
-                -fx-background-color: fade(@danger-7, 15%) !important;
-
-                .mfx-font-icon {
-                    -fx-text-fill: @danger-9 !important;
-                    -fx-fill: @danger-9 !important;
-                }
-            }
-        }
-
-        Text:not(.text-primary, .text-success, .text-warning, .text-danger) {
-            -fx-text-fill: @dark-sheet-text-color !important;
-            -fx-fill: @dark-sheet-text-color !important;
-        }
-
-        .header-label .text:not(.text-primary, .text-success, .text-warning, .text-danger) {
-            -fx-text-fill: @dark-sheet-text-color !important;
-            -fx-fill: @dark-sheet-text-color !important;
-        }
-
-        ScrollPane,
-        MFXScrollPane,
-        .dialog-content-scroll.mfx-scroll-pane,
-        .dialog-content-scroll:fitToWidth:fitToHeight {
-            -fx-background-color: @dark-sheet-bg-color !important;
-        }
-
-        .dialog-content-scroll:fitToWidth:fitToHeight .viewport {
-            -fx-background-color: @dark-sheet-bg-color !important;
-        }
-
-        #dialogContent {
-            -fx-background-color: @dark-sheet-bg-color !important;
-        }
+    .dialog-action {
+        -fx-spacing: @spacing-md !important;
+        -fx-alignment: center-right !important;
     }
 
-    .dialog-form {
-        -fx-background-color: @dark-sheet-bg-color !important;
+    &.dialog-w-xs {
+        -fx-max-width: @screen-xs !important;
+        -fx-pref-width: @screen-xs !important;
+    }
+    &.dialog-w-sm {
+        -fx-max-width: @screen-sm !important;
+        -fx-pref-width: @screen-sm !important;
+    }
+    &.dialog-w-md {
+        -fx-max-width: @screen-md !important;
+        -fx-pref-width: @screen-md !important;
+    }
+    &.dialog-w-lg {
+        -fx-max-width: @screen-lg !important;
+        -fx-pref-width: @screen-lg !important;
+    }
+    &.dialog-w-xl {
+        -fx-max-width: @screen-xl !important;
+        -fx-pref-width: @screen-xl !important;
     }
 }
 

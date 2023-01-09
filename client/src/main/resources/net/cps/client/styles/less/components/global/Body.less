@@ -4,110 +4,21 @@
 @import "../../config/CustomProperties.less";
 @import "../../config/ColorSchemes.less";
 
+
 .body {
-    .body-container {
-        -fx-max-width: @app-max-width;
-        -fx-padding: @spacing-3xl @spacing-xl;
-    }
-
-    .body-text {
-        -fx-font-family: @font-family-body;
-    }
+    -fx-background-color: @body-bg-color;
 }
 
-.theme-light {
-    .body {
-        -fx-background-color: @light-body-bg-color;
-
-        .body-text {
-            -fx-text-fill: @light-body-text-color;
-            -fx-fill: @light-body-text-color;
-
-            &.dim {
-                -fx-text-fill: @light-body-text-color-dim;
-                -fx-fill: @light-body-text-color-dim;
-            }
-
-            &.emp {
-                -fx-text-fill: @light-body-text-color-emp;
-                -fx-fill: @light-body-text-color-emp;
-            }
-
-            &.disabled {
-                -fx-text-fill: @light-body-text-color-disabled;
-                -fx-fill: @light-body-text-color-disabled;
-            }
-        }
-
-        .body-shape {
-            -fx-stroke: @light-body-text-color;
-            -fx-fill: @light-body-text-color;
-
-            &.dim {
-                -fx-stroke: @light-body-text-color-dim;
-                -fx-fill: @light-body-text-color-dim;
-            }
-
-            &.emp {
-                -fx-stroke: @light-body-text-color-emp;
-                -fx-fill: @light-body-text-color-emp;
-            }
-
-            &.disabled {
-                -fx-stroke: @light-body-text-color-disabled;
-                -fx-fill: @light-body-text-color-disabled;
-            }
-        }
-    }
+.body .body-container {
+    -fx-max-width: @app-max-width;
+    -fx-padding: @spacing-3xl @spacing-xl;
 }
 
-.theme-dark {
-    .body {
-        -fx-background-color: @dark-body-bg-color;
-
-        .body-text {
-            -fx-text-fill: @dark-body-text-color;
-            -fx-fill: @dark-body-text-color;
-
-            &.dim {
-                -fx-text-fill: @dark-body-text-color-dim;
-                -fx-fill: @dark-body-text-color-dim;
-            }
-
-            &.emp {
-                -fx-text-fill: @dark-body-text-color-emp;
-                -fx-fill: @dark-body-text-color-emp;
-            }
-
-            &.disabled {
-                -fx-text-fill: @dark-body-text-color-disabled;
-                -fx-fill: @dark-body-text-color-disabled;
-            }
-        }
-
-        .body-shape {
-            -fx-stroke: @dark-body-text-color;
-            -fx-fill: @dark-body-text-color;
-
-            &.dim {
-                -fx-stroke: @dark-body-text-color-dim;
-                -fx-fill: @dark-body-text-color-dim;
-            }
-
-            &.emp {
-                -fx-stroke: @dark-body-text-color-emp;
-                -fx-fill: @dark-body-text-color-emp;
-            }
-
-            &.disabled {
-                -fx-stroke: @dark-body-text-color-disabled;
-                -fx-fill: @dark-body-text-color-disabled;
-            }
-        }
-    }
+.body .body-text {
+    -fx-font-family: @font-family-body;
+    -fx-text-fill: @body-text-color;
+    -fx-fill: @body-text-color;
 }
-
-
 
 
 /* ------------------------------------------------------------------------------------------------ */

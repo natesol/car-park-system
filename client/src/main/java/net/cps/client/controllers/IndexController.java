@@ -1,122 +1,88 @@
 package net.cps.client.controllers;
 
 import io.github.palexdev.materialfx.controls.MFXButton;
-import io.github.palexdev.materialfx.controls.MFXComboBox;
+import io.github.palexdev.materialfx.controls.MFXFilterComboBox;
+import io.github.palexdev.materialfx.utils.StringUtils;
 import io.github.palexdev.materialfx.utils.others.FunctionalStringConverter;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Tooltip;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
 import javafx.util.StringConverter;
 import net.cps.client.App;
-import net.cps.client.CPSClient;
-import net.cps.client.events.KioskEnterEvent;
 import net.cps.common.entities.ParkingLot;
-import net.cps.common.messages.RequestMessage;
-import net.cps.common.messages.ResponseMessage;
-import net.cps.common.utils.Entities;
-import net.cps.common.utils.RequestCallback;
-import net.cps.common.utils.RequestType;
-import net.cps.common.utils.ResponseStatus;
-import org.greenrobot.eventbus.EventBus;
-
+import javafx.collections.ObservableList;
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 
-public class IndexController implements Initializable {
+public class IndexController extends PageController {
     @FXML
-    public AnchorPane root;
-    @FXML
-    public VBox body;
-    @FXML
-    public MFXButton kioskBtn;
+    private MFXButton kioskBtn;
     @FXML
     public MFXButton pcAppBtn;
-    @FXML
-    public MFXComboBox<ParkingLot> parkingLotsCombo;
-    @FXML
-    public MFXButton toggleThemeBtn;
-    @FXML
-    public Tooltip toggleThemeBtnTip;
     
-    
-    /* ----- Scene Controller Initialization ------------------------ */
     
     @Override
     public void initialize (URL url, ResourceBundle resourceBundle) {
-        Platform.runLater(App::updateAppTheme);
-        CPSClient.sendRequestToServer(RequestType.GET, Entities.PARKING_LOT.getTableName(), this::onGetAllParkingLot);
-    
-        CPSClient.sendRequestToServer(RequestType.UPDATE, Entities.PARKING_SPACE.getTableName(), (req, res) -> {
-            if (res.getStatus() == ResponseStatus.SUCCESS) {
-                System.out.println("Parking spaces updated successfully");
-            }
-        });
+        //EventBus.getDefault().register(this);
     }
     
     
-    /* ----- GUI Events Handlers ------------------------------------ */
+    /* ----- Event Handlers ----------------------------------------- */
     
     @FXML
     void kioskBtnClickHandler (ActionEvent event) throws IOException {
-        ParkingLot parkingLot = parkingLotsCombo.getValue();
+        dialog.setWidth("sm");
+        dialog.setTitleText("Open Kiosk App");
+        dialog.setBodyText("Choose which parking lot you want to open the app for.");
+        
+        MFXFilterComboBox<ParkingLot> filterCombo = new MFXFilterComboBox<>();
+        ObservableList<ParkingLot> parkingLots = FXCollections.observableArrayList();
+        parkingLots.add(new ParkingLot("parking #1", "haifa 123", 5));
+        parkingLots.add(new ParkingLot("parking #2", "haifa 61/4", 1));
+        parkingLots.add(new ParkingLot("parking #3", "tel-aviv 99", 2));
+        parkingLots.add(new ParkingLot("parking #4", "eilat 7", 11));
+        StringConverter<ParkingLot> converter = FunctionalStringConverter.to(parkingLot -> (parkingLot == null) ? "" : "#" + "parkingLot.getId()" + " " + parkingLot.getName());
+        Function<String, Predicate<ParkingLot>> filterFunction = str -> parkingLot -> StringUtils.containsIgnoreCase(converter.toString(parkingLot), str);
+        filterCombo.setItems(parkingLots);
+        filterCombo.setConverter(converter);
+        filterCombo.setFilterFunction(filterFunction);
+        
+        HBox wrapper = new HBox();
+        wrapper.getChildren().add(filterCombo);
+        
+        dialog.setCustomContent(wrapper);
     
-        switch (parkingLot.getName()) {
-            case "Haifa Port Parking" -> parkingLot.setId(2);
-            case "Haifa Mt. Carmel Parking" -> parkingLot.setId(3);
-            case "Kiryat-Haim Beach Parking" -> parkingLot.setId(4);
-            case "Eilat Coral Beach Parking" -> parkingLot.setId(5);
-        }
-        App.setEntity(parkingLot);
-        App.setPage("kiosk/KioskHome.fxml");
-        EventBus.getDefault().post(new KioskEnterEvent((ParkingLot) App.getEntity()));
+        MFXButton confirmBtn = new MFXButton("Confirm");
+        confirmBtn.getStyleClass().add("button-primary");
+        confirmBtn.setOnAction(actionEvent -> {
+            try {
+                App.setScene("PCLogin.fxml");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        MFXButton cancelBtn = new MFXButton("Cancel");
+        cancelBtn.getStyleClass().add("button-secondary");
+        cancelBtn.setOnAction(actionEvent -> dialog.close());
+    
+        dialog.setActionButtons(cancelBtn, confirmBtn);
+        dialog.open();
     }
     
     @FXML
     public void pcAppBtnClickHandler (ActionEvent event) throws IOException {
-        App.setPage("pc/auth/PCLogin.fxml");
-    }
-    
-    @FXML
-    public void toggleThemeBtnClickHandler (ActionEvent actionEvent) {
-        Platform.runLater(App::toggleTheme);
+        App.setScene("PCLogin.fxml");
     }
     
     
-    /* ----- EventBus Listeners ------------------------------------- */
+    /* ----- Eventbus Listeners ------------------------------------- */
     
     // ...
-    
-    
-    /* ----- Requests Callbacks (on server response) ---------------- */
-    
-    @RequestCallback.Method
-    private void onGetAllParkingLot (RequestMessage request, ResponseMessage response) {
-        ObservableList<ParkingLot> parkingLots = FXCollections.observableArrayList((List<ParkingLot>) response.getData());
-        
-        Platform.runLater(() -> {
-            if (response.getStatus() == ResponseStatus.SUCCESS) {
-                StringConverter<ParkingLot> converter = FunctionalStringConverter.to(parkingLot -> (parkingLot == null) ? "null" : parkingLot.getName());
-                parkingLotsCombo.setConverter(converter);
-                parkingLotsCombo.setItems(parkingLots);
-                parkingLotsCombo.setItems(parkingLots);
-                parkingLotsCombo.setValue(parkingLots.get(0));
-                parkingLotsCombo.setValue(parkingLots.get(0));
-            }
-            else {
-                System.out.println("failed to get all parking lots from the server.");
-            }
-        });
-    }
-    
     
     
     /* ----- Utility Methods ---------------------------------------- */

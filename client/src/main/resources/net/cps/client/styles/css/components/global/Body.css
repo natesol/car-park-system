@@ -7,106 +7,29 @@
 /* ----- Typography ------------------------------------------------- */
 /* ----- Border Radius ---------------------------------------------- */
 /* ----- Color Pallet ----------------------------------------------- */
+/* ----- Shadows ---------------------------------------------------- */
 /* ------------------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------------ */
 /* ---- Application Color Schemes ----------------------------------------------------------------- */
-/* ----- Color Schemes ---------------------------------------------- */
-/* ----- App Base Colors ------------------- */
-/* ----- Components Colors - Light --------- */
-/* Root */
-/* Body */
-/* Tooltips */
-/* Logo */
-/* Sheet */
+/* ----- General Colors --------------------------------------------- */
+/* ----- Light Color Scheme ----------------------------------------- */
+/* - App Colors - */
+/* - Components Colors - */
 /* Buttons */
-/* Inputs Fields */
-/* ----- Components Colors - Dark ---------- */
-/* Root */
-/* Body */
-/* Tooltips */
-/* Logo */
-/* Sheet */
-/* Buttons */
-/* Inputs Fields */
 /* ------------------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------------ */
+.body {
+  -fx-background-color: #f6f8fa;
+}
 .body .body-container {
   -fx-max-width: 1024px;
   -fx-padding: 64px 24px;
 }
 .body .body-text {
-  -fx-font-family: "Poppins", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Ubuntu", "Bitstream Vera Sans", "Liberation Sans", "Arial", "sans-serif";
-}
-.theme-light .body {
-  -fx-background-color: #f6f8fa;
-}
-.theme-light .body .body-text {
-  -fx-text-fill: #424a53;
-  -fx-fill: #424a53;
-}
-.theme-light .body .body-text.dim {
-  -fx-text-fill: #57606a;
-  -fx-fill: #57606a;
-}
-.theme-light .body .body-text.emp {
-  -fx-text-fill: #24292f;
-  -fx-fill: #24292f;
-}
-.theme-light .body .body-text.disabled {
-  -fx-text-fill: #8c959f;
-  -fx-fill: #8c959f;
-}
-.theme-light .body .body-shape {
-  -fx-stroke: #424a53;
-  -fx-fill: #424a53;
-}
-.theme-light .body .body-shape.dim {
-  -fx-stroke: #57606a;
-  -fx-fill: #57606a;
-}
-.theme-light .body .body-shape.emp {
-  -fx-stroke: #24292f;
-  -fx-fill: #24292f;
-}
-.theme-light .body .body-shape.disabled {
-  -fx-stroke: #8c959f;
-  -fx-fill: #8c959f;
-}
-.theme-dark .body {
-  -fx-background-color: #1a1b1e;
-}
-.theme-dark .body .body-text {
-  -fx-text-fill: #909296;
-  -fx-fill: #909296;
-}
-.theme-dark .body .body-text.dim {
-  -fx-text-fill: #5c5f66;
-  -fx-fill: #5c5f66;
-}
-.theme-dark .body .body-text.emp {
-  -fx-text-fill: #a6a7ab;
-  -fx-fill: #a6a7ab;
-}
-.theme-dark .body .body-text.disabled {
-  -fx-text-fill: #2c2e33;
-  -fx-fill: #2c2e33;
-}
-.theme-dark .body .body-shape {
-  -fx-stroke: #909296;
-  -fx-fill: #909296;
-}
-.theme-dark .body .body-shape.dim {
-  -fx-stroke: #5c5f66;
-  -fx-fill: #5c5f66;
-}
-.theme-dark .body .body-shape.emp {
-  -fx-stroke: #a6a7ab;
-  -fx-fill: #a6a7ab;
-}
-.theme-dark .body .body-shape.disabled {
-  -fx-stroke: #2c2e33;
-  -fx-fill: #2c2e33;
+  -fx-font-family: 'Poppins', system-ui, -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Ubuntu', 'Bitstream Vera Sans', 'Liberation Sans', Arial, sans-serif;
+  -fx-text-fill: #32383f;
+  -fx-fill: #32383f;
 }
 /* ------------------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------------ */

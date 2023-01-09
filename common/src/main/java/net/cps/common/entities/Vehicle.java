@@ -1,127 +1,68 @@
 package net.cps.common.entities;
 
+import javax.persistence.*;
+import java.io.Serializable;
+
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Entity
-@Table(name = "vehicles")
-public class Vehicle implements Serializable {
+@Table(name = "vehicle")
+public class Vehicle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Integer id;
+    @Column(name="id", updatable = false, nullable = false)
+    private Long id;
+    @NotNull
+    Long vehicleNumber;
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "customer_email", referencedColumnName = "email")
-    private Customer customer;
-    @NotNull
-    @Column(name = "number", columnDefinition = "CHAR(8) NOT NULL UNIQUE")
-    private String number;
-    @ManyToMany
-    private List<Subscription> subscriptions;
+    AbstractCostumer customer;
     @OneToMany(mappedBy = "vehicle")
-    private List<Reservation> reservations;
-    @OneToOne(mappedBy = "vehicle", cascade = CascadeType.ALL)
-    private ParkingSpace parkingSpace;
+    List <Reservation> reservations = new ArrayList<>();
     
-    
-    /* ----- Constructors ------------------------------------------- */
-    
-    public Vehicle () {}
-    
-    public Vehicle (@NotNull String number, @NotNull Customer customer) {
-        this.number = number;
+    public Vehicle(@NotNull Long vehicleNumber, @NotNull AbstractCostumer customer, Reservation reservation) {
+        this.vehicleNumber = vehicleNumber;
         this.customer = customer;
-        this.subscriptions = new ArrayList<>();
-        this.reservations = new ArrayList<>();
-        this.parkingSpace = null;
+        this.reservations.add(reservation);
     }
     
-    public Vehicle (@NotNull String number, @NotNull Customer customer, List<Subscription> subscriptions) {
-        this.number = number;
+    public Vehicle(@NotNull Long vehicleNumber, @NotNull AbstractCostumer customer) {
+        this.vehicleNumber = vehicleNumber;
         this.customer = customer;
-        this.subscriptions = subscriptions;
-        this.reservations = new ArrayList<>();
-        this.parkingSpace = null;
     }
     
-    public Vehicle (@NotNull String number, @NotNull Customer customer, List<Subscription> subscriptions, List<Reservation> reservations, ParkingSpace parkingSpace) {
-        this.number = number;
-        this.customer = customer;
-        this.subscriptions = subscriptions;
-        this.reservations = reservations;
-        this.parkingSpace = parkingSpace;
+    public Vehicle() {
+    
     }
     
-    
-    /* ----- Getters and Setters ------------------------------------ */
-    
-    public Integer getId () {
-        return id;
+    public Long getVehicleNumber() {
+        return vehicleNumber;
     }
     
-    public void setId (Integer id) {
-        this.id = id;
-    }
-    
-    public @NotNull String getNumber () {
-        return number;
-    }
-    
-    public void setNumber (@NotNull String number) {
-        this.number = number;
-    }
-    
-    public @NotNull Customer getCustomer () {
+    public AbstractCostumer getCustomer() {
         return customer;
     }
     
-    public void setCustomer (@NotNull Customer customer) {
-        this.customer = customer;
-    }
-    
-    public List<Subscription> getSubscriptions () {
-        return subscriptions;
-    }
-    
-    public void setSubscriptions (List<Subscription> subscriptions) {
-        this.subscriptions = subscriptions;
-    }
-    
-    public List<Reservation> getReservations () {
+    public List<Reservation> getReservations() {
         return reservations;
     }
     
-    public void setReservations (List<Reservation> reservations) {
+    public void setVehicleNumber(Long vehicleNumber) {
+        this.vehicleNumber = vehicleNumber;
+    }
+    
+    public void setCustomer(AbstractCostumer customer) {
+        this.customer = customer;
+    }
+    
+    public void setReservations(List<Reservation> reservations) {
         this.reservations = reservations;
     }
-    
-    public ParkingSpace getParkingSpace () {
-        return parkingSpace;
+    public void addReservation (Reservation reservation){
+        reservations.add(reservation);
     }
-    
-    public void setParkingSpace (ParkingSpace parkingSpace) {
-        this.parkingSpace = parkingSpace;
-    }
-    
-    
-    /* ----- Utility Methods ---------------------------------------- */
-    
-    @Override
-    public String toString () {
-        return "Vehicle {" +
-                "id: " + id +
-                ", licensePlate: " + number +
-                ", customer: " + customer +
-                ", subscriptions: " + (subscriptions != null ? subscriptions : "null") +
-                ", reservations: " + (reservations != null ? reservations : "null") +
-                ", parkingSpace: " + (parkingSpace != null ? parkingSpace : "null") +
-                '}';
-    }
-    
 }

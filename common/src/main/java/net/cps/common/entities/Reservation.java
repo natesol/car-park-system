@@ -1,253 +1,55 @@
 package net.cps.common.entities;
 
-import net.cps.common.utils.ReservationStatus;
+import java.util.Date;
+
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Calendar;
-import java.util.TimeZone;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 
 @Entity
-@Table(name = "reservations")
-public class Reservation implements Serializable {
+@Table(name = "reservation")
+public class Reservation {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", updatable = false, nullable = false)
-    private Integer id;
+    @Column(name="reservationId", updatable = false, nullable = false)
+    private Long reservationId;
     @NotNull
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "parking_lot_id", referencedColumnName = "id")
+    @ManyToOne
+    @JoinColumn(name = "parking_lot_id",referencedColumnName = "id")
     private ParkingLot parkingLot;
     @NotNull
-    @ManyToOne
-    @JoinColumn(name = "customer_email", referencedColumnName = "email")
-    private Customer customer;
+    private LocalDateTime arrivalDate;
+    @NotNull
+    private LocalDateTime departureTime;
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "vehicle_number", referencedColumnName = "number")
+    @JoinColumn(name = "vehicle_number", referencedColumnName = "id")
     private Vehicle vehicle;
-    @NotNull
-    @Column(name = "arrival_time")
-    private Calendar arrivalTime;
-    @NotNull
-    @Column(name = "departure_time")
-    private Calendar departureTime;
-    @Column(name = "entry_time")
-    private Calendar entryTime;
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status")
-    private ReservationStatus status;
-    @NotNull
-    @Column(name = "payed")
-    private Double payed;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "parking_space_id", unique = true)
+    @OneToOne
     private ParkingSpace parkingSpace;
     
-    public static final double CANCELLATION_FEE_MORE_THAN_3_HOURS = 0.9;
-    public static final double CANCELLATION_FEE_LESS_THAN_3_HOURS = 0.5;
-    public static final double CANCELLATION_FEE_LESS_THAN_1_HOURS = 0.1;
-    
-    
-    /* ----- Constructors ------------------------------------------- */
-    
-    public Reservation () {}
-    
-    public Reservation (@NotNull ParkingLot parkingLot, @NotNull Customer customer, @NotNull Vehicle vehicle, @NotNull Calendar arrivalTime, @NotNull Calendar departureTime) {
-        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Jerusalem"));
-        
+    //use if the car already entered the parking lot
+    public Reservation(@NotNull ParkingLot parkingLot, @NotNull LocalDateTime arrivalDate,
+                       @NotNull LocalDateTime departureTime, @NotNull Vehicle vehicle, ParkingSpace parkingSpace) {
         this.parkingLot = parkingLot;
-        this.customer = customer;
-        this.vehicle = vehicle;
-        this.arrivalTime = arrivalTime;
+        this.arrivalDate = arrivalDate;
         this.departureTime = departureTime;
-        this.entryTime = arrivalTime;
-        this.status = ReservationStatus.PENDING;
-        this.payed = calculatePrice();
-    }
-    
-    public Reservation (@NotNull ParkingLot parkingLot, @NotNull Customer customer, @NotNull Vehicle vehicle, @NotNull Calendar arrivalTime, @NotNull Calendar departureTime, @NotNull ReservationStatus status) {
-        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Jerusalem"));
-        
-        this.parkingLot = parkingLot;
-        this.customer = customer;
         this.vehicle = vehicle;
-        this.arrivalTime = arrivalTime;
-        this.departureTime = departureTime;
-        this.entryTime = arrivalTime;
-        this.status = status;
-        this.payed = calculatePrice();
-    }
-    
-    public Reservation (@NotNull ParkingLot parkingLot, @NotNull Customer customer, @NotNull Vehicle vehicle, @NotNull Calendar arrivalTime, @NotNull Calendar departureTime, @NotNull ReservationStatus status, @NotNull Double payed) {
-        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Jerusalem"));
-        
-        this.parkingLot = parkingLot;
-        this.customer = customer;
-        this.vehicle = vehicle;
-        this.arrivalTime = arrivalTime;
-        this.departureTime = departureTime;
-        this.entryTime = arrivalTime;
-        this.status = status;
-        this.payed = payed;
-    }
-    
-    
-    /* ----- Getters & Setters -------------------------------------- */
-    
-    public Integer getId () {
-        return id;
-    }
-    
-    public void setId (Integer id) {
-        this.id = id;
-    }
-    
-    public @NotNull ParkingLot getParkingLot () {
-        return parkingLot;
-    }
-    
-    public void setParkingLot (@NotNull ParkingLot parkingLot) {
-        this.parkingLot = parkingLot;
-    }
-    
-    public @NotNull String getParkingLotName () {
-        return parkingLot.getName();
-    }
-    
-    public @NotNull Customer getCustomer () {
-        return customer;
-    }
-    
-    public void setCustomer (@NotNull Customer customer) {
-        this.customer = customer;
-    }
-    
-    public @NotNull Vehicle getVehicle () {
-        return vehicle;
-    }
-    
-    public void setVehicle (@NotNull Vehicle vehicle) {
-        this.vehicle = vehicle;
-    }
-    
-    public @NotNull String getVehicleNumber () {
-        return vehicle.getNumber();
-    }
-    
-    public @NotNull Calendar getArrivalTime () {
-        return arrivalTime;
-    }
-    
-    public void setArrivalTime (@NotNull Calendar arrivalTime) {
-        this.arrivalTime = arrivalTime;
-    }
-    
-    public @NotNull String getArrivalTimeFormatted () {
-        return String.format("%02d/%02d/%02d %02d:%02d", arrivalTime.get(Calendar.DAY_OF_MONTH), arrivalTime.get(Calendar.MONTH) + 1, arrivalTime.get(Calendar.YEAR), arrivalTime.get(Calendar.HOUR_OF_DAY), arrivalTime.get(Calendar.MINUTE));
-    }
-    
-    public @NotNull Calendar getDepartureTime () {
-        return departureTime;
-    }
-    
-    public void setDepartureTime (@NotNull Calendar departureTime) {
-        this.departureTime = departureTime;
-    }
-    
-    public @NotNull String getDepartureTimeFormatted () {
-        return String.format("%02d/%02d/%02d %02d:%02d", departureTime.get(Calendar.DAY_OF_MONTH), departureTime.get(Calendar.MONTH) + 1, departureTime.get(Calendar.YEAR), departureTime.get(Calendar.HOUR_OF_DAY), departureTime.get(Calendar.MINUTE));
-    }
-    
-    public Calendar getEntryTime () {
-        return entryTime;
-    }
-    
-    public void setEntryTime (Calendar entryTime) {
-        this.entryTime = entryTime;
-    }
-    
-    public @NotNull ReservationStatus getStatus () {
-        return status;
-    }
-    
-    public void setStatus (@NotNull ReservationStatus status) {
-        this.status = status;
-    }
-    
-    public @NotNull Double getPayed () {
-        return payed;
-    }
-    
-    public void setPayed (@NotNull Double payed) {
-        this.payed = payed;
-    }
-    
-    public ParkingSpace getParkingSpace () {
-        return parkingSpace;
-    }
-    
-    public void setParkingSpace (ParkingSpace parkingSpace) {
         this.parkingSpace = parkingSpace;
     }
-    
-    
-    /* ----- Utility Methods ---------------------------------------- */
-    
-    public boolean isPayed () {
-        return payed > 0.0;
+    public Reservation(@NotNull ParkingLot parkingLot, @NotNull LocalDateTime arrivalDate, @NotNull LocalDateTime departureTime, @NotNull Vehicle vehicle) {
+        this.parkingLot = parkingLot;
+        this.arrivalDate = arrivalDate;
+        this.departureTime = departureTime;
+        this.vehicle = vehicle;
     }
     
-    public boolean isCancelled () {
-        return status == ReservationStatus.CANCELLED;
-    }
+    public Reservation() {
     
-    public boolean isPending () {
-        return status == ReservationStatus.PENDING;
     }
-    
-    public boolean isEnded () {
-        return status == ReservationStatus.CHECKED_OUT;
-    }
-    
-    public boolean isOngoing () {
-        return status == ReservationStatus.CHECKED_IN;
-    }
-    
-    public Double calculatePrice () {
-        return parkingLot.calculateReservationPrice(arrivalTime, departureTime);
-    }
-    
-    public Double calculateCancellationFee () {
-        Calendar now = Calendar.getInstance();
-        long diff = departureTime.getTimeInMillis() - now.getTimeInMillis();
-        long diffHours = diff / (60 * 60 * 1000);
-        if (diffHours > 3) {
-            return payed * CANCELLATION_FEE_MORE_THAN_3_HOURS;
-        } else if (diffHours > 1) {
-            return payed * CANCELLATION_FEE_LESS_THAN_3_HOURS;
-        } else {
-            return payed * CANCELLATION_FEE_LESS_THAN_1_HOURS;
-        }
-    }
-    
-    @Override
-    public String toString () {
-        return "Reservation {" +
-                "id: " + id +
-                ", parkingLot: " + parkingLot +
-                ", customer: " + customer +
-                ", vehicle: " + vehicle +
-                ", arrivalTime: " + arrivalTime.getTime() +
-                ", departureTime: " + departureTime.getTime() +
-                ", entryTime: " + entryTime.getTime() +
-                ", status: " + status +
-                ", payed: " + payed +
-                ", parkingSpace: " + parkingSpace +
-                '}';
-    }
-    
 }
