@@ -3,12 +3,25 @@ package net.cps.client.controllers;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.layout.VBox;
 
-public class KioskHomeController {
+public class KioskMainController extends PageController implements Initializable {
     @FXML
-    private MFXButton testBtn;
+    public VBox kioskMenu;
     @FXML
-    private MFXButton test2Btn;
+    public MFXButton homeBtn;
+    @FXML
+    public MFXButton subscriptionBtn;
+    @FXML
+    public MFXButton reservationBtn;
+    @FXML
+    public MFXButton bookNowBtn;
+    @FXML
+    public VBox subPageWrapper;
+
+    
+    
     
     // ----- Action Handlers Methods ----------------------
     

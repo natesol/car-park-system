@@ -5,7 +5,8 @@ package net.cps.common.utils;
  */
 public enum OrganizationType {
     MANAGEMENT,
-    PARKING_LOT;
+    PARKING_LOT,
+    OFFICE;
     
     
     /* ----- Utility Methods ------------------------------------------ */
@@ -14,7 +15,7 @@ public enum OrganizationType {
         return switch (type) {
             case "MANAGEMENT" -> MANAGEMENT;
             case "PARKING_LOT" -> PARKING_LOT;
-            
+            case "OFFICE" -> OFFICE;
             default -> throw new IllegalArgumentException("Invalid type: " + type);
         };
     }

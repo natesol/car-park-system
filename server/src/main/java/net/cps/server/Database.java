@@ -182,7 +182,7 @@ public class Database {
      *                       the query must be in the following format: `INSERT INTO &lt;table_name&gt; (&lt;column_name&gt;, &lt;column_name&gt;, ...) VALUES (&lt;value&gt;, &lt;value&gt;, ...);`.
      * @return the new entities given ids.
      **/
-    public static List<Integer> customQueryAdd (SessionFactory sessionFactory, String query) {
+    public static List<Integer> addCustomQuery (SessionFactory sessionFactory, String query) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         List<Integer> ids = null;
@@ -356,7 +356,7 @@ public class Database {
      *                       or in the following format: `SELECT * FROM &lt;table_name&gt;;`.
      * @return the entities instance.
      **/
-    public static <T> List<T> customQueryGet (SessionFactory sessionFactory, String query, Class<T> type) {
+    public static <T> List<T> getCustomQuery (SessionFactory sessionFactory, String query, Class<T> type) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         List<T> data = null;
@@ -479,7 +479,7 @@ public class Database {
      *                       or in the following format: `UPDATE &lt;table_name&gt; SET &lt;column_name&gt; = &lt;value&gt; WHERE &lt;column_name&gt; IN (&lt;value&gt;, &lt;value&gt;, ...);`,
      *                       or in the following format: `UPDATE &lt;table_name&gt; SET &lt;column_name&gt; = &lt;value&gt;;`.
      **/
-    public static void customQueryUpdate (SessionFactory sessionFactory, String query) {
+    public static void updateCustomQuery (SessionFactory sessionFactory, String query) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         
@@ -633,7 +633,7 @@ public class Database {
      * @param query          the custom query.
      *                       the query must be a 'DELETE' query.
      **/
-    public static void customQueryDelete (SessionFactory sessionFactory, String query) {
+    public static void deleteCustomQuery (SessionFactory sessionFactory, String query) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         

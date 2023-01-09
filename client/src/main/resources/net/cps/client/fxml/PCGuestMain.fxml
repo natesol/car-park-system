@@ -161,7 +161,10 @@
             <center>
                 <MFXScrollPane fitToHeight="true" fitToWidth="true" styleClass="dialog-content-scroll"
                                BorderPane.alignment="CENTER">
-                    <TextFlow fx:id="dialogContent" styleClass="dialog-content"/>
+                    <VBox>
+                        <TextFlow fx:id="dialogContent" styleClass="dialog-content"/>
+                        <VBox fx:id="dialogCustomContent"/>
+                    </VBox>
                 </MFXScrollPane>
             </center>
             <bottom>

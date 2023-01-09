@@ -23,6 +23,7 @@ public enum EmployeeRole {
             case PARKING_LOT_MANAGER -> "Parking Lot Manager";
             case PARKING_LOT_EMPLOYEE -> "Parking Lot Employee";
             case CUSTOMER_SERVICE_EMPLOYEE -> "Customer Service Employee";
+            default -> throw new IllegalArgumentException("Invalid role: " + role);
         };
     }
     
@@ -30,6 +31,7 @@ public enum EmployeeRole {
         String roleFormated = role.trim().toUpperCase().replace(" ", "_").replace("-", "_");
         
         return switch (roleFormated) {
+            case "ADMIN" -> ADMIN;
             case "EMPLOYEE" -> EMPLOYEE;
             case "NETWORK_MANAGER" -> NETWORK_MANAGER;
             case "PARKING_LOT_MANAGER" -> PARKING_LOT_MANAGER;

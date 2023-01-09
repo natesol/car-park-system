@@ -141,7 +141,7 @@ public class PCSignUpController extends PageController {
     
     
     
-    /* ----- Event Listeners ---------------------------------------- */
+    /* ----- Eventbus Listeners ------------------------------------- */
     
     @Subscribe
     public void onCustomerCreation (CustomerCreationEvent event) {

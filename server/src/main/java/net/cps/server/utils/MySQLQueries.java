@@ -20,7 +20,7 @@ public class MySQLQueries {
                       id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
                       name VARCHAR(255) NOT NULL,
                       address VARCHAR(255) NOT NULL,
-                      floor_width INT NOT NULL
+                      floor_cols INT NOT NULL
             )""";
     
     public static final String CREATE_TABLE_RATES = """

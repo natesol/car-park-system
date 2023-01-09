@@ -47,6 +47,9 @@
 .dialog-root .dialog .dialog-content-scroll:fitToWidth:fitToHeight {
   -fx-background-color: #ffffff !important;
 }
+.dialog-root .dialog .dialog-content-scroll:fitToWidth:fitToHeight .viewport {
+  -fx-background-color: #ffffff !important;
+}
 .dialog-root .dialog #dialogContent {
   -fx-background-color: #ffffff !important;
 }

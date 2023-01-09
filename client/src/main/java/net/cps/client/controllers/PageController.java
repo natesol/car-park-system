@@ -32,6 +32,8 @@ public class PageController implements Initializable {
     @FXML
     public TextFlow dialogContent;
     @FXML
+    public VBox dialogCustomContent;
+    @FXML
     public HBox dialogAction;
     public Dialog dialog = new Dialog();
     @FXML
@@ -61,14 +63,22 @@ public class PageController implements Initializable {
         public void setTitleText (String title) {
             dialogControl.setHeaderText(title);
         }
-        public void setBodyText (String content) {
+        public void setBodyText (String... content) {
             dialogContent.getChildren().clear();
-            dialogContent.getChildren().add(new Text(content));
+            for (String str : content) {
+                dialogContent.getChildren().add(new Text(str));
+            }
         }
         public void setBodyText (List<Node> content) {
             dialogContent.getChildren().clear();
             for (Node node : content) {
                 dialogContent.getChildren().add(node);
+            }
+        }
+        public void setCustomContent (Node... nodes) {
+            dialogCustomContent.getChildren().clear();
+            for (Node node : nodes) {
+                dialogCustomContent.getChildren().add(node);
             }
         }
         public void setActionButtons (Node... buttons) {

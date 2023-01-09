@@ -9,22 +9,22 @@ import java.io.IOException;
 
 /**
  * Main JavaFX GUI Application.
-**/
+ **/
 public class App extends Application {
     private static Scene scene;
     private static CPSClient client;
     
-    public static void setScene(String fxml) throws IOException {
+    public static void setScene (String fxml) throws IOException {
         scene.setRoot(ResourcesLoader.loadFXML(fxml));
     }
     
-    public static void run(CPSClient client) {
+    public static void run (CPSClient client) {
         App.client = client;
         launch();
     }
     
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start (Stage stage) throws IOException {
         client = CPSClient.getClient();
         client.openConnection();
         
@@ -40,7 +40,7 @@ public class App extends Application {
     }
     
     @Override
-    public void stop() throws Exception {
+    public void stop () throws Exception {
         super.stop();
         client.closeConnection();
         System.out.println("[CLIENT] application closed successfully.");

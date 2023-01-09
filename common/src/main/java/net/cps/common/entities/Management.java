@@ -1,5 +1,8 @@
 package net.cps.common.entities;
 
+
+import net.cps.common.utils.AbstractOrganization;
+
 public class Management extends AbstractOrganization {
     private Long id;
 
@@ -14,4 +17,6 @@ public class Management extends AbstractOrganization {
     public void setId(Long id) {
         this.id = id;
     }
+    
+    
 }

@@ -1,16 +1,13 @@
 package net.cps.common.entities;
 
+import net.cps.common.utils.AbstractUser;
+
 import javax.persistence.*;
 import java.io.Serializable;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.util.Base64;
-import java.util.Objects;
 
 @Entity
 @Table(name = "customers")
-public class Customer implements Serializable {
+public class Customer extends AbstractUser implements Serializable {
     //@Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     //@Column(name = "id")
@@ -38,7 +35,8 @@ public class Customer implements Serializable {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        setPassword(password);
+        this.passwordSalt = generateSalt();
+        this.passwordHash = hashPassword(password, passwordSalt);
     }
     
     //public int getId () {
@@ -68,61 +66,27 @@ public class Customer implements Serializable {
     public String getEmail () {
         return email;
     }
-    
+
     public void setEmail (String email) {
         this.email = email;
     }
-    
+    @Override
     public String getPasswordHash () {
         return passwordHash;
     }
-    
+
     public void setPasswordHash (String passwordHash) {
         this.passwordHash = passwordHash;
     }
-    
+    @Override
     public String getPasswordSalt () {
         return passwordSalt;
     }
-    
+
     public void setPasswordSalt (String passwordSalt) {
         this.passwordSalt = passwordSalt;
     }
-    
-    public void setPassword (String password) {
-        passwordSalt = generateSalt();
-        passwordHash = hashPassword(password, passwordSalt);
-    }
-    
-    private String generateSalt () {
-        SecureRandom random = new SecureRandom();
-        byte[] salt = new byte[16];
-        random.nextBytes(salt);
-        return Base64.getEncoder().encodeToString(salt);
-    }
-    
-    private String hashPassword (String password, String salt) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-512");
-            md.update(salt.getBytes());
-            byte[] bytes = md.digest(password.getBytes());
-            StringBuilder sb = new StringBuilder();
-            
-            for (byte aByte : bytes) {
-                sb.append(Integer.toString((aByte & 0xff) + 0x100, 16).substring(1));
-            }
-            return sb.toString();
-        }
-        catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-    
-    public boolean verifyPassword (String password) {
-        return Objects.equals(hashPassword(password, passwordSalt), passwordHash);
-    }
-    
+
     @Override
     public String toString () {
         return "Customer {" +

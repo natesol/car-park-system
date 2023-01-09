@@ -178,6 +178,8 @@ public class Main {
             customers.add(new Customer("Jane", "Doe", "janedoe@gmail.com", "987654321"));
             customers.add(new Customer("Bob", "Smith", "bobsmith@gmail.com", "123987456"));
             Database.addMultipleEntities(sessionFactory, customers);
+    
+    
             
             ArrayList<Employee> employees = new ArrayList<>();
             employees.add(new Employee("Amir", "David", "amirdenekamp@gmail.com", "amir123", EmployeeRole.NETWORK_MANAGER));
@@ -217,5 +219,6 @@ public class Main {
     
     /* ------- ^ Test Methods ^ ------------------------------------------------------------------- */
     /* -------------------------------------------------------------------------------------------- */
+
     
 }

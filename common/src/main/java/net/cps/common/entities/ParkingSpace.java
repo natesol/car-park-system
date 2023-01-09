@@ -1,27 +1,50 @@
 package net.cps.common.entities;
 
-import net.cps.common.utils.ParkingSpaceCondition;
+import net.cps.common.utils.ParkingSpaceState;
+import javax.persistence.*;
+import java.io.Serializable;
 
-// maybe not nessecarry, can be included as a field at ParkingLot
-public class ParkingSpace  {
-    private ParkingSpaceCondition condition;
+@Entity
+@Table(name = "parking_spaces")
+public class ParkingSpace implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="parking_lot", updatable = false, nullable = false)
+    private ParkingLot parkingLot;
+
+    @Column(name = "floor_row", nullable = false)
+    private Integer floorRow;
     
+    @Column(name = "floor_num", nullable = false)
+    private Integer numOfFloors;
+    
+    @Column(name = "floor_col", nullable = false)
+    private Integer floorCols;
+    
+    @Column(name = "state", nullable = false)
+    private ParkingSpaceState state;
+    
+    @Column(name = "vehicle_id", nullable = false)
     private String vehicleId;
 
-    public ParkingSpace(ParkingSpaceCondition condition) {
-        this.condition = condition;
+    public ParkingSpace(ParkingSpaceState condition) {
+        this.state = condition;
         this.vehicleId = null;
     }
     public ParkingSpace(String vehicleId) {
-        this.condition = ParkingSpaceCondition.OCCUPIED;
+        this.state = ParkingSpaceState.OCCUPIED;
         this.vehicleId = vehicleId;
     }
-
-    public ParkingSpaceCondition getCondition() {
-        return condition;
+    
+    public ParkingSpace () {
+    
     }
-    public void setCondition(ParkingSpaceCondition condition) {
-        this.condition = condition;
+    
+    public ParkingSpaceState getState () {
+        return state;
+    }
+    public void setState (ParkingSpaceState state) {
+        this.state = state;
     }
     
     public String getVehicleId() {

@@ -1,6 +1,6 @@
 package net.cps.common.utils;
 
-public enum ParkingSpaceCondition {
+public enum ParkingSpaceState {
     AVAILABLE,
     OCCUPIED,
     RESERVED,
@@ -10,7 +10,7 @@ public enum ParkingSpaceCondition {
     
     /* ----- Utility Methods ---------------------------------------- */
     
-    public static String toString(ParkingSpaceCondition condition) {
+    public static String toString(ParkingSpaceState condition) {
         return switch (condition) {
             case AVAILABLE -> "Available";
             case OCCUPIED -> "Occupied";
@@ -21,7 +21,7 @@ public enum ParkingSpaceCondition {
         };
     }
     
-    public static ParkingSpaceCondition fromString(String condition) {
+    public static ParkingSpaceState fromString(String condition) {
         String conditionFormatted = condition.toLowerCase().trim().replaceAll(" ", "_").replaceAll("-", "_");
         return switch (conditionFormatted) {
             case "AVAILABLE" -> AVAILABLE;

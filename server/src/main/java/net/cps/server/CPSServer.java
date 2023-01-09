@@ -301,7 +301,7 @@ public class CPSServer extends AbstractServer {
                 return new ResponseMessage(requestId, "customer", customer, RequestType.AUTH, query, true);
             }
             
-            List<Employee> employeeList = Database.customQueryGet(sessionFactory, MySQLQueries.SELECT_ALL + "employees" + MySQLQueries.WHERE + "email = '" + email + "'", Employee.class);
+            List<Employee> employeeList = Database.getCustomQuery(sessionFactory, MySQLQueries.SELECT_ALL + "employees" + MySQLQueries.WHERE + "email = '" + email + "'", Employee.class);
             Employee employee = employeeList.size() > 0 ? (Employee) (employeeList.get(0)) : null;
             if (employee != null) {
                 if (!employee.verifyPassword(password)) {

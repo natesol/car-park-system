@@ -44,7 +44,6 @@ public class Rates implements Serializable {
     
     public Rates (ParkingLot parkingLot) {
         this.parkingLot = parkingLot;
-        //this.parkingLotId = parkingLot != null ? parkingLot.getId() : null;
         this.hourlyOccasionalParking = DEFAULT_HOURLY_OCCASIONAL_PARKING;
         this.hourlyOnetimeParking = DEFAULT_HOURLY_ONETIME_PARKING;
         this.regularSubscriptionSingleVehicle = DEFAULT_REGULAR_SUBSCRIPTION_SINGLE_VEHICLE;

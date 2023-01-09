@@ -1,5 +1,6 @@
 package net.cps.common.entities;
 
+import net.cps.common.utils.AbstractOrganization;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
@@ -10,10 +11,8 @@ import java.io.Serializable;
 public class ParkingLot extends AbstractOrganization implements Serializable {
     public static final String DEFAULT_NAME = "Parking Lot";
     public static final String DEFAULT_ADDRESS = "Address";
-    public static final int DEFAULT_FLOOR_WIDTH = 1;
+    public static final int DEFAULT_FLOOR_COLS = 1;
     
-    public static final int floorLength = 3; // x axes
-    public static final int numOfFloors = 3; // y axes
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,24 +25,45 @@ public class ParkingLot extends AbstractOrganization implements Serializable {
     @Column(name = "address", nullable = false)
     private String address;
     
-    @Column(name = "floor_width", nullable = false)
-    private int floorWidth; // z axes
+    @Column(name = "floor_rows", nullable = false)
+    private static final Integer floorRows = 3;
+    
+    @Column(name = "num_of_floors", nullable = false)
+    private static final Integer numOfFloors = 3;
+    
+    @Column(name = "floor_cols", nullable = false)
+    private Integer floorCols;
+    
+    //@NotNull
+    //@OneToOne(cascade = CascadeType.ALL)
+    //private Kiosk kiosk;
     
     @NotNull
     @OneToOne(mappedBy = "parkingLot", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Rates rates;
     
+    //@NotNull
+    //@OneToOne
+    //@JoinColumn(name = "robot_id", referencedColumnName = "id")
+    //private Robot robot;
+    //
+    //@OneToMany(fetch = FetchType.LAZY, mappedBy = "parking_lot", cascade = {CascadeType.ALL})
+    //private List<Employee> employees;
+    
+    //@OneToMany(mappedBy="parkingLot")
+    //List <Reservation> reservations;
+    
     public ParkingLot () {
         this.name = DEFAULT_NAME;
         this.address = DEFAULT_ADDRESS;
-        this.floorWidth = DEFAULT_FLOOR_WIDTH;
+        this.floorCols = DEFAULT_FLOOR_COLS;
         this.rates = new Rates(this);
     }
     
-    public ParkingLot (String name, String address, int floorWidth) {
+    public ParkingLot (String name, String address, int floorCols) {
         this.name = name;
         this.address = address;
-        this.floorWidth = floorWidth;
+        this.floorCols = floorCols;
         this.rates = new Rates(this);
     }
     
@@ -59,8 +79,8 @@ public class ParkingLot extends AbstractOrganization implements Serializable {
         return this.address;
     }
     
-    public int getFloorWidth () {
-        return this.floorWidth;
+    public int getFloorCols () {
+        return this.floorCols;
     }
     
     public @NotNull Rates getRates () {
@@ -68,7 +88,7 @@ public class ParkingLot extends AbstractOrganization implements Serializable {
     }
     
     public int getTotalSpace () {
-        return this.floorWidth * floorLength * numOfFloors;
+        return this.floorCols * floorRows * numOfFloors;
     }
     
     public void setName (String name) {
@@ -80,7 +100,7 @@ public class ParkingLot extends AbstractOrganization implements Serializable {
     }
     
     public void setFloorWidth (int floorWidth) {
-        this.floorWidth = floorWidth;
+        this.floorCols = floorWidth;
     }
     
     public void setRates (Double hourlyOccasionalParking, Double hourlyOnetimeParking, Double regularSubscriptionSingleVehicle, Double regularSubscriptionMultipleVehicles, Double fullSubscriptionSingleVehicle) {
@@ -107,7 +127,7 @@ public class ParkingLot extends AbstractOrganization implements Serializable {
                 "id: " + id +
                 ", name: '" + name + "'" +
                 ", address: '" + address + "'" +
-                ", floorWidth: " + floorWidth +
+                ", floorCols: " + floorCols +
                 ", rates: " + rates +
                 "}";
     }

@@ -3,7 +3,7 @@ package net.cps.common.entities;
 import java.util.Date;
 
 
-public abstract  class AbstractCostumer   {
+public abstract class AbstractCostumer   {
     private Long vehicleNumber;
 
     public Integer orderParking(String a, Date b){
