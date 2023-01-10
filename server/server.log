@@ -1,7 +1,7 @@
 Time                      ID                   Type                 Message
-2023-01-09 14:18:42       1                    INFO                 a list of entities added to the database. entities: Customer, ids: [johndoe@gmail.com, janedoe@gmail.com, bobsmith@gmail.com]
-2023-01-09 14:18:42       2                    INFO                 a list of entities added to the database. entities: Employee, ids: [1, 2, 3]
-2023-01-09 14:18:42       3                    INFO                 a list of entities added to the database. entities: ParkingLot, ids: [1, 2, 3, 4]
-2023-01-09 14:18:59       4                    INFO                 client connected via host: 127.0.0.1
-2023-01-09 14:19:55       5                    INFO                 client connected via host: 127.0.0.1
-2023-01-09 14:20:38       6                    INFO                 a new entity added to the database. entity: Customer, id: aaa@aa.aa
+2023-01-10 16:27:20       1                    INFO                 a list of entities added to the database. entities: Customer, ids: [netanelshlomo@gmail.com, john.doe@gmail.com, jane.doe@gmail.com, bob.smith@gmail.com, alice.smith@gmail.com, foo.bar@gmail.com]
+2023-01-10 16:27:20       2                    INFO                 a list of entities added to the database. entities: ParkingLot, ids: [1, 2, 3, 4]
+2023-01-10 16:27:20       3                    INFO                 a new entity added to the database. entity: Management, id: 5
+2023-01-10 16:27:20       4                    INFO                 a list of entities added to the database. entities: Employee, ids: [1, 2, 3, 4, 5]
+2023-01-10 16:27:23       5                    INFO                 client connected via host: 127.0.0.1
+2023-01-10 16:27:25       6                    ERROR                failed to get all entities: ParkingLot from the database.

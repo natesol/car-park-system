@@ -1,7 +1,9 @@
 package net.cps.common.messages;
 
+import net.cps.common.utils.AbstractMessage;
 import net.cps.common.utils.MessageType;
 import net.cps.common.utils.RequestType;
+import net.cps.common.utils.ResponseStatus;
 
 import java.io.Serializable;
 
@@ -10,53 +12,47 @@ import java.io.Serializable;
  * This class is used to send messages between the server and the client (a server response).
  * An instance of this class is sent to the client when the server has finished processing a request.
  */
-public class ResponseMessage extends Message implements Serializable {
-    private RequestType type;
-    private String query;
-    private Boolean isSuccess;
+public class ResponseMessage extends AbstractMessage implements Serializable {
+    public static final MessageType MESSAGE_TYPE = MessageType.REQUEST;
+    private final RequestMessage originalRequest;
+    private final ResponseStatus status;
     
     
     /* ----- Constructors ------------------------------------------- */
     
-    public ResponseMessage (int id, String body, Object data, RequestType requestType, Boolean isSuccess) {
-        super(id, body, data, MessageType.RESPONSE);
-        this.type = requestType;
-        this.query = null;
-        this.isSuccess = isSuccess;
+    public ResponseMessage (int id, RequestMessage originalRequest, ResponseStatus status) {
+        super(id, MESSAGE_TYPE, originalRequest.getHeader(), originalRequest.getBody());
+        this.originalRequest = originalRequest;
+        this.status = status;
     }
     
-    public ResponseMessage (int id, String body, Object data, RequestType requestType, String query, Boolean isSuccess) {
-        super(id, body, data, MessageType.RESPONSE);
-        this.type = requestType;
-        this.query = query;
-        this.isSuccess = isSuccess;
+    public ResponseMessage (int id, RequestMessage originalRequest, ResponseStatus status, String message) {
+        super(id, MESSAGE_TYPE, originalRequest.getHeader(), originalRequest.getBody(), message);
+        this.originalRequest = originalRequest;
+        this.status = status;
+    }
+    
+    public ResponseMessage (int id, RequestMessage originalRequest, ResponseStatus status, Object data) {
+        super(id, MESSAGE_TYPE, originalRequest.getHeader(), originalRequest.getBody(), data);
+        this.originalRequest = originalRequest;
+        this.status = status;
+    }
+    
+    public ResponseMessage (int id, RequestMessage originalRequest, ResponseStatus status, String message, Object data) {
+        super(id, MESSAGE_TYPE, originalRequest.getHeader(), originalRequest.getBody(), message, data);
+        this.originalRequest = originalRequest;
+        this.status = status;
     }
     
     
     /* ----- Getters and Setters ------------------------------------ */
     
-    public RequestType getType () {
-        return type;
+    public RequestMessage getOriginalRequest () {
+        return originalRequest;
     }
     
-    public void setType (RequestType type) {
-        this.type = type;
-    }
-    
-    public String getQuery () {
-        return query;
-    }
-    
-    public void setQuery (String query) {
-        this.query = query;
-    }
-    
-    public Boolean getIsSuccess () {
-        return isSuccess;
-    }
-    
-    public void setIsSuccess (Boolean success) {
-        isSuccess = success;
+    public ResponseStatus getStatus () {
+        return status;
     }
     
     
@@ -68,11 +64,11 @@ public class ResponseMessage extends Message implements Serializable {
                 "id: " + getId() +
                 ", timeStamp: " + getTimeStamp() +
                 ", messageType: " + getMessageType() +
+                ", header: " + getHeader() +
                 ", body: " + getBody() +
                 ", data: " + getData() +
-                ", type: " + type +
-                ", query: " + query +
-                ", isSuccess: " + isSuccess +
+                ", originalRequest: " + originalRequest +
+                ", status: " + status +
                 '}';
     }
 }

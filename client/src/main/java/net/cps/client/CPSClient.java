@@ -1,10 +1,13 @@
 package net.cps.client;
 
 import net.cps.client.events.CustomerCreationEvent;
+import net.cps.client.events.GetAllParkingLotEvent;
+import net.cps.client.events.GetParkingLotEvent;
 import net.cps.client.events.ServerAuthEvent;
 import net.cps.client.ocsf.AbstractClient;
 import net.cps.common.messages.RequestMessage;
 import net.cps.common.messages.ResponseMessage;
+import net.cps.common.utils.Entities;
 import net.cps.common.utils.RequestType;
 import org.greenrobot.eventbus.EventBus;
 
@@ -18,11 +21,13 @@ public class CPSClient extends AbstractClient {
     private static int requestID = 0;
     
     
+    
     /* ----- Constructors ------------------------------------------- */
 
     private CPSClient(String host, int port) {
         super(host, port);
     }
+    
     
     
     /* ----- Getters and Setters ------------------------------------ */
@@ -41,54 +46,95 @@ public class CPSClient extends AbstractClient {
     }
     
     
+    
     /* ----- Utility Methods ---------------------------------------- */
-    
-    public static void sendRequestToServer(RequestType type, String query, Object data) {
-        RequestMessage request = new RequestMessage(requestID++, type, query, data, null);
-        try {
-            client.sendToServer(request);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    
-    public static void sendRequestToServer(RequestType type, String query, String body) {
-        RequestMessage request = new RequestMessage(requestID++, type, query, null, body);
-        try {
-            client.sendToServer(request);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    
-    public static void sendRequestToServer(RequestType type, String query, Object data, String body) {
-        RequestMessage request = new RequestMessage(requestID++, type, query, data, body);
-        try {
-            client.sendToServer(request);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
     
     @Override
     protected void handleMessageFromServer(Object responseObj) {
         ResponseMessage response = (ResponseMessage) responseObj;
+        RequestMessage request = response.getOriginalRequest();
+        String header = request.getHeader();
+        RequestType requestType = request.getType();
         
         System.out.println("Client received response from server: " + response.getBody());
         System.out.println(response);
         
-        if (response.getType() == RequestType.POST) {
-            if (response.getQuery().equals("customer/sign-up")) {
-                EventBus.getDefault().post(new CustomerCreationEvent(response));
-            }
-        }
-        else if (response.getType() == RequestType.AUTH) {
-            if (response.getQuery().startsWith("auth/")) {
+        if (requestType == RequestType.GET) {
+            
+            if (header.startsWith(Entities.PARKING_LOT.getTableName())) {
+                
+                System.out.println("Parking lots received");
+                
+                // Get all parking lots
+                if (!header.contains("/")) {
+                    EventBus.getDefault().post(new GetAllParkingLotEvent(response));
+                }
+                // Get a specific parking lot
+                else {
+                    EventBus.getDefault().post(new GetParkingLotEvent(response));
+                }
+                
                 EventBus.getDefault().post(new ServerAuthEvent(response));
             }
+            
+            
+            EventBus.getDefault().post(new ServerAuthEvent(response));
+        }
+        else if (requestType == RequestType.POST) {
+            //if (response.getQuery().equals("customer/sign-up")) {
+            //    EventBus.getDefault().post(new CustomerCreationEvent(response));
+            //}
+        }
+        else if (requestType == RequestType.AUTH) {
+            //if (response.getQuery().startsWith("auth/")) {
+            //    EventBus.getDefault().post(new ServerAuthEvent(response));
+            //}
+        }
+    }
+    
+    
+    public static void sendRequestToServer(RequestType type, String header) {
+        try {
+            client.sendToServer(new RequestMessage(requestID++, type, header));
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public static void sendRequestToServer(RequestType type, String header, String body) {
+        try {
+            client.sendToServer(new RequestMessage(requestID++, type, header, body));
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public static void sendRequestToServer(RequestType type, String header, String body, String message) {
+        try {
+            client.sendToServer(new RequestMessage(requestID++, type, header, body, message));
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public static void sendRequestToServer(RequestType type, String header, String body, Object data) {
+        try {
+            client.sendToServer(new RequestMessage(requestID++, type, header, body, data));
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public static void sendRequestToServer(RequestType type, String header, String body, String message, Object data) {
+        try {
+            client.sendToServer(new RequestMessage(requestID++, type, header, body, message, data));
+        }
+        catch (IOException e) {
+            e.printStackTrace();
         }
     }
     

@@ -13,6 +13,7 @@ import net.cps.client.events.CustomerLoginEvent;
 import net.cps.client.events.EmployeeLoginEvent;
 import net.cps.client.events.ServerAuthEvent;
 import net.cps.common.utils.RequestType;
+import net.cps.common.utils.ResponseStatus;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -79,7 +80,7 @@ public class PCLoginController extends PageController {
     @Subscribe
     public void onServerAuth (ServerAuthEvent event) {
         Platform.runLater(() -> {
-            if (event.getResponse().getIsSuccess()) {
+            if (event.getResponse().getStatus() == ResponseStatus.OK) {
                 try {
                     if (event.getResponse().getBody().equals("customer")) {
                         App.setScene("PCCustomerMain.fxml");

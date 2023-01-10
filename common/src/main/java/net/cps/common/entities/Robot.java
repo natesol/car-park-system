@@ -1,6 +1,6 @@
 package net.cps.common.entities;
 
-import net.cps.common.utils.ParkingSpaceCondition;
+import net.cps.common.utils.ParkingSpaceState;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -41,7 +41,7 @@ class ParkingSpaceSmartArray {
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
                 for (int k = 0; k < z; k++) {
-                    array[i][j][k] = new ParkingSpace(ParkingSpaceCondition.AVAILABLE);
+                    array[i][j][k] = new ParkingSpace(ParkingSpaceState.AVAILABLE);
                 }
             }
         }
@@ -70,7 +70,7 @@ class ParkingSpaceSmartArray {
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
                 for (int k = 0; k < z; k++) {
-                    if (array[i][j][k].getCondition() == ParkingSpaceCondition.AVAILABLE) {
+                    if (array[i][j][k].getState() == ParkingSpaceState.AVAILABLE) {
                         availableCapacity++;
                     }
                 }
