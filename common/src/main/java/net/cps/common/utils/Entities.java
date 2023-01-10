@@ -7,8 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum Entities {
-    ABSTRACT_ORGANIZATION(AbstractOrganization.class, "organizations", "id", Integer.class, (Integer::parseInt)),
-    MANAGEMENT(Management.class, "managements", "id", Integer.class, (Integer::parseInt)),
+    OFFICE(Office.class, "offices", "id", Integer.class, (Integer::parseInt)),
     PARKING_LOT(ParkingLot.class, "parking_lots", "id", Integer.class, (Integer::parseInt)),
     RATES(Rates.class, "rates", "id", Integer.class, (Integer::parseInt)),
     EMPLOYEE(Employee.class, "employees", "id", Integer.class, (Integer::parseInt)),
@@ -27,6 +26,7 @@ public enum Entities {
     
     
     /* ----- Constructors ---------------------------------------------- */
+    
     Entities (Class<?> entityClass, String tableName, String primaryKey, Class<?> primaryKeyClass, Function<String, ?> primaryKeyConverter) {
         this.entityClass = entityClass;
         this.tableName = tableName;
@@ -68,8 +68,7 @@ public enum Entities {
     
     public static String toString (Entities entity) {
         return switch (entity) {
-            case ABSTRACT_ORGANIZATION -> "Abstract Organization";
-            case MANAGEMENT -> "Management";
+            case OFFICE -> "Office";
             case PARKING_LOT -> "Parking Lot";
             case RATES -> "Rates";
             case EMPLOYEE -> "Employee";
@@ -88,8 +87,7 @@ public enum Entities {
         
         String entityFormatted = camelCaseToSnakeCase(entity).trim().toUpperCase().replace(" ", "_").replace("-", "_");
         return switch (entityFormatted) {
-            case "ABSTRACT_ORGANIZATION" -> ABSTRACT_ORGANIZATION;
-            case "MANAGEMENT" -> MANAGEMENT;
+            case "OFFICE" -> OFFICE;
             case "PARKING_LOT" -> PARKING_LOT;
             case "RATES" -> RATES;
             case "EMPLOYEE" -> EMPLOYEE;

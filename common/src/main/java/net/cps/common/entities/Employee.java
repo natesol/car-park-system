@@ -1,6 +1,6 @@
 package net.cps.common.entities;
 
-import net.cps.common.utils.AbstractOrganization;
+import net.cps.common.utils.Organization;
 import net.cps.common.utils.AbstractUser;
 import net.cps.common.utils.EmployeeRole;
 
@@ -30,7 +30,7 @@ public class Employee extends AbstractUser implements Serializable {
     private EmployeeRole role;
     @ManyToOne
     @JoinColumn(name = "organization")
-    private AbstractOrganization organization;
+    private ParkingLot organization;
     
     
     /* ----- Constructors ------------------------------------------- */
@@ -39,7 +39,7 @@ public class Employee extends AbstractUser implements Serializable {
         super();
     }
     
-    public Employee (String email, String firstName, String lastName,  String password, EmployeeRole role, AbstractOrganization organization) {
+    public Employee (String email, String firstName, String lastName,  String password, EmployeeRole role, ParkingLot organization) {
         super();
         this.email = email;
         this.firstName = firstName;
@@ -106,10 +106,10 @@ public class Employee extends AbstractUser implements Serializable {
         this.role = role;
     }
 
-    public AbstractOrganization getOrganization () {
+    public ParkingLot getOrganization () {
         return organization;
     }
-    public void setOrganization (AbstractOrganization organization) {
+    public void setOrganization (ParkingLot organization) {
         this.organization = organization;
     }
     

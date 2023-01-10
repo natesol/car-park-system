@@ -2,7 +2,7 @@ package net.cps.server;
 
 import net.cps.common.entities.Customer;
 import net.cps.common.entities.Employee;
-import net.cps.common.entities.Management;
+import net.cps.common.entities.Office;
 import net.cps.common.entities.ParkingLot;
 import net.cps.common.utils.EmployeeRole;
 import net.cps.server.utils.Logger;
@@ -87,8 +87,7 @@ public class Main {
             session.createSQLQuery(MySQLQueries.CREATE_DATABASE + databaseName).executeUpdate();
             session.createSQLQuery(MySQLQueries.USE_DATABASE + databaseName).executeUpdate();
             
-            session.createNativeQuery(MySQLQueries.CREATE_TABLE + MySQLQueries.ORGANIZATIONS_TABLE).executeUpdate();
-            session.createNativeQuery(MySQLQueries.CREATE_TABLE + MySQLQueries.MANAGEMENTS_TABLE).executeUpdate();
+            session.createNativeQuery(MySQLQueries.CREATE_TABLE + MySQLQueries.OFFICE_TABLE).executeUpdate();
             session.createNativeQuery(MySQLQueries.CREATE_TABLE + MySQLQueries.PARKING_LOTS_TABLE).executeUpdate();
             session.createNativeQuery(MySQLQueries.CREATE_TABLE + MySQLQueries.RATES_TABLE).executeUpdate();
             session.createNativeQuery(MySQLQueries.CREATE_TABLE + MySQLQueries.EMPLOYEES_TABLE).executeUpdate();
@@ -137,7 +136,7 @@ public class Main {
             parkingLots.get(3).setRates(null, 7.0, 60.0, 54.0, 82.0);
             Database.addMultipleEntities(sessionFactory, parkingLots);
             
-            Database.addEntity(sessionFactory, new Management("aaa", "aaa", 7, "Haifa", "IL"));
+            Database.addEntity(sessionFactory, new Office("aaa", "aaa", 7, "Haifa", "IL"));
             
             ArrayList<Employee> employees = new ArrayList<>();
             employees.add(new Employee("amirdhdlive@gmail.com", "Amir", "David", "amir123", EmployeeRole.NETWORK_MANAGER, parkingLots.get(0)));

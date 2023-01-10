@@ -146,8 +146,7 @@ public class CPSServer extends AbstractServer {
         
         // get all entities of type `T`.
         if (requestHeader.equals(query)) {
-            //List<T> data = (List<T>) Database.getAllEntities(sessionFactory, entity.getEntityClass());
-            List<T> data = (List<T>) Database.getAllEntities(sessionFactory, ParkingLot.class);
+            List<T> data = (List<T>) Database.getAllEntities(sessionFactory, entity.getEntityClass());
             return new ResponseMessage(requestId, request, ResponseStatus.OK, data);
         }
         
