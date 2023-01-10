@@ -1,0 +1,73 @@
+/* ------------------------------------------------------------------------------------------------ */
+/* ---- PC Application Sign Up Page - Page Styles ------------------------------------------------- */
+
+@import "../config/Config.less";
+
+@import "../components/Sheet.less";
+@import "../components/Button.less";
+@import "../components/Dashboard.less";
+
+
+.body {
+
+    .body-container {
+        -fx-padding: @spacing-xl @spacing-md;
+    }
+
+    .logo {
+        -fx-font-size: @font-size-2xl;
+    }
+}
+
+#kioskMenu.kiosk-menu {
+    -fx-background-color: @sheet-bg-color;
+    -fx-border-color: @sheet-border-color;
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+
+    -fx-text-fill: @sheet-text-color;
+    -fx-fill: @sheet-text-color;
+
+    -fx-background-radius: @sheet-radius;
+    -fx-border-radius: @sheet-radius;
+
+    -fx-padding: @spacing-2xl 0;
+
+    -fx-pref-width: @spacing-4xl + 2;
+    -fx-min-width: @spacing-4xl + 2;
+    -fx-max-width: @spacing-4xl + 2;
+
+    .kiosk-menu-button {
+        -fx-padding: @spacing-xs !important;
+
+        -fx-pref-width: @spacing-4xl;
+        -fx-min-width: @spacing-4xl;
+        -fx-max-width: @spacing-4xl;
+        -fx-pref-height: @spacing-4xl;
+        -fx-min-height: @spacing-4xl;
+        -fx-max-height: @spacing-4xl;
+
+        -fx-border-width: 0 !important;
+
+        -fx-border-radius: @radius-xs !important;
+        -fx-background-radius: @radius-xs !important;
+
+        -fx-font-size: @font-size-xs;
+
+        .glyph-icon {
+            -fx-font-size: @font-size-lg !important;
+        }
+
+        &.active {
+            -fx-background-color: @primary !important;
+
+            -fx-fill: @sheet-bg-color !important;
+            -fx-text-fill: @sheet-bg-color !important;
+        }
+
+    }
+}
+
+
+/* ------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------ */
