@@ -6,11 +6,11 @@ package net.cps.common.utils;
  */
 public enum EmployeeRole {
     ADMIN,
-    EMPLOYEE,
     NETWORK_MANAGER,
+    CUSTOMER_SERVICE_EMPLOYEE,
     PARKING_LOT_MANAGER,
     PARKING_LOT_EMPLOYEE,
-    CUSTOMER_SERVICE_EMPLOYEE;
+    EMPLOYEE;
     
     
     /* ----- Utility Methods ------------------------------------------ */
@@ -18,11 +18,11 @@ public enum EmployeeRole {
     public static String toString (EmployeeRole role) {
         return switch (role) {
             case ADMIN -> "Admin";
-            case EMPLOYEE -> "Employee";
             case NETWORK_MANAGER -> "Network Manager";
+            case CUSTOMER_SERVICE_EMPLOYEE -> "Customer Service Employee";
             case PARKING_LOT_MANAGER -> "Parking Lot Manager";
             case PARKING_LOT_EMPLOYEE -> "Parking Lot Employee";
-            case CUSTOMER_SERVICE_EMPLOYEE -> "Customer Service Employee";
+            case EMPLOYEE -> "Employee";
             default -> throw new IllegalArgumentException("Invalid role: " + role);
         };
     }
@@ -32,11 +32,11 @@ public enum EmployeeRole {
         
         return switch (roleFormated) {
             case "ADMIN" -> ADMIN;
-            case "EMPLOYEE" -> EMPLOYEE;
             case "NETWORK_MANAGER" -> NETWORK_MANAGER;
+            case "CUSTOMER_SERVICE_EMPLOYEE" -> CUSTOMER_SERVICE_EMPLOYEE;
             case "PARKING_LOT_MANAGER" -> PARKING_LOT_MANAGER;
             case "PARKING_LOT_EMPLOYEE" -> PARKING_LOT_EMPLOYEE;
-            case "CUSTOMER_SERVICE_EMPLOYEE" -> CUSTOMER_SERVICE_EMPLOYEE;
+            case "EMPLOYEE" -> EMPLOYEE;
             default -> throw new IllegalArgumentException("Invalid role: " + role);
         };
     }

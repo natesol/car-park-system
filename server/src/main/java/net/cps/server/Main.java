@@ -1,18 +1,20 @@
 package net.cps.server;
 
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Timer;
-
-import net.cps.common.entities.*;
+import net.cps.common.entities.Customer;
+import net.cps.common.entities.Employee;
+import net.cps.common.entities.Management;
+import net.cps.common.entities.ParkingLot;
 import net.cps.common.utils.EmployeeRole;
+import net.cps.server.utils.Logger;
 import net.cps.server.utils.MySQLQueries;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-import net.cps.server.utils.Logger;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Timer;
 
 
 /**
@@ -43,7 +45,7 @@ public class Main {
             Logger.print("database connection created successfully.", "database type: '" + Database.getDatabaseType() + "'", "database name: '" + Database.getDatabaseName() + "'", "database port: '" + Database.getDatabasePort() + "'");
             
             createTables(dbSessionFactory);
-            createDummyData1(dbSessionFactory);
+            createDummyData(dbSessionFactory);
             Logger.print("database initialized successfully.");
         }
         catch (HibernateException e) {
@@ -67,7 +69,6 @@ public class Main {
         // !!! v Test Methods v !!!
         sendEmail("test@tset", "test", "test message");
         printMessageOnGivenTime("test message", LocalDateTime.now().plusSeconds(10));
-        testRobot();
         // !!! ^ Test Methods ^ !!!
         // !!!!!!!!!!!!!!!!!!!!
     }
@@ -86,10 +87,12 @@ public class Main {
             session.createSQLQuery(MySQLQueries.CREATE_DATABASE + databaseName).executeUpdate();
             session.createSQLQuery(MySQLQueries.USE_DATABASE + databaseName).executeUpdate();
             
-            session.createNativeQuery(MySQLQueries.CREATE_TABLE_PARKING_LOTS).executeUpdate();
-            session.createNativeQuery(MySQLQueries.CREATE_TABLE_RATES).executeUpdate();
-            session.createNativeQuery(MySQLQueries.CREATE_TABLE_EMPLOYEES).executeUpdate();
-            session.createNativeQuery(MySQLQueries.CREATE_TABLE_CUSTOMERS).executeUpdate();
+            session.createNativeQuery(MySQLQueries.CREATE_TABLE + MySQLQueries.ORGANIZATIONS_TABLE).executeUpdate();
+            session.createNativeQuery(MySQLQueries.CREATE_TABLE + MySQLQueries.MANAGEMENTS_TABLE).executeUpdate();
+            session.createNativeQuery(MySQLQueries.CREATE_TABLE + MySQLQueries.PARKING_LOTS_TABLE).executeUpdate();
+            session.createNativeQuery(MySQLQueries.CREATE_TABLE + MySQLQueries.RATES_TABLE).executeUpdate();
+            session.createNativeQuery(MySQLQueries.CREATE_TABLE + MySQLQueries.EMPLOYEES_TABLE).executeUpdate();
+            session.createNativeQuery(MySQLQueries.CREATE_TABLE + MySQLQueries.CUSTOMERS_TABLE).executeUpdate();
             
             session.flush();
             session.getTransaction().commit();
@@ -113,89 +116,36 @@ public class Main {
      * Create a dummy initial data using the 'Database' methods.
      **/
     private static void createDummyData (SessionFactory sessionFactory) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        
-        try {
-            session.createNativeQuery("""
-                        INSERT INTO parking_lots (name, address, floor_width)
-                        VALUES
-                            ("parking #1", "haifa 123", 5),
-                            ("parking #2", "haifa 61/4", 1),
-                            ("parking #3", "tel-aviv 99", 2),
-                            ("parking #4", "eilat 7", 11);
-                    """).executeUpdate();
-            session.createNativeQuery("""
-                        INSERT INTO rates (
-                            id,
-                            hourly_occasional_parking,
-                            hourly_onetime_parking,
-                            regular_subscription_single_vehicle,
-                            regular_subscription_multiple_vehicles,
-                            full_subscription_single_vehicle
-                        )
-                        VALUES
-                            (1, 8, 7, 60, 54, 72),
-                            (2, 8, 7, 60, 54, 72),
-                            (3, 8, 7, 60, 54, 72),
-                            (4, 8, 7, 60, 54, 72);
-                    """).executeUpdate();
-            
-            Rates rates2 = session.get(Rates.class, 2);
-            rates2.setHourlyOccasionalParking(5.5);
-            rates2.setHourlyOnetimeParking(3.5);
-            session.update(rates2);
-            Rates rates3 = session.get(Rates.class, 3);
-            rates3.setHourlyOccasionalParking(12);
-            rates3.setHourlyOnetimeParking(10);
-            session.update(rates3);
-            
-            session.save(new Employee("test", "test", "test@test", "test", EmployeeRole.EMPLOYEE));
-            session.save(new Employee("netanel", "shlomo", "netanel@gmail", "123456", EmployeeRole.EMPLOYEE));
-            
-            session.save(new Customer("amir", "david", "amirdenekamp@gmail.com", "1234"));
-            
-            session.flush();
-            session.getTransaction().commit();
-            session.clear();
-        }
-        catch (Throwable e) {
-            e.printStackTrace();
-        }
-        finally {
-            assert session != null;
-            session.close();
-        }
-    }
-    
-    
-    private static void createDummyData1 (SessionFactory sessionFactory) {
         try {
             ArrayList<Customer> customers = new ArrayList<>();
-            customers.add(new Customer("John", "Doe", "johndoe@gmail.com", "123456789"));
-            customers.add(new Customer("Jane", "Doe", "janedoe@gmail.com", "987654321"));
-            customers.add(new Customer("Bob", "Smith", "bobsmith@gmail.com", "123987456"));
+            customers.add(new Customer("netanelshlomo@gmail.com", "357357357", "Netanel", "Shlomo", "123456"));
+            customers.add(new Customer("john.doe@gmail.com", "321321321", "John", "Doe", "123456"));
+            customers.add(new Customer("jane.doe@gmail.com", "456456465", "Jane", "Doe", "123456"));
+            customers.add(new Customer("bob.smith@gmail.com", "654654654", "Bob", "Smith", "123456"));
+            customers.add(new Customer("alice.smith@gmail.com", "258258258", "Alice", "Smith", "123456"));
+            customers.add(new Customer("foo.bar@gmail.com", "987987987", "Foo", "Bar", "123456"));
             Database.addMultipleEntities(sessionFactory, customers);
-    
-    
-            
-            ArrayList<Employee> employees = new ArrayList<>();
-            employees.add(new Employee("Amir", "David", "amirdenekamp@gmail.com", "amir123", EmployeeRole.NETWORK_MANAGER));
-            employees.add(new Employee("Jane", "Doe", "janedoe@gmail.com", "jane123", EmployeeRole.EMPLOYEE));
-            employees.add(new Employee("Bob", "Smith", "bobsmith@gmail.com", "bob123", EmployeeRole.EMPLOYEE));
-            Database.addMultipleEntities(sessionFactory, employees);
             
             ArrayList<ParkingLot> parkingLots = new ArrayList<>();
-            parkingLots.add(new ParkingLot("parking #1", "haifa 123", 8, "1,0,1,-1,1,0,0,1,0,-1,1,-1,1,1,0,0,0,1,1,-1,0,1,0,-1,0,1,1,-1,1,0,1,-1,1,0,1,1,0,-1,1,0,0,-1,0,1,-1,0,1,-1,-1,0,1,0,0,-1,0,-1,1,-1,0,0,1,-1,1,0,0,1,1,0,0,-1,0,1,-1"));
-            parkingLots.add(new ParkingLot("parking #2", "haifa 61/4", 4, "1,0,1,-1,1,0,-1,1,0,1,-1,0,1,1,0,-1,1,1,0,1,-1,0,1,-1,0,1,1,1,0,-1,1,-1,0,1,-1,1,1,0,-1,0,1,-1,0,1,1,1,-1,0,1,-1,0,1,-1,1,0,1,1,-1,1,0,0,-1,1,-1,0,1,1,0"));
-            parkingLots.add(new ParkingLot("parking #3", "tel-aviv 99", 6, "1,1,1,0,0,1,1,1,1,0,0,1,1,0,0,1,0,1,1,1,1,0,0,1,1,1,0,0,1,0,0,1,1,1,0,1,1,0,0,0,0,1,1,0,0,1,1,0,1,0,0,1,0,1,1,0,0,1,1,1,0,1,1,0,0,1,1,0,0,1,1,1,1"));
-            parkingLots.add(new ParkingLot("parking #4", "eilat 7", 7, "1,1,1,0,1,-1,1,1,0,0,1,1,1,1,-1,1,1,0,0,1,1,1,1,1,0,0,-1,1,1,0,0,0,0,1,1,1,1,1,1,0,0,-1,-1,-1,1,1,1,1,0,0,0,-1,-1,-1,-1,1,1,1,1,1,0,0,0,0,0,0,-1,-1,-1,-1"));
-
+            parkingLots.add(new ParkingLot("Haifa Port Parking", "Ha-Namal", 36, "Haifa", "IL", 5));
+            parkingLots.add(new ParkingLot("Haifa Mt. Carmel Parking", "Haim HaZaz",7, "Haifa", "IL", 1));
+            parkingLots.add(new ParkingLot("Kiryat-Haim Beach Parking", "Sderot HaNassi Truman", 10, "Haifa", "IL", 2));
+            parkingLots.add(new ParkingLot("Eilat Coral Beach Parking", "Izmargad Ev. Coral Beach" ,13, "Eilat", "IL", 11));
             parkingLots.get(0).setRates(6.0, 5.0, 60.0, null, 75.0);
             parkingLots.get(1).setRates(5.5, 3.5, 60.0, 54.0, 72.0);
             parkingLots.get(2).setRates(12.0, 10.0, null, 54.0, 72.0);
             parkingLots.get(3).setRates(null, 7.0, 60.0, 54.0, 82.0);
             Database.addMultipleEntities(sessionFactory, parkingLots);
+            
+            Database.addEntity(sessionFactory, new Management("aaa", "aaa", 7, "Haifa", "IL"));
+            
+            ArrayList<Employee> employees = new ArrayList<>();
+            employees.add(new Employee("amirdhdlive@gmail.com", "Amir", "David", "amir123", EmployeeRole.NETWORK_MANAGER, parkingLots.get(0)));
+            employees.add(new Employee("harel.avraham@gmail.com", "Harel", "Avraham", "harel123", EmployeeRole.CUSTOMER_SERVICE_EMPLOYEE, parkingLots.get(0)));
+            employees.add(new Employee("shelly.brezner@gmail.com", "Shelly", "Brezner", "shelly123", EmployeeRole.PARKING_LOT_MANAGER, parkingLots.get(1)));
+            employees.add(new Employee("einat.lasry@gmail.com", "Einat", "Lasry", "einat123", EmployeeRole.PARKING_LOT_EMPLOYEE, parkingLots.get(1)));
+            employees.add(new Employee("yoav.furer@gmail.com", "Yoav", "Furer", "yoav123", EmployeeRole.PARKING_LOT_MANAGER, parkingLots.get(2)));
+            Database.addMultipleEntities(sessionFactory, employees);
         }
         catch (HibernateException e) {
             Logger.print("Error: database dummy data creation failed.", "ended with error: " + e.getMessage());
@@ -206,12 +156,6 @@ public class Main {
     
     /* -------------------------------------------------------------------------------------------- */
     /* ------- v Test Methods v ------------------------------------------------------------------- */
-    
-    private static void testRobot () {
-        Robot robot = new Robot();
-        
-        // do prints after each step to see the robot's progress.
-    }
     
     private static void sendEmail (String to, String subject, String body) {
         // TODO: implement...
@@ -224,6 +168,6 @@ public class Main {
     
     /* ------- ^ Test Methods ^ ------------------------------------------------------------------- */
     /* -------------------------------------------------------------------------------------------- */
-
+    
     
 }

@@ -1,6 +1,7 @@
 package net.cps.common.entities;
 
 import net.cps.common.utils.AbstractOrganization;
+import net.cps.common.utils.OrganizationType;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
@@ -8,99 +9,117 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "parking_lots")
+@PrimaryKeyJoinColumn(name = "organization_id")
 public class ParkingLot extends AbstractOrganization implements Serializable {
-    public static final String DEFAULT_NAME = "Parking Lot";
-    public static final String DEFAULT_ADDRESS = "Address";
-    public static final int DEFAULT_FLOOR_COLS = 1;
-    
-    
-    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
     private Integer id;
-    
+    @NotNull
     @Column(name = "name", nullable = false)
     private String name;
-    
-    @Column(name = "address", nullable = false)
-    private String address;
-    
-    @Column(name = "floor_rows", nullable = false)
-    private static final Integer floorRows = 3;
-    
+    @NotNull
     @Column(name = "num_of_floors", nullable = false)
-    private static final Integer numOfFloors = 3;
-    
+    private Integer numOfFloors;
+    @NotNull
+    @Column(name = "floor_rows", nullable = false)
+    private Integer floorRows;
+    @NotNull
     @Column(name = "floor_cols", nullable = false)
     private Integer floorCols;
-    
-    //@NotNull
-    //@OneToOne(cascade = CascadeType.ALL)
-    //private Kiosk kiosk;
-    
     @NotNull
     @OneToOne(mappedBy = "parkingLot", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Rates rates;
     
-    //@NotNull
-    //@OneToOne
-    //@JoinColumn(name = "robot_id", referencedColumnName = "id")
-    //private Robot robot;
-    //
-    //@OneToMany(fetch = FetchType.LAZY, mappedBy = "parking_lot", cascade = {CascadeType.ALL})
-    //private List<Employee> employees;
     
-    //@OneToMany(mappedBy="parkingLot")
-    //List <Reservation> reservations;
+    public static final OrganizationType TYPE = OrganizationType.PARKING_LOT;
+    public static final String DEFAULT_NAME = "Parking Lot Name";
+    public static final Integer DEFAULT_FLOOR_NUM = 3;
+    public static final Integer DEFAULT_FLOOR_ROWS = 3;
+    public static final Integer DEFAULT_FLOOR_COLS = 1;
+    
+    
+    /* ----- Constructors ------------------------------------------- */
     
     public ParkingLot () {
+        super(TYPE);
         this.name = DEFAULT_NAME;
-        this.address = DEFAULT_ADDRESS;
+        this.numOfFloors = DEFAULT_FLOOR_NUM;
+        this.floorRows = DEFAULT_FLOOR_ROWS;
         this.floorCols = DEFAULT_FLOOR_COLS;
         this.rates = new Rates(this);
     }
     
-    public ParkingLot (String name, String address, int floorCols) {
+    public ParkingLot (@NotNull String name, String street, Integer streetNumber, String city, String state, @NotNull Integer floorCols) {
+        super(TYPE, street, streetNumber, city, state);
         this.name = name;
-        this.address = address;
+        this.numOfFloors = DEFAULT_FLOOR_NUM;
+        this.floorRows = DEFAULT_FLOOR_ROWS;
         this.floorCols = floorCols;
         this.rates = new Rates(this);
     }
     
-    public int getId () {
-        return this.id;
+    public ParkingLot (@NotNull String name, String street, Integer streetNumber, String city, String state, @NotNull Integer numOfFloors, @NotNull Integer floorRows, @NotNull Integer floorCols) {
+        super(TYPE, street, streetNumber, city, state);
+        this.name = name;
+        this.numOfFloors = numOfFloors;
+        this.floorRows = floorRows;
+        this.floorCols = floorCols;
+        this.rates = new Rates(this);
     }
     
-    public String getName () {
-        return this.name;
+    
+    /* ----- Getters and Setters ------------------------------------ */
+    
+    public Integer getId () {
+        return id;
     }
     
-    public String getAddress () {
-        return this.address;
+    public void setId (Integer id) {
+        this.id = id;
     }
     
-    public int getFloorCols () {
+    public @NotNull String getName () {
+        return name;
+    }
+    
+    public void setName (@NotNull String name) {
+        this.name = name;
+    }
+    
+    public @NotNull Integer getNumOfFloors () {
+        return numOfFloors;
+    }
+    
+    public void setNumOfFloors (@NotNull Integer numOfFloors) {
+        this.numOfFloors = numOfFloors;
+    }
+    
+    public @NotNull Integer getFloorRows () {
+        return floorRows;
+    }
+    
+    public void setFloorRows (@NotNull Integer floorRows) {
+        this.floorRows = floorRows;
+    }
+    
+    public @NotNull Integer getFloorCols () {
         return this.floorCols;
+    }
+    
+    public void setFloorCols (@NotNull Integer floorCols) {
+        this.floorCols = floorCols;
+    }
+    
+    public Integer getCapacity () {
+        return this.floorCols * floorRows * numOfFloors;
     }
     
     public @NotNull Rates getRates () {
         return this.rates;
     }
     
-    public int getTotalSpace () {
-        return this.floorCols * floorRows * numOfFloors;
-    }
-    
-    public void setName (String name) {
-        this.name = name;
-    }
-    
-    public void setAddress (String address) {
-        this.address = address;
-    }
-    
-    public void setFloorWidth (int floorWidth) {
-        this.floorCols = floorWidth;
+    public void setRates (@NotNull Rates rates) {
+        this.rates = rates;
     }
     
     public void setRates (Double hourlyOccasionalParking, Double hourlyOnetimeParking, Double regularSubscriptionSingleVehicle, Double regularSubscriptionMultipleVehicles, Double fullSubscriptionSingleVehicle) {
@@ -121,12 +140,17 @@ public class ParkingLot extends AbstractOrganization implements Serializable {
         }
     }
     
+    
+    /* ----- Utility Methods ---------------------------------------- */
+    
     @Override
     public String toString () {
         return "ParkingLot {" +
                 "id: " + id +
                 ", name: '" + name + "'" +
-                ", address: '" + address + "'" +
+                ", address: '" + getAddress() + "'" +
+                ", numOfFloors: " + numOfFloors +
+                ", floorRows: " + floorRows +
                 ", floorCols: " + floorCols +
                 ", rates: " + rates +
                 "}";

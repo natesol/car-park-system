@@ -1,9 +1,6 @@
 package net.cps.server;
 
-import net.cps.common.entities.Customer;
-import net.cps.common.entities.Employee;
-import net.cps.common.entities.ParkingLot;
-import net.cps.common.entities.Rates;
+import net.cps.common.utils.Entities;
 import net.cps.server.utils.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -15,8 +12,10 @@ import org.hibernate.service.ServiceRegistry;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -34,10 +33,9 @@ public class Database {
      **/
     private static SessionFactory createSessionFactory () {
         try {
-            configuration.addAnnotatedClass(ParkingLot.class);
-            configuration.addAnnotatedClass(Rates.class);
-            configuration.addAnnotatedClass(Employee.class);
-            configuration.addAnnotatedClass(Customer.class);
+            for (Entities entity : Entities.values()) {
+                configuration.addAnnotatedClass(entity.getEntityClass());
+            }
             
             ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
             return configuration.buildSessionFactory(serviceRegistry);
@@ -221,13 +219,13 @@ public class Database {
      * @param id             the entity id.
      * @return the entity instance.
      **/
-    public static <T> T getEntity (SessionFactory sessionFactory, Class<T> T, int id) {
+    public static <T> T getEntity (SessionFactory sessionFactory, Class<T> T, Object id) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         T data = null;
         
         try (session) {
-            data = (T) session.get(T, id);
+            data = (T) session.get(T, (Serializable) id);
             session.flush();
             transaction.commit();
             session.clear();
@@ -246,13 +244,13 @@ public class Database {
         return data;
     }
     
-    public static <T> T getEntity (SessionFactory sessionFactory, Class<T> T, String id) {
+    public static <T> T getEntity (SessionFactory sessionFactory, Class<T> T, String fieldName, String fieldValue) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         T data = null;
         
         try (session) {
-            data = (T) session.get(T, id);
+            data = (T) session.createQuery("FROM " + Entities.fromString(T.getSimpleName()).getTableName() + " WHERE " + fieldName + " = '" + fieldValue + "'").getSingleResult();
             session.flush();
             transaction.commit();
             session.clear();
@@ -262,14 +260,49 @@ public class Database {
                 transaction.rollback();
             }
             
-            Logger.print("Error: failed to get entity: " + T.getSimpleName() + " from the database.", "'READ' transaction ended with the exception: " + e.getMessage());
             e.printStackTrace();
+            Logger.print("Error: failed to get entity: " + T.getSimpleName() + " from the database.", "'READ' transaction ended with the exception: " + e.getMessage());
+            Logger.error("failed to get entity: " + T.getSimpleName() + " from the database.");
+        }
+        session.close();
+        
+        return data;
+        
+    }
+    
+    public static <T> T getEntity (SessionFactory sessionFactory, Class<T> T, String[] fieldsNames, String[] fieldsValues) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        T data = null;
+        
+        try (session) {
+            StringBuilder query = new StringBuilder("FROM " + Entities.fromString(T.getSimpleName()).getTableName() + " WHERE ");
+            for (int i = 0 ; i < fieldsNames.length ; i++) {
+                query.append(fieldsNames[i]).append(" = '").append(fieldsValues[i]).append("'");
+                if (i < fieldsNames.length - 1) {
+                    query.append(" AND ");
+                }
+            }
+            
+            data = (T) session.createQuery(query.toString()).getSingleResult();
+            session.flush();
+            transaction.commit();
+            session.clear();
+        }
+        catch (Throwable e) {
+            if (e instanceof HibernateException && transaction != null) {
+                transaction.rollback();
+            }
+            
+            e.printStackTrace();
+            Logger.print("Error: failed to get entity: " + T.getSimpleName() + " from the database.", "'READ' transaction ended with the exception: " + e.getMessage());
             Logger.error("failed to get entity: " + T.getSimpleName() + " from the database.");
         }
         session.close();
         
         return data;
     }
+    
     
     /**
      * Read method - get a list of instances of an entity type from the entity-related-table in the database.
@@ -280,13 +313,19 @@ public class Database {
      * @param ids            the entities ids.
      * @return the entities instance.
      **/
-    public static <T> ArrayList<T> getMultipleEntities (SessionFactory sessionFactory, Class<T> T, List<Integer> ids) {
+    public static <T> ArrayList<T> getMultipleEntities (SessionFactory sessionFactory, Class<T> T, List<Object> ids) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        ArrayList<T> data = null;
+        ArrayList<T> data = new ArrayList<>();
         
         try (session) {
-            data = (ArrayList<T>) session.createQuery("from " + T.getSimpleName() + " where id in :ids").setParameterList("ids", ids).list();
+            for (Object id : ids) {
+                T entity = (T) session.get(T, (Serializable) id);
+                if (entity != null) {
+                    data.add(entity);
+                }
+            }
+            
             session.flush();
             transaction.commit();
             session.clear();
@@ -304,27 +343,27 @@ public class Database {
         }
         session.close();
         
-        return data;
+        return data.size() > 0 ? data : null;
     }
+    
+    
     
     /**
      * Read method - get all the instances of an entity type from the entity-related-table in the database.
      *
      * @param sessionFactory the 'SessionFactory' object to use.
-     * @param T              the entity class.
+     * @param entityClass              the entity class.
      *                       the entity must have a primary key.
      * @return the entities instance.
      **/
-    public static <T> List<T> getAllEntities (SessionFactory sessionFactory, Class<T> T) {
+    public static <T> List<T> getAllEntities (SessionFactory sessionFactory, Class<T> entityClass) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         List<T> data = null;
         
         try (session) {
-            CriteriaBuilder builder = session.getCriteriaBuilder();
-            CriteriaQuery<T> query = (CriteriaQuery<T>) builder.createQuery(T);
-            query.from(T);
-            data = session.createQuery(query).getResultList();
+            //data = session.createQuery("FROM " + entityClass.getSimpleName()).getResultList();
+            data = session.createQuery("FROM " + entityClass.getSimpleName()).list();
             
             session.flush();
             transaction.commit();
@@ -335,9 +374,9 @@ public class Database {
                 transaction.rollback();
             }
             
-            Logger.print("Error: failed to get all entities: " + T.getSimpleName() + " from the database.", "'READ' transaction ended with the exception:" + e.getMessage());
             e.printStackTrace();
-            Logger.error("failed to get all entities: " + T.getSimpleName() + " from the database.");
+            Logger.print("Error: failed to get all entities: " + entityClass.getSimpleName() + " from the database.", "'READ' transaction ended with the exception:" + e.getMessage());
+            Logger.error("failed to get all entities: " + entityClass.getSimpleName() + " from the database.");
             
             throw new HibernateException(e);
         }
@@ -350,19 +389,20 @@ public class Database {
      * Read method - execute a custom `SELECT` query, and return the entities instance.
      *
      * @param sessionFactory the 'SessionFactory' object to use.
+     * @param T              the entity class.
      * @param query          the custom query.
      *                       the query must be in the following format: `SELECT * FROM &lt;table_name&gt; WHERE &lt;column_name&gt; = &lt;value&gt;;`,
      *                       or in the following format: `SELECT * FROM &lt;table_name&gt; WHERE &lt;column_name&gt; IN (&lt;value&gt;, &lt;value&gt;, ...);`,
      *                       or in the following format: `SELECT * FROM &lt;table_name&gt;;`.
      * @return the entities instance.
      **/
-    public static <T> List<T> getCustomQuery (SessionFactory sessionFactory, String query, Class<T> type) {
+    public static <T> List<T> getCustomQuery (SessionFactory sessionFactory, Class<T> T, String query) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         List<T> data = null;
         
         try (session) {
-            data = session.createNativeQuery(query, type).getResultList();
+            data = session.createNativeQuery(query, T).getResultList();
             session.flush();
             transaction.commit();
             session.clear();
@@ -382,6 +422,8 @@ public class Database {
         
         return data;
     }
+    
+    
     
     /**
      * Update method - update an entity already existing row on the entity-related-table in the database.

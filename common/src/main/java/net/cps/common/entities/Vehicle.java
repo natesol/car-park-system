@@ -1,16 +1,14 @@
 package net.cps.common.entities;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 import org.jetbrains.annotations.NotNull;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "vehicle")
+@Table(name = "vehicles")
 public class Vehicle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,19 +16,21 @@ public class Vehicle {
     private Long id;
     @NotNull
     Long vehicleNumber;
-    @NotNull
-    @ManyToOne
-    AbstractCostumer customer;
-    @OneToMany(mappedBy = "vehicle")
-    List <Reservation> reservations = new ArrayList<>();
     
-    public Vehicle(@NotNull Long vehicleNumber, @NotNull AbstractCostumer customer, Reservation reservation) {
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+    
+    //@OneToMany(mappedBy = "vehicle")
+    //List <Reservation> reservations = new ArrayList<>();
+    
+    public Vehicle(@NotNull Long vehicleNumber,Customer customer, Reservation reservation) {
         this.vehicleNumber = vehicleNumber;
         this.customer = customer;
-        this.reservations.add(reservation);
+        //this.reservations.add(reservation);
     }
     
-    public Vehicle(@NotNull Long vehicleNumber, @NotNull AbstractCostumer customer) {
+    public Vehicle(@NotNull Long vehicleNumber, Customer customer) {
         this.vehicleNumber = vehicleNumber;
         this.customer = customer;
     }
@@ -43,26 +43,26 @@ public class Vehicle {
         return vehicleNumber;
     }
     
-    public AbstractCostumer getCustomer() {
+    public Customer getCustomer() {
         return customer;
     }
     
-    public List<Reservation> getReservations() {
-        return reservations;
-    }
+    //public List<Reservation> getReservations() {
+    //    return reservations;
+    //}
     
     public void setVehicleNumber(Long vehicleNumber) {
         this.vehicleNumber = vehicleNumber;
     }
     
-    public void setCustomer(AbstractCostumer customer) {
+    public void setCustomer(Customer customer) {
         this.customer = customer;
     }
     
-    public void setReservations(List<Reservation> reservations) {
-        this.reservations = reservations;
-    }
-    public void addReservation (Reservation reservation){
-        reservations.add(reservation);
-    }
+    //public void setReservations(List<Reservation> reservations) {
+    //    this.reservations = reservations;
+    //}
+    //public void addReservation (Reservation reservation){
+    //    reservations.add(reservation);
+    //}
 }

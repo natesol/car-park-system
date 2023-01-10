@@ -22,6 +22,7 @@ import net.cps.client.CPSClient;
 import net.cps.client.events.CustomerCreationEvent;
 import net.cps.common.entities.Customer;
 import net.cps.common.utils.RequestType;
+import net.cps.common.utils.ResponseStatus;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -97,8 +98,8 @@ public class PCSignUpController extends PageController {
             return;
         }
         
-        Customer customer = new Customer(firstName, lastName, email, password);
-        CPSClient.sendRequestToServer(RequestType.POST, "customer/sign-up", customer, "create a new customer account");
+        Customer customer = new Customer(email, "id", firstName, lastName, password);
+        //CPSClient.sendRequestToServer(RequestType.POST, "customer/sign-up", customer, "create a new customer account");
     }
     
     @FXML
@@ -146,7 +147,7 @@ public class PCSignUpController extends PageController {
     @Subscribe
     public void onCustomerCreation (CustomerCreationEvent event) {
         Platform.runLater(() -> {
-            if (event.getResponse().getIsSuccess()) {
+            if (event.getResponse().getStatus() == ResponseStatus.OK) {
                 dialog.setTitleText("Success");
                 dialog.setBodyText("Your account has been created successfully");
                 
