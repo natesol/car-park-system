@@ -390,14 +390,12 @@ class ParkingSpaceSmartArray {
         return numOfParkingSpaces - numOfUnavailablePS;
     }
     //if client enters, we want to check if he has reservation.
-    public Reservation UpdateReservation (Vehicle vehicle){
+    public void UpdateReservation (Vehicle vehicle, Long idReservation){
         List<Reservation> reservations = vehicle.getReservationsList();
-        if (reservations.size() > 0) {
-            Collections.sort(reservations, Comparator.comparing(Reservation::getArrivalTime));
-            return reservations.get(0);
+        for(Reservation reservation:reservations){
+            if(reservation.getId()==idReservation)
+                reservation.setEnterParkingLot(true);
         }
-        return null;
-
     }
 
 }

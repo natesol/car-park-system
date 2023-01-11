@@ -17,8 +17,7 @@ public class Subscription {
 
     public Subscription () {}
     //ORDINARY SUBSCRIPTION
-    public Subscription(Long id, Long customerId, Long carId, ParkingLot parkingLot, Vehicle vehicle, String subscriptionType, Calendar startDate, Customer customer, Integer departureTimeHour, Integer departureTimeMinuets) {
-        this.id = id;
+    public Subscription(Long customerId, Long carId, ParkingLot parkingLot, Vehicle vehicle, String subscriptionType, Calendar startDate, Customer customer, Integer departureTimeHour, Integer departureTimeMinuets) {
         this.customerId = customerId;
         this.carId = carId;
         this.parkingLot = parkingLot;
@@ -32,27 +31,24 @@ public class Subscription {
         this.departureTimeMinuets = departureTimeMinuets;
     }
     //FULL SUBSCRIPTION
-    public Subscription(Long id, Long customerId, Long carId, ParkingLot parkingLot, Vehicle vehicle, String subscriptionType, Calendar startDate, Customer customer) {
+    public Subscription(Long customerId, Long carId, Vehicle vehicle, String subscriptionType, Calendar startDate, Customer customer) {
         if (subscriptionType != "full"){
-            System.out.println("ERROR, you need to enter departure hour and minuets\n");
-            return;
+            System.out.println("ERROR, you need to enter specific parking lot\n");
         }
-        this.id = id;
         this.customerId = customerId;
         this.carId = carId;
-        this.parkingLot = parkingLot;
         this.vehicle = vehicle;
         this.subscriptionType = subscriptionType;
         this.startDate = startDate;
         this.endDate = startDate;
         endDate.add(Calendar.DAY_OF_MONTH, 28); // add 28 days
         this.customer = customer;
-        this.departureTimeMinuets = 0;
         this.departureTimeHour = 0;
+        this.departureTimeMinuets = 0;
     }
+
     //GETTERS AND SETTERS
 
-    public void setId(Long id) {this.id = id;}
     public Long getId() {return id;}
 
     public Calendar getEndDate() {return endDate;}
@@ -85,11 +81,15 @@ public class Subscription {
     public int getDepartureTimeMinuets() {return departureTimeMinuets;}
     public void setDepartureTimeMinuets(int departureTimeMinuets) {this.departureTimeMinuets = departureTimeMinuets;}
 
-    public Reservation makeReservation(Calendar arrivalDate, Long idReservation){
+
+    public Reservation makeReservation(Calendar arrivalDate, ParkingLot parkingLot){
         Calendar departureTime=Calendar.getInstance();
         departureTime.set(Calendar.MINUTE, departureTimeMinuets);
         departureTime.set(Calendar.HOUR_OF_DAY, departureTimeHour);
-        Reservation reservation = new Reservation(idReservation, parkingLot, arrivalDate, departureTime, vehicle);
+        if(departureTime.before(arrivalDate)){ //hour time after 0:00
+            departureTime.add(Calendar.DAY_OF_MONTH,1);//add 1 day
+        }
+        Reservation reservation = new Reservation(parkingLot, arrivalDate, departureTime, vehicle);
         return reservation;
     }
 
