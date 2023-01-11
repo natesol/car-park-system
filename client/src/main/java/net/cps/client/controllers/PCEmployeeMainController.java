@@ -15,7 +15,6 @@ import net.cps.common.entities.Employee;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.jetbrains.annotations.NotNull;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -46,8 +45,8 @@ public class PCEmployeeMainController extends PageController {
     public HBox subPageBody;
     @FXML
     public VBox dashboardLeft;
-    
-    
+
+
     @Override
     public void initialize (URL url, ResourceBundle resourceBundle) {
         EventBus.getDefault().register(this);
@@ -89,10 +88,10 @@ public class PCEmployeeMainController extends PageController {
         setSubPage("PCEmployeeMainSubscriptions.fxml");
         activateMenuBtn(menuBtnSubscriptions);
     }
-    
+
     @FXML
     public void menuBtnReservationsClickHandler (MouseEvent mouseEvent) throws IOException {
-        setSubPage("PCEmployeeMainReservations.fxml");
+        setSubPage("PCEmployeeMainParkingTracking.fxml");
         activateMenuBtn(menuBtnReservations);
     }
     
