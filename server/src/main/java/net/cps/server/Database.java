@@ -10,9 +10,12 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -118,7 +121,7 @@ public class Database {
             Logger.info("a new entity added to the database. entity: " + entityObject.getClass().getSimpleName() + ", id: " + id);
         }
         catch (Throwable e) {
-            if (e instanceof HibernateException && session.isOpen() && transaction != null) {
+            if (e instanceof HibernateException && transaction != null) {
                 transaction.rollback();
             }
             
@@ -156,7 +159,7 @@ public class Database {
             Logger.info("a list of entities added to the database. entities: " + entitiesList.get(0).getClass().getSimpleName() + ", ids: " + ids);
         }
         catch (Throwable e) {
-            if (e instanceof HibernateException && session.isOpen() && transaction != null) {
+            if (e instanceof HibernateException && transaction != null) {
                 transaction.rollback();
             }
             
@@ -194,7 +197,7 @@ public class Database {
             Logger.info("a new entities added to the database. entities: " + query.split(" ")[2] + ", ids: " + ids);
         }
         catch (Throwable e) {
-            if (e instanceof HibernateException && session.isOpen() && transaction != null) {
+            if (e instanceof HibernateException && transaction != null) {
                 transaction.rollback();
             }
             
@@ -344,11 +347,12 @@ public class Database {
     }
     
     
+    
     /**
      * Read method - get all the instances of an entity type from the entity-related-table in the database.
      *
      * @param sessionFactory the 'SessionFactory' object to use.
-     * @param entityClass    the entity class.
+     * @param entityClass              the entity class.
      *                       the entity must have a primary key.
      * @return the entities instance.
      **/
@@ -358,7 +362,8 @@ public class Database {
         List<T> data = null;
         
         try (session) {
-            data = session.createQuery("FROM " + entityClass.getSimpleName()).getResultList();
+            //data = session.createQuery("FROM " + entityClass.getSimpleName()).getResultList();
+            data = session.createQuery("FROM " + entityClass.getSimpleName()).list();
             
             session.flush();
             transaction.commit();
@@ -417,6 +422,7 @@ public class Database {
         
         return data;
     }
+    
     
     
     /**

@@ -16,12 +16,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.scene.layout.VBox;
 import net.cps.client.App;
-import net.cps.client.CPSClient;
 import net.cps.client.events.CustomerCreationEvent;
 import net.cps.common.entities.Customer;
-import net.cps.common.utils.RequestType;
 import net.cps.common.utils.ResponseStatus;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -147,7 +144,7 @@ public class PCSignUpController extends PageController {
     @Subscribe
     public void onCustomerCreation (CustomerCreationEvent event) {
         Platform.runLater(() -> {
-            if (event.getResponse().getStatus() == ResponseStatus.OK) {
+            if (event.getResponse().getStatus() == ResponseStatus.SUCCESS) {
                 dialog.setTitleText("Success");
                 dialog.setBodyText("Your account has been created successfully");
                 

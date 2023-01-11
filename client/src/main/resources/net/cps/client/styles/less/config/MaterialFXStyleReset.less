@@ -11,9 +11,11 @@
     -mfx-green: @green-5 !important;
     -mfx-onyx: @dark-base-6 !important;
     -mfx-orange: @orange-5 !important;
-    -mfx-purple: @primary !important;
+    -mfx-purple: @primary-5 !important;
     -mfx-red: @red-5 !important;
     -mfx-yellow: @yellow-5 !important;
+
+    -mfx-main: @primary-5 !important;
 
     -mfx-text-he: @sheet-text-color-emp !important; /* High Emphasis */
     -mfx-text-me: @sheet-text-color-dim !important; /* Medium Emphasis */
@@ -72,6 +74,177 @@
         -fx-background-color: @sheet-text-color-disabled;
         -fx-border-color: @sheet-text-color-disabled;
     }
+}
+
+
+
+
+
+
+
+
+
+
+
+// !!!!!!!!!!!!!!!!!!!!!
+
+.mfx-combo-box {
+    -mfx-track-color: @root-scroll-track-color;
+    -mfx-thumb-color: @root-scroll-thumb-color;
+    -mfx-thumb-hover-color: @root-scroll-thumb-hover-color;
+
+    -mfx-gap: 0;
+    -fx-padding: 3 5 3 5;
+}
+.mfx-combo-box .caret .mfx-ripple-generator {
+    -mfx-ripple-color: @button-ripple-color;
+}
+.mfx-combo-box:focus-within .caret .mfx-font-icon {
+    -mfx-color: -mfx-main;
+}
+.mfx-combo-box .combo-popup .virtual-flow {
+    -fx-background-radius: @radius-base;
+    -fx-border-radius: @radius-base;
+    -fx-border-color: @sheet-bg-color;
+    -fx-max-height: @screen-xs;
+}
+.mfx-combo-box:disabled .caret .mfx-font-icon {
+    -mfx-color: @sheet-text-color-disabled;
+}
+/**************************************************
+* Virtual Flow Init
+**************************************************/
+.virtual-flow {
+    -fx-background-color: @sheet-bg-color;
+    -fx-background-radius: @radius-base;
+    -fx-border-radius: @radius-base;
+}
+/* Remove JavaFX crap */
+.scroll-bar,
+.scroll-bar .decrement-arrow,
+.scroll-bar .increment-arrow {
+    -fx-pref-width: 0;
+    -fx-pref-height: 0;
+}
+.scroll-bar:horizontal .increment-button,
+.scroll-bar:horizontal .decrement-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0.0em;
+    -fx-padding: 0.0 0.0 10.0 0.0;
+}
+.scroll-bar:vertical .increment-button,
+.scroll-bar:vertical .decrement-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0.0em;
+    -fx-padding: 0.0 10.0 0.0 0.0;
+}
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow {
+    -fx-shape: " ";
+    -fx-padding: 0.15em 0.0;
+}
+.scroll-bar:horizontal .increment-arrow,
+.scroll-bar:horizontal .decrement-arrow {
+    -fx-shape: " ";
+    -fx-padding: 0.0 0.05em;
+}
+.scroll-bar:vertical .increment-arrow,
+.scroll-bar:vertical .decrement-arrow {
+    -fx-shape: " ";
+    -fx-padding: 0.0 0.05em;
+}
+/* Customize ScrollBars */
+.scroll-bar:horizontal .track {
+    -fx-background-color: -mfx-track-color;
+    -fx-border-color: transparent;
+    -fx-background-radius: 2.0em;
+    -fx-border-radius: 2.0em;
+    -fx-background-insets: 3;
+}
+.scroll-bar:vertical .track {
+    -fx-background-color: -mfx-track-color;
+    -fx-border-color: transparent;
+    -fx-background-radius: 2.0em;
+    -fx-border-radius: 2.0em;
+    -fx-background-insets: 3;
+}
+.scroll-bar .decrement-arrow,
+.scroll-bar .increment-arrow {
+    -fx-pref-width: 0;
+    -fx-pref-height: 0;
+}
+.scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 12;
+    -fx-pref-height: 12;
+    -fx-padding: 5 0.5 5 0.5;
+}
+.scroll-bar:horizontal {
+    -fx-background-color: transparent;
+    -fx-pref-width: 12;
+    -fx-pref-height: 12;
+    -fx-padding: 0.5 5 0.5 5;
+}
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color: -mfx-thumb-color;
+    -fx-background-insets: 2.0, 0.0, 0.0;
+    -fx-background-radius: 2.0em;
+}
+.scroll-bar:horizontal .thumb:hover,
+.scroll-bar:vertical .thumb:hover {
+    -fx-background-color: -mfx-thumb-hover-color;
+    -fx-background-insets: 1.5, 0.0, 0.0;
+    -fx-background-radius: 2.0em;
+}
+.mfx-filter-combo-box {
+    -mfx-caret-visible: true;
+}
+.mfx-filter-combo-box:popup {
+    -mfx-caret-visible: false;
+    -mfx-editable: false;
+}
+.mfx-filter-combo-box .combo-popup .virtual-flow {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0;
+    -fx-max-height: @screen-xs;
+}
+.mfx-filter-combo-box .combo-popup .search-container {
+    -fx-background-radius: @radius-base;
+    -fx-border-radius: @radius-base;
+    -fx-background-color: @sheet-bg-color;
+    -fx-border-color: @sheet-bg-color;
+    -fx-padding: 10 5 5 5;
+}
+.mfx-filter-combo-box .combo-popup .search-field {
+    -mfx-gap: 0;
+    -mfx-float-mode: disabled;
+    -fx-padding: 5;
+    -fx-display-caret: false;
+}
+.mfx-filter-combo-box .combo-popup .search-field,
+.mfx-filter-combo-box .combo-popup .search-field:focus-within {
+    -fx-border-width: 1;
+    -fx-background-insets: 0;
+    -fx-border-color: @sheet-border-color;
+}
+.mfx-combo-box-cell {
+    -mfx-main: @primary-5;
+    -mfx-hover: @primary-1;
+    -mfx-selected: @primary-3;
+    -fx-background-color: transparent;
+    -fx-background-radius: 5;
+    -fx-padding: 5;
+}
+.mfx-combo-box-cell:hover {
+    -fx-background-color: -mfx-hover;
+}
+.mfx-combo-box-cell:selected {
+    -fx-background-color: -mfx-selected;
+}
+.mfx-combo-box-cell .data-label {
+    -fx-font-family: @font-family-body;
+    -fx-text-fill: @sheet-text-color-emp;
 }
 
 

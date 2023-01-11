@@ -4,7 +4,7 @@ package net.cps.common.utils;
  * Organizations types for the client-server communication.
  */
 public enum OrganizationType {
-    DUMMY_VALUE, // Fix MySQL8 enum start with 1.
+    //DUMMY_VALUE, // Fix MySQL8 enum start with 1.
     MANAGEMENT,
     PARKING_LOT,
     OFFICE;

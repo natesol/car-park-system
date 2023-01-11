@@ -13,7 +13,7 @@
             prefWidth="960.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="net.cps.client.controllers.IndexController">
     <stylesheets>
-        <URL value="@../styles/css/GlobalStyles.css"/>
+        <URL value="@../styles/css/utils/GlobalStyles.css"/>
         <URL value="@../styles/css/pages/Index.css"/>
     </stylesheets>
     <styleClass>

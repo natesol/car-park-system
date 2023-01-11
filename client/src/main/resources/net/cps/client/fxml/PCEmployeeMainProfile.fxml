@@ -10,7 +10,7 @@
       xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="net.cps.client.controllers.PCEmployeeMainController">
     <stylesheets>
-        <URL value="@../styles/css/GlobalStyles.css"/>
+        <URL value="@../styles/css/utils/GlobalStyles.css"/>
         <URL value="@../styles/css/pages/PCEmployeeMain.css" />
         <URL value="@../styles/css/pages/PCEmployeeMainSubPage.css" />
     </stylesheets>

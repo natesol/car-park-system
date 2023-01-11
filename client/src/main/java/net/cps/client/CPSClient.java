@@ -1,12 +1,12 @@
 package net.cps.client;
 
-import net.cps.client.events.CustomerCreationEvent;
 import net.cps.client.events.GetAllParkingLotEvent;
 import net.cps.client.events.GetParkingLotEvent;
 import net.cps.client.events.ServerAuthEvent;
 import net.cps.client.ocsf.AbstractClient;
 import net.cps.common.messages.RequestMessage;
 import net.cps.common.messages.ResponseMessage;
+import net.cps.common.utils.RequestMessageCallback;
 import net.cps.common.utils.Entities;
 import net.cps.common.utils.RequestType;
 import org.greenrobot.eventbus.EventBus;
@@ -59,79 +59,81 @@ public class CPSClient extends AbstractClient {
         System.out.println("Client received response from server: " + response.getBody());
         System.out.println(response);
         
-        if (requestType == RequestType.GET) {
-            
-            if (header.startsWith(Entities.PARKING_LOT.getTableName())) {
-                
-                System.out.println("Parking lots received");
-                
-                // Get all parking lots
-                if (!header.contains("/")) {
-                    EventBus.getDefault().post(new GetAllParkingLotEvent(response));
-                }
-                // Get a specific parking lot
-                else {
-                    EventBus.getDefault().post(new GetParkingLotEvent(response));
-                }
-                
-                EventBus.getDefault().post(new ServerAuthEvent(response));
-            }
-            
-            
-            EventBus.getDefault().post(new ServerAuthEvent(response));
-        }
-        else if (requestType == RequestType.POST) {
-            //if (response.getQuery().equals("customer/sign-up")) {
-            //    EventBus.getDefault().post(new CustomerCreationEvent(response));
-            //}
-        }
-        else if (requestType == RequestType.AUTH) {
-            //if (response.getQuery().startsWith("auth/")) {
-            //    EventBus.getDefault().post(new ServerAuthEvent(response));
-            //}
-        }
+        request.getCallback().callback(request, response, response.getData());
+        
+        //if (requestType == RequestType.GET) {
+        //
+        //    if (header.startsWith(Entities.PARKING_LOT.getTableName())) {
+        //
+        //        System.out.println("Parking lots received");
+        //
+        //        // Get all parking lots
+        //        if (!header.contains("/")) {
+        //            EventBus.getDefault().post(new GetAllParkingLotEvent(response));
+        //        }
+        //        // Get a specific parking lot
+        //        else {
+        //            EventBus.getDefault().post(new GetParkingLotEvent(response));
+        //        }
+        //
+        //        EventBus.getDefault().post(new ServerAuthEvent(response));
+        //    }
+        //
+        //
+        //    EventBus.getDefault().post(new ServerAuthEvent(response));
+        //}
+        //else if (requestType == RequestType.POST) {
+        //    //if (response.getQuery().equals("customer/sign-up")) {
+        //    //    EventBus.getDefault().post(new CustomerCreationEvent(response));
+        //    //}
+        //}
+        //else if (requestType == RequestType.AUTH) {
+        //    //if (response.getQuery().startsWith("auth/")) {
+        //    //    EventBus.getDefault().post(new ServerAuthEvent(response));
+        //    //}
+        //}
     }
     
     
-    public static void sendRequestToServer(RequestType type, String header) {
+    public static void sendRequestToServer(RequestType type, String header, RequestMessageCallback callback) {
         try {
-            client.sendToServer(new RequestMessage(requestID++, type, header));
+            client.sendToServer(new RequestMessage(requestID++, type, header, callback));
         }
         catch (IOException e) {
             e.printStackTrace();
         }
     }
     
-    public static void sendRequestToServer(RequestType type, String header, String body) {
+    public static void sendRequestToServer(RequestType type, String header, String body, RequestMessageCallback callback) {
         try {
-            client.sendToServer(new RequestMessage(requestID++, type, header, body));
+            client.sendToServer(new RequestMessage(requestID++, type, header, body, callback));
         }
         catch (IOException e) {
             e.printStackTrace();
         }
     }
     
-    public static void sendRequestToServer(RequestType type, String header, String body, String message) {
+    public static void sendRequestToServer(RequestType type, String header, String body, String message, RequestMessageCallback callback) {
         try {
-            client.sendToServer(new RequestMessage(requestID++, type, header, body, message));
+            client.sendToServer(new RequestMessage(requestID++, type, header, body, message, callback));
         }
         catch (IOException e) {
             e.printStackTrace();
         }
     }
     
-    public static void sendRequestToServer(RequestType type, String header, String body, Object data) {
+    public static void sendRequestToServer(RequestType type, String header, String body, Object data, RequestMessageCallback callback) {
         try {
-            client.sendToServer(new RequestMessage(requestID++, type, header, body, data));
+            client.sendToServer(new RequestMessage(requestID++, type, header, body, data, callback));
         }
         catch (IOException e) {
             e.printStackTrace();
         }
     }
     
-    public static void sendRequestToServer(RequestType type, String header, String body, String message, Object data) {
+    public static void sendRequestToServer(RequestType type, String header, String body, String message, Object data, RequestMessageCallback callback) {
         try {
-            client.sendToServer(new RequestMessage(requestID++, type, header, body, message, data));
+            client.sendToServer(new RequestMessage(requestID++, type, header, body, message, data, callback));
         }
         catch (IOException e) {
             e.printStackTrace();

@@ -4,7 +4,7 @@ package net.cps.common.utils;
  * Response statuses for the client-server communication.
  */
 public enum ResponseStatus {
-    OK,             // request was successful - equivalent to HTTP 200
+    SUCCESS,        // request was successful - equivalent to HTTP 200
     CREATED,        // request was successful and a new resource was created - equivalent to HTTP 201
     NO_CONTENT,     // request was successful but no content was returned - equivalent to HTTP 204
     BAD_REQUEST,    // request was malformed (a 'bad request') - equivalent to HTTP 400
@@ -19,7 +19,7 @@ public enum ResponseStatus {
     public static ResponseStatus fromString (String status) {
         String statusFormatted = status.trim().toUpperCase().replace(" ", "_").replace("-", "_");
         return switch (statusFormatted) {
-            case "OK" -> OK;
+            case "SUCCESS" -> SUCCESS;
             case "CREATED" -> CREATED;
             case "NO_CONTENT" -> NO_CONTENT;
             case "BAD_REQUEST" -> BAD_REQUEST;
@@ -33,7 +33,7 @@ public enum ResponseStatus {
     
     public static String toString (ResponseStatus status) {
         return switch (status) {
-            case OK -> "OK";
+            case SUCCESS -> "SUCCESS";
             case CREATED -> "CREATED";
             case NO_CONTENT -> "NO_CONTENT";
             case BAD_REQUEST -> "BAD_REQUEST";

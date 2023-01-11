@@ -27,145 +27,85 @@
 @font-face {
   font-family: 'Poppins Light';
   src: url('../../../fonts/Poppins/Poppins-Thin.ttf') format('truetype');
-  font-weight: 300;
-  font-style: normal;
-  font-display: block;
 }
 @font-face {
   font-family: 'Poppins';
   src: url('../../../fonts/Poppins/Poppins-Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: block;
 }
 @font-face {
   font-family: 'Poppins Italic';
   src: url('../../../fonts/Poppins/Poppins-Italic.ttf') format('truetype');
-  font-weight: 400;
-  font-style: italic;
-  font-display: block;
 }
 @font-face {
   font-family: 'Poppins Bold';
   src: url('../../../fonts/Poppins/Poppins-Bold.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: block;
 }
 @font-face {
   font-family: 'Poppins Black';
   src: url('../../../fonts/Poppins/Poppins-Black.ttf') format('truetype');
-  font-weight: 900;
-  font-style: normal;
-  font-display: block;
 }
 /* ----- 'Roboto' Configurations ------------------------------------ */
 @font-face {
   font-family: 'Roboto Light';
   src: url('../../../fonts/Roboto/Roboto-Light.ttf') format('truetype');
-  font-weight: 300;
-  font-style: normal;
-  font-display: block;
 }
 @font-face {
   font-family: 'Roboto Light Italic';
   src: url('../../../fonts/Roboto/Roboto-LightItalic.ttf') format('truetype');
-  font-weight: 300;
-  font-style: italic;
-  font-display: block;
 }
 @font-face {
   font-family: 'Roboto';
   src: url('../../../fonts/Roboto/Roboto-Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: block;
 }
 @font-face {
   font-family: 'Roboto Italic';
   src: url('../../../fonts/Roboto/Roboto-Italic.ttf') format('truetype');
-  font-weight: 400;
-  font-style: italic;
-  font-display: block;
 }
 @font-face {
   font-family: 'Roboto Bold';
   src: url('../../../fonts/Roboto/Roboto-Bold.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: block;
 }
 @font-face {
   font-family: 'Roboto Bold Italic';
   src: url('../../../fonts/Roboto/Roboto-BoldItalic.ttf') format('truetype');
-  font-weight: 700;
-  font-style: italic;
-  font-display: block;
 }
 @font-face {
   font-family: 'Roboto Black';
   src: url('../../../fonts/Roboto/Roboto-Black.ttf') format('truetype');
-  font-weight: 900;
-  font-style: normal;
-  font-display: block;
 }
 @font-face {
   font-family: 'Roboto Black Italic';
   src: url('../../../fonts/Roboto/Roboto-BlackItalic.ttf') format('truetype');
-  font-weight: 900;
-  font-style: italic;
-  font-display: block;
 }
 /* ----- 'FiraCode' Configurations ---------------------------------- */
 @font-face {
   font-family: 'Fira Code Light';
   src: url('../../../fonts/FiraCode/FiraCode-Light.ttf') format('truetype');
-  font-weight: 300;
-  font-style: normal;
-  font-display: block;
 }
 @font-face {
   font-family: 'Fira Code';
   src: url('../../../fonts/FiraCode/FiraCode-Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: block;
 }
 @font-face {
   font-family: 'Fira Code Bold';
   src: url('../../../fonts/FiraCode/FiraCode-SemiBold.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: block;
 }
 @font-face {
   font-family: 'Fira Code Black';
   src: url('../../../fonts/FiraCode/FiraCode-Bold.ttf') format('truetype');
-  font-weight: 900;
-  font-style: normal;
-  font-display: block;
 }
 /* ----- 'FontAwesome' Configurations ---------------------------------- */
 @font-face {
   font-family: 'FontAwesome';
   src: url('../../../fonts/FontAwesome/fa-regular-400.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: block;
 }
 @font-face {
   font-family: 'FontAwesome Brands';
   src: url('../../../fonts/FontAwesome/fa-brands-400.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: block;
 }
 @font-face {
   font-family: 'FontAwesome Solid';
   src: url('../../../fonts/FontAwesome/fa-solid-900.ttf') format('truetype');
-  font-weight: 900;
-  font-style: normal;
-  font-display: block;
 }
 /* ------------------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------------ */
@@ -199,6 +139,7 @@
   -mfx-purple: #2196f3 !important;
   -mfx-red: #f44336 !important;
   -mfx-yellow: #ffeb3b !important;
+  -mfx-main: #2196f3 !important;
   -mfx-text-he: #32383f !important;
   /* High Emphasis */
   -mfx-text-me: #57606a !important;
@@ -222,7 +163,7 @@
 .mfx-checkbox {
   -mfx-main: #2196f3 !important;
   -mfx-secondary: #57606a !important;
-  -fx-font-family: 'Poppins', system-ui, -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Ubuntu', 'Bitstream Vera Sans', 'Liberation Sans', Arial, sans-serif !important;
+  -fx-font-family: "Poppins", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Ubuntu", "Bitstream Vera Sans", "Liberation Sans", "Arial", "sans-serif" !important;
   -fx-text-fill: #424a53 !important;
   -fx-cursor: hand !important;
 }
@@ -242,6 +183,163 @@
   -fx-background-color: #afb8c1;
   -fx-border-color: #afb8c1;
 }
+.mfx-combo-box {
+  -mfx-track-color: #afb8c1;
+  -mfx-thumb-color: #6e7781;
+  -mfx-thumb-hover-color: #424a53;
+  -mfx-gap: 0;
+  -fx-padding: 3 5 3 5;
+}
+.mfx-combo-box .caret .mfx-ripple-generator {
+  -mfx-ripple-color: rgba(0, 0, 0, 0.2);
+}
+.mfx-combo-box:focus-within .caret .mfx-font-icon {
+  -mfx-color: -mfx-main;
+}
+.mfx-combo-box .combo-popup .virtual-flow {
+  -fx-background-radius: 16px;
+  -fx-border-radius: 16px;
+  -fx-border-color: #ffffff;
+  -fx-max-height: 360px;
+}
+.mfx-combo-box:disabled .caret .mfx-font-icon {
+  -mfx-color: #afb8c1;
+}
+/**************************************************
+* Virtual Flow Init
+**************************************************/
+.virtual-flow {
+  -fx-background-color: #ffffff;
+  -fx-background-radius: 16px;
+  -fx-border-radius: 16px;
+}
+/* Remove JavaFX crap */
+.scroll-bar,
+.scroll-bar .decrement-arrow,
+.scroll-bar .increment-arrow {
+  -fx-pref-width: 0;
+  -fx-pref-height: 0;
+}
+.scroll-bar:horizontal .increment-button,
+.scroll-bar:horizontal .decrement-button {
+  -fx-background-color: transparent;
+  -fx-background-radius: 0.0em;
+  -fx-padding: 0.0 0.0 10.0 0.0;
+}
+.scroll-bar:vertical .increment-button,
+.scroll-bar:vertical .decrement-button {
+  -fx-background-color: transparent;
+  -fx-background-radius: 0.0em;
+  -fx-padding: 0.0 10.0 0.0 0.0;
+}
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow {
+  -fx-shape: " ";
+  -fx-padding: 0.15em 0.0;
+}
+.scroll-bar:horizontal .increment-arrow,
+.scroll-bar:horizontal .decrement-arrow {
+  -fx-shape: " ";
+  -fx-padding: 0.0 0.05em;
+}
+.scroll-bar:vertical .increment-arrow,
+.scroll-bar:vertical .decrement-arrow {
+  -fx-shape: " ";
+  -fx-padding: 0.0 0.05em;
+}
+/* Customize ScrollBars */
+.scroll-bar:horizontal .track {
+  -fx-background-color: -mfx-track-color;
+  -fx-border-color: transparent;
+  -fx-background-radius: 2.0em;
+  -fx-border-radius: 2.0em;
+  -fx-background-insets: 3;
+}
+.scroll-bar:vertical .track {
+  -fx-background-color: -mfx-track-color;
+  -fx-border-color: transparent;
+  -fx-background-radius: 2.0em;
+  -fx-border-radius: 2.0em;
+  -fx-background-insets: 3;
+}
+.scroll-bar .decrement-arrow,
+.scroll-bar .increment-arrow {
+  -fx-pref-width: 0;
+  -fx-pref-height: 0;
+}
+.scroll-bar:vertical {
+  -fx-background-color: transparent;
+  -fx-pref-width: 12;
+  -fx-pref-height: 12;
+  -fx-padding: 5 0.5 5 0.5;
+}
+.scroll-bar:horizontal {
+  -fx-background-color: transparent;
+  -fx-pref-width: 12;
+  -fx-pref-height: 12;
+  -fx-padding: 0.5 5 0.5 5;
+}
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+  -fx-background-color: -mfx-thumb-color;
+  -fx-background-insets: 2.0, 0.0, 0.0;
+  -fx-background-radius: 2.0em;
+}
+.scroll-bar:horizontal .thumb:hover,
+.scroll-bar:vertical .thumb:hover {
+  -fx-background-color: -mfx-thumb-hover-color;
+  -fx-background-insets: 1.5, 0.0, 0.0;
+  -fx-background-radius: 2.0em;
+}
+.mfx-filter-combo-box {
+  -mfx-caret-visible: true;
+}
+.mfx-filter-combo-box:popup {
+  -mfx-caret-visible: false;
+  -mfx-editable: false;
+}
+.mfx-filter-combo-box .combo-popup .virtual-flow {
+  -fx-background-color: transparent;
+  -fx-background-radius: 0;
+  -fx-max-height: 360px;
+}
+.mfx-filter-combo-box .combo-popup .search-container {
+  -fx-background-radius: 16px;
+  -fx-border-radius: 16px;
+  -fx-background-color: #ffffff;
+  -fx-border-color: #ffffff;
+  -fx-padding: 10 5 5 5;
+}
+.mfx-filter-combo-box .combo-popup .search-field {
+  -mfx-gap: 0;
+  -mfx-float-mode: disabled;
+  -fx-padding: 5;
+  -fx-display-caret: false;
+}
+.mfx-filter-combo-box .combo-popup .search-field,
+.mfx-filter-combo-box .combo-popup .search-field:focus-within {
+  -fx-border-width: 1;
+  -fx-background-insets: 0;
+  -fx-border-color: #eaeef2;
+}
+.mfx-combo-box-cell {
+  -mfx-main: #2196f3;
+  -mfx-hover: #bbdefb;
+  -mfx-selected: #64b5f6;
+  -fx-background-color: transparent;
+  -fx-background-radius: 5;
+  -fx-padding: 5;
+}
+.mfx-combo-box-cell:hover {
+  -fx-background-color: -mfx-hover;
+}
+.mfx-combo-box-cell:selected {
+  -fx-background-color: -mfx-selected;
+}
+.mfx-combo-box-cell .data-label {
+  -fx-font-family: "Poppins", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Ubuntu", "Bitstream Vera Sans", "Liberation Sans", "Arial", "sans-serif";
+  -fx-text-fill: #32383f;
+}
 /* ------------------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------------ */
@@ -260,7 +358,7 @@
   -fx-padding: 20px !important;
 }
 .sheet .sheet-text {
-  -fx-font-family: 'Poppins', system-ui, -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Ubuntu', 'Bitstream Vera Sans', 'Liberation Sans', Arial, sans-serif;
+  -fx-font-family: "Poppins", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Ubuntu", "Bitstream Vera Sans", "Liberation Sans", "Arial", "sans-serif";
 }
 /* ------------------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------------ */
@@ -269,7 +367,7 @@
 .logo {
   -fx-alignment: center;
   -fx-max-width: 100%;
-  -fx-font-family: 'Poppins Black', system-ui, -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Ubuntu', 'Bitstream Vera Sans', 'Liberation Sans', Arial, sans-serif !important;
+  -fx-font-family: "Poppins Black", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Ubuntu", "Bitstream Vera Sans", "Liberation Sans", "Arial", "sans-serif" !important;
   -fx-font-weight: 900 !important;
   -fx-min-height: 1.8em !important;
   -fx-pef-height: 1.8em !important;
@@ -284,7 +382,7 @@
 .logo .logo-top,
 .logo .logo-bottom {
   -fx-alignment: center;
-  -fx-font-family: 'Poppins Black', system-ui, -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Ubuntu', 'Bitstream Vera Sans', 'Liberation Sans', Arial, sans-serif !important;
+  -fx-font-family: "Poppins Black", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Ubuntu", "Bitstream Vera Sans", "Liberation Sans", "Arial", "sans-serif" !important;
   -fx-font-weight: 900 !important;
   -fx-min-height: 0.9em !important;
   -fx-pef-height: 0.9em !important;
@@ -305,7 +403,7 @@
 /* ---- Component Style - Buttons ----------------------------------------------------------------- */
 /* - Button Base Styles - */
 .button {
-  -fx-font-family: 'Poppins Bold', system-ui, -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Ubuntu', 'Bitstream Vera Sans', 'Liberation Sans', Arial, sans-serif !important;
+  -fx-font-family: "Poppins Bold", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Ubuntu", "Bitstream Vera Sans", "Liberation Sans", "Arial", "sans-serif" !important;
   -fx-font-weight: 700 !important;
   -fx-font-size: 16px;
   -fx-padding: 0.5em 1.3em !important;
@@ -317,28 +415,28 @@
 .button:focused,
 .button:focus-within {
   -fx-translate-y: -1px !important;
+  -fx-background-insets: 0 0 -1px 0 !important;
+  -fx-border-insets: 0 0 -1px 0 !important;
 }
 .button:pressed {
   -fx-translate-y: 0 !important;
-  -fx-scale-shape: 0.985 !important;
   -fx-scale-x: 0.985 !important;
   -fx-scale-y: 0.985 !important;
 }
 .button:pressed .text,
 .button:pressed .glyph-icon {
   -fx-translate-y: 0 !important;
-  -fx-scale-shape: 1.01522842639594 !important;
   -fx-scale-x: 1.01522842639594 !important;
   -fx-scale-y: 1.01522842639594 !important;
 }
 .button Text,
 .button .text {
-  -fx-font-family: 'Poppins Bold', system-ui, -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Ubuntu', 'Bitstream Vera Sans', 'Liberation Sans', Arial, sans-serif !important;
+  -fx-font-family: "Poppins Bold", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Ubuntu", "Bitstream Vera Sans", "Liberation Sans", "Arial", "sans-serif" !important;
   -fx-font-weight: 700 !important;
   -fx-font-size: 1em !important;
   -fx-text-fill: inherit !important;
   -fx-fill: inherit !important;
-  -fx-font-smoothing-type: black !important;
+  -fx-font-smoothing-type: gray !important;
 }
 .button .mfx-font-icon,
 .button .glyph-icon {
@@ -347,7 +445,7 @@
   -fx-text-fill: inherit !important;
   -fx-fill: inherit !important;
   -mfx-color: inherit !important;
-  -fx-font-smoothing-type: black !important;
+  -fx-font-smoothing-type: gray !important;
   -mfx-size: 16px;
   -fx-stroke-width: 0 !important;
 }
@@ -441,7 +539,7 @@
   -fx-font-size: 70px;
 }
 .body .text {
-  -fx-font-family: 'Poppins', system-ui, -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Ubuntu', 'Bitstream Vera Sans', 'Liberation Sans', Arial, sans-serif;
+  -fx-font-family: "Poppins", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Ubuntu", "Bitstream Vera Sans", "Liberation Sans", "Arial", "sans-serif";
 }
 .body .wrapper-slogan-text {
   -fx-pref-width: 500px !important;
@@ -463,7 +561,7 @@
   -fx-font-size: 16px;
 }
 .body .sheet .sign-up-title {
-  -fx-font-family: 'Poppins Bold', system-ui, -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Ubuntu', 'Bitstream Vera Sans', 'Liberation Sans', Arial, sans-serif;
+  -fx-font-family: "Poppins Bold", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Ubuntu", "Bitstream Vera Sans", "Liberation Sans", "Arial", "sans-serif";
   -fx-font-size: 28px;
 }
 .body .sheet .sheet-text {

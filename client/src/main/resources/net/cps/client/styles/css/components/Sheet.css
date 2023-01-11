@@ -31,7 +31,7 @@
   -fx-padding: 20px !important;
 }
 .sheet .sheet-text {
-  -fx-font-family: 'Poppins', system-ui, -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Ubuntu', 'Bitstream Vera Sans', 'Liberation Sans', Arial, sans-serif;
+  -fx-font-family: "Poppins", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Ubuntu", "Bitstream Vera Sans", "Liberation Sans", "Arial", "sans-serif";
 }
 /* ------------------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------------ */

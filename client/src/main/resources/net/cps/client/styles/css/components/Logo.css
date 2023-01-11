@@ -22,7 +22,7 @@
 .logo {
   -fx-alignment: center;
   -fx-max-width: 100%;
-  -fx-font-family: 'Poppins Black', system-ui, -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Ubuntu', 'Bitstream Vera Sans', 'Liberation Sans', Arial, sans-serif !important;
+  -fx-font-family: "Poppins Black", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Ubuntu", "Bitstream Vera Sans", "Liberation Sans", "Arial", "sans-serif" !important;
   -fx-font-weight: 900 !important;
   -fx-min-height: 1.8em !important;
   -fx-pef-height: 1.8em !important;
@@ -37,7 +37,7 @@
 .logo .logo-top,
 .logo .logo-bottom {
   -fx-alignment: center;
-  -fx-font-family: 'Poppins Black', system-ui, -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Ubuntu', 'Bitstream Vera Sans', 'Liberation Sans', Arial, sans-serif !important;
+  -fx-font-family: "Poppins Black", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Ubuntu", "Bitstream Vera Sans", "Liberation Sans", "Arial", "sans-serif" !important;
   -fx-font-weight: 900 !important;
   -fx-min-height: 0.9em !important;
   -fx-pef-height: 0.9em !important;

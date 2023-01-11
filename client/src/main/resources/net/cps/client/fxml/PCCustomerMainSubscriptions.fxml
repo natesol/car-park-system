@@ -12,7 +12,7 @@
 
 <HBox fx:id="subPageBody" maxWidth="1024.0" minHeight="400.0" minWidth="600.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.cps.client.controllers.PCGuestMainController">
     <stylesheets>
-        <URL value="@../styles/css/GlobalStyles.css" />
+        <URL value="@../styles/css/utils/GlobalStyles.css" />
         <URL value="@../styles/css/pages/PCCustomerMain.css" />
         <URL value="@../styles/css/pages/PCCustomerMainSubPage.css"/>
     </stylesheets>

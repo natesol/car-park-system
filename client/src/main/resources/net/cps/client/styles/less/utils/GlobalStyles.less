@@ -1,0 +1,75 @@
+/* ------------------------------------------------------------------------------------------------ */
+/* ---- Global Styles Configurations - Barrel ----------------------------------------------------- */
+
+/* - Base Configurations - */
+@import "../config/Config.less";
+
+/* - Base Components Styles (All Pages Base Controls) - */
+@import "../components/global/Root.less";
+@import "../components/global/Body.less";
+@import "../components/global/Dialog.less";
+
+
+/* - Basic Styles Reset - */
+* {
+    -fx-accent: @primary-3;
+    -fx-focus-color: @primary-3;
+    -fx-highlight-text-fill: @primary-3;
+}
+
+
+/* - Global Styles - */
+Text,
+Label,
+TextField,
+PasswordField,
+TextArea,
+ListView,
+TreeView,
+TableView,
+TabPane,
+SplitPane,
+ScrollPane,
+MFXTextField,
+MFXPasswordField,
+MFXTextField .floating-text,
+MFXTextField .text-field {
+    -fx-font-family: @font-family-body;
+    -fx-text-fill: @body-text-color;
+    -fx-fill: @body-text-color;
+    -fx-smooth: true;
+    -fx-font-smoothing-type: gray;
+}
+
+Hyperlink,
+Hyperlink:visited {
+    -fx-text-fill: @primary-5;
+    -fx-fill: @primary-5;
+    -fx-border-width: 0;
+    -fx-border-style: none;
+    -fx-underline: false;
+
+    &:hover,
+    &:focused,
+    &:focus-within {
+        -fx-text-fill: @primary-8;
+        -fx-fill: @primary-8;
+        -fx-underline: true;
+        -fx-border-width: 0;
+        -fx-border-style: none;
+
+        .text {
+            -fx-text-fill: inherit !important;
+            -fx-fill: inherit !important;
+        }
+    }
+
+    .text {
+        -fx-text-fill: inherit !important;
+        -fx-fill: inherit !important;
+    }
+}
+
+
+/* ------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------ */

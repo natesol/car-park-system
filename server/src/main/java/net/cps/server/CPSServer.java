@@ -1,7 +1,5 @@
 package net.cps.server;
 
-import net.cps.common.entities.Customer;
-import net.cps.common.entities.Employee;
 import net.cps.common.entities.ParkingLot;
 import net.cps.common.messages.RequestMessage;
 import net.cps.common.messages.ResponseMessage;
@@ -12,7 +10,6 @@ import net.cps.server.ocsf.AbstractServer;
 import net.cps.server.ocsf.ConnectionToClient;
 import net.cps.server.ocsf.SubscribedClient;
 import net.cps.server.utils.Logger;
-import net.cps.server.utils.MySQLQueries;
 import org.hibernate.SessionFactory;
 
 import java.io.IOException;
@@ -20,7 +17,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 
 /**
@@ -146,8 +142,9 @@ public class CPSServer extends AbstractServer {
         
         // get all entities of type `T`.
         if (requestHeader.equals(query)) {
-            List<T> data = (List<T>) Database.getAllEntities(sessionFactory, entity.getEntityClass());
-            return new ResponseMessage(requestId, request, ResponseStatus.OK, data);
+            //List<T> data = (List<T>) Database.getAllEntities(sessionFactory, entity.getEntityClass());
+            List<T> data = (List<T>) Database.getAllEntities(sessionFactory, ParkingLot.class);
+            return new ResponseMessage(requestId, request, ResponseStatus.SUCCESS, data);
         }
         
         requestHeader = requestHeader.split("/")[1];
@@ -181,7 +178,7 @@ public class CPSServer extends AbstractServer {
                     data = Database.getEntity(sessionFactory, T, fieldsNames, fieldsValues);
                 }
             }
-            return new ResponseMessage(requestId, request, ResponseStatus.OK, data);
+            return new ResponseMessage(requestId, request, ResponseStatus.SUCCESS, data);
         }
         
         // get a list of entities of type `T`.
@@ -222,7 +219,7 @@ public class CPSServer extends AbstractServer {
             sqlQuery.delete(sqlQuery.length() - 4, sqlQuery.length());
             data = Database.getCustomQuery(sessionFactory, T, sqlQuery.toString());
     
-            return new ResponseMessage(requestId, request, ResponseStatus.OK, data);
+            return new ResponseMessage(requestId, request, ResponseStatus.SUCCESS, data);
         }
     
         return new ResponseMessage(requestId, request, ResponseStatus.BAD_REQUEST, "Bad Request: response to 'GET: " + query + "'", null);

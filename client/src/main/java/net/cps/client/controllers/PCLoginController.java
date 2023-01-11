@@ -67,7 +67,7 @@ public class PCLoginController extends PageController {
             return;
         }
         
-        CPSClient.sendRequestToServer(RequestType.AUTH, "auth/" + email + "/" + password, "user login authentication");
+        CPSClient.sendRequestToServer(RequestType.AUTH, "auth/" + email + "/" + password, "user login authentication", null);
     }
     
     @FXML
@@ -80,7 +80,7 @@ public class PCLoginController extends PageController {
     @Subscribe
     public void onServerAuth (ServerAuthEvent event) {
         Platform.runLater(() -> {
-            if (event.getResponse().getStatus() == ResponseStatus.OK) {
+            if (event.getResponse().getStatus() == ResponseStatus.SUCCESS) {
                 try {
                     if (event.getResponse().getBody().equals("customer")) {
                         App.setScene("PCCustomerMain.fxml");

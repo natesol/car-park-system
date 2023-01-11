@@ -1,6 +1,6 @@
 package net.cps.common.entities;
 
-import net.cps.common.utils.Organization;
+import net.cps.common.utils.AbstractOrganization;
 import net.cps.common.utils.OrganizationType;
 import org.jetbrains.annotations.NotNull;
 
@@ -9,45 +9,41 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "parking_lots")
-public class ParkingLot implements Organization, Serializable {
-    @Id
+@PrimaryKeyJoinColumn(name = "organization_id")
+public class ParkingLot extends AbstractOrganization implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", updatable = false, nullable = false)
+    @Column(name = "id", updatable = false, nullable = false, columnDefinition = "INT NOT NULL AUTO_INCREMENT")
     private Integer id;
     @NotNull
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", columnDefinition = "VARCHAR(55) NOT NULL")
     private String name;
     @NotNull
-    @Column(name = "type")
-    private OrganizationType type;
-    @NotNull
-    @Column(name = "street_number")
+    @Column(name = "street_number", columnDefinition = "MEDIUMINT NOT NULL")
     private Integer streetNumber;
     @NotNull
-    @Column(name = "street")
+    @Column(name = "street", columnDefinition = "VARCHAR(55) NOT NULL")
     private String street;
     @NotNull
-    @Column(name = "city")
+    @Column(name = "city", columnDefinition = "VARCHAR(55) NOT NULL")
     private String city;
     @NotNull
-    @Column(name = "state")
+    @Column(name = "state", columnDefinition = "VARCHAR(55) NOT NULL")
     private String state;
     @NotNull
-    @Column(name = "num_of_floors", nullable = false)
+    @Column(name = "num_of_floors", columnDefinition = "TINYINT NOT NULL")
     private Integer numOfFloors;
     @NotNull
-    @Column(name = "floor_rows", nullable = false)
+    @Column(name = "floor_rows", columnDefinition = "TINYINT NOT NULL")
     private Integer floorRows;
     @NotNull
-    @Column(name = "floor_cols", nullable = false)
+    @Column(name = "floor_cols", columnDefinition = "TINYINT NOT NULL")
     private Integer floorCols;
     @NotNull
     @OneToOne(mappedBy = "parkingLot", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Rates rates;
     
-    public static final String DEFAULT_NAME = "Parking Lot Name";
     public static final OrganizationType TYPE = OrganizationType.PARKING_LOT;
-    
+    public static final String DEFAULT_NAME = "Parking Lot Name";
     public static final Integer DEFAULT_FLOOR_NUM = 3;
     public static final Integer DEFAULT_FLOOR_ROWS = 3;
     public static final Integer DEFAULT_FLOOR_COLS = 1;
@@ -56,12 +52,12 @@ public class ParkingLot implements Organization, Serializable {
     /* ----- Constructors ------------------------------------------- */
     
     public ParkingLot () {
-        this.type = TYPE;
+        super(TYPE);
         this.name = DEFAULT_NAME;
-        this.streetNumber = Organization.DEFAULT_STREET_NUMBER;
-        this.street = Organization.DEFAULT_STREET;
-        this.city = Organization.DEFAULT_CITY;
-        this.state = Organization.DEFAULT_STATE;
+        this.streetNumber = AbstractOrganization.DEFAULT_STREET_NUMBER;
+        this.street = AbstractOrganization.DEFAULT_STREET;
+        this.city = AbstractOrganization.DEFAULT_CITY;
+        this.state = AbstractOrganization.DEFAULT_STATE;
         this.numOfFloors = DEFAULT_FLOOR_NUM;
         this.floorRows = DEFAULT_FLOOR_ROWS;
         this.floorCols = DEFAULT_FLOOR_COLS;
@@ -69,10 +65,10 @@ public class ParkingLot implements Organization, Serializable {
     }
     
     public ParkingLot (@NotNull String name, @NotNull String street, @NotNull Integer streetNumber, @NotNull String city, @NotNull String state, @NotNull Integer floorCols) {
-        this.type = TYPE;
+        super(TYPE);
         this.name = name;
-        this.streetNumber = streetNumber;
         this.street = street;
+        this.streetNumber = streetNumber;
         this.city = city;
         this.state = state;
         this.numOfFloors = DEFAULT_FLOOR_NUM;
@@ -82,10 +78,10 @@ public class ParkingLot implements Organization, Serializable {
     }
     
     public ParkingLot (@NotNull String name, @NotNull String street, @NotNull Integer streetNumber, @NotNull String city, @NotNull String state, @NotNull Integer numOfFloors, @NotNull Integer floorRows, @NotNull Integer floorCols) {
-        this.type = TYPE;
+        super(TYPE);
         this.name = name;
-        this.streetNumber = streetNumber;
         this.street = street;
+        this.streetNumber = streetNumber;
         this.city = city;
         this.state = state;
         this.numOfFloors = numOfFloors;
@@ -105,16 +101,6 @@ public class ParkingLot implements Organization, Serializable {
         this.id = id;
     }
     
-    @Override
-    public @NotNull OrganizationType getType () {
-        return type;
-    }
-    
-    @Override
-    public void setType (@NotNull OrganizationType type) {
-        this.type = type;
-    }
-    
     public @NotNull String getName () {
         return name;
     }
@@ -123,42 +109,34 @@ public class ParkingLot implements Organization, Serializable {
         this.name = name;
     }
     
-    @Override
     public @NotNull Integer getStreetNumber () {
         return streetNumber;
     }
     
-    @Override
     public void setStreetNumber (@NotNull Integer streetNumber) {
         this.streetNumber = streetNumber;
     }
     
-    @Override
     public @NotNull String getStreet () {
         return street;
     }
     
-    @Override
     public void setStreet (@NotNull String street) {
         this.street = street;
     }
     
-    @Override
     public @NotNull String getCity () {
         return city;
     }
     
-    @Override
     public void setCity (@NotNull String city) {
         this.city = city;
     }
     
-    @Override
     public @NotNull String getState () {
         return state;
     }
     
-    @Override
     public void setState (@NotNull String state) {
         this.state = state;
     }

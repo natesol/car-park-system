@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+
+<HBox fx:id="subPageBody" maxWidth="1024.0" minHeight="400.0" minWidth="600.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.cps.client.controllers.KioskMainController">
+    <stylesheets>
+        <URL value="@../styles/css/utils/GlobalStyles.css" />
+        <URL value="@../styles/css/pages/KioskMain.css" />
+        <URL value="@../styles/css/pages/KioskMainSubPage.css" />
+    </stylesheets>
+    <styleClass>
+        <String fx:value="sub-page-body" />
+        <String fx:value="color-scheme-light" />
+    </styleClass>
+    <VBox alignment="TOP_CENTER" maxWidth="1024.0" minHeight="400.0" minWidth="600.0" prefHeight="600" prefWidth="1024.0">
+
+        <Text fx:id="subPageTitle" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sub-page-title" text="Kiosk Reservation">
+        </Text>
+        <VBox maxWidth="600.0">
+            <VBox.margin>
+                <Insets top="30.0" />
+            </VBox.margin>
+            <TextFlow>
+            </TextFlow>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="You can choose an action from the menu on the left - and continue from there." />
+        </VBox>
+    </VBox>
+</HBox>

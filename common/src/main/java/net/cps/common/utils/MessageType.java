@@ -7,8 +7,7 @@ package net.cps.common.utils;
 public enum MessageType {
     DEFAULT,
     REQUEST,
-    RESPONSE,
-    ERROR;
+    RESPONSE;
     
     
     /* ----- Utility Methods ------------------------------------------ */
@@ -18,7 +17,6 @@ public enum MessageType {
             case "DEFAULT" -> DEFAULT;
             case "REQUEST" -> REQUEST;
             case "RESPONSE" -> RESPONSE;
-            case "ERROR" -> ERROR;
             default -> throw new IllegalArgumentException("Invalid type: " + type);
         };
     }

@@ -24,7 +24,7 @@
 .logo {
   -fx-alignment: center;
   -fx-max-width: 100%;
-  -fx-font-family: 'Poppins Black', system-ui, -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Ubuntu', 'Bitstream Vera Sans', 'Liberation Sans', Arial, sans-serif !important;
+  -fx-font-family: "Poppins Black", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Ubuntu", "Bitstream Vera Sans", "Liberation Sans", "Arial", "sans-serif" !important;
   -fx-font-weight: 900 !important;
   -fx-min-height: 1.8em !important;
   -fx-pef-height: 1.8em !important;
@@ -39,7 +39,7 @@
 .logo .logo-top,
 .logo .logo-bottom {
   -fx-alignment: center;
-  -fx-font-family: 'Poppins Black', system-ui, -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Ubuntu', 'Bitstream Vera Sans', 'Liberation Sans', Arial, sans-serif !important;
+  -fx-font-family: "Poppins Black", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Ubuntu", "Bitstream Vera Sans", "Liberation Sans", "Arial", "sans-serif" !important;
   -fx-font-weight: 900 !important;
   -fx-min-height: 0.9em !important;
   -fx-pef-height: 0.9em !important;
@@ -60,7 +60,7 @@
 /* ---- Component Style - Buttons ----------------------------------------------------------------- */
 /* - Button Base Styles - */
 .button {
-  -fx-font-family: 'Poppins Bold', system-ui, -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Ubuntu', 'Bitstream Vera Sans', 'Liberation Sans', Arial, sans-serif !important;
+  -fx-font-family: "Poppins Bold", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Ubuntu", "Bitstream Vera Sans", "Liberation Sans", "Arial", "sans-serif" !important;
   -fx-font-weight: 700 !important;
   -fx-font-size: 16px;
   -fx-padding: 0.5em 1.3em !important;
@@ -72,28 +72,28 @@
 .button:focused,
 .button:focus-within {
   -fx-translate-y: -1px !important;
+  -fx-background-insets: 0 0 -1px 0 !important;
+  -fx-border-insets: 0 0 -1px 0 !important;
 }
 .button:pressed {
   -fx-translate-y: 0 !important;
-  -fx-scale-shape: 0.985 !important;
   -fx-scale-x: 0.985 !important;
   -fx-scale-y: 0.985 !important;
 }
 .button:pressed .text,
 .button:pressed .glyph-icon {
   -fx-translate-y: 0 !important;
-  -fx-scale-shape: 1.01522842639594 !important;
   -fx-scale-x: 1.01522842639594 !important;
   -fx-scale-y: 1.01522842639594 !important;
 }
 .button Text,
 .button .text {
-  -fx-font-family: 'Poppins Bold', system-ui, -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Ubuntu', 'Bitstream Vera Sans', 'Liberation Sans', Arial, sans-serif !important;
+  -fx-font-family: "Poppins Bold", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Ubuntu", "Bitstream Vera Sans", "Liberation Sans", "Arial", "sans-serif" !important;
   -fx-font-weight: 700 !important;
   -fx-font-size: 1em !important;
   -fx-text-fill: inherit !important;
   -fx-fill: inherit !important;
-  -fx-font-smoothing-type: black !important;
+  -fx-font-smoothing-type: gray !important;
 }
 .button .mfx-font-icon,
 .button .glyph-icon {
@@ -102,7 +102,7 @@
   -fx-text-fill: inherit !important;
   -fx-fill: inherit !important;
   -mfx-color: inherit !important;
-  -fx-font-smoothing-type: black !important;
+  -fx-font-smoothing-type: gray !important;
   -mfx-size: 16px;
   -fx-stroke-width: 0 !important;
 }
@@ -196,7 +196,7 @@
   -fx-padding: 0 !important;
 }
 .dashboard .sheet-text {
-  -fx-font-family: 'Poppins', system-ui, -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Ubuntu', 'Bitstream Vera Sans', 'Liberation Sans', Arial, sans-serif !important;
+  -fx-font-family: "Poppins", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Ubuntu", "Bitstream Vera Sans", "Liberation Sans", "Arial", "sans-serif" !important;
   -fx-font-weight: 400 !important;
   -fx-text-fill: #424a53 !important;
   -fx-fill: #424a53 !important;
@@ -239,7 +239,7 @@
   -fx-border-style: solid;
 }
 .dashboard .dashboard-left .dashboard-menu-title {
-  -fx-font-family: 'Poppins Bold', system-ui, -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Ubuntu', 'Bitstream Vera Sans', 'Liberation Sans', Arial, sans-serif !important;
+  -fx-font-family: "Poppins Bold", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Ubuntu", "Bitstream Vera Sans", "Liberation Sans", "Arial", "sans-serif" !important;
   -fx-font-weight: 700 !important;
   -fx-font-size: 14px;
   -fx-padding: 0 0 14px 0;
@@ -257,7 +257,7 @@
   -fx-alignment: center-left;
   -fx-text-alignment: left;
   -fx-font-size: 14px;
-  -fx-font-family: 'Poppins', system-ui, -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Ubuntu', 'Bitstream Vera Sans', 'Liberation Sans', Arial, sans-serif !important;
+  -fx-font-family: "Poppins", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Ubuntu", "Bitstream Vera Sans", "Liberation Sans", "Arial", "sans-serif" !important;
   -fx-font-weight: 400 !important;
 }
 .dashboard .dashboard-left .dashboard-menu-button.active {

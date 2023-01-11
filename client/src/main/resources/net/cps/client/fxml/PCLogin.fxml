@@ -20,7 +20,7 @@
 
 <AnchorPane fx:id="root" maxHeight="600.0" maxWidth="960.0" minHeight="400.0" minWidth="800.0" prefHeight="600.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.cps.client.controllers.PCLoginController">
     <stylesheets>
-        <URL value="@../styles/css/GlobalStyles.css" />
+        <URL value="@../styles/css/utils/GlobalStyles.css" />
         <URL value="@../styles/css/pages/PCLogin.css" />
     </stylesheets>
     <styleClass>
