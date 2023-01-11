@@ -12,6 +12,10 @@ import net.cps.common.utils.RequestType;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 
 /**
  * Client side main class (entry point).
@@ -19,7 +23,7 @@ import java.io.IOException;
 public class CPSClient extends AbstractClient {
     private static CPSClient client = null;
     private static int requestID = 0;
-    
+    private static final Map<Integer, BiConsumer<RequestMessage, ResponseMessage>> callbacks = new HashMap<>();
     
     
     /* ----- Constructors ------------------------------------------- */
@@ -56,10 +60,12 @@ public class CPSClient extends AbstractClient {
         String header = request.getHeader();
         RequestType requestType = request.getType();
         
-        System.out.println("Client received response from server: " + response.getBody());
-        System.out.println(response);
-        
-        request.getCallback().callback(request, response, response.getData());
+        Integer requestId = request.getId();
+        BiConsumer<RequestMessage, ResponseMessage> callback = callbacks.get(requestId);
+        if (callback != null) {
+            callback.accept(request, response);
+            callbacks.remove(requestId);
+        }
         
         //if (requestType == RequestType.GET) {
         //
@@ -95,8 +101,9 @@ public class CPSClient extends AbstractClient {
     }
     
     
-    public static void sendRequestToServer(RequestType type, String header, RequestMessageCallback callback) {
+    public static void sendRequestToServer(RequestType type, String header, BiConsumer<RequestMessage, ResponseMessage> callback) {
         try {
+            callbacks.put(requestID, callback);
             client.sendToServer(new RequestMessage(requestID++, type, header, callback));
         }
         catch (IOException e) {
@@ -104,8 +111,9 @@ public class CPSClient extends AbstractClient {
         }
     }
     
-    public static void sendRequestToServer(RequestType type, String header, String body, RequestMessageCallback callback) {
+    public static void sendRequestToServer(RequestType type, String header, String body, BiConsumer<RequestMessage, ResponseMessage> callback) {
         try {
+            callbacks.put(requestID, callback);
             client.sendToServer(new RequestMessage(requestID++, type, header, body, callback));
         }
         catch (IOException e) {
@@ -113,8 +121,9 @@ public class CPSClient extends AbstractClient {
         }
     }
     
-    public static void sendRequestToServer(RequestType type, String header, String body, String message, RequestMessageCallback callback) {
+    public static void sendRequestToServer(RequestType type, String header, String body, String message, BiConsumer<RequestMessage, ResponseMessage> callback) {
         try {
+            callbacks.put(requestID, callback);
             client.sendToServer(new RequestMessage(requestID++, type, header, body, message, callback));
         }
         catch (IOException e) {
@@ -122,8 +131,9 @@ public class CPSClient extends AbstractClient {
         }
     }
     
-    public static void sendRequestToServer(RequestType type, String header, String body, Object data, RequestMessageCallback callback) {
+    public static void sendRequestToServer(RequestType type, String header, String body, Object data, BiConsumer<RequestMessage, ResponseMessage> callback) {
         try {
+            callbacks.put(requestID, callback);
             client.sendToServer(new RequestMessage(requestID++, type, header, body, data, callback));
         }
         catch (IOException e) {
@@ -131,8 +141,9 @@ public class CPSClient extends AbstractClient {
         }
     }
     
-    public static void sendRequestToServer(RequestType type, String header, String body, String message, Object data, RequestMessageCallback callback) {
+    public static void sendRequestToServer(RequestType type, String header, String body, String message, Object data, BiConsumer<RequestMessage, ResponseMessage> callback) {
         try {
+            callbacks.put(requestID, callback);
             client.sendToServer(new RequestMessage(requestID++, type, header, body, message, data, callback));
         }
         catch (IOException e) {

@@ -20,6 +20,7 @@ import javafx.collections.ObservableList;
 import net.cps.common.messages.RequestMessage;
 import net.cps.common.messages.ResponseMessage;
 import net.cps.common.utils.Entities;
+import net.cps.common.utils.RequestMessageCallback;
 import net.cps.common.utils.RequestType;
 import net.cps.common.utils.ResponseStatus;
 import org.greenrobot.eventbus.EventBus;
@@ -42,7 +43,7 @@ public class IndexController extends PageController {
     
     @Override
     public void initialize (URL url, ResourceBundle resourceBundle) {
-        EventBus.getDefault().register(this);
+        //EventBus.getDefault().register(this);
     }
     
     
@@ -50,8 +51,7 @@ public class IndexController extends PageController {
     
     @FXML
     void kioskBtnClickHandler (ActionEvent event) throws IOException {
-        CPSClient.sendRequestToServer(RequestType.GET, Entities.PARKING_LOT.getTableName(), null, "get all parking lots from the server.", null);
-        System.out.println("kiosk button clicked");
+        CPSClient.sendRequestToServer(RequestType.GET, Entities.PARKING_LOT.getTableName(), null, "get all parking lots from the server.", this::onGetAllParkingLot);
     }
     
     @FXML
@@ -59,14 +59,11 @@ public class IndexController extends PageController {
         App.setScene("PCLogin.fxml");
     }
     
-    
-    /* ----- Eventbus Listeners ------------------------------------- */
-    
-    @Subscribe
-    public void onGetAllParkingLot (GetAllParkingLotEvent event) {
-        ResponseMessage response = event.getResponse();
+    public void onGetAllParkingLot (RequestMessage request, ResponseMessage response) {
+        System.out.println("onGetAllParkingLot ???");
+        
         ObservableList<ParkingLot> parkingLots = FXCollections.observableArrayList((List<ParkingLot>) response.getData());
-
+        
         Platform.runLater(() -> {
             if (response.getStatus() == ResponseStatus.SUCCESS) {
                 dialog.setTitleText("Open Kiosk App");
@@ -108,8 +105,6 @@ public class IndexController extends PageController {
                 System.out.println("failed to get all parking lots from the server.");
             }
         });
-        
-
     }
     
     

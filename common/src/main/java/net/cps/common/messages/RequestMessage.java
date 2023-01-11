@@ -1,11 +1,13 @@
 package net.cps.common.messages;
 
 import net.cps.common.utils.AbstractMessage;
-import net.cps.common.utils.RequestMessageCallback;
 import net.cps.common.utils.MessageType;
+import net.cps.common.utils.RequestMessageCallback;
 import net.cps.common.utils.RequestType;
 
 import java.io.Serializable;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 
 /*
  * This class is used to send messages between the client and the server (a client request).
@@ -38,36 +40,36 @@ import java.io.Serializable;
 public class RequestMessage extends AbstractMessage implements Serializable {
     public static final MessageType MESSAGE_TYPE = MessageType.REQUEST;
     private final RequestType type;
-    private final RequestMessageCallback callback;
+    private final transient BiConsumer<RequestMessage, ResponseMessage> callback;
     
     
     /* ----- Constructors ------------------------------------------- */
     
-    public RequestMessage (int id, RequestType requestType, String header, RequestMessageCallback callback) {
+    public RequestMessage (int id, RequestType requestType, String header, BiConsumer<RequestMessage, ResponseMessage> callback) {
         super(id, MESSAGE_TYPE, header);
         this.type = requestType;
         this.callback = callback;
     }
     
-    public RequestMessage (int id, RequestType requestType, String header, String body, RequestMessageCallback callback) {
+    public RequestMessage (int id, RequestType requestType, String header, String body, BiConsumer<RequestMessage, ResponseMessage> callback) {
         super(id, MESSAGE_TYPE, header, body);
         this.type = requestType;
         this.callback = callback;
     }
     
-    public RequestMessage (int id, RequestType requestType, String header, String body, String message, RequestMessageCallback callback) {
+    public RequestMessage (int id, RequestType requestType, String header, String body, String message, BiConsumer<RequestMessage, ResponseMessage> callback) {
         super(id, MESSAGE_TYPE, header, body, message);
         this.type = requestType;
         this.callback = callback;
     }
     
-    public RequestMessage (int id, RequestType requestType, String header, String body, Object data, RequestMessageCallback callback) {
+    public RequestMessage (int id, RequestType requestType, String header, String body, Object data, BiConsumer<RequestMessage, ResponseMessage> callback) {
         super(id, MESSAGE_TYPE, header, body, data);
         this.type = requestType;
         this.callback = callback;
     }
     
-    public RequestMessage (int id, RequestType requestType, String header, String body, String message, Object data, RequestMessageCallback callback) {
+    public RequestMessage (int id, RequestType requestType, String header, String body, String message, Object data, BiConsumer<RequestMessage, ResponseMessage> callback) {
         super(id, MESSAGE_TYPE, header, body, message, data);
         this.type = requestType;
         this.callback = callback;
@@ -84,13 +86,13 @@ public class RequestMessage extends AbstractMessage implements Serializable {
         return type;
     }
     
-    public RequestMessageCallback getCallback () {
+    public BiConsumer<RequestMessage, ResponseMessage> getCallback () {
         return callback;
     }
     
-    public void onResponse (ResponseMessage response) {
+    public <R> void onResponse (ResponseMessage response) {
         if (callback != null) {
-            callback.callback(this, response, response.getData());
+            callback.accept(response.getOriginalRequest(), response);
         }
     }
     
