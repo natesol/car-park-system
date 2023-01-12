@@ -28,6 +28,9 @@ public class ParkingLot extends AbstractOrganization implements Serializable {
     
     @Column(name = "floor_width", nullable = false)
     private int floorWidth; // z axes
+
+    @Column(name = "map", nullable = false)
+    private String map;
     
     @NotNull
     @OneToOne(mappedBy = "parkingLot", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -37,13 +40,15 @@ public class ParkingLot extends AbstractOrganization implements Serializable {
         this.name = DEFAULT_NAME;
         this.address = DEFAULT_ADDRESS;
         this.floorWidth = DEFAULT_FLOOR_WIDTH;
+        this.map = "1";
         this.rates = new Rates(this);
     }
     
-    public ParkingLot (String name, String address, int floorWidth) {
+    public ParkingLot (String name, String address, int floorWidth, String map) {
         this.name = name;
         this.address = address;
         this.floorWidth = floorWidth;
+        this.map = map;
         this.rates = new Rates(this);
     }
     
@@ -70,6 +75,10 @@ public class ParkingLot extends AbstractOrganization implements Serializable {
     public int getTotalSpace () {
         return this.floorWidth * floorLength * numOfFloors;
     }
+
+    public String getMap() {
+        return this.map;
+    }
     
     public void setName (String name) {
         this.name = name;
@@ -81,6 +90,10 @@ public class ParkingLot extends AbstractOrganization implements Serializable {
     
     public void setFloorWidth (int floorWidth) {
         this.floorWidth = floorWidth;
+    }
+
+    public void setMap(String map) {
+        this.map = map;
     }
     
     public void setRates (Double hourlyOccasionalParking, Double hourlyOnetimeParking, Double regularSubscriptionSingleVehicle, Double regularSubscriptionMultipleVehicles, Double fullSubscriptionSingleVehicle) {

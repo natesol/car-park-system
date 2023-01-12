@@ -184,10 +184,11 @@ public class Main {
             Database.addMultipleEntities(sessionFactory, employees);
             
             ArrayList<ParkingLot> parkingLots = new ArrayList<>();
-            parkingLots.add(new ParkingLot("parking #1", "haifa 123", 5));
-            parkingLots.add(new ParkingLot("parking #2", "haifa 61/4", 1));
-            parkingLots.add(new ParkingLot("parking #3", "tel-aviv 99", 2));
-            parkingLots.add(new ParkingLot("parking #4", "eilat 7", 11));
+            parkingLots.add(new ParkingLot("parking #1", "haifa 123", 8, "1,0,1,-1,1,0,0,1,0,-1,1,-1,1,1,0,0,0,1,1,-1,0,1,0,-1,0,1,1,-1,1,0,1,-1,1,0,1,1,0,-1,1,0,0,-1,0,1,-1,0,1,-1,-1,0,1,0,0,-1,0,-1,1,-1,0,0,1,-1,1,0,0,1,1,0,0,-1,0,1,-1"));
+            parkingLots.add(new ParkingLot("parking #2", "haifa 61/4", 4, "1,0,1,-1,1,0,-1,1,0,1,-1,0,1,1,0,-1,1,1,0,1,-1,0,1,-1,0,1,1,1,0,-1,1,-1,0,1,-1,1,1,0,-1,0,1,-1,0,1,1,1,-1,0,1,-1,0,1,-1,1,0,1,1,-1,1,0,0,-1,1,-1,0,1,1,0"));
+            parkingLots.add(new ParkingLot("parking #3", "tel-aviv 99", 6, "1,1,1,0,0,1,1,1,1,0,0,1,1,0,0,1,0,1,1,1,1,0,0,1,1,1,0,0,1,0,0,1,1,1,0,1,1,0,0,0,0,1,1,0,0,1,1,0,1,0,0,1,0,1,1,0,0,1,1,1,0,1,1,0,0,1,1,0,0,1,1,1,1"));
+            parkingLots.add(new ParkingLot("parking #4", "eilat 7", 7, "1,1,1,0,1,-1,1,1,0,0,1,1,1,1,-1,1,1,0,0,1,1,1,1,1,0,0,-1,1,1,0,0,0,0,1,1,1,1,1,1,0,0,-1,-1,-1,1,1,1,1,0,0,0,-1,-1,-1,-1,1,1,1,1,1,0,0,0,0,0,0,-1,-1,-1,-1"));
+
             parkingLots.get(0).setRates(6.0, 5.0, 60.0, null, 75.0);
             parkingLots.get(1).setRates(5.5, 3.5, 60.0, 54.0, 72.0);
             parkingLots.get(2).setRates(12.0, 10.0, null, 54.0, 72.0);
