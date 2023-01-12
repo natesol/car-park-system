@@ -1,55 +1,59 @@
 package net.cps.common.entities;
 
-import java.util.Date;
-
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 
 @Entity
-@Table(name = "reservation")
-public class Reservation {
-    
+@Table(name = "reservations")
+public class Reservation implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="reservationId", updatable = false, nullable = false)
-    private Long reservationId;
+    @Column(name = "id", updatable = false, nullable = false)
+    private Integer id;
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "parking_lot_id",referencedColumnName = "id")
+    @JoinColumn(name = "vehicle_number", referencedColumnName = "number")
+    private Vehicle vehicle;
+    @NotNull
+    @OneToOne
+    @JoinColumn(name = "parking_lot_id", referencedColumnName = "id")
     private ParkingLot parkingLot;
     @NotNull
-    private LocalDateTime arrivalDate;
-    @NotNull
-    private LocalDateTime departureTime;
-    @NotNull
     @ManyToOne
-    @JoinColumn(name = "vehicle_number", referencedColumnName = "id")
-    private Vehicle vehicle;
-    @OneToOne
+    @JoinColumn(name = "customer_email", referencedColumnName = "email")
+    private Customer customer;
+    @NotNull
+    @Column(name = "arrival_time")
+    private LocalDateTime arrivalTime;
+    @NotNull
+    @Column(name = "departure_time")
+    private LocalDateTime departureTime;
+    @OneToOne(mappedBy = "reservation", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private ParkingSpace parkingSpace;
     
+    
     //use if the car already entered the parking lot
-    public Reservation(@NotNull ParkingLot parkingLot, @NotNull LocalDateTime arrivalDate,
-                       @NotNull LocalDateTime departureTime, @NotNull Vehicle vehicle, ParkingSpace parkingSpace) {
+    public Reservation (@NotNull ParkingLot parkingLot, @NotNull LocalDateTime arrivalDate,
+                        @NotNull LocalDateTime departureTime, @NotNull Vehicle vehicle, ParkingSpace parkingSpace) {
         this.parkingLot = parkingLot;
-        this.arrivalDate = arrivalDate;
+        this.arrivalTime = arrivalDate;
         this.departureTime = departureTime;
         this.vehicle = vehicle;
         this.parkingSpace = parkingSpace;
     }
-    public Reservation(@NotNull ParkingLot parkingLot, @NotNull LocalDateTime arrivalDate, @NotNull LocalDateTime departureTime, @NotNull Vehicle vehicle) {
+    
+    public Reservation (@NotNull ParkingLot parkingLot, @NotNull LocalDateTime arrivalDate, @NotNull LocalDateTime departureTime, @NotNull Vehicle vehicle) {
         this.parkingLot = parkingLot;
-        this.arrivalDate = arrivalDate;
+        this.arrivalTime = arrivalDate;
         this.departureTime = departureTime;
         this.vehicle = vehicle;
     }
     
-    public Reservation() {
+    public Reservation () {
     
     }
 }

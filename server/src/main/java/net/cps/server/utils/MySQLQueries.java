@@ -21,7 +21,7 @@ public class MySQLQueries {
             """
                     (
                         id              INT NOT NULL AUTO_INCREMENT,
-                        type            ENUM('MANAGEMENT', 'PARKING_LOT', 'OFFICE') NOT NULL,
+                        type            ENUM('MANAGEMENT', 'OFFICE', 'PARKING_LOT') NOT NULL,
                         PRIMARY KEY (id)
                     )""";
     
@@ -94,4 +94,52 @@ public class MySQLQueries {
                           is_active BOOLEAN NOT NULL,
                           balance DOUBLE NOT NULL
                     )""";
+    
+    
+    /*
+        INSERT INTO users (username, email, password)
+        VALUES ('john_doe', 'johndoe@example.com', 'password123'),
+               ('jane_doe', 'janedoe@example.com', 'password456'),
+               ('jim_doe', 'jimdoe@example.com', 'password789')
+     
+     
+        
+        username
+        email
+        password
+        
+        'john_doe', 'johndoe@example.com', 'password123'
+        'jane_doe', 'janedoe@example.com', 'password456'
+        'jim_doe', 'jimdoe@example.com', 'password789'
+ 
+ 
+        SELECT * FROM users
+ 
+ 
+        SELECT * FROM users WHERE
+            (username = 'john_doe' AND email = 'johndoe@example.com' AND password = 'password123') OR
+            (username = 'jane_doe' AND email = 'janedoe@example.com' AND password = 'password456') OR
+            (username = 'jim_doe' AND email = 'jimdoe@example.com' AND password = 'password789')
+    */
+    
+    
+    public static String insertQueryToSelectQuery (String insert) {
+        String table = insert.split(" ")[2];
+        StringBuilder select = new StringBuilder("SELECT * FROM " + table + " WHERE ");
+        insert = insert.replace("INSERT INTO " + table + " ", "");
+        String[] parts = insert.split(" VALUES ");
+        String[] fields = parts[0].replace("(", "").replace(")", "").split(", ");
+        String[] valuesList = parts[1].replaceAll("\\), \\(", " OR ").replace("(", "").replace(")", "").split(" OR ");
+        
+        for (String s : valuesList) {
+            String[] values = s.split(", ");
+            select.append("(");
+            for (int j = 0 ; j < fields.length ; j++) {
+                select.append(fields[j]).append(" = ").append(values[j]).append(", ");
+            }
+            select = new StringBuilder(select.substring(0, select.length() - 2));
+            select.append(") OR ");
+        }
+        return select.substring(0, select.length() - 4);
+    }
 }

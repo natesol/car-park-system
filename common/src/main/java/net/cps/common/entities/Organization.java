@@ -15,7 +15,7 @@ public abstract class Organization {
     private Integer id;
     @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "type", nullable = false, columnDefinition = "ENUM('MANAGEMENT', 'PARKING_LOT', 'OFFICE') NOT NULL")
+    @Column(name = "type", nullable = false, columnDefinition = "ENUM('MANAGEMENT', 'OFFICE', 'PARKING_LOT') NOT NULL")
     private OrganizationType type;
     
     public static final Integer DEFAULT_STREET_NUMBER = 1;
@@ -51,38 +51,38 @@ public abstract class Organization {
         this.type = type;
     }
     
-    abstract public String getStreet ();
+    abstract public String getStreetName ();
     
-    abstract public void setStreet (String street);
+    abstract public void setStreetName (String streetName);
     
     abstract public Integer getStreetNumber ();
     
     abstract public void setStreetNumber (Integer streetNumber);
     
-    abstract public String getCity ();
+    abstract public String getCityName ();
     
-    abstract public void setCity (String city);
+    abstract public void setCityName (String cityName);
     
-    abstract public String getState ();
+    abstract public String getCountrySymbol ();
     
-    abstract public void setState (String state);
+    abstract public void setCountrySymbol (String countrySymbol);
     
     public String getAddress () {
-        return getStreet() + "ST. " + getStreetNumber() + ", " + getCity() + ", " + getState();
+        return getStreetName() + "ST. " + getStreetNumber() + ", " + getCityName() + ", " + getCountrySymbol();
     }
     
     public void setAddress (String address) {
         String[] addressParts = address.split(", ");
-        setStreet(addressParts[0].split("ST. ")[0].trim());
+        setStreetName(addressParts[0].split("ST. ")[0].trim());
         setStreetNumber(Integer.parseInt(addressParts[0].split("ST. ")[1].trim()));
-        setCity(addressParts[1].trim());
-        setState(addressParts[2].trim());
+        setCityName(addressParts[1].trim());
+        setCountrySymbol(addressParts[2].trim());
     }
     
     public void setAddress (@NotNull String street, @NotNull Integer streetNumber, @NotNull String city, @NotNull String state) {
-        setStreet(street);
+        setStreetName(street);
         setStreetNumber(streetNumber);
-        setCity(city);
-        setState(state);
+        setCityName(city);
+        setCountrySymbol(state);
     }
 }

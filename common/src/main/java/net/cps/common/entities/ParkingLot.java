@@ -20,14 +20,14 @@ public class ParkingLot extends Organization implements Serializable {
     @Column(name = "street_number", columnDefinition = "MEDIUMINT NOT NULL")
     private Integer streetNumber;
     @NotNull
-    @Column(name = "street", columnDefinition = "VARCHAR(55) NOT NULL")
-    private String street;
+    @Column(name = "street_name", columnDefinition = "VARCHAR(55) NOT NULL")
+    private String streetName;
     @NotNull
-    @Column(name = "city", columnDefinition = "VARCHAR(55) NOT NULL")
-    private String city;
+    @Column(name = "city_name", columnDefinition = "VARCHAR(55) NOT NULL")
+    private String cityName;
     @NotNull
-    @Column(name = "state", columnDefinition = "VARCHAR(55) NOT NULL")
-    private String state;
+    @Column(name = "country_symbol", columnDefinition = "CHAR(2) NOT NULL")
+    private String countrySymbol;
     @NotNull
     @Column(name = "num_of_floors", columnDefinition = "TINYINT NOT NULL")
     private Integer numOfFloors;
@@ -54,35 +54,35 @@ public class ParkingLot extends Organization implements Serializable {
         super(TYPE);
         this.name = DEFAULT_NAME;
         this.streetNumber = Organization.DEFAULT_STREET_NUMBER;
-        this.street = Organization.DEFAULT_STREET;
-        this.city = Organization.DEFAULT_CITY;
-        this.state = Organization.DEFAULT_STATE;
+        this.streetName = Organization.DEFAULT_STREET;
+        this.cityName = Organization.DEFAULT_CITY;
+        this.countrySymbol = Organization.DEFAULT_STATE;
         this.numOfFloors = DEFAULT_FLOOR_NUM;
         this.floorRows = DEFAULT_FLOOR_ROWS;
         this.floorCols = DEFAULT_FLOOR_COLS;
         this.rates = new Rates(this);
     }
     
-    public ParkingLot (@NotNull String name, @NotNull String street, @NotNull Integer streetNumber, @NotNull String city, @NotNull String state, @NotNull Integer floorCols) {
+    public ParkingLot (@NotNull String name, @NotNull String streetName, @NotNull Integer streetNumber, @NotNull String cityName, @NotNull String countrySymbol, @NotNull Integer floorCols) {
         super(TYPE);
         this.name = name;
-        this.street = street;
+        this.streetName = streetName;
         this.streetNumber = streetNumber;
-        this.city = city;
-        this.state = state;
+        this.cityName = cityName;
+        this.countrySymbol = countrySymbol;
         this.numOfFloors = DEFAULT_FLOOR_NUM;
         this.floorRows = DEFAULT_FLOOR_ROWS;
         this.floorCols = floorCols;
         this.rates = new Rates(this);
     }
     
-    public ParkingLot (@NotNull String name, @NotNull String street, @NotNull Integer streetNumber, @NotNull String city, @NotNull String state, @NotNull Integer numOfFloors, @NotNull Integer floorRows, @NotNull Integer floorCols) {
+    public ParkingLot (@NotNull String name, @NotNull String streetName, @NotNull Integer streetNumber, @NotNull String cityName, @NotNull String countrySymbol, @NotNull Integer numOfFloors, @NotNull Integer floorRows, @NotNull Integer floorCols) {
         super(TYPE);
         this.name = name;
-        this.street = street;
+        this.streetName = streetName;
         this.streetNumber = streetNumber;
-        this.city = city;
-        this.state = state;
+        this.cityName = cityName;
+        this.countrySymbol = countrySymbol;
         this.numOfFloors = numOfFloors;
         this.floorRows = floorRows;
         this.floorCols = floorCols;
@@ -116,28 +116,28 @@ public class ParkingLot extends Organization implements Serializable {
         this.streetNumber = streetNumber;
     }
     
-    public @NotNull String getStreet () {
-        return street;
+    public @NotNull String getStreetName () {
+        return streetName;
     }
     
-    public void setStreet (@NotNull String street) {
-        this.street = street;
+    public void setStreetName (@NotNull String streetName) {
+        this.streetName = streetName;
     }
     
-    public @NotNull String getCity () {
-        return city;
+    public @NotNull String getCityName () {
+        return cityName;
     }
     
-    public void setCity (@NotNull String city) {
-        this.city = city;
+    public void setCityName (@NotNull String cityName) {
+        this.cityName = cityName;
     }
     
-    public @NotNull String getState () {
-        return state;
+    public @NotNull String getCountrySymbol () {
+        return countrySymbol;
     }
     
-    public void setState (@NotNull String state) {
-        this.state = state;
+    public void setCountrySymbol (@NotNull String countrySymbol) {
+        this.countrySymbol = countrySymbol;
     }
     
     public @NotNull Integer getNumOfFloors () {

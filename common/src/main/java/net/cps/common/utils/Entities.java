@@ -20,7 +20,7 @@ public enum Entities {
             Integer.class,
             (Integer::parseInt)
     ),
-    MANAGEMENT(Management.class, "managements", "id", Integer.class, (Integer::parseInt)),
+    MANAGEMENT(Office.class, "managements", "id", Integer.class, (Integer::parseInt)),
     PARKING_LOT(ParkingLot.class, "parking_lots", "id", Integer.class, (Integer::parseInt)),
     RATES(Rates.class, "rates", "id", Integer.class, (Integer::parseInt)),
     EMPLOYEE(Employee.class, "employees", "id", Integer.class, (Integer::parseInt)),
@@ -73,6 +73,9 @@ public enum Entities {
         return primaryKeyConverter;
     }
     
+    public String getPrimaryKeyGetterName () {
+        return "get" + primaryKey.substring(0,1).toUpperCase() + primaryKey.substring(1);
+    }
     
     
     /* ----- Utility Methods ---------------------------------------- */

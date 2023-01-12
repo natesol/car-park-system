@@ -2,7 +2,7 @@ package net.cps.server;
 
 import net.cps.common.entities.Customer;
 import net.cps.common.entities.Employee;
-import net.cps.common.entities.Management;
+import net.cps.common.entities.Office;
 import net.cps.common.entities.ParkingLot;
 import net.cps.common.utils.EmployeeRole;
 import net.cps.server.utils.Logger;
@@ -134,7 +134,7 @@ public class Main {
             parkingLots.get(3).setRates(null, 7.0, 60.0, 54.0, 82.0);
             Database.createMultipleEntities(sessionFactory, parkingLots);
             
-            Database.createEntity(sessionFactory, new Management("aaa", "aaa", 7, "Haifa", "IL"));
+            Database.createEntity(sessionFactory, new Office("aaa", "aaa", 7, "Haifa", "IL"));
             
             ArrayList<Employee> employees = new ArrayList<>();
             employees.add(new Employee("amirdhdlive@gmail.com", "Amir", "David", "amir123", EmployeeRole.NETWORK_MANAGER, parkingLots.get(0)));

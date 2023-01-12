@@ -10,9 +10,9 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
-import javax.persistence.Tuple;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.List;
@@ -113,7 +113,7 @@ public class Database {
      *
      * @param sessionFactory the 'SessionFactory' object to use.
      * @param entityObject   the entity to add.
-     * @return the new entity given id.
+     * @return the new entity given id (the primary key).
      **/
     public static <T> Object createEntity (SessionFactory sessionFactory, T entityObject) {
         Session session = sessionFactory.openSession();
@@ -130,12 +130,12 @@ public class Database {
             Logger.info("a new entity added to the database. entity: " + entityObject.getClass().getSimpleName() + ", id: " + id);
         }
         catch (Throwable e) {
-            if (e instanceof HibernateException && transaction != null) {
+            if (e instanceof HibernateException && session.isOpen() && transaction != null) {
                 transaction.rollback();
             }
             
-            Logger.print("Error: failed to add entity: " + entityObject.getClass().getSimpleName() + " to the database.", "'CREATE' transaction ended with the exception: " + e.getMessage());
             e.printStackTrace();
+            Logger.print("Error: failed to add entity: " + entityObject.getClass().getSimpleName() + " to the database.", "'CREATE' transaction ended with the exception: " + e.getMessage());
             Logger.error("failed to add entity: " + entityObject.getClass().getSimpleName() + " to the database.");
         }
         session.close();
@@ -148,12 +148,13 @@ public class Database {
      *
      * @param sessionFactory the 'SessionFactory' object to use.
      * @param entitiesList   the entities to add.
-     * @return a list of the new entities given ids.
+     * @return a list of the new entities given ids (primary keys).
      **/
     public static <T> ArrayList<Object> createMultipleEntities (SessionFactory sessionFactory, List<T> entitiesList) {
+        String entityClassName = entitiesList.get(0).getClass().getSimpleName();
+        ArrayList<Object> ids = new ArrayList<>();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        ArrayList<Object> ids = new ArrayList<>();
         
         try (session) {
             for (T entity : entitiesList) {
@@ -164,17 +165,17 @@ public class Database {
             transaction.commit();
             session.clear();
             
-            Logger.print("a list of entities added to the database.", "entities: " + entitiesList.get(0).getClass().getSimpleName() + ", ids: " + ids);
-            Logger.info("a list of entities added to the database. entities: " + entitiesList.get(0).getClass().getSimpleName() + ", ids: " + ids);
+            Logger.print("a list of entities added to the database.", "entities: " + entityClassName + ", ids: " + ids);
+            Logger.info("a list of entities added to the database. entities: " + entityClassName + ", ids: " + ids);
         }
         catch (Throwable e) {
-            if (e instanceof HibernateException && transaction != null) {
+            if (e instanceof HibernateException && session.isOpen() && transaction != null) {
                 transaction.rollback();
             }
             
-            Logger.print("Error: failed to add entities: " + entitiesList.get(0).getClass().getSimpleName() + " to the database.", "'CREATE' transaction ended with the exception: " + e.getMessage());
             e.printStackTrace();
-            Logger.error("failed to add entities: " + entitiesList.get(0).getClass().getSimpleName() + " to the database.");
+            Logger.print("Error: failed to add entities: " + entityClassName + " to the database.", "'CREATE' transaction ended with the exception: " + e.getMessage());
+            Logger.error("failed to add entities: " + entityClassName + " to the database.");
         }
         session.close();
         
@@ -187,30 +188,44 @@ public class Database {
      * @param sessionFactory the 'SessionFactory' object to use.
      * @param query          the custom `INSERT` query.
      *                       the query must be in the following format: `INSERT INTO &lt;table_name&gt; (&lt;column_name&gt;, &lt;column_name&gt;, ...) VALUES (&lt;value&gt;, &lt;value&gt;, ...);`.
-     * @return the new entities given ids.
+     * @return the new entities given ids (primary keys).
      **/
-    public static ArrayList<Object> createCustomQuery (SessionFactory sessionFactory, String query) {
+    public static <T> ArrayList<Object> createCustomQuery (SessionFactory sessionFactory, String query) {
+        ArrayList<Object> ids = null;
+        Entities entity = Entities.fromString(query.split(" ")[2]);
+        String entityClassName = entity.getClassName();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        ArrayList<Object> ids = null;
         
         try (session) {
-            ids = (ArrayList<Object>) session.createNativeQuery(query).getResultList();
+            session.createNativeQuery(query).executeUpdate();
+            
+            Class<?> T = entity.getClass();
+            ArrayList<T> entities = (ArrayList<T>) session.createNativeQuery(query, T).getResultList();
+            ids = (ArrayList<Object>) entities.stream().map((e) -> {
+                try {
+                    return e.getClass().getDeclaredMethod(entity.getPrimaryKeyGetterName());
+                }
+                catch (NoSuchMethodException ex) {
+                    throw new RuntimeException(ex);
+                }
+            });
+            
             session.flush();
             transaction.commit();
             session.clear();
             
-            Logger.print("a new entities added to the database.", "entities: " + query.split(" ")[2] + ", ids: " + ids);
-            Logger.info("a new entities added to the database. entities: " + query.split(" ")[2] + ", ids: " + ids);
+            Logger.print("a new entities added to the database.", "entities: " + entityClassName + ", ids: " + ids);
+            Logger.info("a new entities added to the database. entities: " + entityClassName + ", ids: " + ids);
         }
         catch (Throwable e) {
-            if (e instanceof HibernateException && transaction != null) {
+            if (e instanceof HibernateException && session.isOpen() && transaction != null) {
                 transaction.rollback();
             }
             
-            Logger.print("Error: failed to add entities: " + query.split(" ")[2] + " to the database.", "'CREATE' transaction ended with the exception: " + e.getMessage());
             e.printStackTrace();
-            Logger.error("failed to add entities: " + query.split(" ")[2] + " to the database.");
+            Logger.print("Error: failed to add entities: " + entityClassName + " to the database.", "'CREATE' transaction ended with the exception: " + e.getMessage());
+            Logger.error("failed to add entities: " + entityClassName + " to the database.");
         }
         session.close();
         
@@ -243,7 +258,7 @@ public class Database {
                 transaction.rollback();
             }
             
-            Logger.print("Error: failed to get entity: " + T.getSimpleName() + " from the database.", "'READ' transaction ended with the exception: " + e.getMessage());
+            Logger.print("Error: failed to get entity: " + T.getSimpleName() + " from the database.", "'GET' transaction ended with the exception: " + e.getMessage());
             e.printStackTrace();
             Logger.error("failed to get entity: " + T.getSimpleName() + " from the database.");
         }
@@ -269,7 +284,7 @@ public class Database {
             }
             
             e.printStackTrace();
-            Logger.print("Error: failed to get entity: " + T.getSimpleName() + " from the database.", "'READ' transaction ended with the exception: " + e.getMessage());
+            Logger.print("Error: failed to get entity: " + T.getSimpleName() + " from the database.", "'GET' transaction ended with the exception: " + e.getMessage());
             Logger.error("failed to get entity: " + T.getSimpleName() + " from the database.");
         }
         session.close();
@@ -278,7 +293,7 @@ public class Database {
         
     }
     
-    public static <T> T getEntity (SessionFactory sessionFactory, Class<T> T, List<SimpleEntry<String,String>>[] fields) {
+    public static <T> T getEntity (SessionFactory sessionFactory, Class<T> T, List<SimpleEntry<String, String>>[] fields) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         T data = null;
@@ -291,8 +306,8 @@ public class Database {
                     query.append(" AND ");
                 }
             }
-            
             data = (T) session.createQuery(query.toString()).getSingleResult();
+            
             session.flush();
             transaction.commit();
             session.clear();
@@ -303,7 +318,7 @@ public class Database {
             }
             
             e.printStackTrace();
-            Logger.print("Error: failed to get entity: " + T.getSimpleName() + " from the database.", "'READ' transaction ended with the exception: " + e.getMessage());
+            Logger.print("Error: failed to get entity: " + T.getSimpleName() + " from the database.", "'GET' transaction ended with the exception: " + e.getMessage());
             Logger.error("failed to get entity: " + T.getSimpleName() + " from the database.");
         }
         session.close();
@@ -342,7 +357,7 @@ public class Database {
                 transaction.rollback();
             }
             
-            Logger.print("Error: failed to get entities: " + T.getSimpleName() + " from the database.", "'READ' transaction ended with the exception:" + e.getMessage());
+            Logger.print("Error: failed to get entities: " + T.getSimpleName() + " from the database.", "'GET' transaction ended with the exception:" + e.getMessage());
             e.printStackTrace();
             Logger.error("failed to get entities: " + T.getSimpleName() + " from the database.");
             
@@ -351,6 +366,39 @@ public class Database {
         session.close();
         
         return data.size() > 0 ? data : null;
+    }
+    
+    public static <T> ArrayList<T> getMultipleEntities (SessionFactory sessionFactory, Class<T> T, List<SimpleEntry<String, String>>[] fields) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        ArrayList<T> data = new ArrayList<>();
+        
+        try (session) {
+            StringBuilder query = new StringBuilder("FROM " + Entities.fromString(T.getSimpleName()).getTableName() + " WHERE ");
+            for (int i = 0 ; i < fields.length ; i++) {
+                query.append(fields[i].get(0)).append(" = '").append(fields[i].get(1)).append("'");
+                if (i < fields.length - 1) {
+                    query.append(" AND ");
+                }
+            }
+            data = (ArrayList<T>) session.createQuery(query.toString()).list();
+            
+            session.flush();
+            transaction.commit();
+            session.clear();
+        }
+        catch (Throwable e) {
+            if (e instanceof HibernateException && session.isOpen() && transaction != null) {
+                transaction.rollback();
+            }
+            
+            e.printStackTrace();
+            Logger.print("Error: failed to get entity: " + T.getSimpleName() + " from the database.", "'GET' transaction ended with the exception: " + e.getMessage());
+            Logger.error("failed to get entity: " + T.getSimpleName() + " from the database.");
+        }
+        session.close();
+        
+        return data;
     }
     
     /**
@@ -379,7 +427,7 @@ public class Database {
             }
             
             e.printStackTrace();
-            Logger.print("Error: failed to get all entities: " + entityClass.getSimpleName() + " from the database.", "'READ' transaction ended with the exception:" + e.getMessage());
+            Logger.print("Error: failed to get all entities: " + entityClass.getSimpleName() + " from the database.", "'GET' transaction ended with the exception:" + e.getMessage());
             Logger.error("failed to get all entities: " + entityClass.getSimpleName() + " from the database.");
             
             throw new HibernateException(e);
@@ -416,7 +464,7 @@ public class Database {
                 transaction.rollback();
             }
             
-            Logger.print("Error: failed to get entities: " + query.split(" ")[3] + " from the database.", "'READ' transaction ended with the exception:" + e.getMessage());
+            Logger.print("Error: failed to get entities: " + query.split(" ")[3] + " from the database.", "'GET' transaction ended with the exception:" + e.getMessage());
             e.printStackTrace();
             Logger.error("failed to get entities: " + query.split(" ")[3] + " from the database.");
             
@@ -437,33 +485,34 @@ public class Database {
      * @return the entity id.
      **/
     public static <T> Object updateEntity (SessionFactory sessionFactory, T entityObject) {
+        Object id = null;
+        String className = entityObject.getClass().getSimpleName();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        Object id = null;
         
         try (session) {
             session.update(entityObject);
-            id = entityObject;
+            id = entityObject.getClass().getDeclaredMethod(Entities.fromString(className).getPrimaryKeyGetterName()).invoke(entityObject);
             
             session.flush();
             transaction.commit();
             session.clear();
             
-            Logger.print("an entity updated on the database.", "entity: " + entityObject.getClass().getSimpleName() + ", id: " + entityObject.getClass().getDeclaredMethod("getId").invoke(entityObject));
-            Logger.info("an entity updated on the database. entity: " + entityObject.getClass().getSimpleName() + ", id: " + entityObject.getClass().getDeclaredMethod("getId").invoke(entityObject));
+            Logger.print("an entity updated on the database.", "entity: " + className + ", id: " + id);
+            Logger.info("an entity updated on the database. entity: " + className + ", id: " + id);
         }
         catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException e) {
-            Logger.print("Error: access to the entity's id failed.", "'UPDATE' transaction ended with the exception: " + e.getMessage());
             e.printStackTrace();
+            Logger.print("Error: access to the entity's id failed.", "'UPDATE' transaction ended with the exception: " + e.getMessage());
         }
         catch (Throwable e) {
             if (e instanceof HibernateException && session.isOpen() && transaction != null) {
                 transaction.rollback();
             }
             
-            Logger.print("Error: failed to update entity: " + entityObject.getClass().getSimpleName() + " on the database.", "'UPDATE' transaction ended with the exception: " + e.getMessage());
             e.printStackTrace();
-            Logger.error("failed to update entity: " + entityObject.getClass().getSimpleName() + " on the database.");
+            Logger.print("Error: failed to update entity: " + className + " on the database.", "'UPDATE' transaction ended with the exception: " + e.getMessage());
+            Logger.error("failed to update entity: " + className + " on the database.");
         }
         
         session.close();
@@ -479,34 +528,38 @@ public class Database {
      * @return a list of the updated entities ids.
      **/
     public static <T> ArrayList<Object> updateMultipleEntities (SessionFactory sessionFactory, List<T> entitiesList) {
+        ArrayList<Object> ids = new ArrayList<>();
+        String className = entitiesList.get(0).getClass().getSimpleName();
+        Entities _entity = Entities.fromString(className);
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        ArrayList<Object> ids = new ArrayList<>();
         
         try (session) {
+            Method getter = _entity.getClass().getDeclaredMethod(_entity.getPrimaryKeyGetterName());
+            
             for (T entity : entitiesList) {
                 session.update(entity);
-                ids.add(entity.getClass().getDeclaredMethod("getId").invoke(entity));
+                ids.add(getter.invoke(entity));
             }
             session.flush();
             transaction.commit();
             session.clear();
             
-            Logger.print("entities updated on the database.", "entities: " + entitiesList.get(0).getClass().getSimpleName() + ", ids: " + ids);
-            Logger.info("entities updated on the database. entities: " + entitiesList.get(0).getClass().getSimpleName() + ", ids: " + ids);
+            Logger.print("entities updated on the database.", "entities: " + className + ", ids: " + ids);
+            Logger.info("entities updated on the database. entities: " + className + ", ids: " + ids);
         }
         catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException e) {
-            Logger.print("Error: access to the entity's id failed.", "'UPDATE' transaction ended with the exception: " + e.getMessage());
             e.printStackTrace();
+            Logger.print("Error: access to the entity's id failed.", "'UPDATE' transaction ended with the exception: " + e.getMessage());
         }
         catch (Throwable e) {
             if (e instanceof HibernateException && session.isOpen() && transaction != null) {
                 transaction.rollback();
             }
             
-            Logger.print("Error: failed to update entities: " + entitiesList.get(0).getClass().getSimpleName() + " on the database.", "'UPDATE' transaction ended with the exception: " + e.getMessage());
             e.printStackTrace();
-            Logger.error("failed to update entities: " + entitiesList.get(0).getClass().getSimpleName() + " on the database.");
+            Logger.print("Error: failed to update entities: " + className + " on the database.", "'UPDATE' transaction ended with the exception: " + e.getMessage());
+            Logger.error("failed to update entities: " + className + " on the database.");
         }
         
         session.close();
@@ -518,34 +571,39 @@ public class Database {
      *
      * @param sessionFactory the 'SessionFactory' object to use.
      * @param query          the custom query.
-     *                       the query must be in the following format: `&lt;table_name&gt; SET &lt;column_name&gt; = &lt;value&gt; WHERE &lt;column_name&gt; = &lt;value&gt;;`,
-     *                       or in the following format: `&lt;table_name&gt; SET &lt;column_name&gt; = &lt;value&gt; WHERE &lt;column_name&gt; IN (&lt;value&gt;, &lt;value&gt;, ...);`,
-     *                       or in the following format: `&lt;table_name&gt; SET &lt;column_name&gt; = &lt;value&gt;;`.
+     *                       the query must be in the following format: `SET &lt;table_name&gt; SET &lt;column_name&gt; = &lt;value&gt; WHERE &lt;column_name&gt; = &lt;value&gt;;`,
+     *                       or in the following format: `SET &lt;table_name&gt; SET &lt;column_name&gt; = &lt;value&gt; WHERE &lt;column_name&gt; IN (&lt;value&gt;, &lt;value&gt;, ...);`,
+     *                       or in the following format: `SET &lt;table_name&gt; SET &lt;column_name&gt; = &lt;value&gt;;`.
      * @return a list of the updated entities ids.
+     * <p>
+     * !!!
      **/
     public static ArrayList<Object> updateCustomQuery (SessionFactory sessionFactory, String query) {
+        ArrayList<Object> ids = new ArrayList<>();
+        Entities _entity = Entities.fromString(query.split(" ")[1]);
+        String className = _entity.getClassName();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        ArrayList<Object> ids = new ArrayList<>();
         
         try (session) {
             session.createNativeQuery(query).executeUpdate();
             ids = (ArrayList<Object>) session.createNativeQuery(query.replace("SET", "SELECT *")).getResultList();
+            
             session.flush();
             transaction.commit();
             session.clear();
             
-            Logger.print("entities updated on the database.", "entities: " + query.split(" ")[1] + ", via custom query: " + query);
-            Logger.info("entities updated on the database. entities: " + query.split(" ")[1] + ", via custom query: " + query);
+            Logger.print("entities updated on the database.", "entities: " + className + ", via custom query: " + query);
+            Logger.info("entities updated on the database. entities: " + className + ", via custom query: " + query);
         }
         catch (Throwable e) {
             if (e instanceof HibernateException && session.isOpen() && transaction != null) {
                 transaction.rollback();
             }
             
-            Logger.print("Error: failed to update entities: " + query.split(" ")[1] + " on the database.", "'UPDATE' transaction ended with the exception: " + e.getMessage());
             e.printStackTrace();
-            Logger.error("failed to update entities: " + query.split(" ")[1] + " on the database.");
+            Logger.print("Error: failed to update entities: " + className + " on the database.", "'UPDATE' transaction ended with the exception: " + e.getMessage());
+            Logger.error("failed to update entities: " + className + " on the database.");
         }
         
         session.close();
@@ -562,19 +620,22 @@ public class Database {
      * @return the deleted entity id.
      **/
     public static <T> Object deleteEntity (SessionFactory sessionFactory, T entityObject) {
+        Object id = null;
+        String className = entityObject.getClass().getSimpleName();
+        Entities _entity = Entities.fromString(className);
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        Object id = null;
         
         try (session) {
             session.delete(entityObject);
-            id = entityObject.getClass().getDeclaredMethod("getId").invoke(entityObject);
+            id = entityObject.getClass().getDeclaredMethod(_entity.getPrimaryKeyGetterName()).invoke(entityObject);
+            
             session.flush();
             transaction.commit();
             session.clear();
             
-            Logger.print("an entity deleted from the database.", "entity: " + entityObject.getClass().getSimpleName() + ", id: " + entityObject.getClass().getDeclaredMethod("getId").invoke(entityObject));
-            Logger.info("an entity deleted from the database. entity: " + entityObject.getClass().getSimpleName() + ", id: " + entityObject.getClass().getDeclaredMethod("getId").invoke(entityObject));
+            Logger.print("an entity deleted from the database.", "entity: " + className + ", id: " + id);
+            Logger.info("an entity deleted from the database. entity: " + className + ", id: " + id);
         }
         catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
@@ -586,11 +647,11 @@ public class Database {
             }
             
             e.printStackTrace();
-            Logger.print("Error: failed to delete entity: " + entityObject.getClass().getSimpleName() + " from the database.", "'DELETE' transaction ended with the exception: " + e.getMessage());
-            Logger.error("failed to delete entity: " + entityObject.getClass().getSimpleName() + " from the database.");
+            Logger.print("Error: failed to delete entity: " + className + " from the database.", "'DELETE' transaction ended with the exception: " + e.getMessage());
+            Logger.error("failed to delete entity: " + className + " from the database.");
         }
-        
         session.close();
+        
         return id;
     }
     
@@ -603,21 +664,23 @@ public class Database {
      * @return a list of the deleted entities ids.
      **/
     public static <T> ArrayList<Object> deleteMultipleEntities (SessionFactory sessionFactory, List<T> entitiesList) {
+        ArrayList<Object> ids = new ArrayList<>();
+        String className = entitiesList.get(0).getClass().getSimpleName();
+        Entities _entity = Entities.fromString(className);
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        ArrayList<Object> ids = new ArrayList<>();
-    
+        
         try (session) {
             for (T entity : entitiesList) {
                 session.delete(entity);
-                ids.add(entity.getClass().getDeclaredMethod("getId").invoke(entity));
+                ids.add(entity.getClass().getDeclaredMethod(_entity.getPrimaryKeyGetterName()).invoke(entity));
             }
             session.flush();
             transaction.commit();
             session.clear();
             
-            Logger.print("entities deleted from the database.", "entities: " + entitiesList.get(0).getClass().getSimpleName() + ", ids: " + ids);
-            Logger.info("entities deleted from the database. entities: " + entitiesList.get(0).getClass().getSimpleName() + ", ids: " + ids);
+            Logger.print("entities deleted from the database.", "entities: " + className + ", ids: " + ids);
+            Logger.info("entities deleted from the database. entities: " + className + ", ids: " + ids);
         }
         catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
@@ -628,12 +691,12 @@ public class Database {
                 transaction.rollback();
             }
             
-            Logger.print("Error: failed to delete entities: " + entitiesList.get(0).getClass().getSimpleName() + " from the database.", "'DELETE' transaction ended with the exception: " + e.getMessage());
             e.printStackTrace();
-            Logger.error("failed to delete entities: " + entitiesList.get(0).getClass().getSimpleName() + " from the database.");
+            Logger.print("Error: failed to delete entities: " + className + " from the database.", "'DELETE' transaction ended with the exception: " + e.getMessage());
+            Logger.error("failed to delete entities: " + className + " from the database.");
         }
         session.close();
-
+        
         return ids;
     }
     
@@ -641,24 +704,32 @@ public class Database {
      * Delete method - delete all entities rows from the entity-related-table in the database (the table will be truncated).
      *
      * @param sessionFactory the 'SessionFactory' object to use.
-     * @param T              the entity class.
+     * @param entityClass    the entity class.
      * @return a list of the deleted entities ids.
      **/
-    public static <T> ArrayList<Object> deleteAllEntities (SessionFactory sessionFactory, Class<T> T) {
+    public static <T> ArrayList<Object> deleteAllEntities (SessionFactory sessionFactory, Class<T> entityClass) {
+        ArrayList<Object> ids = new ArrayList<>();
+        String className = entityClass.getSimpleName();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        ArrayList<Object> ids = new ArrayList<>();
         
         try (session) {
-            session.createQuery("DELETE FROM " + T.getSimpleName()).executeUpdate();
-            //ids = (ArrayList<Object>) session.createNativeQuery(query.replace("SET", "SELECT *")).getResultList();
+            ids = (ArrayList<Object>) session.createQuery("FROM " + className).getResultList().stream().map(e -> {
+                try {
+                    return entityClass.getDeclaredMethod(Entities.fromString(entityClass.getSimpleName()).getPrimaryKeyGetterName()).invoke(e);
+                }
+                catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException ex) {
+                    throw new RuntimeException(ex);
+                }
+            });
+            session.createQuery("DELETE FROM " + className).executeUpdate();
             
             session.flush();
             transaction.commit();
             session.clear();
             
-            Logger.print("all entities deleted from the database.", "entities: " + T.getSimpleName() + ".");
-            Logger.info("all entities deleted from the database. entities: " + T.getSimpleName() + ".");
+            Logger.print("all entities deleted from the database.", "entities: " + className + ".");
+            Logger.info("all entities deleted from the database. entities: " + className + ".");
         }
         catch (Throwable e) {
             if (e instanceof HibernateException && session.isOpen() && transaction != null) {
@@ -666,8 +737,8 @@ public class Database {
             }
             
             e.printStackTrace();
-            Logger.print("Error: failed to delete all entities: " + T.getSimpleName() + " from the database.", "'DELETE' transaction ended with the exception: " + e.getMessage());
-            Logger.error("failed to delete all entities: " + T.getSimpleName() + " from the database.");
+            Logger.print("Error: failed to delete all entities: " + className + " from the database.", "'DELETE' transaction ended with the exception: " + e.getMessage());
+            Logger.error("failed to delete all entities: " + className + " from the database.");
         }
         session.close();
         
@@ -681,12 +752,14 @@ public class Database {
      * @param query          the custom query.
      *                       the query must be a 'DELETE' query.
      * @return a list of the deleted entities ids.
+     *
+     * !!!
      **/
     public static ArrayList<Object> deleteCustomQuery (SessionFactory sessionFactory, String query) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         ArrayList<Object> ids = new ArrayList<>();
-    
+        
         try (session) {
             session.createQuery(query).executeUpdate();
             
@@ -707,7 +780,7 @@ public class Database {
             Logger.error("failed to delete entities: " + query.split(" ")[2] + " from the database.");
         }
         session.close();
-    
+        
         return ids;
     }
 }

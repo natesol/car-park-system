@@ -120,33 +120,6 @@ public class RequestMessage extends AbstractMessage implements Serializable {
         }
     }
     
-    //public static boolean checkFormat(String header, RequestType requestType) {
-    //    String[] headerParts = header.split("/");
-    //    if (requestType == RequestType.GET || requestType == RequestType.CREATE || requestType == RequestType.UPDATE || requestType == RequestType.DELETE) {
-    //        if (headerParts.length > 0) {
-    //            // check if the first part is a valid table name
-    //            // and the rest are valid ids or valid filters
-    //            return checkTableName(headerParts[0]) && checkIdsAndFilters(headerParts);
-    //        }
-    //    } else if (requestType == RequestType.AUTH) {
-    //        if (headerParts.length == 2) {
-    //            // check if the first part is a valid auth type
-    //            // and the second part is valid auth data
-    //            return checkAuthType(headerParts[0]) && checkAuthData(headerParts[1]);
-    //        }
-    //    } else if (requestType == RequestType.CUSTOM) {
-    //        // for custom request type, you can decide what validation to do on the header
-    //        // it can be as simple as just checking if the header is not null or empty
-    //        // or it can be more complex validation
-    //        return header != null && !header.isEmpty();
-    //    }
-    //    return false;
-    //}
-    
-    //private static boolean checkTableName(String tableName) {
-    //    // check if tableName is valid
-    //    return tableName.matches("^
-    
     
     @Override
     public String toString () {

@@ -1,13 +1,13 @@
 package net.cps.common.utils;
 
+
 /**
- * Organizations types for the client-server communication.
- */
+ * Organizations types for the 'CityPark' system.
+ **/
 public enum OrganizationType {
-    //DUMMY_VALUE, // Fix MySQL8 enum start with 1.
-    MANAGEMENT,
-    PARKING_LOT,
-    OFFICE;
+    MANAGEMENT,         // The Company HQ Offices (Management).
+    OFFICE,             // General Offices.
+    PARKING_LOT;        // Parking Lots.
     
     
     /* ----- Utility Methods ------------------------------------------ */
@@ -17,8 +17,8 @@ public enum OrganizationType {
         
         return switch (type) {
             case "MANAGEMENT" -> MANAGEMENT;
-            case "PARKING_LOT" -> PARKING_LOT;
             case "OFFICE" -> OFFICE;
+            case "PARKING_LOT" -> PARKING_LOT;
             default -> throw new IllegalArgumentException("Invalid type: " + type);
         };
     }
@@ -26,8 +26,8 @@ public enum OrganizationType {
     public static String toString (OrganizationType type) {
         return switch (type) {
             case MANAGEMENT -> "Management";
-            case PARKING_LOT -> "Parking Lot";
             case OFFICE -> "Office";
+            case PARKING_LOT -> "Parking Lot";
             default -> throw new IllegalArgumentException("Invalid type: " + type);
         };
     }
