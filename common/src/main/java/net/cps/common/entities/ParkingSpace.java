@@ -5,13 +5,17 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Calendar;
 
 @Entity
 @Table(name = "parking_spaces")
 public class ParkingSpace implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="parking_lot", updatable = false, nullable = false)
+    @Column(name = "id", updatable = false, nullable = false)
+    private Integer id;
+    @NotNull
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private ParkingLot parkingLot;
     @NotNull
     @Column(name = "floor_num")
@@ -21,40 +25,88 @@ public class ParkingSpace implements Serializable {
     private Integer floorRow;
     @NotNull
     @Column(name = "floor_col")
-    private Integer floorCols;
+    private Integer floorCol;
     @NotNull
     @Column(name = "state")
     private ParkingSpaceState state;
-    @Column(name = "vehicle_id")
-    private String vehicleId;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "reservation", unique = true)
+    @OneToOne(mappedBy = "parkingSpace", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Vehicle vehicle;
+    @OneToOne(mappedBy = "parkingSpace", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Reservation reservation;
+    
+    public ParkingSpace (int i, int j, int k, @NotNull ParkingLot parkingLot) {
+        this.floorNum = i;
+        this.floorRow = j;
+        this.floorCol = k;
+        this.parkingLot = parkingLot;
+        this.state = ParkingSpaceState.AVAILABLE;
+    }
+    
+    public Integer getId () {
+        return id;
+    }
+    
+    public void setId (Integer id) {
+        this.id = id;
+    }
+    
+    public ParkingLot getParkingLot () {
+        return parkingLot;
+    }
+    
+    public void setParkingLot (ParkingLot parkingLot) {
+        this.parkingLot = parkingLot;
+    }
+    
+    public Integer getFloorNum () {
+        return floorNum;
+    }
+    
+    public void setFloorNum (Integer floorNum) {
+        this.floorNum = floorNum;
+    }
+    
+    public Integer getFloorRow () {
+        return floorRow;
+    }
+    
+    public void setFloorRow (Integer floorRow) {
+        this.floorRow = floorRow;
+    }
+    
+    public Integer getFloorCol () {
+        return floorCol;
+    }
+    
+    public void setFloorCol (Integer floorCol) {
+        this.floorCol = floorCol;
+    }
+    
+
     
     public Reservation getReservation () {return reservation;}
     
     public void setReservation (Reservation reservation) {this.reservation = reservation;}
-    //@OneToOne(fetch = FetchType.EAGER)
-    //@JoinColumn(name = "reservation_id")
-    //private Reservation reservation;
-
     
-    //public Reservation getReservation_id () {return reservation_id;}
-    //
-    //public void setReservation_id (Reservation reservation_id) {this.reservation_id = reservation_id;}
-    //
-    
-    public ParkingSpace(ParkingSpaceState condition) {
-        this.state = condition;
-        this.vehicleId = null;
+    public ParkingSpace(ParkingSpaceState state) {
+        this.state = state;
+        this.vehicle = null;
+        parkingLot = null;
     }
-    public ParkingSpace(String vehicleId) {
+    public ParkingSpace(Vehicle vehicle) {
         this.state = ParkingSpaceState.OCCUPIED;
-        this.vehicleId = vehicleId;
+        this.vehicle = vehicle;
+        parkingLot = null;
     }
     
-    public ParkingSpace () {
+    public ParkingSpace () {parkingLot = null;}
     
+    public Vehicle getVehicle () {
+        return vehicle;
+    }
+    
+    public void setVehicle (Vehicle vehicle) {
+        this.vehicle = vehicle;
     }
     
     public ParkingSpaceState getState () {
@@ -64,10 +116,16 @@ public class ParkingSpace implements Serializable {
         this.state = state;
     }
     
-    public String getVehicleId() {
-        return vehicleId;
+    public Calendar getArrivalTime () {
+        return reservation.getArrivalTime();
     }
-    public void setVehicleId(String vehicleId) {
-        this.vehicleId = vehicleId;
+    public void setArrivalTime (Calendar arrivalTime) {
+        reservation.setArrivalTime(arrivalTime);
+    }
+    public Calendar getDepartureTime () {
+        return reservation.getDepartureTime();
+    }
+    public void setDepartureTime (Calendar departureTime) {
+        reservation.setDepartureTime(departureTime);
     }
 }

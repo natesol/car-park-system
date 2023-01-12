@@ -84,12 +84,12 @@ public class Main {
             session.createSQLQuery(MySQLQueries.CREATE_DATABASE + databaseName).executeUpdate();
             session.createSQLQuery(MySQLQueries.USE_DATABASE + databaseName).executeUpdate();
             
-            session.createNativeQuery(MySQLQueries.CREATE_TABLE + MySQLQueries.ORGANIZATIONS_TABLE).executeUpdate();
-            session.createNativeQuery(MySQLQueries.CREATE_TABLE + MySQLQueries.MANAGEMENTS_TABLE).executeUpdate();
-            session.createNativeQuery(MySQLQueries.CREATE_TABLE + MySQLQueries.PARKING_LOTS_TABLE).executeUpdate();
-            session.createNativeQuery(MySQLQueries.CREATE_TABLE + MySQLQueries.RATES_TABLE).executeUpdate();
-            session.createNativeQuery(MySQLQueries.CREATE_TABLE + MySQLQueries.EMPLOYEES_TABLE).executeUpdate();
-            session.createNativeQuery(MySQLQueries.CREATE_TABLE + MySQLQueries.CUSTOMERS_TABLE).executeUpdate();
+            session.createNativeQuery(MySQLQueries.CREATE_ORGANIZATIONS_TABLE).executeUpdate();
+            session.createNativeQuery(MySQLQueries.CREATE_MANAGEMENTS_TABLE).executeUpdate();
+            session.createNativeQuery(MySQLQueries.CREATE_PARKING_LOTS_TABLE).executeUpdate();
+            session.createNativeQuery(MySQLQueries.CREATE_RATES_TABLE).executeUpdate();
+            session.createNativeQuery(MySQLQueries.CREATE_EMPLOYEES_TABLE).executeUpdate();
+            session.createNativeQuery(MySQLQueries.CREATE_CUSTOMERS_TABLE).executeUpdate();
             
             session.flush();
             session.getTransaction().commit();

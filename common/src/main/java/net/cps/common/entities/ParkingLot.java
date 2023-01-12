@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "parking_lots")
@@ -38,8 +39,14 @@ public class ParkingLot extends Organization implements Serializable {
     @Column(name = "floor_cols", columnDefinition = "TINYINT NOT NULL")
     private Integer floorCols;
     @NotNull
-    @OneToOne(mappedBy = "parkingLot", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "parkingLot", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Rates rates;
+    @NotNull
+    @OneToMany(mappedBy = "parkingLot", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ParkingSpace> parkingSpace;
+    @NotNull
+    @OneToMany(mappedBy = "parkingLot", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Reservation> reservations;
     
     public static final OrganizationType TYPE = OrganizationType.PARKING_LOT;
     public static final String DEFAULT_NAME = "Parking Lot Name";
@@ -174,6 +181,22 @@ public class ParkingLot extends Organization implements Serializable {
     
     public void setRates (@NotNull Rates rates) {
         this.rates = rates;
+    }
+    
+    public List<ParkingSpace> getParkingSpace () {
+        return parkingSpace;
+    }
+    
+    public void setParkingSpace (List<ParkingSpace> parkingSpace) {
+        this.parkingSpace = parkingSpace;
+    }
+    
+    public List<Reservation> getReservations () {
+        return reservations;
+    }
+    
+    public void setReservations (List<Reservation> reservations) {
+        this.reservations = reservations;
     }
     
     public void setRates (Double hourlyOccasionalParking, Double hourlyOnetimeParking, Double regularSubscriptionSingleVehicle, Double regularSubscriptionMultipleVehicles, Double fullSubscriptionSingleVehicle) {

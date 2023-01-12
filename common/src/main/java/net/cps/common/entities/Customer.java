@@ -12,7 +12,7 @@ import java.util.List;
 @Table(name = "customers")
 public class Customer extends AbstractUser implements Serializable {
     @Id
-    @Column(name = "email")
+    @Column(name = "email", unique = true, columnDefinition = "VARCHAR(100) UNIQUE NOT NULL PRIMARY KEY")
     private String email;
     @Column(name = "id")
     private String id;
@@ -163,7 +163,7 @@ public class Customer extends AbstractUser implements Serializable {
     public String toString () {
         return "Customer {" +
                 "email: '" + email + "'" +
-                ", id: " + id +
+                ", idNumber: " + id +
                 ", firstName: '" + firstName + "'" +
                 ", lastName: '" + lastName + "'" +
                 ", passwordHash: '" + passwordHash + "'" +

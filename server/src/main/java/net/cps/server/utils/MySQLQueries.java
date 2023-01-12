@@ -17,111 +17,24 @@ public class MySQLQueries {
     public static final String INSERT_INTO = "INSERT INTO ";
     
     
-    public static final String ORGANIZATIONS_TABLE = Entities.ORGANIZATION.getTableName() +
-            """
-                    (
-                        id              INT NOT NULL AUTO_INCREMENT,
-                        type            ENUM('MANAGEMENT', 'OFFICE', 'PARKING_LOT') NOT NULL,
-                        PRIMARY KEY (id)
-                    )""";
+    public static final String CREATE_ORGANIZATIONS_TABLE = CREATE_TABLE + Entities.ORGANIZATION.getTableName() + Entities.ORGANIZATION.getTableQuery();
     
-    public static final String MANAGEMENTS_TABLE = Entities.MANAGEMENT.getTableName() +
-            """
-                    (
-                        id              INT NOT NULL AUTO_INCREMENT,
-                        organization_id INT NOT NULL,
-                        name            VARCHAR(55) NOT NULL,
-                        street_number   MEDIUMINT NOT NULL,
-                        street          VARCHAR(55) NOT NULL,
-                        city            VARCHAR(55) NOT NULL,
-                        state           VARCHAR(55) NOT NULL,
-                        PRIMARY KEY (id),
-                        FOREIGN KEY (organization_id) REFERENCES organizations(id)
-                    )""";
+    public static final String CREATE_MANAGEMENTS_TABLE = CREATE_TABLE + Entities.OFFICE.getTableName() + Entities.OFFICE.getTableQuery();
     
-    public static final String PARKING_LOTS_TABLE = Entities.PARKING_LOT.getTableName() +
-            """
-                    (
-                        id              INT NOT NULL AUTO_INCREMENT,
-                        organization_id INT NOT NULL,
-                        name            VARCHAR(55) NOT NULL,
-                        street_number   MEDIUMINT NOT NULL,
-                        street          VARCHAR(55) NOT NULL,
-                        city            VARCHAR(55) NOT NULL,
-                        state           VARCHAR(55) NOT NULL,
-                        num_of_floors   TINYINT NOT NULL,
-                        floor_rows      TINYINT NOT NULL,
-                        floor_cols      TINYINT NOT NULL,
-                        PRIMARY KEY (id),
-                        FOREIGN KEY (organization_id) REFERENCES organizations(id)
-                    )""";
+    public static final String CREATE_PARKING_LOTS_TABLE = CREATE_TABLE + Entities.PARKING_LOT.getTableName() + Entities.PARKING_LOT.getTableQuery();
     
-    public static final String RATES_TABLE = Entities.RATES.getTableName() +
-            """
-                    (
-                              id INT NOT NULL PRIMARY KEY,
-                              hourly_occasional_parking DOUBLE NOT NULL,
-                              hourly_onetime_parking DOUBLE NOT NULL,
-                              regular_subscription_single_vehicle DOUBLE NOT NULL,
-                              regular_subscription_multiple_vehicles DOUBLE NOT NULL,
-                              full_subscription_single_vehicle DOUBLE NOT NULL,
-                              FOREIGN KEY (id) REFERENCES parking_lots(id)
-                    )""";
+    public static final String CREATE_RATES_TABLE = CREATE_TABLE + Entities.RATES.getTableName() + Entities.RATES.getTableQuery();
     
-    public static final String EMPLOYEES_TABLE = Entities.EMPLOYEE.getTableName() +
-            """
-                    (
-                              id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-                              first_name VARCHAR(255) NOT NULL,
-                              last_name VARCHAR(255) NOT NULL,
-                              role VARCHAR(255) NOT NULL,
-                              email VARCHAR(255) NOT NULL,
-                              password_hash VARCHAR(255) NOT NULL,
-                              password_salt VARCHAR(255) NOT NULL,
-                              is_active BOOLEAN NOT NULL,
-                              organization VARCHAR(255)
-                    )""";
+    public static final String CREATE_EMPLOYEES_TABLE = CREATE_TABLE + Entities.EMPLOYEE.getTableName() + Entities.EMPLOYEE.getTableQuery();
     
-    public static final String CUSTOMERS_TABLE = Entities.CUSTOMER.getTableName() +
-            """
-                    (
-                          email VARCHAR(255) NOT NULL PRIMARY KEY,
-                          id VARCHAR(255) NOT NULL,
-                          first_name VARCHAR(255) NOT NULL,
-                          last_name VARCHAR(255) NOT NULL,
-                          password_salt VARCHAR(255) NOT NULL,
-                          password_hash VARCHAR(255) NOT NULL,
-                          is_active BOOLEAN NOT NULL,
-                          balance DOUBLE NOT NULL
-                    )""";
+    public static final String CREATE_CUSTOMERS_TABLE = CREATE_TABLE + Entities.CUSTOMER.getTableName() + Entities.CUSTOMER.getTableQuery();
+    
+    public static final String CREATE_VEHICLES_TABLE = CREATE_TABLE + Entities.VEHICLE.getTableName() + Entities.VEHICLE.getTableQuery();
+    
+    public static final String CREATE_RESERVATIONS_TABLE = CREATE_TABLE + Entities.RESERVATION.getTableName() + Entities.RESERVATION.getTableQuery();
     
     
-    /*
-        INSERT INTO users (username, email, password)
-        VALUES ('john_doe', 'johndoe@example.com', 'password123'),
-               ('jane_doe', 'janedoe@example.com', 'password456'),
-               ('jim_doe', 'jimdoe@example.com', 'password789')
-     
-     
-        
-        username
-        email
-        password
-        
-        'john_doe', 'johndoe@example.com', 'password123'
-        'jane_doe', 'janedoe@example.com', 'password456'
-        'jim_doe', 'jimdoe@example.com', 'password789'
- 
- 
-        SELECT * FROM users
- 
- 
-        SELECT * FROM users WHERE
-            (username = 'john_doe' AND email = 'johndoe@example.com' AND password = 'password123') OR
-            (username = 'jane_doe' AND email = 'janedoe@example.com' AND password = 'password456') OR
-            (username = 'jim_doe' AND email = 'jimdoe@example.com' AND password = 'password789')
-    */
-    
+    /* ----- Utility Methods ---------------------------------------- */
     
     public static String insertQueryToSelectQuery (String insert) {
         String table = insert.split(" ")[2];

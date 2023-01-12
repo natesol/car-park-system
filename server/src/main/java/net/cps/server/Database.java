@@ -78,7 +78,7 @@ public class Database {
             return configuration.buildSessionFactory(serviceRegistry);
         }
         catch (Throwable e) {
-            Logger.print("failed to create session factory.", "creation ended with the exception:" + e.getMessage());
+            Logger.print("failed to create session factory.", "creation ended with the exception: " + e.getMessage());
             e.printStackTrace();
             throw new ExceptionInInitializerError(e);
         }

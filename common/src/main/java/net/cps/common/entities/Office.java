@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "managements")
+@Table(name = "offices")
 @PrimaryKeyJoinColumn(name = "organization_id")
 public class Office extends Organization implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)

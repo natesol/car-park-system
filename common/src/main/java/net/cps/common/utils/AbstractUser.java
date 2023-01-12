@@ -7,9 +7,9 @@ import java.util.Base64;
 import java.util.Objects;
 
 
-/*
+/**
  *
- */
+ **/
 public abstract class AbstractUser {
     static final private String HASH_ALGORITHM = "SHA-512";
     static final private Integer HASH_KEY_BASE = 16;
