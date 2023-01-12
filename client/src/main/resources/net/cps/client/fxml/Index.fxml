@@ -21,14 +21,13 @@
         <String fx:value="color-scheme-light"/>
     </styleClass>
 
-    <Hyperlink maxHeight="0.0" maxWidth="0.0" styleClass="focus-fix" text="focus-fix" textFill="TRANSPARENT"/>
+    <Hyperlink maxHeight="0.0" maxWidth="0.0" text="focus-fix" textFill="TRANSPARENT"/>
 
     <MFXScrollPane fitToHeight="true" fitToWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                    AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 
         <VBox fx:id="body" alignment="TOP_CENTER" styleClass="body">
             <VBox alignment="TOP_CENTER" styleClass="body-container">
-
 
                 <VBox alignment="CENTER">
                     <VBox.margin>

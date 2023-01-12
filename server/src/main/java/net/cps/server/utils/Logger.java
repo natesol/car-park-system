@@ -7,6 +7,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
+/**
+ * Logger for the server.
+ **/
 public class Logger {
     
     public static final String ANSI_BLACK_BACKGROUND = "\033[40m";

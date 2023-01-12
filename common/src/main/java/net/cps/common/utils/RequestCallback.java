@@ -1,16 +1,11 @@
 package net.cps.common.utils;
+import java.lang.annotation.*;
 
-import net.cps.common.messages.RequestMessage;
-import net.cps.common.messages.ResponseMessage;
-
-import java.io.Serializable;
-import java.util.function.BiConsumer;
 
 /**
- * Callback interface for the RequestMessage to pass a callback from the caller.
- * This callback will be called when the response is received back from the server.
- * The callback method must be implemented by the caller, and must take two parameters: RequestMessage object and ResponseMessage object.
- */
-@FunctionalInterface
-public interface RequestCallback extends BiConsumer<RequestMessage, ResponseMessage>, Serializable {}
-
+ * Request Callback Annotation - this annotation is used to mark a method that is supposed to be passed as a callback for a server request.
+ * This annotation is intended to complement the use of `RequestMessageCallback` interface.
+ **/
+@Documented
+@Target(ElementType.METHOD)
+public @interface RequestCallback {}

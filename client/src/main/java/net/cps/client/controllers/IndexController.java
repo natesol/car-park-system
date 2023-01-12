@@ -18,6 +18,7 @@ import javafx.collections.ObservableList;
 import net.cps.common.messages.RequestMessage;
 import net.cps.common.messages.ResponseMessage;
 import net.cps.common.utils.Entities;
+import net.cps.common.utils.RequestCallback;
 import net.cps.common.utils.RequestType;
 import net.cps.common.utils.ResponseStatus;
 
@@ -36,17 +37,17 @@ public class IndexController extends PageController {
     public MFXButton pcAppBtn;
     
     
+    /* ----- JavaFX Initialize Method ------------------------------- */
+    
     @Override
-    public void initialize (URL url, ResourceBundle resourceBundle) {
-        //EventBus.getDefault().register(this);
-    }
+    public void initialize (URL url, ResourceBundle resourceBundle) {}
     
     
     /* ----- Event Handlers ----------------------------------------- */
     
     @FXML
     void kioskBtnClickHandler (ActionEvent event) throws IOException {
-        CPSClient.sendRequestToServer(RequestType.GET, Entities.PARKING_LOT.getTableName(), null, "get all parking lots from the server.", this::onGetAllParkingLot);
+        CPSClient.sendRequestToServer(RequestType.GET, Entities.PARKING_LOT.getTableName(), this::onGetAllParkingLot);
     }
     
     @FXML
@@ -54,9 +55,8 @@ public class IndexController extends PageController {
         App.setScene("PCLogin.fxml");
     }
     
+    @RequestCallback
     public void onGetAllParkingLot (RequestMessage request, ResponseMessage response) {
-        System.out.println("onGetAllParkingLot ???");
-        
         ObservableList<ParkingLot> parkingLots = FXCollections.observableArrayList((List<ParkingLot>) response.getData());
         
         Platform.runLater(() -> {
@@ -101,6 +101,11 @@ public class IndexController extends PageController {
             }
         });
     }
+    
+    
+    /* ----- EventBus Listeners ------------------------------------- */
+    
+    // ...
     
     
     /* ----- Utility Methods ---------------------------------------- */

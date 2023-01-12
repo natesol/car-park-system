@@ -1,5 +1,5 @@
 Time                      ID                   Type                 Message
-2023-01-12 06:05:11       1                    INFO                 a list of entities added to the database. entities: Customer, ids: [netanelshlomo@gmail.com, john.doe@gmail.com, jane.doe@gmail.com, bob.smith@gmail.com, alice.smith@gmail.com, foo.bar@gmail.com]
-2023-01-12 06:05:11       2                    INFO                 a list of entities added to the database. entities: ParkingLot, ids: [1, 2, 3, 4]
-2023-01-12 06:05:11       3                    INFO                 a new entity added to the database. entity: Management, id: 5
-2023-01-12 06:05:11       4                    INFO                 a list of entities added to the database. entities: Employee, ids: [1, 2, 3, 4, 5]
+2023-01-12 09:45:22       1                    INFO                 a list of entities added to the database. entities: Customer, ids: [netanelshlomo@gmail.com, john.doe@gmail.com, jane.doe@gmail.com, bob.smith@gmail.com, alice.smith@gmail.com, foo.bar@gmail.com]
+2023-01-12 09:45:22       2                    INFO                 a list of entities added to the database. entities: ParkingLot, ids: [1, 2, 3, 4]
+2023-01-12 09:45:22       3                    INFO                 a new entity added to the database. entity: Management, id: 5
+2023-01-12 09:45:22       4                    INFO                 a list of entities added to the database. entities: Employee, ids: [1, 2, 3, 4, 5]

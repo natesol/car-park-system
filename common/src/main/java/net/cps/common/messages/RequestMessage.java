@@ -2,7 +2,7 @@ package net.cps.common.messages;
 
 import net.cps.common.utils.AbstractMessage;
 import net.cps.common.utils.MessageType;
-import net.cps.common.utils.RequestCallback;
+import net.cps.common.utils.RequestMessageCallback;
 import net.cps.common.utils.RequestType;
 
 import java.io.Serializable;
@@ -60,36 +60,36 @@ import java.io.Serializable;
 public class RequestMessage extends AbstractMessage implements Serializable {
     public static final MessageType MESSAGE_TYPE = MessageType.REQUEST;
     private final RequestType type;
-    private final transient RequestCallback callback;
+    private final transient RequestMessageCallback callback;
     
     
     /* ----- Constructors ------------------------------------------- */
     
-    public RequestMessage (int id, RequestType requestType, String header, RequestCallback callback) {
+    public RequestMessage (int id, RequestType requestType, String header, RequestMessageCallback callback) {
         super(id, MESSAGE_TYPE, header);
         this.type = requestType;
         this.callback = callback;
     }
     
-    public RequestMessage (int id, RequestType requestType, String header, String body, RequestCallback callback) {
+    public RequestMessage (int id, RequestType requestType, String header, String body, RequestMessageCallback callback) {
         super(id, MESSAGE_TYPE, header, body);
         this.type = requestType;
         this.callback = callback;
     }
     
-    public RequestMessage (int id, RequestType requestType, String header, String body, String message, RequestCallback callback) {
+    public RequestMessage (int id, RequestType requestType, String header, String body, String message, RequestMessageCallback callback) {
         super(id, MESSAGE_TYPE, header, body, message);
         this.type = requestType;
         this.callback = callback;
     }
     
-    public RequestMessage (int id, RequestType requestType, String header, String body, Object data, RequestCallback callback) {
+    public RequestMessage (int id, RequestType requestType, String header, String body, Object data, RequestMessageCallback callback) {
         super(id, MESSAGE_TYPE, header, body, data);
         this.type = requestType;
         this.callback = callback;
     }
     
-    public RequestMessage (int id, RequestType requestType, String header, String body, String message, Object data, RequestCallback callback) {
+    public RequestMessage (int id, RequestType requestType, String header, String body, String message, Object data, RequestMessageCallback callback) {
         super(id, MESSAGE_TYPE, header, body, message, data);
         this.type = requestType;
         this.callback = callback;
@@ -106,7 +106,7 @@ public class RequestMessage extends AbstractMessage implements Serializable {
         return type;
     }
     
-    public RequestCallback getCallback () {
+    public RequestMessageCallback getCallback () {
         return callback;
     }
     
