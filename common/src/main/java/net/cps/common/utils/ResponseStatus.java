@@ -5,7 +5,7 @@ package net.cps.common.utils;
  */
 public enum ResponseStatus {
     SUCCESS,        // request was successful - equivalent to HTTP 200
-    CREATED,        // request was successful and a new resource was created - equivalent to HTTP 201
+    FINISHED,       // request was successful and all the resources changes finished successfully (for CREATE, UPDATE, DELETE) - equivalent to HTTP 201
     NOT_FOUND,      // request was successful but the requested content was not found - equivalent to HTTP 204 or a 404
     UNAUTHORIZED,   // request was not authorized - equivalent to HTTP 401
     BAD_REQUEST,    // request was not successful (a bad request format, or some gateway error ended the request process) - equivalent to HTTP 400 or a 502
@@ -18,7 +18,7 @@ public enum ResponseStatus {
         String statusFormatted = status.trim().toUpperCase().replace(" ", "_").replace("-", "_");
         return switch (statusFormatted) {
             case "SUCCESS" -> SUCCESS;
-            case "CREATED" -> CREATED;
+            case "FINISHED" -> FINISHED;
             case "BAD_REQUEST" -> BAD_REQUEST;
             case "UNAUTHORIZED" -> UNAUTHORIZED;
             case "NOT_FOUND" -> NOT_FOUND;
@@ -30,7 +30,7 @@ public enum ResponseStatus {
     public static String toString (ResponseStatus status) {
         return switch (status) {
             case SUCCESS -> "SUCCESS";
-            case CREATED -> "CREATED";
+            case FINISHED -> "FINISHED";
             case BAD_REQUEST -> "BAD_REQUEST";
             case UNAUTHORIZED -> "UNAUTHORIZED";
             case NOT_FOUND -> "NOT_FOUND";

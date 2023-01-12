@@ -10,8 +10,10 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
+import javax.persistence.Tuple;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -119,7 +121,7 @@ public class Database {
         Object id = null;
         
         try (session) {
-            id = (Object) session.save(entityObject);
+            id = session.save(entityObject);
             session.flush();
             transaction.commit();
             session.clear();
@@ -187,15 +189,13 @@ public class Database {
      *                       the query must be in the following format: `INSERT INTO &lt;table_name&gt; (&lt;column_name&gt;, &lt;column_name&gt;, ...) VALUES (&lt;value&gt;, &lt;value&gt;, ...);`.
      * @return the new entities given ids.
      **/
-    public static List<Integer> createCustomQuery (SessionFactory sessionFactory, String query) {
+    public static ArrayList<Object> createCustomQuery (SessionFactory sessionFactory, String query) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        List<Integer> ids = null;
-        
-        System.out.println(query);
+        ArrayList<Object> ids = null;
         
         try (session) {
-            ids = session.createNativeQuery(query).getResultList();
+            ids = (ArrayList<Object>) session.createNativeQuery(query).getResultList();
             session.flush();
             transaction.commit();
             session.clear();
@@ -278,16 +278,16 @@ public class Database {
         
     }
     
-    public static <T> T getEntity (SessionFactory sessionFactory, Class<T> T, String[] fieldsNames, String[] fieldsValues) {
+    public static <T> T getEntity (SessionFactory sessionFactory, Class<T> T, List<SimpleEntry<String,String>>[] fields) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         T data = null;
         
         try (session) {
             StringBuilder query = new StringBuilder("FROM " + Entities.fromString(T.getSimpleName()).getTableName() + " WHERE ");
-            for (int i = 0 ; i < fieldsNames.length ; i++) {
-                query.append(fieldsNames[i]).append(" = '").append(fieldsValues[i]).append("'");
-                if (i < fieldsNames.length - 1) {
+            for (int i = 0 ; i < fields.length ; i++) {
+                query.append(fields[i].get(0)).append(" = '").append(fields[i].get(1)).append("'");
+                if (i < fields.length - 1) {
                     query.append(" AND ");
                 }
             }
@@ -361,14 +361,13 @@ public class Database {
      *                       the entity must have a primary key.
      * @return the entities instance.
      **/
-    public static <T> List<T> getAllEntities (SessionFactory sessionFactory, Class<T> entityClass) {
+    public static <T> ArrayList<T> getAllEntities (SessionFactory sessionFactory, Class<T> entityClass) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        List<T> data = null;
+        ArrayList<T> data;
         
         try (session) {
-            //data = session.createQuery("FROM " + entityClass.getSimpleName()).getResultList();
-            data = session.createQuery("FROM " + entityClass.getSimpleName()).list();
+            data = (ArrayList<T>) session.createQuery("FROM " + entityClass.getSimpleName()).getResultList();
             
             session.flush();
             transaction.commit();
@@ -401,13 +400,13 @@ public class Database {
      *                       or in the following format: `SELECT * FROM &lt;table_name&gt;;`.
      * @return the entities instance.
      **/
-    public static <T> List<T> getCustomQuery (SessionFactory sessionFactory, Class<T> T, String query) {
+    public static <T> ArrayList<T> getCustomQuery (SessionFactory sessionFactory, Class<T> T, String query) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        List<T> data = null;
+        ArrayList<T> data;
         
         try (session) {
-            data = session.createNativeQuery(query, T).getResultList();
+            data = (ArrayList<T>) session.createNativeQuery(query, T).getResultList();
             session.flush();
             transaction.commit();
             session.clear();
@@ -435,13 +434,17 @@ public class Database {
      * @param sessionFactory the 'SessionFactory' object to use.
      * @param entityObject   the entity instance.
      *                       the entity must have a primary key.
+     * @return the entity id.
      **/
-    public static <T> void updateEntity (SessionFactory sessionFactory, T entityObject) {
+    public static <T> Object updateEntity (SessionFactory sessionFactory, T entityObject) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
+        Object id = null;
         
         try (session) {
             session.update(entityObject);
+            id = entityObject;
+            
             session.flush();
             transaction.commit();
             session.clear();
@@ -461,11 +464,10 @@ public class Database {
             Logger.print("Error: failed to update entity: " + entityObject.getClass().getSimpleName() + " on the database.", "'UPDATE' transaction ended with the exception: " + e.getMessage());
             e.printStackTrace();
             Logger.error("failed to update entity: " + entityObject.getClass().getSimpleName() + " on the database.");
-            
-            throw new HibernateException(e);
         }
         
         session.close();
+        return id;
     }
     
     /**
@@ -474,23 +476,22 @@ public class Database {
      * @param sessionFactory the 'SessionFactory' object to use.
      * @param entitiesList   the entities instance.
      *                       the entities must have a primary key.
+     * @return a list of the updated entities ids.
      **/
-    public static <T> void updateMultipleEntities (SessionFactory sessionFactory, List<T> entitiesList) {
+    public static <T> ArrayList<Object> updateMultipleEntities (SessionFactory sessionFactory, List<T> entitiesList) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
+        ArrayList<Object> ids = new ArrayList<>();
         
         try (session) {
             for (T entity : entitiesList) {
                 session.update(entity);
+                ids.add(entity.getClass().getDeclaredMethod("getId").invoke(entity));
             }
             session.flush();
             transaction.commit();
             session.clear();
             
-            ArrayList<Integer> ids = new ArrayList<>();
-            for (T entity : entitiesList) {
-                ids.add((Integer) entity.getClass().getDeclaredMethod("getId").invoke(entity));
-            }
             Logger.print("entities updated on the database.", "entities: " + entitiesList.get(0).getClass().getSimpleName() + ", ids: " + ids);
             Logger.info("entities updated on the database. entities: " + entitiesList.get(0).getClass().getSimpleName() + ", ids: " + ids);
         }
@@ -509,6 +510,7 @@ public class Database {
         }
         
         session.close();
+        return ids;
     }
     
     /**
@@ -516,16 +518,19 @@ public class Database {
      *
      * @param sessionFactory the 'SessionFactory' object to use.
      * @param query          the custom query.
-     *                       the query must be in the following format: `UPDATE &lt;table_name&gt; SET &lt;column_name&gt; = &lt;value&gt; WHERE &lt;column_name&gt; = &lt;value&gt;;`,
-     *                       or in the following format: `UPDATE &lt;table_name&gt; SET &lt;column_name&gt; = &lt;value&gt; WHERE &lt;column_name&gt; IN (&lt;value&gt;, &lt;value&gt;, ...);`,
-     *                       or in the following format: `UPDATE &lt;table_name&gt; SET &lt;column_name&gt; = &lt;value&gt;;`.
+     *                       the query must be in the following format: `&lt;table_name&gt; SET &lt;column_name&gt; = &lt;value&gt; WHERE &lt;column_name&gt; = &lt;value&gt;;`,
+     *                       or in the following format: `&lt;table_name&gt; SET &lt;column_name&gt; = &lt;value&gt; WHERE &lt;column_name&gt; IN (&lt;value&gt;, &lt;value&gt;, ...);`,
+     *                       or in the following format: `&lt;table_name&gt; SET &lt;column_name&gt; = &lt;value&gt;;`.
+     * @return a list of the updated entities ids.
      **/
-    public static void updateCustomQuery (SessionFactory sessionFactory, String query) {
+    public static ArrayList<Object> updateCustomQuery (SessionFactory sessionFactory, String query) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
+        ArrayList<Object> ids = new ArrayList<>();
         
         try (session) {
             session.createNativeQuery(query).executeUpdate();
+            ids = (ArrayList<Object>) session.createNativeQuery(query.replace("SET", "SELECT *")).getResultList();
             session.flush();
             transaction.commit();
             session.clear();
@@ -542,7 +547,9 @@ public class Database {
             e.printStackTrace();
             Logger.error("failed to update entities: " + query.split(" ")[1] + " on the database.");
         }
+        
         session.close();
+        return ids;
     }
     
     
@@ -552,13 +559,16 @@ public class Database {
      * @param sessionFactory the 'SessionFactory' object to use.
      * @param entityObject   the entity instance.
      *                       the entity must have a primary key.
+     * @return the deleted entity id.
      **/
-    public static <T> void deleteEntity (SessionFactory sessionFactory, T entityObject) {
+    public static <T> Object deleteEntity (SessionFactory sessionFactory, T entityObject) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
+        Object id = null;
         
         try (session) {
             session.delete(entityObject);
+            id = entityObject.getClass().getDeclaredMethod("getId").invoke(entityObject);
             session.flush();
             transaction.commit();
             session.clear();
@@ -567,22 +577,21 @@ public class Database {
             Logger.info("an entity deleted from the database. entity: " + entityObject.getClass().getSimpleName() + ", id: " + entityObject.getClass().getDeclaredMethod("getId").invoke(entityObject));
         }
         catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException e) {
-            Logger.print("Error: access to the entity's id failed.", "'DELETE' transaction ended with the exception: ");
             e.printStackTrace();
+            Logger.print("Error: access to the entity's id failed.", "'DELETE' transaction ended with the exception: " + e.getMessage());
         }
         catch (Throwable e) {
             if (e instanceof HibernateException && session.isOpen() && transaction != null) {
                 transaction.rollback();
             }
             
-            Logger.print("Error: failed to delete entity: " + entityObject.getClass().getSimpleName() + " from the database.", "'DELETE' transaction ended with the exception: " + e.getMessage());
             e.printStackTrace();
+            Logger.print("Error: failed to delete entity: " + entityObject.getClass().getSimpleName() + " from the database.", "'DELETE' transaction ended with the exception: " + e.getMessage());
             Logger.error("failed to delete entity: " + entityObject.getClass().getSimpleName() + " from the database.");
-            
-            throw new HibernateException(e);
         }
         
         session.close();
+        return id;
     }
     
     /**
@@ -591,30 +600,28 @@ public class Database {
      * @param sessionFactory the 'SessionFactory' object to use.
      * @param entitiesList   the entities instance.
      *                       the entities must have a primary key.
+     * @return a list of the deleted entities ids.
      **/
-    public static <T> void deleteMultipleEntities (SessionFactory sessionFactory, List<T> entitiesList) {
+    public static <T> ArrayList<Object> deleteMultipleEntities (SessionFactory sessionFactory, List<T> entitiesList) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        
+        ArrayList<Object> ids = new ArrayList<>();
+    
         try (session) {
             for (T entity : entitiesList) {
                 session.delete(entity);
+                ids.add(entity.getClass().getDeclaredMethod("getId").invoke(entity));
             }
             session.flush();
             transaction.commit();
             session.clear();
             
-            ArrayList<Integer> ids = new ArrayList<>();
-            for (T entity : entitiesList) {
-                ids.add((Integer) entity.getClass().getDeclaredMethod("getId").invoke(entity));
-            }
             Logger.print("entities deleted from the database.", "entities: " + entitiesList.get(0).getClass().getSimpleName() + ", ids: " + ids);
             Logger.info("entities deleted from the database. entities: " + entitiesList.get(0).getClass().getSimpleName() + ", ids: " + ids);
         }
         catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException e) {
-            
-            Logger.print("Error: access to the entity's id failed.", "'DELETE' transaction ended with the exception:");
             e.printStackTrace();
+            Logger.print("Error: access to the entity's id failed.", "'DELETE' transaction ended with the exception:");
         }
         catch (Throwable e) {
             if (e instanceof HibernateException && session.isOpen() && transaction != null) {
@@ -624,10 +631,10 @@ public class Database {
             Logger.print("Error: failed to delete entities: " + entitiesList.get(0).getClass().getSimpleName() + " from the database.", "'DELETE' transaction ended with the exception: " + e.getMessage());
             e.printStackTrace();
             Logger.error("failed to delete entities: " + entitiesList.get(0).getClass().getSimpleName() + " from the database.");
-            
-            throw new HibernateException(e);
         }
         session.close();
+
+        return ids;
     }
     
     /**
@@ -635,13 +642,17 @@ public class Database {
      *
      * @param sessionFactory the 'SessionFactory' object to use.
      * @param T              the entity class.
+     * @return a list of the deleted entities ids.
      **/
-    public static <T> void deleteAllEntities (SessionFactory sessionFactory, Class<T> T) {
+    public static <T> ArrayList<Object> deleteAllEntities (SessionFactory sessionFactory, Class<T> T) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
+        ArrayList<Object> ids = new ArrayList<>();
         
         try (session) {
             session.createQuery("DELETE FROM " + T.getSimpleName()).executeUpdate();
+            //ids = (ArrayList<Object>) session.createNativeQuery(query.replace("SET", "SELECT *")).getResultList();
+            
             session.flush();
             transaction.commit();
             session.clear();
@@ -654,13 +665,13 @@ public class Database {
                 transaction.rollback();
             }
             
-            Logger.print("Error: failed to delete all entities: " + T.getSimpleName() + " from the database.", "'DELETE' transaction ended with the exception: " + e.getMessage());
             e.printStackTrace();
+            Logger.print("Error: failed to delete all entities: " + T.getSimpleName() + " from the database.", "'DELETE' transaction ended with the exception: " + e.getMessage());
             Logger.error("failed to delete all entities: " + T.getSimpleName() + " from the database.");
-            
-            throw new HibernateException(e);
         }
         session.close();
+        
+        return ids;
     }
     
     /**
@@ -669,13 +680,16 @@ public class Database {
      * @param sessionFactory the 'SessionFactory' object to use.
      * @param query          the custom query.
      *                       the query must be a 'DELETE' query.
+     * @return a list of the deleted entities ids.
      **/
-    public static void deleteCustomQuery (SessionFactory sessionFactory, String query) {
+    public static ArrayList<Object> deleteCustomQuery (SessionFactory sessionFactory, String query) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        
+        ArrayList<Object> ids = new ArrayList<>();
+    
         try (session) {
             session.createQuery(query).executeUpdate();
+            
             session.flush();
             transaction.commit();
             session.clear();
@@ -688,12 +702,12 @@ public class Database {
                 transaction.rollback();
             }
             
-            Logger.print("Error: failed to delete entities: " + query.split(" ")[2] + " from the database.", "'DELETE' transaction ended with the exception: " + e.getMessage());
             e.printStackTrace();
+            Logger.print("Error: failed to delete entities: " + query.split(" ")[2] + " from the database.", "'DELETE' transaction ended with the exception: " + e.getMessage());
             Logger.error("failed to delete entities: " + query.split(" ")[2] + " from the database.");
-            
-            throw new HibernateException(e);
         }
         session.close();
+    
+        return ids;
     }
 }

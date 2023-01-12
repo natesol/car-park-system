@@ -1,5 +1,7 @@
 package net.cps.server;
 
+import net.cps.common.entities.Customer;
+import net.cps.common.entities.Employee;
 import net.cps.common.messages.RequestMessage;
 import net.cps.common.messages.ResponseMessage;
 import net.cps.common.utils.Entities;
@@ -109,27 +111,26 @@ public class CPSServer extends AbstractServer {
                 client.sendToClient(handleCreateRequest(dbSessionFactory, request));
             }
             else if (requestType == RequestType.UPDATE) {
-                // client.sendToClient(handleUpdateRequest(dbSessionFactory, request));
-                System.out.println("UPDATE request");
+                client.sendToClient(handleUpdateRequest(dbSessionFactory, request));
             }
             else if (requestType == RequestType.DELETE) {
-                // client.sendToClient(handleDeleteRequest(dbSessionFactory, request));
-                System.out.println("DELETE request");
+                client.sendToClient(handleDeleteRequest(dbSessionFactory, request));
             }
             else if (requestType == RequestType.AUTH) {
-                System.out.println("AUTH request");
-                //if (query.startsWith("auth")) {
-                //    client.sendToClient(handleAuthRequest(dbSessionFactory, request.getId()));
-                //}
+                client.sendToClient(handleAuthRequest(dbSessionFactory, request));
             }
             else if (requestType == RequestType.CUSTOM) {
-                // custom request
-                System.out.println("CUSTOM request");
+                // TODO: Custom Requests Handlers...
+                
+                Logger.print("Warning: The request 'CUSTOM: " + request.getHeader() + "' from the client passed unaddressed.");
+            }
+            else {
+                Logger.print("Warning: The request '" + requestType.toString() + ": " + request.getHeader() + "' from the client passed unaddressed.");
             }
         }
         catch (IOException e) {
-            Logger.print("Error: an error occurred while handling: '" + requestType + ": " + request.getHeader() + "' request from client.");
             e.printStackTrace();
+            Logger.print("Error: an error occurred while handling: '" + requestType + ": " + request.getHeader() + "' request from client.");
         }
         finally {
             Database.closeSession();
@@ -227,7 +228,6 @@ public class CPSServer extends AbstractServer {
         try {
             String query = request.getHeader().split("/")[0];
             Integer requestId = request.getId();
-            String requestHeader = request.getHeader();
             Entities entity = Entities.fromString(query);
             Class<T> T = (Class<T>) entity.getEntityClass();
             Class<U> U = (Class<U>) entity.getPrimaryKeyClass();
@@ -239,20 +239,20 @@ public class CPSServer extends AbstractServer {
             }
             
             // create multiple entities by the data list given on the request.
-            if ((obj instanceof List)) {
+            if (obj instanceof List) {
                 List<T> data = (List<T>) request.getData();
                 ArrayList<U> ids = (ArrayList<U>) Database.createMultipleEntities(sessionFactory, data);
-                return new ResponseMessage(requestId, request, ids.size() == data.size() ? ResponseStatus.CREATED : ResponseStatus.SUCCESS, ids);
+                return new ResponseMessage(requestId, request, ids.size() == data.size() ? ResponseStatus.FINISHED : ResponseStatus.SUCCESS, ids);
             }
-
+            
             // create one entity of type `T`.
-            //if (obj instanceof T) {
+            if (obj.getClass() == T) {
                 T data = (T) request.getData();
                 U id = (U) Database.createEntity(sessionFactory, data);
-                return new ResponseMessage(requestId, request, id != null ? ResponseStatus.CREATED : ResponseStatus.SUCCESS, id);
-            //}
+                return new ResponseMessage(requestId, request, id != null ? ResponseStatus.FINISHED : ResponseStatus.SUCCESS, id);
+            }
             
-            //return new ResponseMessage(requestId, request, ResponseStatus.BAD_REQUEST, "Bad Request: response to 'CREATE: " + query + "'", null);
+            return new ResponseMessage(requestId, request, ResponseStatus.BAD_REQUEST, "Bad Request: response to 'CREATE: " + query + "'", null);
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -260,98 +260,164 @@ public class CPSServer extends AbstractServer {
         }
     }
     
-    private <T> ResponseMessage handleUpdateRequest (SessionFactory sessionFactory, Integer requestId, String query, Object requestData, String entityQuery, Class<T> T) {
-        //String query = request.getHeader().split("/")[0];
-        //// update a single entity of type `T`
-        //if (query.equals(entityQuery)) {
-        //    T data = (T) requestData;
-        //    Database.updateEntity(sessionFactory, data);
-        //
-        //    return new ResponseMessage(requestId, "response to 'UPDATE' '" + query + "'", null, RequestType.POST, query, true);
-        //}
-        //// update a list of entities of type `T`
-        //else if (query.startsWith(entityQuery + "/")) {
-        //    String[] splitQuery = query.split("/");
-        //    String[] ids = splitQuery.length > 1 ? splitQuery[1].split("\\?") : new String[] {"0"};
-        //
-        //    if (ids.length > 1) {
-        //        List<T> data = (List<T>) requestData;
-        //        Database.updateMultipleEntities(sessionFactory, data);
-        //
-        //        return new ResponseMessage(requestId, "response to 'UPDATE' '" + query + "'", null, RequestType.POST, query, true);
-        //    }
-        //    else {
-        //        T data = (T) requestData;
-        //        Database.updateEntity(sessionFactory, data);
-        //
-        //        return new ResponseMessage(requestId, "response to 'UPDATE' '" + query + "'", null, RequestType.POST, query, true);
-        //    }
-        //}
-        //return new ResponseMessage(requestId, "bad request: response to 'UPDATE' '" + query + "'", null, RequestType.UPDATE, "bad request", false);
-        //
-        return null;
+    private <T, U> ResponseMessage handleUpdateRequest (SessionFactory sessionFactory, RequestMessage request) {
+        try {
+            String query = request.getHeader().split("/")[0];
+            Integer requestId = request.getId();
+            Entities entity = Entities.fromString(query);
+            Class<T> T = (Class<T>) entity.getEntityClass();
+            Class<U> U = (Class<U>) entity.getPrimaryKeyClass();
+            Object obj = request.getData();
+            
+            // no entity to update from the client.
+            if (obj == null) {
+                return new ResponseMessage(requestId, request, ResponseStatus.BAD_REQUEST, "Bad Request: response to 'UPDATE: " + query + "'", null);
+            }
+            
+            // update multiple entities by the data list given on the request.
+            if (obj instanceof List) {
+                List<T> data = (List<T>) request.getData();
+                ArrayList<Object> ids = Database.updateMultipleEntities(sessionFactory, data);
+                return new ResponseMessage(requestId, request, ids.size() == data.size() ? ResponseStatus.FINISHED : ResponseStatus.SUCCESS, ids);
+            }
+            
+            // update one entity of type `T`.
+            if (obj.getClass() == T) {
+                T data = (T) request.getData();
+                U id = (U) Database.updateEntity(sessionFactory, data);
+                return new ResponseMessage(requestId, request, id != null ? ResponseStatus.FINISHED : ResponseStatus.SUCCESS, id);
+            }
+            
+            return new ResponseMessage(requestId, request, ResponseStatus.BAD_REQUEST, "Bad Request: response to 'UPDATE: " + query + "'", null);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseMessage(request.getId(), request, ResponseStatus.ERROR, "Error: response to 'UPDATE: " + request.getHeader() + "'", e);
+        }
     }
     
-    private <T> ResponseMessage handleDeleteRequest (SessionFactory sessionFactory, Integer requestId, String query, String entityQuery, Class<T> T) {
-        //// delete all entities of type `T`
-        //if (query.equals(entityQuery)) {
-        //    Database.deleteAllEntities(sessionFactory, T);
-        //
-        //    return new ResponseMessage(requestId, "response to 'DELETE' '" + query + "'", null, RequestType.DELETE, query, true);
-        //}
-        //// delete a list of entities of type `T`
-        //else if (query.startsWith(entityQuery + "/")) {
-        //    String[] splitQuery = query.split("/");
-        //    String[] ids = splitQuery.length > 1 ? splitQuery[1].split("\\?") : new String[] {"0"};
-        //    List<Integer> idList = new ArrayList<>();
-        //    for (String id : ids) {
-        //        idList.add(Integer.parseInt(id));
-        //    }
-        //
-        //    if (ids.length > 1) {
-        //        List<T> entitiesList = Database.getMultipleEntities(sessionFactory, T, idList);
-        //        Database.deleteMultipleEntities(sessionFactory, entitiesList);
-        //        return new ResponseMessage(requestId, "response to 'DELETE' '" + query + "'", null, RequestType.DELETE, query, true);
-        //    }
-        //    else {
-        //        T entity = Database.getEntity(sessionFactory, T, idList.get(0));
-        //        Database.deleteEntity(sessionFactory, entity);
-        //        return new ResponseMessage(requestId, "response to 'DELETE' '" + query + "'", null, RequestType.DELETE, query, true);
-        //    }
-        //}
-        //return new ResponseMessage(requestId, "bad request: response to 'DELETE' '" + query + "'", null, RequestType.DELETE, "bad request", false);
-        
-        return null;
+    private <T, U> ResponseMessage handleDeleteRequest (SessionFactory sessionFactory, RequestMessage request) {
+        try {
+            String query = request.getHeader().split("/")[0];
+            Integer requestId = request.getId();
+            Entities entity = Entities.fromString(query);
+            Class<T> T = (Class<T>) entity.getEntityClass();
+            Class<U> U = (Class<U>) entity.getPrimaryKeyClass();
+            Object obj = request.getData();
+            
+            // no entity to delete from the client.
+            if (obj == null) {
+                return new ResponseMessage(requestId, request, ResponseStatus.BAD_REQUEST, "Bad Request: response to 'DELETE: " + query + "'", null);
+            }
+            
+            // delete multiple entities by the data list given on the request.
+            if (obj instanceof List) {
+                List<T> data = (List<T>) request.getData();
+                ArrayList<Object> ids = Database.deleteMultipleEntities(sessionFactory, data);
+                return new ResponseMessage(requestId, request, ids.size() == data.size() ? ResponseStatus.FINISHED : ResponseStatus.SUCCESS, ids);
+            }
+            
+            // delete one entity of type `T`.
+            if (obj.getClass() == T) {
+                T data = (T) request.getData();
+                U id = (U) Database.deleteEntity(sessionFactory, data);
+                return new ResponseMessage(requestId, request, id != null ? ResponseStatus.FINISHED : ResponseStatus.SUCCESS, id);
+            }
+            
+            return new ResponseMessage(requestId, request, ResponseStatus.BAD_REQUEST, "Bad Request: response to 'UPDATE: " + query + "'", null);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseMessage(request.getId(), request, ResponseStatus.ERROR, "Error: response to 'UPDATE: " + request.getHeader() + "'", e);
+        }
     }
     
-    private <T> ResponseMessage handleAuthRequest (SessionFactory sessionFactory, Integer requestId, String query) {
-        //try {
-        //    String[] splitQuery = query.split("/");
-        //    String email = splitQuery[1];
-        //    String password = splitQuery[2];
-        //
-        //    Customer customer = Database.getEntity(sessionFactory, Customer.class, email);
-        //    if (customer != null) {
-        //        if (!customer.isPasswordEquals(password)) {
-        //            return new ResponseMessage(requestId, "Sorry, but the password you entered does not match the email you entered. Please check the password and try again.", null, RequestType.AUTH, query, false);
-        //        }
-        //        return new ResponseMessage(requestId, "customer", customer, RequestType.AUTH, query, true);
-        //    }
-        //
-        //    //List<Employee> employeeList = Database.getCustomQuery(sessionFactory, MySQLQueries.SELECT_ALL + "employees" + MySQLQueries.WHERE + "email = '" + email + "'", Employee.class);
-        //    Employee employee = employeeList.size() > 0 ? (Employee) (employeeList.get(0)) : null;
-        //    if (employee != null) {
-        //        if (!employee.isPasswordEquals(password)) {
-        //            return new ResponseMessage(requestId, "Sorry, but the password you entered does not match the email you entered. Please check the password and try again.", null, RequestType.AUTH, query, false);
-        //        }
-        //        return new ResponseMessage(requestId, "employee", employee, RequestType.AUTH, query, true);
-        //    }
-        //
-        //    return new ResponseMessage(requestId, "Sorry, but the email you entered does not exist in our system. Please check the email and try again, or sign-up for a new account.", null, RequestType.AUTH, query, false);
-        //}
-        //catch (Throwable e) {
-        //    e.printStackTrace();
-        //}
-        return null;
+    private <T> ResponseMessage handleAuthRequest (SessionFactory sessionFactory, RequestMessage request) {
+        try {
+            String query = request.getHeader();
+            Integer requestId = request.getId();
+            Object _obj = request.getData();
+            
+            // create a new customer account.
+            if (query.startsWith("register")) {
+                if (_obj.getClass() != Customer.class) {
+                    return new ResponseMessage(requestId, request, ResponseStatus.BAD_REQUEST, "Bad Request: response to 'AUTH: " + query + "'. None user type entity sent on the request.", null);
+                }
+                
+                Customer customer = (Customer) _obj;
+                if (Database.getEntity(sessionFactory, Customer.class, customer.getEmail()) != null) {
+                    return new ResponseMessage(requestId, request, ResponseStatus.UNAUTHORIZED, "Sorry, that email address is already in use. Please enter a different email address or try logging in with that address.", null);
+                }
+                
+                String email = (String) Database.createEntity(sessionFactory, customer);
+                if (email == null || !email.equals(customer.getEmail())) {
+                    Logger.print("Error: On response to - AUTH: '" + request.getHeader() + "'.", "While creating an account with id: '" + customer.getEmail() + "', the id: '" + email + "' created instead.");
+                    Logger.error("On response to - AUTH: 'register'. While creating an account with id: '" + customer.getEmail() + "', the id: '" + email + "' created instead.");
+                    return new ResponseMessage(requestId, request, ResponseStatus.SUCCESS, "Sorry, its seems like something went wrong while creating the new account. Please try again later.", null);
+                }
+                
+                return new ResponseMessage(requestId, request, ResponseStatus.FINISHED, "Account created successfully.", customer);
+            }
+            
+            // authenticate a user login (and return the user instance on approved credentials).
+            if (query.startsWith("login")) {
+                String[] fields = query.split("/")[1].split("&");
+                String email = fields[0].split("=")[1];
+                String password = fields[1].split("=")[1];
+                
+                // the given email belongs to a customer.
+                Customer customer = Database.getEntity(sessionFactory, Customer.class, email);
+                if (customer != null) {
+                    if (customer.getIsActive()) {
+                        return new ResponseMessage(requestId, request, ResponseStatus.UNAUTHORIZED, "Sorry, but you are currently logged in on another device. Users not allowed to connect to the system via different devices at the same time. Please log out and try again.", null);
+                    }
+                    if (!customer.isPasswordEquals(password)) {
+                        return new ResponseMessage(requestId, request, ResponseStatus.UNAUTHORIZED, "Sorry, but the email you entered does not match the password you entered. Please check the password and try again.", null);
+                    }
+                    
+                    customer.setIsActive(true);
+                    Database.updateEntity(sessionFactory, customer);
+                    return new ResponseMessage(requestId, request, ResponseStatus.SUCCESS, Entities.CUSTOMER.getClassName(), customer);
+                }
+                
+                // the given email belongs to an employee.
+                Employee employee = Database.getEntity(sessionFactory, Employee.class, "email", email);
+                if (employee != null) {
+                    if (employee.getIsActive()) {
+                        return new ResponseMessage(requestId, request, ResponseStatus.UNAUTHORIZED, "Sorry, but you are currently logged in on another device. Users not allowed to connect to the system via different devices at the same time. Please log out and try again.", null);
+                    }
+                    if (!employee.isPasswordEquals(password)) {
+                        return new ResponseMessage(requestId, request, ResponseStatus.UNAUTHORIZED, "Sorry, but the email you entered does not match the password you entered. Please check the password and try again.", null);
+                    }
+                    
+                    employee.setIsActive(true);
+                    Database.updateEntity(sessionFactory, employee);
+                    return new ResponseMessage(requestId, request, ResponseStatus.SUCCESS, Entities.EMPLOYEE.getClassName(), employee);
+                }
+                
+                // the given email do not exist on the database.
+                return new ResponseMessage(requestId, request, ResponseStatus.UNAUTHORIZED, "Sorry, but the email you entered does not exist in our system. Please check the email and try again, or sign-up for a new account.", null);
+            }
+            
+            // logout a user from the system.
+            if (query.startsWith("logout")) {
+                if (_obj.getClass() == Customer.class ) {
+                    ((Customer) _obj).setIsActive(false);
+                }
+                else if (_obj.getClass() == Employee.class ) {
+                    ((Employee) _obj).setIsActive(false);
+                }
+                
+                Database.updateEntity(sessionFactory, _obj);
+                return new ResponseMessage(requestId, request, ResponseStatus.SUCCESS);
+            }
+    
+            return new ResponseMessage(requestId, request, ResponseStatus.BAD_REQUEST, "Bad Request: response to 'AUTH: " + query + "'.", null);
+        }
+        catch (Throwable e) {
+            e.printStackTrace();
+            
+            return new ResponseMessage(request.getId(), request, ResponseStatus.ERROR, e.getMessage(), e);
+        }
     }
 }

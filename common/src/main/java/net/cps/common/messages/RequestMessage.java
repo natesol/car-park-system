@@ -30,7 +30,7 @@ import java.io.Serializable;
  *      - auth request: <auth type>/<auth data>
  *        * auth type can be only: "login", "logout" or "register".
  *        * auth data is the data needed for the auth type.
- *        e.g. "login/email=admin@gmail.com&password=1234" or "logout/1" or "register/email=amir@gmail.com&password=1234"
+ *        e.g. "login/email=admin@gmail.com&password=1234" or "logout/1" or "register"
  * </p>
  * <p>
  * Request `header` special requests (CUSTOM) format:
