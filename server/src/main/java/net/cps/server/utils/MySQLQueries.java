@@ -19,7 +19,7 @@ public class MySQLQueries {
     
     public static final String CREATE_ORGANIZATIONS_TABLE = CREATE_TABLE + Entities.ORGANIZATION.getTableName() + Entities.ORGANIZATION.getTableQuery();
     
-    public static final String CREATE_MANAGEMENTS_TABLE = CREATE_TABLE + Entities.OFFICE.getTableName() + Entities.OFFICE.getTableQuery();
+    public static final String CREATE_OFFICES_TABLE = CREATE_TABLE + Entities.OFFICE.getTableName() + Entities.OFFICE.getTableQuery();
     
     public static final String CREATE_PARKING_LOTS_TABLE = CREATE_TABLE + Entities.PARKING_LOT.getTableName() + Entities.PARKING_LOT.getTableQuery();
     
@@ -29,9 +29,13 @@ public class MySQLQueries {
     
     public static final String CREATE_CUSTOMERS_TABLE = CREATE_TABLE + Entities.CUSTOMER.getTableName() + Entities.CUSTOMER.getTableQuery();
     
+    public static final String CREATE_SUBSCRIPTIONS_TABLE = CREATE_TABLE + Entities.SUBSCRIPTION.getTableName() + Entities.SUBSCRIPTION.getTableQuery();
+    
     public static final String CREATE_VEHICLES_TABLE = CREATE_TABLE + Entities.VEHICLE.getTableName() + Entities.VEHICLE.getTableQuery();
     
     public static final String CREATE_RESERVATIONS_TABLE = CREATE_TABLE + Entities.RESERVATION.getTableName() + Entities.RESERVATION.getTableQuery();
+    
+    public static final String CREATE_PARKING_SPACES_TABLE = CREATE_TABLE + Entities.PARKING_SPACE.getTableName() + Entities.PARKING_SPACE.getTableQuery();
     
     
     /* ----- Utility Methods ---------------------------------------- */

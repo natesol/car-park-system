@@ -194,7 +194,7 @@ class ParkingSpaceSmartArray {
                 }
                 else if (myList.get(j + 1).getState() == ParkingSpaceState.AVAILABLE) {
                     //j+1 is empty - need to swap
-                    if (swap(myList.get(j), myList.get(j + 1)) == false) return false; //error - return 1
+                    if (!swap(myList.get(j), myList.get(j + 1))) return false; //error - return 1
                 }
                 //case full parking
                 //j>j+1: need to swap

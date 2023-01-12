@@ -85,7 +85,7 @@ public class Main {
             session.createSQLQuery(MySQLQueries.USE_DATABASE + databaseName).executeUpdate();
             
             session.createNativeQuery(MySQLQueries.CREATE_ORGANIZATIONS_TABLE).executeUpdate();
-            session.createNativeQuery(MySQLQueries.CREATE_MANAGEMENTS_TABLE).executeUpdate();
+            session.createNativeQuery(MySQLQueries.CREATE_OFFICES_TABLE).executeUpdate();
             session.createNativeQuery(MySQLQueries.CREATE_PARKING_LOTS_TABLE).executeUpdate();
             session.createNativeQuery(MySQLQueries.CREATE_RATES_TABLE).executeUpdate();
             session.createNativeQuery(MySQLQueries.CREATE_EMPLOYEES_TABLE).executeUpdate();

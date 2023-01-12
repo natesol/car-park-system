@@ -1,92 +1,103 @@
 package net.cps.common.entities;
 
-import java.util.Date;
+import net.cps.common.utils.ComplaintStatus;
+
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.Calendar;
 
 @Entity
 @Table(name = "complaints")
 public class Complaint {
-    static final String TABLE_NAME = "complaints";
-    static final String ENTITY_NAME = "complaint";
-    
     @Id
     @Column(name = "id", nullable = false)
-    private Long id;
-    
+    private Integer id;
     @ManyToOne
-    @JoinColumn(name = "customer_id", referencedColumnName= "id")
-    Customer customer;
-    String status;
-    String content;
-    String notes;
-    LocalDateTime submissionDate;
+    @JoinColumn(name = "customer_id", referencedColumnName = "id")
+    private Customer customer;
+    @Column(name = "status", nullable = false)
+    private ComplaintStatus status;
+    @Column(name = "submission_time", nullable = false)
+    private Calendar submissionTime;
+    @Column(name = "resolution_time")
+    private Calendar resolutionTime;
+    @Column(name = "content", nullable = false)
+    private String content;
+    @Column(name = "resolution", nullable = false)
+    private String resolution;
     @ManyToOne
-    @JoinColumn(name = "assigned_employee_id", referencedColumnName = "id")
-    Employee assignedEmployee;
+    @JoinColumn(name = "employee_id", referencedColumnName = "id")
+    private Employee employee;
     
-    public Complaint(Customer customer, String content, LocalDateTime submissionDate, Employee assignedEmployee) {
+    public Complaint (Customer customer, String content) {
         this.customer = customer;
+        this.status = ComplaintStatus.ACTIVE;
+        this.submissionTime = Calendar.getInstance();
         this.content = content;
-        this.submissionDate = submissionDate;
-        this.assignedEmployee = assignedEmployee;
-        status= "active";
     }
     
-    public Complaint() {
+    public Complaint () {}
     
-    }
-    
-    public Long getId() {
+    public Integer getId () {
         return id;
     }
     
-    public Customer getCustomer() {
+    public void setId (Integer id) {
+        this.id = id;
+    }
+    
+    public Customer getCustomer () {
         return customer;
     }
     
-    public String getStatus() {
-        return status;
-    }
-    
-    public String getContent() {
-        return content;
-    }
-    
-    public String getNotes() {
-        return notes;
-    }
-    
-    public LocalDateTime getSubmissionDate() {
-        return submissionDate;
-    }
-    
-    public Employee getAssignedEmployee() {
-        return assignedEmployee;
-    }
-    
-    public void setCustomer(Customer customer) {
+    public void setCustomer (Customer customer) {
         this.customer = customer;
     }
     
-    public void setStatus(String status) {
+    public ComplaintStatus getStatus () {
+        return status;
+    }
+    
+    public void setStatus (ComplaintStatus status) {
         this.status = status;
     }
     
-    public void setContent(String content) {
+    public Calendar getSubmissionTime () {
+        return submissionTime;
+    }
+    
+    public void setSubmissionTime (Calendar submissionTime) {
+        this.submissionTime = submissionTime;
+    }
+    
+    public Calendar getResolutionTime () {
+        return resolutionTime;
+    }
+    
+    public void setResolutionTime (Calendar resolutionTime) {
+        this.resolutionTime = resolutionTime;
+    }
+    
+    public String getContent () {
+        return content;
+    }
+    
+    public void setContent (String content) {
         this.content = content;
     }
     
-    public void setNotes(String notes) {
-        this.notes = notes;
+    public String getResolution () {
+        return resolution;
     }
     
-    public void setSubmissionDate(LocalDateTime submissionDate) {
-        this.submissionDate = submissionDate;
+    public void setResolution (String resolution) {
+        this.resolution = resolution;
     }
     
-    public void setAssignedEmployee(Employee assignedEmployee) {
-        this.assignedEmployee = assignedEmployee;
+    public Employee getEmployee () {
+        return employee;
+    }
+    
+    public void setEmployee (Employee employee) {
+        this.employee = employee;
     }
 }
