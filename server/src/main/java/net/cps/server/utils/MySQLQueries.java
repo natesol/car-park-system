@@ -17,7 +17,7 @@ public class MySQLQueries {
     public static final String INSERT_INTO = "INSERT INTO ";
     
     
-    public static final String ORGANIZATIONS_TABLE = Entities.ABSTRACT_ORGANIZATION.getTableName() +
+    public static final String ORGANIZATIONS_TABLE = Entities.ORGANIZATION.getTableName() +
             """
                     (
                         id              INT NOT NULL AUTO_INCREMENT,

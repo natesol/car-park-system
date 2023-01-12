@@ -6,12 +6,10 @@ package net.cps.common.utils;
 public enum ResponseStatus {
     SUCCESS,        // request was successful - equivalent to HTTP 200
     CREATED,        // request was successful and a new resource was created - equivalent to HTTP 201
-    NO_CONTENT,     // request was successful but no content was returned - equivalent to HTTP 204
-    BAD_REQUEST,    // request was malformed (a 'bad request') - equivalent to HTTP 400
+    NOT_FOUND,      // request was successful but the requested content was not found - equivalent to HTTP 204 or a 404
     UNAUTHORIZED,   // request was not authorized - equivalent to HTTP 401
-    NOT_FOUND,      // request was not found - equivalent to HTTP 404
-    ERROR,          // request was not successful (a general error ended the request process) - equivalent to HTTP 500
-    BAD_GATEWAY;    // request was not successful (a gateway error ended the request process) - equivalent to HTTP 502
+    BAD_REQUEST,    // request was not successful (a bad request format, or some gateway error ended the request process) - equivalent to HTTP 400 or a 502
+    ERROR;          // request was not successful (a general fatal error ended the request process) - equivalent to HTTP 500
     
     
     /* ----- Utility Methods ------------------------------------------ */
@@ -21,12 +19,10 @@ public enum ResponseStatus {
         return switch (statusFormatted) {
             case "SUCCESS" -> SUCCESS;
             case "CREATED" -> CREATED;
-            case "NO_CONTENT" -> NO_CONTENT;
             case "BAD_REQUEST" -> BAD_REQUEST;
             case "UNAUTHORIZED" -> UNAUTHORIZED;
             case "NOT_FOUND" -> NOT_FOUND;
             case "ERROR" -> ERROR;
-            case "BAD_GATEWAY" -> BAD_GATEWAY;
             default -> throw new IllegalArgumentException("Invalid status: " + status);
         };
     }
@@ -35,12 +31,10 @@ public enum ResponseStatus {
         return switch (status) {
             case SUCCESS -> "SUCCESS";
             case CREATED -> "CREATED";
-            case NO_CONTENT -> "NO_CONTENT";
             case BAD_REQUEST -> "BAD_REQUEST";
             case UNAUTHORIZED -> "UNAUTHORIZED";
             case NOT_FOUND -> "NOT_FOUND";
             case ERROR -> "ERROR";
-            case BAD_GATEWAY -> "BAD_GATEWAY";
             default -> throw new IllegalArgumentException("Invalid status: " + status);
         };
     }

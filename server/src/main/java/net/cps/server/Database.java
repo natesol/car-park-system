@@ -10,12 +10,9 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 
@@ -23,29 +20,16 @@ public class Database {
     private static final Configuration configuration = new Configuration();
     private static final SessionFactory sessionFactory = createSessionFactory();
     
+    
+    /* ----- Constructors ------------------------------------------- */
+    
     /**
      * Static class.
      **/
     private Database () {}
     
-    /**
-     * Create the base hibernate 'SessionFactory' object for the database.
-     **/
-    private static SessionFactory createSessionFactory () {
-        try {
-            for (Entities entity : Entities.values()) {
-                configuration.addAnnotatedClass(entity.getEntityClass());
-            }
-            
-            ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
-            return configuration.buildSessionFactory(serviceRegistry);
-        }
-        catch (Throwable e) {
-            Logger.print("failed to create session factory.", "creation ended with the exception:" + e.getMessage());
-            e.printStackTrace();
-            throw new ExceptionInInitializerError(e);
-        }
-    }
+    
+    /* ----- Getters and Setters ------------------------------------ */
     
     /**
      * Get the connected database type (dialect).
@@ -73,6 +57,29 @@ public class Database {
      **/
     public static SessionFactory getSessionFactory () {
         return sessionFactory;
+    }
+    
+    
+    
+    /* ----- Utility Methods ---------------------------------------- */
+    
+    /**
+     * Create the base hibernate 'SessionFactory' object for the database.
+     **/
+    private static SessionFactory createSessionFactory () {
+        try {
+            for (Entities entity : Entities.values()) {
+                configuration.addAnnotatedClass(entity.getEntityClass());
+            }
+            
+            ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
+            return configuration.buildSessionFactory(serviceRegistry);
+        }
+        catch (Throwable e) {
+            Logger.print("failed to create session factory.", "creation ended with the exception:" + e.getMessage());
+            e.printStackTrace();
+            throw new ExceptionInInitializerError(e);
+        }
     }
     
     /**
@@ -106,7 +113,7 @@ public class Database {
      * @param entityObject   the entity to add.
      * @return the new entity given id.
      **/
-    public static <T> Object addEntity (SessionFactory sessionFactory, T entityObject) {
+    public static <T> Object createEntity (SessionFactory sessionFactory, T entityObject) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         Object id = null;
@@ -141,7 +148,7 @@ public class Database {
      * @param entitiesList   the entities to add.
      * @return a list of the new entities given ids.
      **/
-    public static <T> ArrayList<Object> addMultipleEntities (SessionFactory sessionFactory, List<T> entitiesList) {
+    public static <T> ArrayList<Object> createMultipleEntities (SessionFactory sessionFactory, List<T> entitiesList) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         ArrayList<Object> ids = new ArrayList<>();
@@ -180,7 +187,7 @@ public class Database {
      *                       the query must be in the following format: `INSERT INTO &lt;table_name&gt; (&lt;column_name&gt;, &lt;column_name&gt;, ...) VALUES (&lt;value&gt;, &lt;value&gt;, ...);`.
      * @return the new entities given ids.
      **/
-    public static List<Integer> addCustomQuery (SessionFactory sessionFactory, String query) {
+    public static List<Integer> createCustomQuery (SessionFactory sessionFactory, String query) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         List<Integer> ids = null;
@@ -210,6 +217,7 @@ public class Database {
         return ids;
     }
     
+    
     /**
      * Read method - get one instances of an entity type from the entity-related-table in the database.
      *
@@ -231,7 +239,7 @@ public class Database {
             session.clear();
         }
         catch (Throwable e) {
-            if (e instanceof HibernateException && transaction != null) {
+            if (e instanceof HibernateException && session.isOpen() && transaction != null) {
                 transaction.rollback();
             }
             
@@ -256,7 +264,7 @@ public class Database {
             session.clear();
         }
         catch (Throwable e) {
-            if (e instanceof HibernateException && transaction != null) {
+            if (e instanceof HibernateException && session.isOpen() && transaction != null) {
                 transaction.rollback();
             }
             
@@ -290,7 +298,7 @@ public class Database {
             session.clear();
         }
         catch (Throwable e) {
-            if (e instanceof HibernateException && transaction != null) {
+            if (e instanceof HibernateException && session.isOpen() && transaction != null) {
                 transaction.rollback();
             }
             
@@ -302,7 +310,6 @@ public class Database {
         
         return data;
     }
-    
     
     /**
      * Read method - get a list of instances of an entity type from the entity-related-table in the database.
@@ -331,7 +338,7 @@ public class Database {
             session.clear();
         }
         catch (Throwable e) {
-            if (e instanceof HibernateException && transaction != null) {
+            if (e instanceof HibernateException && session.isOpen() && transaction != null) {
                 transaction.rollback();
             }
             
@@ -346,13 +353,11 @@ public class Database {
         return data.size() > 0 ? data : null;
     }
     
-    
-    
     /**
      * Read method - get all the instances of an entity type from the entity-related-table in the database.
      *
      * @param sessionFactory the 'SessionFactory' object to use.
-     * @param entityClass              the entity class.
+     * @param entityClass    the entity class.
      *                       the entity must have a primary key.
      * @return the entities instance.
      **/
@@ -370,7 +375,7 @@ public class Database {
             session.clear();
         }
         catch (Throwable e) {
-            if (e instanceof HibernateException && transaction != null) {
+            if (e instanceof HibernateException && session.isOpen() && transaction != null) {
                 transaction.rollback();
             }
             
@@ -408,7 +413,7 @@ public class Database {
             session.clear();
         }
         catch (Throwable e) {
-            if (e instanceof HibernateException && transaction != null) {
+            if (e instanceof HibernateException && session.isOpen() && transaction != null) {
                 transaction.rollback();
             }
             
@@ -422,7 +427,6 @@ public class Database {
         
         return data;
     }
-    
     
     
     /**
@@ -450,7 +454,7 @@ public class Database {
             e.printStackTrace();
         }
         catch (Throwable e) {
-            if (e instanceof HibernateException && transaction != null) {
+            if (e instanceof HibernateException && session.isOpen() && transaction != null) {
                 transaction.rollback();
             }
             
@@ -490,17 +494,12 @@ public class Database {
             Logger.print("entities updated on the database.", "entities: " + entitiesList.get(0).getClass().getSimpleName() + ", ids: " + ids);
             Logger.info("entities updated on the database. entities: " + entitiesList.get(0).getClass().getSimpleName() + ", ids: " + ids);
         }
-        catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException |
-               NoSuchMethodException e) {
-            if (e instanceof HibernateException && transaction != null) {
-                transaction.rollback();
-            }
-            
+        catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException e) {
             Logger.print("Error: access to the entity's id failed.", "'UPDATE' transaction ended with the exception: " + e.getMessage());
             e.printStackTrace();
         }
         catch (Throwable e) {
-            if (e instanceof HibernateException && transaction != null) {
+            if (e instanceof HibernateException && session.isOpen() && transaction != null) {
                 transaction.rollback();
             }
             
@@ -535,7 +534,7 @@ public class Database {
             Logger.info("entities updated on the database. entities: " + query.split(" ")[1] + ", via custom query: " + query);
         }
         catch (Throwable e) {
-            if (e instanceof HibernateException && transaction != null) {
+            if (e instanceof HibernateException && session.isOpen() && transaction != null) {
                 transaction.rollback();
             }
             
@@ -545,6 +544,7 @@ public class Database {
         }
         session.close();
     }
+    
     
     /**
      * Delete method - delete an entity row from the entity-related-table in the database.
@@ -566,17 +566,12 @@ public class Database {
             Logger.print("an entity deleted from the database.", "entity: " + entityObject.getClass().getSimpleName() + ", id: " + entityObject.getClass().getDeclaredMethod("getId").invoke(entityObject));
             Logger.info("an entity deleted from the database. entity: " + entityObject.getClass().getSimpleName() + ", id: " + entityObject.getClass().getDeclaredMethod("getId").invoke(entityObject));
         }
-        catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException |
-               NoSuchMethodException e) {
-            if (e instanceof HibernateException && transaction != null) {
-                transaction.rollback();
-            }
-            
+        catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException e) {
             Logger.print("Error: access to the entity's id failed.", "'DELETE' transaction ended with the exception: ");
             e.printStackTrace();
         }
         catch (Throwable e) {
-            if (e instanceof HibernateException && transaction != null) {
+            if (e instanceof HibernateException && session.isOpen() && transaction != null) {
                 transaction.rollback();
             }
             
@@ -622,7 +617,7 @@ public class Database {
             e.printStackTrace();
         }
         catch (Throwable e) {
-            if (e instanceof HibernateException && transaction != null) {
+            if (e instanceof HibernateException && session.isOpen() && transaction != null) {
                 transaction.rollback();
             }
             
@@ -655,7 +650,7 @@ public class Database {
             Logger.info("all entities deleted from the database. entities: " + T.getSimpleName() + ".");
         }
         catch (Throwable e) {
-            if (e instanceof HibernateException && transaction != null) {
+            if (e instanceof HibernateException && session.isOpen() && transaction != null) {
                 transaction.rollback();
             }
             
@@ -689,7 +684,7 @@ public class Database {
             Logger.info("entities deleted from the database. entities: " + query.split(" ")[2] + ", via custom query: " + query);
         }
         catch (Throwable e) {
-            if (e instanceof HibernateException && transaction != null) {
+            if (e instanceof HibernateException && session.isOpen() && transaction != null) {
                 transaction.rollback();
             }
             

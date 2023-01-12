@@ -1,5 +1,6 @@
-package net.cps.common.utils;
+package net.cps.common.entities;
 
+import net.cps.common.utils.OrganizationType;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
@@ -7,7 +8,7 @@ import javax.persistence.*;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "organizations")
-public abstract class AbstractOrganization {
+public abstract class Organization {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false, columnDefinition = "INT NOT NULL AUTO_INCREMENT")
@@ -25,9 +26,9 @@ public abstract class AbstractOrganization {
     
     /* ----- Constructors ------------------------------------------- */
     
-    public AbstractOrganization () {}
+    public Organization () {}
     
-    public AbstractOrganization (@NotNull OrganizationType type) {
+    public Organization (@NotNull OrganizationType type) {
         this.type = type;
     }
     

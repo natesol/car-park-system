@@ -19,9 +19,9 @@ import java.util.Timer;
 
 /**
  * Server side main class (entry point).
- */
+ **/
 public class Main {
-    private static final int DEFAULT_PORT = 3000;
+    private static final Integer DEFAULT_PORT = 3000;
     private static CPSServer server;
     private static SessionFactory dbSessionFactory;
     
@@ -47,9 +47,6 @@ public class Main {
             createTables(dbSessionFactory);
             createDummyData(dbSessionFactory);
             Logger.print("database initialized successfully.");
-        }
-        catch (HibernateException e) {
-            e.printStackTrace();
         }
         catch (Throwable e) {
             e.printStackTrace();
@@ -124,7 +121,7 @@ public class Main {
             customers.add(new Customer("bob.smith@gmail.com", "654654654", "Bob", "Smith", "123456"));
             customers.add(new Customer("alice.smith@gmail.com", "258258258", "Alice", "Smith", "123456"));
             customers.add(new Customer("foo.bar@gmail.com", "987987987", "Foo", "Bar", "123456"));
-            Database.addMultipleEntities(sessionFactory, customers);
+            Database.createMultipleEntities(sessionFactory, customers);
             
             ArrayList<ParkingLot> parkingLots = new ArrayList<>();
             parkingLots.add(new ParkingLot("Haifa Port Parking", "Ha-Namal", 36, "Haifa", "IL", 5));
@@ -135,9 +132,9 @@ public class Main {
             parkingLots.get(1).setRates(5.5, 3.5, 60.0, 54.0, 72.0);
             parkingLots.get(2).setRates(12.0, 10.0, null, 54.0, 72.0);
             parkingLots.get(3).setRates(null, 7.0, 60.0, 54.0, 82.0);
-            Database.addMultipleEntities(sessionFactory, parkingLots);
+            Database.createMultipleEntities(sessionFactory, parkingLots);
             
-            Database.addEntity(sessionFactory, new Management("aaa", "aaa", 7, "Haifa", "IL"));
+            Database.createEntity(sessionFactory, new Management("aaa", "aaa", 7, "Haifa", "IL"));
             
             ArrayList<Employee> employees = new ArrayList<>();
             employees.add(new Employee("amirdhdlive@gmail.com", "Amir", "David", "amir123", EmployeeRole.NETWORK_MANAGER, parkingLots.get(0)));
@@ -145,7 +142,7 @@ public class Main {
             employees.add(new Employee("shelly.brezner@gmail.com", "Shelly", "Brezner", "shelly123", EmployeeRole.PARKING_LOT_MANAGER, parkingLots.get(1)));
             employees.add(new Employee("einat.lasry@gmail.com", "Einat", "Lasry", "einat123", EmployeeRole.PARKING_LOT_EMPLOYEE, parkingLots.get(1)));
             employees.add(new Employee("yoav.furer@gmail.com", "Yoav", "Furer", "yoav123", EmployeeRole.PARKING_LOT_MANAGER, parkingLots.get(2)));
-            Database.addMultipleEntities(sessionFactory, employees);
+            Database.createMultipleEntities(sessionFactory, employees);
         }
         catch (HibernateException e) {
             Logger.print("Error: database dummy data creation failed.", "ended with error: " + e.getMessage());

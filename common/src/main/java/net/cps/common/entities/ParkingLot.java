@@ -1,6 +1,5 @@
 package net.cps.common.entities;
 
-import net.cps.common.utils.AbstractOrganization;
 import net.cps.common.utils.OrganizationType;
 import org.jetbrains.annotations.NotNull;
 
@@ -10,7 +9,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "parking_lots")
 @PrimaryKeyJoinColumn(name = "organization_id")
-public class ParkingLot extends AbstractOrganization implements Serializable {
+public class ParkingLot extends Organization implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false, columnDefinition = "INT NOT NULL AUTO_INCREMENT")
     private Integer id;
@@ -54,10 +53,10 @@ public class ParkingLot extends AbstractOrganization implements Serializable {
     public ParkingLot () {
         super(TYPE);
         this.name = DEFAULT_NAME;
-        this.streetNumber = AbstractOrganization.DEFAULT_STREET_NUMBER;
-        this.street = AbstractOrganization.DEFAULT_STREET;
-        this.city = AbstractOrganization.DEFAULT_CITY;
-        this.state = AbstractOrganization.DEFAULT_STATE;
+        this.streetNumber = Organization.DEFAULT_STREET_NUMBER;
+        this.street = Organization.DEFAULT_STREET;
+        this.city = Organization.DEFAULT_CITY;
+        this.state = Organization.DEFAULT_STATE;
         this.numOfFloors = DEFAULT_FLOOR_NUM;
         this.floorRows = DEFAULT_FLOOR_ROWS;
         this.floorCols = DEFAULT_FLOOR_COLS;

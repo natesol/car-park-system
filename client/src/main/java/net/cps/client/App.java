@@ -4,13 +4,12 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import net.cps.client.utils.ResourcesLoader;
-import net.cps.common.entities.Employee;
-import net.cps.common.entities.ParkingLot;
+import net.cps.common.utils.RequestType;
 
 import java.io.IOException;
 
 /**
- * Main JavaFX GUI Application.
+ *  Main JavaFX GUI Application.
  **/
 public class App extends Application {
     private static Scene scene;
@@ -50,11 +49,8 @@ public class App extends Application {
     public void stop () throws Exception {
         super.stop();
         
-        //if (entity Instanceof Employee) {
-        //    client.sendRequestToServer(RequestType.POST, Entities.EMPLOYEE.getTableName(), entity, "logout");
-        //} else if (entity Instanceof ParkingLot) {
-        //    client.sendRequestToServer(RequestType.POST, Entities.PARKING_LOT.getTableName(), entity, "logout");
-        //}
+        CPSClient.sendRequestToServer(RequestType.UPDATE, "logout/", "logout on application close.", entity, null);
+        
         client.closeConnection();
         System.out.println("[CLIENT] application closed successfully.");
     }
