@@ -1,22 +1,18 @@
 package net.cps.client.controllers;
 
 import io.github.palexdev.materialfx.controls.MFXButton;
-import io.github.palexdev.materialfx.controls.MFXPasswordField;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Hyperlink;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import net.cps.client.App;
-import net.cps.client.CPSClient;
 import net.cps.client.events.CustomerLoginEvent;
 import net.cps.client.events.EmployeeLoginEvent;
 import net.cps.client.events.UserAuthEvent;
 import net.cps.common.entities.Customer;
 import net.cps.common.entities.Employee;
-import net.cps.common.utils.Entities;
-import net.cps.common.utils.RequestType;
 import net.cps.common.utils.ResponseStatus;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -26,22 +22,20 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 
-public class PCLoginController extends PageController {
+public class PCForgotPasswordController extends PageController {
     @FXML
-    public MFXButton guestBtn;
+    public HBox goBackBtn;
     @FXML
     public MFXTextField emailField;
     @FXML
-    public MFXPasswordField passwordField;
+    public MFXButton sendBtn;
     @FXML
-    public Hyperlink forgotPasswordLink;
+    public MFXButton resetCodeBtn;
     @FXML
-    public MFXButton loginBtn;
-    @FXML
-    public Hyperlink signUpLink;
+    public Hyperlink loginLink;
     
     
-    /* ----- Scene Controller Initialization ------------------------ */
+    /* ---- JavaFX Initialization ----------------------------------- */
     
     @Override
     public void initialize (URL url, ResourceBundle resourceBundle) {
@@ -52,60 +46,43 @@ public class PCLoginController extends PageController {
     /* ----- GUI Events Handlers ------------------------------------ */
     
     @FXML
-    void guestBtnClickHandler (ActionEvent actionEvent) throws IOException {
-        App.setPage("PCGuestMain.fxml");
+    public void goBackBtnClickHandler (ActionEvent event) throws IOException {
+        App.setPage("PCLogin.fxml");
     }
     
     @FXML
-    void loginBtnClickHandler (ActionEvent event) throws IOException {
+    public void sendBtnClickHandler (ActionEvent actionEvent) {
         String email = emailField.getText();
-        String password = passwordField.getText();
         
-        if (email.isEmpty() || password.isEmpty()) {
-            dialog.setTitleText("Error");
-            dialog.setBodyText("Please fill all the fields");
-            dialog.open();
-            return;
-        }
-        if (!(email.contains("@") && email.contains("."))) {
-            dialog.setTitleText("Error");
-            dialog.setBodyText("Please enter a valid email");
-            dialog.open();
-            return;
-        }
-        
-        CPSClient.sendRequestToServer(RequestType.AUTH, "login/email=" + email + "&password=" + password, "user login authentication", null);
+        //CPSClient.sendRequest(RequestType.FORGOT_PASSWORD, emailField.getText());
     }
     
     @FXML
-    public void forgotPasswordLinkClickHandler (MouseEvent mouseEvent) throws IOException {
-        App.setPage("PCForgotPassword.fxml");
+    public void resetCodeBtnClickHandler (ActionEvent actionEvent) {
+        dialog.setTitleText("Enter Reset Code");
+        dialog.setBodyText("_ _ _ _ _ _");
+        dialog.open();
     }
     
     @FXML
-    void signUpLinkClickHandler (ActionEvent event) throws IOException {
-        App.setPage("PCSignUp.fxml");
+    public void loginLinkClickHandler (ActionEvent actionEvent) throws IOException {
+        App.setPage("PCLogin.fxml");
     }
     
     
-    /* ----- EventBus Listeners ------------------------------------- */
+    /* ----- Event Listeners ---------------------------------------- */
     
     @Subscribe
     public void onServerAuth (UserAuthEvent event) {
-        ResponseStatus status = event.getResponse().getStatus();
-        String message = event.getMessage();
-        
         Platform.runLater(() -> {
-            if (status == ResponseStatus.SUCCESS) {
+            if (event.getResponse().getStatus() == ResponseStatus.SUCCESS) {
                 try {
-                    if (message.equals(Entities.CUSTOMER.getClassName())) {
+                    if (event.getResponse().getBody().equals("customer")) {
                         App.setPage("PCCustomerMain.fxml");
-                        App.setEntity(event.getResponse().getData());
                         EventBus.getDefault().post(new CustomerLoginEvent((Customer) event.getResponse().getData()));
                     }
-                    else if (message.equals(Entities.EMPLOYEE.getClassName())) {
+                    else if (event.getResponse().getBody().equals("employee")) {
                         App.setPage("PCEmployeeMain.fxml");
-                        App.setEntity(event.getResponse().getData());
                         EventBus.getDefault().post(new EmployeeLoginEvent((Employee) event.getResponse().getData()));
                     }
                     else {
@@ -120,20 +97,14 @@ public class PCLoginController extends PageController {
             }
             else {
                 dialog.setTitleText("Error");
-                dialog.setBodyText(message);
+                dialog.setBodyText(event.getResponse().getBody());
                 dialog.open();
             }
         });
     }
     
-    
-    /* ----- Requests Callbacks (on server response) ---------------- */
-    
-    // ...
-    
-    
+
     /* ----- Utility Methods ---------------------------------------- */
     
     // ...
-    
 }

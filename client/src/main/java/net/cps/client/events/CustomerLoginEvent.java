@@ -1,20 +1,16 @@
 package net.cps.client.events;
 
 import jdk.jfr.Event;
-import net.cps.common.messages.ResponseMessage;
+import net.cps.common.entities.Customer;
 
 public class CustomerLoginEvent extends Event {
-    private ResponseMessage response;
+    private final Customer customer;
 
-    public CustomerLoginEvent (ResponseMessage response) {
-        this.response = response;
+    public CustomerLoginEvent (Customer customer) {
+        this.customer = customer;
     }
     
-    public ResponseMessage getResponse() {
-        return response;
-    }
-    
-    public void setResponse(ResponseMessage response) {
-        this.response = response;
+    public Customer getCustomer () {
+        return customer;
     }
 }

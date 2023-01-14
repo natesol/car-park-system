@@ -48,6 +48,8 @@ public class PCCustomerMainController extends PageController {
     public VBox dashboardLeft;
     
     
+    /* ----- Scene Controller Initialization ------------------------ */
+    
     @Override
     public void initialize (URL url, ResourceBundle resourceBundle) {
         EventBus.getDefault().register(this);
@@ -65,16 +67,7 @@ public class PCCustomerMainController extends PageController {
     }
     
     
-    
-    /* ----- Event Handlers ----------------------------------------- */
-    
-    @Subscribe
-    public void onCustomerLogin (CustomerLoginEvent event) throws IOException {
-        customer = (Customer) event.getResponse().getData();
-        
-        customerFirstName.setText(customer.getFirstName());
-        customerLastName.setText(customer.getLastName());
-    }
+    /* ----- GUI Events Handlers ------------------------------------ */
     
     @FXML
     public void menuBtnHomeClickHandler (MouseEvent mouseEvent) throws IOException {
@@ -116,7 +109,7 @@ public class PCCustomerMainController extends PageController {
             confirmBtn.setOnAction(event -> {
                 dialog.close();
                 try {
-                    App.setScene("PCLogin.fxml");
+                    App.setPage("PCLogin.fxml");
                 }
                 catch (IOException e) {
                     throw new RuntimeException(e);
@@ -131,9 +124,28 @@ public class PCCustomerMainController extends PageController {
     }
     
     
-    /* ----- Utility Methods ----------------------- */
+    /* ----- EventBus Listeners ------------------------------------- */
     
-    public void setSubPage (String fxml) throws IOException {
+    @Subscribe
+    public void onCustomerLogin (CustomerLoginEvent event) throws IOException {
+        customer = event.getCustomer();
+        App.setEntity(customer);
+        
+        Platform.runLater(() -> {
+            customerFirstName.setText(customer.getFirstName());
+            customerLastName.setText(customer.getLastName());
+        });
+    }
+    
+    
+    /* ----- Requests Callbacks (on server response) ---------------- */
+    
+    // ...
+    
+    
+    /* ----- Utility Methods ---------------------------------------- */
+    
+    private void setSubPage (String fxml) throws IOException {
         Platform.runLater(() -> {
             try {
                 subPageWrapper.getChildren().clear();
@@ -145,14 +157,14 @@ public class PCCustomerMainController extends PageController {
         });
     }
     
-    public void setSubPage (Pane pane) {
+    private void setSubPage (Pane pane) {
         Platform.runLater(() -> {
             subPageWrapper.getChildren().clear();
             subPageWrapper.getChildren().add(pane);
         });
     }
     
-    public void activateMenuBtn (@NotNull MFXButton btn) {
+    private void activateMenuBtn (@NotNull MFXButton btn) {
         Platform.runLater(() -> {
             dashboardLeft.lookupAll(".dashboard-menu-button.active").forEach(node -> node.getStyleClass().remove("active"));
             btn.getStyleClass().add("active");

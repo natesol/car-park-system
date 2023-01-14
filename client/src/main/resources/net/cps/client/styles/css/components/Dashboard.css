@@ -68,13 +68,6 @@
   -fx-border-radius: 16px !important;
   -fx-cursor: hand;
 }
-.button:hover,
-.button:focused,
-.button:focus-within {
-  -fx-translate-y: -1px !important;
-  -fx-background-insets: 0 0 -1px 0 !important;
-  -fx-border-insets: 0 0 -1px 0 !important;
-}
 .button:pressed {
   -fx-translate-y: 0 !important;
   -fx-scale-x: 0.985 !important;

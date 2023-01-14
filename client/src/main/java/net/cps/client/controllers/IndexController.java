@@ -32,18 +32,18 @@ import java.util.function.Predicate;
 
 public class IndexController extends PageController {
     @FXML
-    private MFXButton kioskBtn;
+    public MFXButton kioskBtn;
     @FXML
     public MFXButton pcAppBtn;
     
     
-    /* ----- JavaFX Initialize Method ------------------------------- */
+    /* ----- Scene Controller Initialization ------------------------ */
     
     @Override
     public void initialize (URL url, ResourceBundle resourceBundle) {}
     
     
-    /* ----- Event Handlers ----------------------------------------- */
+    /* ----- GUI Events Handlers ------------------------------------ */
     
     @FXML
     void kioskBtnClickHandler (ActionEvent event) throws IOException {
@@ -52,18 +52,24 @@ public class IndexController extends PageController {
     
     @FXML
     public void pcAppBtnClickHandler (ActionEvent event) throws IOException {
-        App.setScene("PCLogin.fxml");
+        App.setPage("PCLogin.fxml");
     }
     
-    @RequestCallback
-    public void onGetAllParkingLot (RequestMessage request, ResponseMessage response) {
+    
+    /* ----- EventBus Listeners ------------------------------------- */
+    
+    // ...
+    
+    
+    /* ----- Requests Callbacks (on server response) ---------------- */
+    
+    @RequestCallback.Method
+    private void onGetAllParkingLot (RequestMessage request, ResponseMessage response) {
         ObservableList<ParkingLot> parkingLots = FXCollections.observableArrayList((List<ParkingLot>) response.getData());
         
         Platform.runLater(() -> {
             if (response.getStatus() == ResponseStatus.SUCCESS) {
-                dialog.setTitleText("Open Kiosk App");
-                dialog.setBodyText("Choose which parking lot you want to open the app for.");
-
+                // Create the filter combo-box and set its items.
                 MFXFilterComboBox<ParkingLot> filterCombo = new MFXFilterComboBox<>();
                 filterCombo.setFloatMode(FloatMode.DISABLED);
                 filterCombo.setPrefWidth(400);
@@ -73,18 +79,18 @@ public class IndexController extends PageController {
                 filterCombo.setValue(parkingLots.get(0));
                 filterCombo.setConverter(converter);
                 filterCombo.setFilterFunction(filterFunction);
-
+                
+                // Create a HBox as wrapper to hold the filter combo-box.
                 HBox wrapper = new HBox();
                 wrapper.getChildren().add(filterCombo);
-
-                dialog.setCustomContent(wrapper);
-
+                
+                // Create the dialog buttons.
                 MFXButton confirmBtn = new MFXButton("Confirm");
                 confirmBtn.getStyleClass().add("button-primary");
                 confirmBtn.setOnAction(actionEvent -> {
                     try {
                         App.setEntity(filterCombo.getValue());
-                        App.setScene("KioskMain.fxml");
+                        App.setPage("KioskMain.fxml");
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -92,7 +98,11 @@ public class IndexController extends PageController {
                 MFXButton cancelBtn = new MFXButton("Cancel");
                 cancelBtn.getStyleClass().add("button-secondary");
                 cancelBtn.setOnAction(actionEvent -> dialog.close());
-
+    
+                // Set the dialog content and open it.
+                dialog.setTitleText("Open Kiosk App");
+                dialog.setBodyText("Choose which parking lot you want to open the app for.");
+                dialog.setCustomContent(wrapper);
                 dialog.setActionButtons(cancelBtn, confirmBtn);
                 dialog.open();
             }
@@ -101,11 +111,6 @@ public class IndexController extends PageController {
             }
         });
     }
-    
-    
-    /* ----- EventBus Listeners ------------------------------------- */
-    
-    // ...
     
     
     /* ----- Utility Methods ---------------------------------------- */

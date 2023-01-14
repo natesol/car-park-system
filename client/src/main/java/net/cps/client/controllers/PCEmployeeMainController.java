@@ -70,12 +70,27 @@ public class PCEmployeeMainController extends PageController {
     
     @Subscribe
     public void onEmployeeLogin (EmployeeLoginEvent event) throws IOException {
-        employee = (Employee) event.getResponse().getData();
-        
+        employee = event.getEmployee();
         String role = employee.getRole().toString();
         
-        customerFirstName.setText(employee.getFirstName());
-        customerLastName.setText(employee.getLastName() + " (" + role + ")");
+        Platform.runLater(() -> {
+            customerFirstName.setText(employee.getFirstName());
+            customerLastName.setText(employee.getLastName() + " (" + role + ")");
+    
+            switch (role) {
+                case "ADMIN" -> {
+                    menuBtnSubscriptions.setVisible(false);
+                    menuBtnReservations.setVisible(false);
+                    menuBtnComplaints.setVisible(false);
+                }
+                case "MANAGER" -> {
+                    menuBtnSubscriptions.setVisible(false);
+                    menuBtnReservations.setVisible(false);
+                }
+                case "EMPLOYEE" -> menuBtnSubscriptions.setVisible(false);
+            }
+        });
+        
     }
     
     @FXML
@@ -118,7 +133,7 @@ public class PCEmployeeMainController extends PageController {
             confirmBtn.setOnAction(event -> {
                 dialog.close();
                 try {
-                    App.setScene("PCLogin.fxml");
+                    App.setPage("PCLogin.fxml");
                 }
                 catch (IOException e) {
                     throw new RuntimeException(e);

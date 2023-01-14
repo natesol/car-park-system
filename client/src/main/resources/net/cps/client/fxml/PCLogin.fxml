@@ -118,7 +118,7 @@
                             <VBox.margin>
                                 <Insets bottom="-5.0" top="-5.0" />
                             </VBox.margin>
-                            <Hyperlink fx:id="forgotPasswordLink" alignment="CENTER_RIGHT" styleClass="forgot-password-link" text="Forgot password?" />
+                            <Hyperlink fx:id="forgotPasswordLink" onMouseClicked="#forgotPasswordLinkClickHandler" alignment="CENTER_RIGHT" styleClass="forgot-password-link" text="Forgot password?" />
                         </TextFlow>
                         <MFXButton fx:id="loginBtn" contentDisplay="RIGHT" onAction="#loginBtnClickHandler" text="Login">
                             <styleClass>

@@ -575,8 +575,6 @@ public class Database {
      *                       or in the following format: `SET &lt;table_name&gt; SET &lt;column_name&gt; = &lt;value&gt; WHERE &lt;column_name&gt; IN (&lt;value&gt;, &lt;value&gt;, ...);`,
      *                       or in the following format: `SET &lt;table_name&gt; SET &lt;column_name&gt; = &lt;value&gt;;`.
      * @return a list of the updated entities ids.
-     * <p>
-     * !!!
      **/
     public static ArrayList<Object> updateCustomQuery (SessionFactory sessionFactory, String query) {
         ArrayList<Object> ids = new ArrayList<>();

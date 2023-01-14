@@ -13,6 +13,6 @@ public class Main {
         client = CPSClient.getClient(host, port);
         System.out.println("[CLIENT] client connected to - host: '" + host + "', port: '" + port + "'.");
 
-        App.run(client);
+        App.render(client);
     }
 }

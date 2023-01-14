@@ -2,7 +2,6 @@ package net.cps.client.controllers;
 
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.application.Platform;
-import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -73,7 +72,7 @@ public class PCGuestMainController extends PageController {
     }
     
     public void menuBtnSignUpClickHandler (MouseEvent mouseEvent) throws IOException {
-        App.setScene("PCSignUp.fxml");
+        App.setPage("PCSignUp.fxml");
     }
     
     

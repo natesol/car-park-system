@@ -12,6 +12,7 @@ import net.cps.server.ocsf.ConnectionToClient;
 import net.cps.server.ocsf.SubscribedClient;
 import net.cps.server.utils.Logger;
 import org.hibernate.SessionFactory;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -100,32 +101,23 @@ public class CPSServer extends AbstractServer {
     protected void handleMessageFromClient (Object requestObj, ConnectionToClient client) {
         RequestMessage request = (RequestMessage) requestObj;
         RequestType requestType = request.getType();
-        
         SessionFactory dbSessionFactory = Database.getSessionFactory();
         
         try {
-            if (requestType == RequestType.GET) {
-                client.sendToClient(handleGetRequest(dbSessionFactory, request));
-            }
-            else if (requestType == RequestType.CREATE) {
-                client.sendToClient(handleCreateRequest(dbSessionFactory, request));
-            }
-            else if (requestType == RequestType.UPDATE) {
-                client.sendToClient(handleUpdateRequest(dbSessionFactory, request));
-            }
-            else if (requestType == RequestType.DELETE) {
-                client.sendToClient(handleDeleteRequest(dbSessionFactory, request));
-            }
-            else if (requestType == RequestType.AUTH) {
-                client.sendToClient(handleAuthRequest(dbSessionFactory, request));
-            }
-            else if (requestType == RequestType.CUSTOM) {
-                // TODO: Custom Requests Handlers...
-                
-                Logger.print("Warning: The request 'CUSTOM: " + request.getHeader() + "' from the client passed unaddressed.");
-            }
-            else {
-                Logger.print("Warning: The request '" + requestType.toString() + ": " + request.getHeader() + "' from the client passed unaddressed.");
+            switch (requestType) {
+                case GET -> client.sendToClient(handleGetRequest(dbSessionFactory, request));
+                case CREATE -> client.sendToClient(handleCreateRequest(dbSessionFactory, request));
+                case UPDATE -> client.sendToClient(handleUpdateRequest(dbSessionFactory, request));
+                case DELETE -> client.sendToClient(handleDeleteRequest(dbSessionFactory, request));
+                case AUTH -> client.sendToClient(handleAuthRequest(dbSessionFactory, request));
+                case CUSTOM -> {
+                    // Custom Requests Handlers...
+                    
+                    Logger.print("Warning: The request 'CUSTOM: " + request.getHeader() + "' from the client passed unaddressed.");
+                }
+                default -> {
+                    Logger.print("Warning: The request '" + requestType + ": " + request.getHeader() + "' from the client passed unaddressed.");
+                }
             }
         }
         catch (IOException e) {
@@ -137,7 +129,7 @@ public class CPSServer extends AbstractServer {
         }
     }
     
-    private <T> ResponseMessage handleGetRequest (SessionFactory sessionFactory, RequestMessage request) {
+    private <T> @NotNull ResponseMessage handleGetRequest (SessionFactory sessionFactory, RequestMessage request) {
         try {
             String query = request.getHeader().split("/")[0];
             Integer requestId = request.getId();
@@ -224,7 +216,7 @@ public class CPSServer extends AbstractServer {
         }
     }
     
-    private <T, U> ResponseMessage handleCreateRequest (SessionFactory sessionFactory, RequestMessage request) {
+    private <T, U> @NotNull ResponseMessage handleCreateRequest (SessionFactory sessionFactory, RequestMessage request) {
         try {
             String query = request.getHeader().split("/")[0];
             Integer requestId = request.getId();
@@ -260,7 +252,7 @@ public class CPSServer extends AbstractServer {
         }
     }
     
-    private <T, U> ResponseMessage handleUpdateRequest (SessionFactory sessionFactory, RequestMessage request) {
+    private <T, U> @NotNull ResponseMessage handleUpdateRequest (SessionFactory sessionFactory, RequestMessage request) {
         try {
             String query = request.getHeader().split("/")[0];
             Integer requestId = request.getId();
@@ -296,7 +288,7 @@ public class CPSServer extends AbstractServer {
         }
     }
     
-    private <T, U> ResponseMessage handleDeleteRequest (SessionFactory sessionFactory, RequestMessage request) {
+    private <T, U> @NotNull ResponseMessage handleDeleteRequest (SessionFactory sessionFactory, RequestMessage request) {
         try {
             String query = request.getHeader().split("/")[0];
             Integer requestId = request.getId();
@@ -332,7 +324,7 @@ public class CPSServer extends AbstractServer {
         }
     }
     
-    private <T> ResponseMessage handleAuthRequest (SessionFactory sessionFactory, RequestMessage request) {
+    private <T> @NotNull ResponseMessage handleAuthRequest (SessionFactory sessionFactory, RequestMessage request) {
         try {
             String query = request.getHeader();
             Integer requestId = request.getId();
@@ -416,7 +408,6 @@ public class CPSServer extends AbstractServer {
         }
         catch (Throwable e) {
             e.printStackTrace();
-            
             return new ResponseMessage(request.getId(), request, ResponseStatus.ERROR, e.getMessage(), e);
         }
     }

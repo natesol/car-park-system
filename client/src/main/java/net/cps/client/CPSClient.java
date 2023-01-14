@@ -1,10 +1,12 @@
 package net.cps.client;
 
+import net.cps.client.events.UserAuthEvent;
 import net.cps.client.ocsf.AbstractClient;
 import net.cps.common.messages.RequestMessage;
 import net.cps.common.messages.ResponseMessage;
-import net.cps.common.utils.RequestMessageCallback;
+import net.cps.common.utils.RequestCallback;
 import net.cps.common.utils.RequestType;
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -16,7 +18,7 @@ import java.util.Map;
  */
 public class CPSClient extends AbstractClient {
     private static CPSClient client = null; // singleton - self instance
-    private static final Map<Integer, RequestMessageCallback> callbacks = new HashMap<>();
+    private static final Map<Integer, RequestCallback> callbacks = new HashMap<>();
     private static int requestId = 1;
     
     
@@ -49,7 +51,7 @@ public class CPSClient extends AbstractClient {
     
     /* ----- Utility Methods ---------------------------------------- */
     
-    public static void sendRequestToServer (RequestType type, String header, RequestMessageCallback callback) {
+    public static void sendRequestToServer (RequestType type, String header, RequestCallback callback) {
         try {
             callbacks.put(requestId, callback);
             client.sendToServer(new RequestMessage(requestId, type, header, callback));
@@ -60,7 +62,7 @@ public class CPSClient extends AbstractClient {
         }
     }
     
-    public static void sendRequestToServer (RequestType type, String header, String body, RequestMessageCallback callback) {
+    public static void sendRequestToServer (RequestType type, String header, String body, RequestCallback callback) {
         try {
             callbacks.put(requestId, callback);
             client.sendToServer(new RequestMessage(requestId, type, header, body, callback));
@@ -71,7 +73,7 @@ public class CPSClient extends AbstractClient {
         }
     }
     
-    public static void sendRequestToServer (RequestType type, String header, String body, String message, RequestMessageCallback callback) {
+    public static void sendRequestToServer (RequestType type, String header, String body, String message, RequestCallback callback) {
         try {
             callbacks.put(requestId, callback);
             client.sendToServer(new RequestMessage(requestId, type, header, body, message, callback));
@@ -82,7 +84,7 @@ public class CPSClient extends AbstractClient {
         }
     }
     
-    public static void sendRequestToServer (RequestType type, String header, String body, Object data, RequestMessageCallback callback) {
+    public static void sendRequestToServer (RequestType type, String header, String body, Object data, RequestCallback callback) {
         try {
             callbacks.put(requestId, callback);
             client.sendToServer(new RequestMessage(requestId, type, header, body, data, callback));
@@ -93,7 +95,7 @@ public class CPSClient extends AbstractClient {
         }
     }
     
-    public static void sendRequestToServer (RequestType type, String header, String body, String message, Object data, RequestMessageCallback callback) {
+    public static void sendRequestToServer (RequestType type, String header, String body, String message, Object data, RequestCallback callback) {
         try {
             callbacks.put(requestId, callback);
             client.sendToServer(new RequestMessage(requestId, type, header, body, message, data, callback));
@@ -113,7 +115,7 @@ public class CPSClient extends AbstractClient {
         ResponseMessage response = (ResponseMessage) responseObj;
         RequestMessage request = response.getOriginalRequest();
         Integer requestId = request.getId();
-        RequestMessageCallback callback = callbacks.get(requestId);
+        RequestCallback callback = callbacks.get(requestId);
         
         if (callback != null) {
             callback.accept(request, response);
@@ -122,24 +124,26 @@ public class CPSClient extends AbstractClient {
         }
         
         RequestType type = request.getType();
-        
-        if (type == RequestType.GET) {
-            System.out.println("[CLIENT] received response for GET request: " + response);
-        }
-        else if (type == RequestType.CREATE) {
-            System.out.println("[CLIENT] received response for CREATE request: " + response);
-        }
-        else if (type == RequestType.UPDATE) {
-            System.out.println("[CLIENT] received response for UPDATE request: " + response);
-        }
-        else if (type == RequestType.DELETE) {
-            System.out.println("[CLIENT] received response for DELETE request: " + response);
-        }
-        else if (type == RequestType.AUTH) {
-            System.out.println("[CLIENT] received response for AUTH request: " + response);
-        }
-        else {
-            System.out.println("[CLIENT] received response for unknown request: " + response);
+        switch (type) {
+            case GET -> {
+                System.out.println("[CLIENT] unhandled response for GET request: " + response);
+            }
+            case CREATE -> {
+                System.out.println("[CLIENT] unhandled response for CREATE request: " + response);
+            }
+            case UPDATE -> {
+                System.out.println("[CLIENT] unhandled response for UPDATE request: " + response);
+            }
+            case DELETE -> {
+                System.out.println("[CLIENT] unhandled response for DELETE request: " + response);
+            }
+            case AUTH -> {
+                EventBus.getDefault().post(new UserAuthEvent(response));
+            }
+            case CUSTOM -> {
+                System.out.println("[CLIENT] unhandled response for CUSTOM request: " + response);
+            }
+            default -> System.out.println("Unknown request type: " + type);
         }
     }
     

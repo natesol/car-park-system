@@ -59,4 +59,19 @@ public class MySQLQueries {
         }
         return select.substring(0, select.length() - 4);
     }
+    
+    public static String setQueryToSelectQuery (String set) {
+        String table = set.split(" ")[1];
+        StringBuilder select = new StringBuilder("SELECT * FROM " + table + " WHERE ");
+        set = set.replace("UPDATE " + table + " SET ", "");
+        String[] parts = set.split(" WHERE ");
+        String[] fields = parts[0].split(", ");
+        String[] conditions = parts[1].split(" AND ");
+        
+        for (String s : conditions) {
+            String[] condition = s.split(" = ");
+            select.append(condition[0]).append(" = ").append(condition[1]).append(" AND ");
+        }
+        return select.substring(0, select.length() - 5);
+    }
 }

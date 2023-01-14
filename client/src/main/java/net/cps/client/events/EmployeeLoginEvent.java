@@ -1,20 +1,16 @@
 package net.cps.client.events;
 
 import jdk.jfr.Event;
-import net.cps.common.messages.ResponseMessage;
+import net.cps.common.entities.Employee;
 
 public class EmployeeLoginEvent extends Event {
-    private ResponseMessage response;
+    private final Employee employee;
 
-    public EmployeeLoginEvent (ResponseMessage response) {
-        this.response = response;
+    public EmployeeLoginEvent (Employee employee) {
+        this.employee = employee;
     }
     
-    public ResponseMessage getResponse() {
-        return response;
-    }
-    
-    public void setResponse(ResponseMessage response) {
-        this.response = response;
+    public Employee getEmployee () {
+        return employee;
     }
 }

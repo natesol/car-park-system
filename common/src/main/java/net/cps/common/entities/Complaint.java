@@ -9,6 +9,7 @@ import java.util.Calendar;
 @Table(name = "complaints")
 public class Complaint {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
     @ManyToOne

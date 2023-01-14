@@ -4,6 +4,9 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import net.cps.client.utils.ResourcesLoader;
+import net.cps.common.entities.Employee;
+import net.cps.common.utils.AbstractUser;
+import net.cps.common.utils.Entities;
 import net.cps.common.utils.RequestType;
 
 import java.io.IOException;
@@ -16,19 +19,6 @@ public class App extends Application {
     
     public static CPSClient client = null;
     public static Object entity = null;
-    
-    public static void run (CPSClient client) {
-        App.client = client;
-        launch();
-    }
-    
-    public static void setScene (String fxml) throws IOException {
-        scene.setRoot(ResourcesLoader.loadFXML(fxml));
-    }
-    
-    public static void setEntity (Object entity) {
-        App.entity = entity;
-    }
     
     
     @Override
@@ -47,11 +37,33 @@ public class App extends Application {
     
     @Override
     public void stop () throws Exception {
+        // Stop the `JavaFX` GUI application
         super.stop();
         
-        CPSClient.sendRequestToServer(RequestType.UPDATE, "logout/", "logout on application close.", entity, null);
+        // Logout the current user
+        if (entity != null && !entity.getClass().equals(Entities.PARKING_LOT.getEntityClass())) {
+            CPSClient.sendRequestToServer(RequestType.AUTH, "logout/" + ((AbstractUser) entity).getEmail(), "logout on application close.", entity, null);
+        }
         
+        // Close the connection with the server
         client.closeConnection();
         System.out.println("[CLIENT] application closed successfully.");
     }
+    
+    
+    /* ----- Utility Methods ---------------------------------------- */
+    
+    public static void render (CPSClient client) {
+        App.client = client;
+        launch();
+    }
+    
+    public static void setPage (String fxml) throws IOException {
+        scene.setRoot(ResourcesLoader.loadFXML(fxml));
+    }
+    
+    public static void setEntity (Object entity) {
+        App.entity = entity;
+    }
+    
 }

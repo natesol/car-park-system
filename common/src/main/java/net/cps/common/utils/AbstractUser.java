@@ -19,6 +19,7 @@ public abstract class AbstractUser {
     String passwordHash = null;
     String passwordSalt = null;
     
+    public abstract String getEmail ();
     public abstract String getPasswordHash ();
     public abstract String getPasswordSalt ();
     
