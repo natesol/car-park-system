@@ -1,7 +1,12 @@
 package net.cps.common.entities;
 
+import net.cps.common.utils.SubscriptionType;
+import org.jetbrains.annotations.NotNull;
+
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalTime;
+import java.util.Calendar;
+import java.util.List;
 
 @Entity
 @Table(name = "subscriptions")
@@ -10,89 +15,134 @@ public class Subscription {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
-    
-    private Long customerId;
-    private Long carId;
-    private String parkingLot;
-    //private Vehicle vehicle;
-    private String subscriptionType;
-    private Date startDate;
-    //@Id
+    @NotNull
     @ManyToOne
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "customer_email", referencedColumnName = "email")
     private Customer customer;
-
-    public Subscription(Long customerId, Long carId, String parkingLot, Vehicle vehicle, String subscriptionType, Customer customer) {
-        this.customerId = customerId;
-        this.carId = carId;
+    @ManyToOne
+    @JoinColumn(name = "parking_lot_id", referencedColumnName = "id")
+    private ParkingLot parkingLot;
+    @NotNull
+    @Column(name = "created_at", nullable = false)
+    private Calendar createdAt;
+    @NotNull
+    @Column(name = "expires_at", nullable = false)
+    private Calendar expiresAt;
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type", nullable = false)
+    private SubscriptionType type;
+    @NotNull
+    @ManyToMany(mappedBy = "subscriptions")
+    private List<Vehicle> vehicles;
+    @NotNull
+    @Column(name = "departure_time", nullable = false)
+    private LocalTime departureTime;
+    @NotNull
+    @Column(name = "status", nullable = false)
+    private String status;
+    @NotNull
+    @Column(name = "price", nullable = false)
+    private Double price;
+    
+    
+    /* ----- Constructors ------------------------------------------- */
+    
+    public Subscription () {}
+    
+    public Subscription (@NotNull Customer customer, ParkingLot parkingLot, @NotNull SubscriptionType type, @NotNull List<Vehicle> vehicles, @NotNull LocalTime departureTime) {
+        this.customer = customer;
         this.parkingLot = parkingLot;
-        //this.vehicle = vehicle;
-        this.subscriptionType = subscriptionType;
+        this.createdAt = Calendar.getInstance();
+        this.expiresAt = Calendar.getInstance();
+        this.expiresAt.add(Calendar.DATE, 28);
+        this.type = type;
+        this.vehicles = vehicles;
+        this.departureTime = departureTime;
+        this.status = "active";
+        this.price = 0.0;
+    }
+    
+    
+    /* ----- Getters and Setters ------------------------------------ */
+    
+    public Integer getId () {
+        return id;
+    }
+    
+    public void setId (Integer id) {
+        this.id = id;
+    }
+    
+    public Customer getCustomer () {
+        return customer;
+    }
+    
+    public void setCustomer (Customer customer) {
         this.customer = customer;
     }
     
-    public Subscription () {
-    
-    }
-    
-    public Long getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
-    }
-
-    public Long getCarId() {
-        return carId;
-    }
-
-    public void setCarId(Long carId) {
-        this.carId = carId;
-    }
-
-    public String getParkingLot() {
+    public ParkingLot getParkingLot () {
         return parkingLot;
     }
-
-    public void setParkingLot(String parkingLot) {
+    
+    public void setParkingLot (ParkingLot parkingLot) {
         this.parkingLot = parkingLot;
     }
-
-    //public Vehicle getVehicle() {
-    //    return vehicle;
-    //}
-    //
-    //public void setVehicle(Vehicle vehicle) {
-    //    this.vehicle = vehicle;
-    //}
-
-    public String getSubscriptionType() {
-        return subscriptionType;
-    }
-
-    public void setSubscriptionType(String subscriptionType) {
-        this.subscriptionType = subscriptionType;
-    }
-
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Date getAndDate() {
-        return andDate;
-    }
-
-    public void setAndDate(Date andDate) {
-        this.andDate = andDate;
-    }
-
-    private Date andDate;
     
-    public Integer getId () {return id;}
-    public void setId (Integer id) {this.id = id;}
+    public Calendar getCreatedAt () {
+        return createdAt;
+    }
+    
+    public void setCreatedAt (Calendar createdAt) {
+        this.createdAt = createdAt;
+    }
+    
+    public Calendar getExpiresAt () {
+        return expiresAt;
+    }
+    
+    public void setExpiresAt (Calendar expiresAt) {
+        this.expiresAt = expiresAt;
+    }
+    
+    public SubscriptionType getType () {
+        return type;
+    }
+    
+    public void setType (SubscriptionType type) {
+        this.type = type;
+    }
+    
+    public List<Vehicle> getVehicles () {
+        return vehicles;
+    }
+    
+    public void setVehicles (List<Vehicle> vehicles) {
+        this.vehicles = vehicles;
+    }
+    
+    public String getStatus () {
+        return status;
+    }
+    
+    public void setStatus (String status) {
+        this.status = status;
+    }
+    
+    public Double getPrice () {
+        return price;
+    }
+    
+    public void setPrice (Double price) {
+        this.price = price;
+    }
+    
+    public @NotNull LocalTime getDepartureTime () {
+        return departureTime;
+    }
+    
+    public void setDepartureTime (@NotNull LocalTime departureTime) {
+        this.departureTime = departureTime;
+    }
 }

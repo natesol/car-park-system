@@ -12,10 +12,11 @@ import java.util.List;
 @Table(name = "customers")
 public class Customer extends AbstractUser implements Serializable {
     @Id
-    @Column(name = "email")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false, nullable = false, columnDefinition = "INT NOT NULL AUTO_INCREMENT")
+    private Integer id;
+    @Column(name = "email", unique = true, columnDefinition = "VARCHAR(100) UNIQUE NOT NULL")
     private String email;
-    @Column(name = "id")
-    private String id;
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")
@@ -42,10 +43,9 @@ public class Customer extends AbstractUser implements Serializable {
         super();
     }
     
-    public Customer (String email, String id, String firstName, String lastName, String password) {
+    public Customer (String email, String firstName, String lastName, String password) {
         super();
         this.email = email;
-        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.passwordSalt = generateSalt();
@@ -60,23 +60,27 @@ public class Customer extends AbstractUser implements Serializable {
     
     /* ----- Getters and Setters ------------------------------------ */
     
+    public Integer getId () {
+        return id;
+    }
+    
+    public void setId (Integer id) {
+        this.id = id;
+    }
+    
+    @Override
     public String getEmail () {
         return email;
     }
+    
     public void setEmail (String email) {
         this.email = email;
-    }
-    
-    public String getId () {
-        return id;
-    }
-    public void setId (String id) {
-        this.id = id;
     }
     
     public String getFirstName () {
         return firstName;
     }
+    
     public void setFirstName (String firstName) {
         this.firstName = firstName;
     }
@@ -84,6 +88,7 @@ public class Customer extends AbstractUser implements Serializable {
     public String getLastName () {
         return lastName;
     }
+    
     public void setLastName (String lastName) {
         this.lastName = lastName;
     }
@@ -92,6 +97,7 @@ public class Customer extends AbstractUser implements Serializable {
     public String getPasswordSalt () {
         return passwordSalt;
     }
+    
     public void setPasswordSalt (String passwordSalt) {
         this.passwordSalt = passwordSalt;
     }
@@ -100,6 +106,7 @@ public class Customer extends AbstractUser implements Serializable {
     public String getPasswordHash () {
         return passwordHash;
     }
+    
     public void setPasswordHash (String passwordHash) {
         this.passwordHash = passwordHash;
     }
@@ -107,6 +114,7 @@ public class Customer extends AbstractUser implements Serializable {
     public Boolean getIsActive () {
         return isActive;
     }
+    
     public void setIsActive (Boolean active) {
         isActive = active;
     }
@@ -114,9 +122,11 @@ public class Customer extends AbstractUser implements Serializable {
     public List<Vehicle> getVehicles () {
         return vehicles;
     }
+    
     public void setVehicles (List<Vehicle> vehicles) {
         this.vehicles = vehicles;
     }
+    
     public void setVehicles (Vehicle... vehicles) {
         Collections.addAll(this.vehicles, vehicles);
     }
@@ -124,6 +134,7 @@ public class Customer extends AbstractUser implements Serializable {
     public List<Subscription> getSubscriptions () {
         return subscriptions;
     }
+    
     public void setSubscriptions (List<Subscription> subscriptions) {
         this.subscriptions = subscriptions;
     }
@@ -131,6 +142,7 @@ public class Customer extends AbstractUser implements Serializable {
     public Double getBalance () {
         return balance;
     }
+    
     public void setBalance (Double balance) {
         this.balance = balance;
     }
@@ -141,6 +153,7 @@ public class Customer extends AbstractUser implements Serializable {
     public void addVehicle (Vehicle vehicle) {
         this.vehicles.add(vehicle);
     }
+    
     public void removeVehicle (Vehicle vehicle) {
         this.vehicles.remove(vehicle);
     }
@@ -148,6 +161,7 @@ public class Customer extends AbstractUser implements Serializable {
     public void addSubscription (Subscription subscription) {
         this.subscriptions.add(subscription);
     }
+    
     public void removeSubscription (Subscription subscription) {
         this.subscriptions.remove(subscription);
     }
@@ -155,6 +169,7 @@ public class Customer extends AbstractUser implements Serializable {
     public void creditBalance (Double amount) {
         this.balance += amount;
     }
+    
     public void chargeBalance (Double amount) {
         this.balance -= amount;
     }
@@ -162,15 +177,15 @@ public class Customer extends AbstractUser implements Serializable {
     @Override
     public String toString () {
         return "Customer {" +
-                "email: '" + email + "'" +
-                ", id: " + id +
+                "id: " + id +
+                ", email: '" + email + "'" +
                 ", firstName: '" + firstName + "'" +
                 ", lastName: '" + lastName + "'" +
                 ", passwordHash: '" + passwordHash + "'" +
                 ", passwordSalt: '" + passwordSalt + "'" +
                 ", isActive: " + isActive +
-                ", vehicles: " + vehicles +
-                ", subscriptions: " + subscriptions +
+                //", vehicles: " + vehicles +
+                //", subscriptions: " + subscriptions +
                 ", balance: " + balance +
                 "}";
     }

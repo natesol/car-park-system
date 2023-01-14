@@ -21,7 +21,7 @@
         <String fx:value="color-scheme-light"/>
     </styleClass>
 
-    <Hyperlink maxHeight="0.0" maxWidth="0.0" styleClass="focus-fix" text="focus-fix" textFill="TRANSPARENT"/>
+    <Hyperlink maxHeight="0.0" maxWidth="0.0" text="focus-fix" textFill="TRANSPARENT"/>
 
     <MFXScrollPane fx:id="rootScroll" fitToHeight="true" fitToWidth="true" AnchorPane.bottomAnchor="0.0"
                    AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -47,11 +47,8 @@
                             <VBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
                                 <TextFlow styleClass="dashboard-user-message">
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="Hello "/>
-                                    <Text fx:id="customerFirstName" strokeType="OUTSIDE" strokeWidth="0.0"
-                                          styleClass="sheet-text" text="FirstName"/>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text=" "/>
-                                    <Text fx:id="customerLastName" strokeType="OUTSIDE" strokeWidth="0.0"
-                                          styleClass="sheet-text" text="LastName"/>
+                                    <Text fx:id="employeeName" strokeType="OUTSIDE" strokeWidth="0.0"
+                                          styleClass="sheet-text" text="FirstName LastName"/>
                                     <VBox.margin>
                                         <Insets/>
                                     </VBox.margin>
@@ -94,34 +91,55 @@
 
                                 <VBox alignment="TOP_CENTER" spacing="2.0">
                                     <MFXButton fx:id="menuBtnHome" graphicTextGap="8.0"
-                                               onMouseClicked="#menuBtnHomeClickHandler"
-                                               styleClass="dashboard-menu-button" text="Home">
+                                               onMouseClicked="#menuBtnHomeClickHandler" text="Home">
                                         <graphic>
                                             <FontAwesomeIconView glyphName="HOME"/>
                                         </graphic>
-                                    </MFXButton>
-                                    <MFXButton fx:id="menuBtnSubscriptions" graphicTextGap="8.0"
-                                               onMouseClicked="#menuBtnSubscriptionsClickHandler"
-                                               styleClass="dashboard-menu-button" text="Subscriptions">
-                                        <graphic>
-                                            <FontAwesomeIconView glyphName="DRIVERS_LICENSE"/>
-                                        </graphic>
-                                    </MFXButton>
-                                    <MFXButton fx:id="menuBtnReservations" graphicTextGap="8.0"
-                                               onMouseClicked="#menuBtnReservationsClickHandler" text="Reservations">
                                         <styleClass>
                                             <String fx:value="dashboard-menu-button"/>
                                             <String fx:value="active"/>
                                         </styleClass>
+                                    </MFXButton>
+                                    <MFXButton fx:id="menuBtnParkingLots" graphicTextGap="8.0"
+                                               onMouseClicked="#menuBtnSubscriptionsClickHandler"
+                                               styleClass="dashboard-menu-button" text="Parking Lots">
                                         <graphic>
-                                            <FontAwesomeIconView glyphName="AUTOMOBILE"/>
+                                            <FontAwesomeIconView glyphName="MAP" text=""/>
+                                        </graphic>
+                                    </MFXButton>
+                                    <MFXButton fx:id="menuBtnEmployees" graphicTextGap="8.0"
+                                               onMouseClicked="#menuBtnSubscriptionsClickHandler"
+                                               styleClass="dashboard-menu-button" text="Employees">
+                                        <graphic>
+                                            <FontAwesomeIconView glyphName="INSTAGRAM" text=""/>
+                                        </graphic>
+                                    </MFXButton>
+                                    <MFXButton fx:id="menuBtnReports" graphicTextGap="8.0"
+                                               onMouseClicked="#menuBtnReservationsClickHandler"
+                                               styleClass="dashboard-menu-button" text="Reports">
+                                        <graphic>
+                                            <FontAwesomeIconView glyphName="AUTOMOBILE" text=""/>
+                                        </graphic>
+                                    </MFXButton>
+                                    <MFXButton fx:id="menuBtnStatistics" graphicTextGap="8.0"
+                                               onMouseClicked="#menuBtnComplaintsClickHandler"
+                                               styleClass="dashboard-menu-button" text="Statistics">
+                                        <graphic>
+                                            <FontAwesomeIconView glyphName="COG" text=""/>
                                         </graphic>
                                     </MFXButton>
                                     <MFXButton fx:id="menuBtnComplaints" graphicTextGap="8.0"
                                                onMouseClicked="#menuBtnComplaintsClickHandler"
                                                styleClass="dashboard-menu-button" text="Complaints">
                                         <graphic>
-                                            <FontAwesomeIconView glyphName="LIST_ALT"/>
+                                            <FontAwesomeIconView glyphName="COG" text=""/>
+                                        </graphic>
+                                    </MFXButton>
+                                    <MFXButton fx:id="menuBtnComplaints1" graphicTextGap="8.0"
+                                               onMouseClicked="#menuBtnComplaintsClickHandler"
+                                               styleClass="dashboard-menu-button" text="Parking Spaces">
+                                        <graphic>
+                                            <FontAwesomeIconView glyphName="COG" text=""/>
                                         </graphic>
                                     </MFXButton>
                                 </VBox>
@@ -145,9 +163,9 @@
                                                 <FontAwesomeIconView glyphName="USER"/>
                                             </graphic>
                                         </MFXButton>
-                                        <MFXButton fx:id="menuBtnSignOut" graphicTextGap="8.0"
-                                                   onMouseClicked="#menuBtnSignOutClickHandler"
-                                                   styleClass="dashboard-menu-button" text="Sign-Out">
+                                        <MFXButton fx:id="menuBtnLogout" graphicTextGap="8.0"
+                                                   onMouseClicked="#menuBtnLogoutClickHandler"
+                                                   styleClass="dashboard-menu-button" text="Logout">
                                             <graphic>
                                                 <FontAwesomeIconView glyphName="SIGN_OUT"/>
                                             </graphic>

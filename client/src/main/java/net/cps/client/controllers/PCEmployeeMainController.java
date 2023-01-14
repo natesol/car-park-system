@@ -9,11 +9,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import net.cps.client.App;
-import net.cps.client.CPSClient;
-import net.cps.client.events.CustomerLoginEvent;
+import net.cps.client.events.EmployeeLoginEvent;
 import net.cps.client.utils.ResourcesLoader;
-import net.cps.common.entities.Customer;
-import net.cps.common.utils.RequestType;
+import net.cps.common.entities.Employee;
+import net.cps.common.utils.EmployeeRole;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.jetbrains.annotations.NotNull;
@@ -23,11 +22,11 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 
-public class PCCustomerMainController extends PageController {
-    private Customer customer;
+public class PCEmployeeMainController extends PageController {
+    private Employee employee;
     
     @FXML
-    public Text customerName;
+    public Text employeeName;
     @FXML
     public MFXButton menuBtnHome;
     @FXML
@@ -39,7 +38,7 @@ public class PCCustomerMainController extends PageController {
     @FXML
     public MFXButton menuBtnProfile;
     @FXML
-    public MFXButton menuBtnSignOut;
+    public MFXButton menuBtnLogout;
     @FXML
     public Pane subPageWrapper;
     @FXML
@@ -47,21 +46,6 @@ public class PCCustomerMainController extends PageController {
     @FXML
     public VBox dashboardLeft;
     
-    /* Home Sub Page */
-    
-    /* Subscriptions Sub Page */
-    
-    /* Reservations Sub Page */
-    @FXML
-    public MFXButton newReservationBtn;
-    
-    /* Complaints Sub Page */
-    @FXML
-    public MFXButton fileComplaintBtn;
-    
-    
-    
-    /* ----- Scene Controller Initialization ------------------------ */
     
     @Override
     public void initialize (URL url, ResourceBundle resourceBundle) {
@@ -69,26 +53,54 @@ public class PCCustomerMainController extends PageController {
         
         Platform.runLater(() -> {
             try {
-                setSubPage("PCCustomerMainHome.fxml");
+                setSubPage("PCEmployeeMainHome.fxml");
             }
             catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            
             activateMenuBtn(menuBtnHome);
         });
     }
     
     
-    /* ----- GUI Events Handlers ------------------------------------ */
+    /* ----- Event Handlers ----------------------------------------- */
+    
+    @Subscribe
+    public void onEmployeeLogin (EmployeeLoginEvent event) throws IOException {
+        employee = event.getEmployee();
+        EmployeeRole role = employee.getRole();
+        
+        Platform.runLater(() -> {
+            employeeName.setText(employee.getFirstName() + " " + employee.getLastName() + " (" + role + ")");
+    
+            switch (role) {
+                case NETWORK_MANAGER -> {
+                    //menuBtnSubscriptions.setVisible(false);
+                    //menuBtnReservations.setVisible(false);
+                    //menuBtnComplaints.setVisible(false);
+                }
+                case CUSTOMER_SERVICE_EMPLOYEE -> {
+                    //menuBtnSubscriptions.setVisible(false);
+                    //menuBtnReservations.setVisible(false);
+                }
+                case PARKING_LOT_MANAGER -> {
+                    //menuBtnSubscriptions.setVisible(false);
+                }
+                case PARKING_LOT_EMPLOYEE -> {
+                    //menuBtnSubscriptions.setVisible(false);
+                }
+            }
+        });
+        
+    }
     
     @FXML
     public void menuBtnHomeClickHandler (MouseEvent mouseEvent) throws IOException {
-        if (menuBtnHome.getStyleClass().contains("active")) return;
+        if (menuBtnProfile.getStyleClass().contains("active")) return;
         
         Platform.runLater(() -> {
             try {
-                setSubPage("PCCustomerMainHome.fxml");
+                setSubPage("PCEmployeeMainHome.fxml");
             }
             catch (IOException e) {
                 throw new RuntimeException(e);
@@ -99,11 +111,11 @@ public class PCCustomerMainController extends PageController {
     
     @FXML
     public void menuBtnSubscriptionsClickHandler (MouseEvent mouseEvent) throws IOException {
-        if (menuBtnSubscriptions.getStyleClass().contains("active")) return;
+        if (menuBtnProfile.getStyleClass().contains("active")) return;
         
         Platform.runLater(() -> {
             try {
-                setSubPage("PCCustomerMainSubscriptions.fxml");
+                setSubPage("PCEmployeeMainSubscriptions.fxml");
             }
             catch (IOException e) {
                 throw new RuntimeException(e);
@@ -114,11 +126,11 @@ public class PCCustomerMainController extends PageController {
     
     @FXML
     public void menuBtnReservationsClickHandler (MouseEvent mouseEvent) throws IOException {
-        if (menuBtnReservations.getStyleClass().contains("active")) return;
+        if (menuBtnProfile.getStyleClass().contains("active")) return;
         
         Platform.runLater(() -> {
             try {
-                setSubPage("PCCustomerMainReservations.fxml");
+                setSubPage("PCEmployeeMainReservations.fxml");
             }
             catch (IOException e) {
                 throw new RuntimeException(e);
@@ -129,11 +141,11 @@ public class PCCustomerMainController extends PageController {
     
     @FXML
     public void menuBtnComplaintsClickHandler (MouseEvent mouseEvent) throws IOException {
-        if (menuBtnComplaints.getStyleClass().contains("active")) return;
+        if (menuBtnProfile.getStyleClass().contains("active")) return;
         
         Platform.runLater(() -> {
             try {
-                setSubPage("PCCustomerMainComplaints.fxml");
+                setSubPage("PCEmployeeMainComplaints.fxml");
             }
             catch (IOException e) {
                 throw new RuntimeException(e);
@@ -148,7 +160,7 @@ public class PCCustomerMainController extends PageController {
         
         Platform.runLater(() -> {
             try {
-                setSubPage("PCCustomerMainProfile.fxml");
+                setSubPage("PCEmployeeMainProfile.fxml");
             }
             catch (IOException e) {
                 throw new RuntimeException(e);
@@ -160,12 +172,13 @@ public class PCCustomerMainController extends PageController {
     @FXML
     public void menuBtnLogoutClickHandler (MouseEvent mouseEvent) throws IOException {
         Platform.runLater(() -> {
+            dialog.setTitleText("Log Out");
+            dialog.setBodyText("Are you sure you want to log out?");
+            dialog.setWidth("xs");
             MFXButton confirmBtn = new MFXButton("Log Out");
             confirmBtn.setOnAction(event -> {
                 dialog.close();
                 try {
-                    CPSClient.sendRequestToServer(RequestType.AUTH, "logout/" + customer.getEmail(), "customer initialized logout.", customer, null);
-                    App.setEntity(null);
                     App.setPage("PCLogin.fxml");
                 }
                 catch (IOException e) {
@@ -175,38 +188,15 @@ public class PCCustomerMainController extends PageController {
             confirmBtn.getStyleClass().add("button-primary");
             MFXButton cancelBtn = new MFXButton("Cancel");
             cancelBtn.setOnAction(event -> dialog.close());
-            cancelBtn.getStyleClass().add("button-secondary");
-            
-            dialog.setWidth(Dialog.Width.EXTRA_SMALL);
-            dialog.setTitleText("Log Out");
-            dialog.setBodyText("Are you sure you want to log out?");
             dialog.setActionButtons(cancelBtn, confirmBtn);
             dialog.open();
         });
     }
     
     
-    /* ----- EventBus Listeners ------------------------------------- */
+    /* ----- Utility Methods ----------------------- */
     
-    @Subscribe
-    public void onCustomerLogin (CustomerLoginEvent event) throws IOException {
-        customer = event.getCustomer();
-        App.setEntity(customer);
-        
-        Platform.runLater(() -> {
-            customerName.setText(customer.getFirstName() + " " + customer.getLastName());
-        });
-    }
-    
-    
-    /* ----- Requests Callbacks (on server response) ---------------- */
-    
-    // ...
-    
-    
-    /* ----- Utility Methods ---------------------------------------- */
-    
-    private void setSubPage (String fxml) throws IOException {
+    public void setSubPage (String fxml) throws IOException {
         Platform.runLater(() -> {
             try {
                 subPageWrapper.getChildren().clear();
@@ -218,14 +208,14 @@ public class PCCustomerMainController extends PageController {
         });
     }
     
-    private void setSubPage (Pane pane) {
+    public void setSubPage (Pane pane) {
         Platform.runLater(() -> {
             subPageWrapper.getChildren().clear();
             subPageWrapper.getChildren().add(pane);
         });
     }
     
-    private void activateMenuBtn (@NotNull MFXButton btn) {
+    public void activateMenuBtn (@NotNull MFXButton btn) {
         Platform.runLater(() -> {
             dashboardLeft.lookupAll(".dashboard-menu-button.active").forEach(node -> node.getStyleClass().remove("active"));
             btn.getStyleClass().add("active");

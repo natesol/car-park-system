@@ -128,30 +128,32 @@ public enum Entities {
                     (
                         id              INT NOT NULL AUTO_INCREMENT,
                         customer_email  VARCHAR(100) NOT NULL,
-                        parking_lot_id  INT,
+                        parking_lot_id  INT NOT NULL,
                         created_at      TIMESTAMP NOT NULL,
                         expires_at      TIMESTAMP NOT NULL,
                         type            ENUM('BASIC', 'PREMIUM') NOT NULL,
                         departure_time  TIME NOT NULL,
-                        state           ENUM('ACTIVE', 'EXPIRED', 'RENEWED', 'CANCELLED') NOT NULL,
+                        status          VARCHAR(255) NOT NULL,
                         price           DOUBLE NOT NULL,
                         PRIMARY KEY (id),
                         FOREIGN KEY (customer_email) REFERENCES customers(email),
                         FOREIGN KEY (parking_lot_id) REFERENCES parking_lots(id)
                     )"""
     ),
-    VEHICLE(Vehicle.class,
-            "vehicles",
+    RESERVATION(Reservation.class,
+            "reservations",
             "id",
             Integer.class,
             (Integer::parseInt),
             """
                     (
-                        id                  INT NOT NULL AUTO_INCREMENT,
-                        customer_email      VARCHAR(100) NOT NULL,
-                        number              CHAR(8) UNIQUE NOT NULL,
-                        PRIMARY KEY (id),
-                        FOREIGN KEY (customer_email) REFERENCES customers(email)
+                        id              INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+                        customer_email  VARCHAR(100) NOT NULL,
+                        parking_lot_id  INT NOT NULL,
+                        start_date      DATETIME NOT NULL,
+                        end_date        DATETIME NOT NULL,
+                        FOREIGN KEY (customer_email) REFERENCES customers(email),
+                        FOREIGN KEY (parking_lot_id) REFERENCES parking_lots(id)
                     )"""
     ),
     PARKING_SPACE(ParkingSpace.class,
@@ -167,38 +169,12 @@ public enum Entities {
                         row_num         TINYINT NOT NULL,
                         col_num         TINYINT NOT NULL,
                         state           ENUM('AVAILABLE', 'OCCUPIED', 'RESERVED', 'DISABLED', 'OUT_OF_ORDER') NOT NULL,
-                        vehicle_number  CHAR(8) UNIQUE,
                         PRIMARY KEY (id),
-                        FOREIGN KEY (parking_lot_id) REFERENCES parking_lots(id),
-                        FOREIGN KEY (vehicle_number) REFERENCES vehicles(number)
+                        FOREIGN KEY (parking_lot_id) REFERENCES parking_lots(id)
                     )"""
     ),
-    RESERVATION(Reservation.class,
-            "reservations",
-            "id",
-            Integer.class,
-            (Integer::parseInt),
-            """
-                    (
-                        id                      INT NOT NULL AUTO_INCREMENT,
-                        parking_lot_id          INT NOT NULL,
-                        customer_email          VARCHAR(100) NOT NULL,
-                        vehicle_number          CHAR(8) UNIQUE NOT NULL,
-                        arrival_time            DATETIME NOT NULL,
-                        departure_time          DATETIME NOT NULL,
-                        entry_time              DATETIME,
-                        status                  ENUM('PENDING', 'CANCELLED', 'CHECKED_IN', 'CHECKED_OUT') NOT NULL,
-                        payed                   DOUBLE NOT NULL,
-                        parking_space_id        INT UNIQUE,
-                        PRIMARY KEY (id),
-                        FOREIGN KEY (parking_lot_id) REFERENCES parking_lots(id),
-                        FOREIGN KEY (customer_email) REFERENCES customers(email),
-                        FOREIGN KEY (vehicle_number) REFERENCES vehicles(number),
-                        FOREIGN KEY (parking_space_id) REFERENCES parking_spaces(id)
-                    )"""
-    ),
-    COMPLAINT(Complaint.class,
-            "complaints",
+    VEHICLE(Vehicle.class,
+            "vehicles",
             "id",
             Integer.class,
             (Integer::parseInt),
@@ -206,35 +182,11 @@ public enum Entities {
                     (
                         id                  INT NOT NULL AUTO_INCREMENT,
                         customer_email      VARCHAR(100) NOT NULL,
-                        status              ENUM('ACTIVE', 'RESOLVED', 'CANCELLED') NOT NULL,
-                        submission_time     DATETIME NOT NULL,
-                        resolution_time     DATETIME,
-                        content             TEXT NOT NULL,
-                        resolution          TEXT,
-                        employee_id         INT,
+                        license_plate       CHAR(8) UNIQUE NOT NULL,
+                        parking_space_id    INT,
                         PRIMARY KEY (id),
                         FOREIGN KEY (customer_email) REFERENCES customers(email),
-                        FOREIGN KEY (employee_id) REFERENCES employees(id)
-                    )"""
-    ),
-    DAILY_STATISTICS(DailyStatistics.class,
-            "daily_statistics",
-            "id",
-            Integer.class,
-            (Integer::parseInt),
-            """
-                    (
-                        id                      INT NOT NULL AUTO_INCREMENT,
-                        parking_lot_id          INT NOT NULL,
-                        created_at              DATETIME NOT NULL,
-                        total_reservations      INT NOT NULL,
-                        total_fulfilled         INT NOT NULL,
-                        total_cancellations     INT NOT NULL,
-                        total_latency           INT NOT NULL,
-                        daily_average_latency   DOUBLE NOT NULL,
-                        daily_median_latency    DOUBLE NOT NULL,
-                        PRIMARY KEY (id),
-                        FOREIGN KEY (parking_lot_id) REFERENCES parking_lots(id)
+                        FOREIGN KEY (parking_space_id) REFERENCES parking_spaces(id)
                     )"""
     );
     
@@ -299,17 +251,13 @@ public enum Entities {
     public static String toString (Entities entity) {
         return switch (entity) {
             case ORGANIZATION -> "Organization";
-            case OFFICE -> "Office";
+            case OFFICE -> "Management";
             case PARKING_LOT -> "Parking Lot";
             case RATES -> "Rates";
             case EMPLOYEE -> "Employee";
             case CUSTOMER -> "Customer";
             case SUBSCRIPTION -> "Subscription";
             case VEHICLE -> "Vehicle";
-            case PARKING_SPACE -> "Parking Space";
-            case RESERVATION -> "Reservation";
-            case COMPLAINT -> "Complaint";
-            case DAILY_STATISTICS -> "Daily Statistics";
             default -> throw new IllegalArgumentException("Invalid entity: " + entity);
         };
     }
@@ -322,18 +270,14 @@ public enum Entities {
         
         String entityFormatted = camelCaseToSnakeCase(entity).trim().toUpperCase().replace(" ", "_").replace("-", "_");
         return switch (entityFormatted) {
-            case "ORGANIZATION" -> ORGANIZATION;
-            case "OFFICE" -> OFFICE;
+            case "ABSTRACT_ORGANIZATION" -> ORGANIZATION;
+            case "MANAGEMENT" -> OFFICE;
             case "PARKING_LOT" -> PARKING_LOT;
             case "RATES" -> RATES;
             case "EMPLOYEE" -> EMPLOYEE;
             case "CUSTOMER" -> CUSTOMER;
             case "SUBSCRIPTION" -> SUBSCRIPTION;
             case "VEHICLE" -> VEHICLE;
-            case "PARKING_SPACE" -> PARKING_SPACE;
-            case "RESERVATION" -> RESERVATION;
-            case "COMPLAINT" -> COMPLAINT;
-            case "DAILY_STATISTICS" -> DAILY_STATISTICS;
             default -> throw new IllegalArgumentException("Invalid entity: " + entity);
         };
     }

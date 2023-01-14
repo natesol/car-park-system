@@ -1,6 +1,7 @@
 package net.cps.server.utils;
 
 import net.cps.common.utils.Entities;
+import org.jetbrains.annotations.NotNull;
 
 public class MySQLQueries {
     public static final String CREATE_DATABASE = "CREATE DATABASE IF NOT EXISTS ";
@@ -17,77 +18,61 @@ public class MySQLQueries {
     public static final String INSERT_INTO = "INSERT INTO ";
     
     
-    public static final String ORGANIZATIONS_TABLE = Entities.ABSTRACT_ORGANIZATION.getTableName() +
-            """
-                    (
-                        id INT NOT NULL AUTO_INCREMENT,
-                        type ENUM('Management', 'Parking Lot', 'Office') NOT NULL,
-                        street_number INT NOT NULL,
-                        street VARCHAR(255) NOT NULL,
-                        city VARCHAR(255) NOT NULL,
-                        state VARCHAR(255) NOT NULL,
-                        PRIMARY KEY (id)
-                    )""";
+    public static final String CREATE_ORGANIZATIONS_TABLE = CREATE_TABLE + Entities.ORGANIZATION.getTableName() + Entities.ORGANIZATION.getTableQuery();
     
-    public static final String MANAGEMENTS_TABLE = Entities.MANAGEMENT.getTableName() +
-            """
-                    (
-                        id INT NOT NULL AUTO_INCREMENT,
-                        organization_id INT NOT NULL,
-                        name VARCHAR(255) NOT NULL,
-                        PRIMARY KEY (id),
-                        FOREIGN KEY (organization_id) REFERENCES organizations(id)
-                    )""";
+    public static final String CREATE_OFFICES_TABLE = CREATE_TABLE + Entities.OFFICE.getTableName() + Entities.OFFICE.getTableQuery();
     
-    public static final String PARKING_LOTS_TABLE = Entities.PARKING_LOT.getTableName() +
-            """
-                    (
-                        id INT NOT NULL AUTO_INCREMENT,
-                        organization_id INT NOT NULL,
-                        name VARCHAR(255) NOT NULL,
-                        num_of_floors INT NOT NULL,
-                        floor_rows INT NOT NULL,
-                        floor_cols INT NOT NULL,
-                        PRIMARY KEY (id),
-                        FOREIGN KEY (organization_id) REFERENCES organizations(id)
-                    )""";
+    public static final String CREATE_PARKING_LOTS_TABLE = CREATE_TABLE + Entities.PARKING_LOT.getTableName() + Entities.PARKING_LOT.getTableQuery();
     
-    public static final String RATES_TABLE = Entities.RATES.getTableName() +
-            """
-                    (
-                              id INT NOT NULL PRIMARY KEY,
-                              hourly_occasional_parking DOUBLE NOT NULL,
-                              hourly_onetime_parking DOUBLE NOT NULL,
-                              regular_subscription_single_vehicle DOUBLE NOT NULL,
-                              regular_subscription_multiple_vehicles DOUBLE NOT NULL,
-                              full_subscription_single_vehicle DOUBLE NOT NULL,
-                              FOREIGN KEY (id) REFERENCES parking_lots(id)
-                    )""";
+    public static final String CREATE_RATES_TABLE = CREATE_TABLE + Entities.RATES.getTableName() + Entities.RATES.getTableQuery();
     
-    public static final String EMPLOYEES_TABLE = Entities.EMPLOYEE.getTableName() +
-            """
-                    (
-                              id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-                              first_name VARCHAR(255) NOT NULL,
-                              last_name VARCHAR(255) NOT NULL,
-                              role VARCHAR(255) NOT NULL,
-                              email VARCHAR(255) NOT NULL,
-                              password_hash VARCHAR(255) NOT NULL,
-                              password_salt VARCHAR(255) NOT NULL,
-                              is_active BOOLEAN NOT NULL,
-                              organization VARCHAR(255)
-                    )""";
+    public static final String CREATE_EMPLOYEES_TABLE = CREATE_TABLE + Entities.EMPLOYEE.getTableName() + Entities.EMPLOYEE.getTableQuery();
     
-    public static final String CUSTOMERS_TABLE = Entities.CUSTOMER.getTableName() +
-            """
-                    (
-                          email VARCHAR(255) NOT NULL PRIMARY KEY,
-                          id VARCHAR(255) NOT NULL,
-                          first_name VARCHAR(255) NOT NULL,
-                          last_name VARCHAR(255) NOT NULL,
-                          password_salt VARCHAR(255) NOT NULL,
-                          password_hash VARCHAR(255) NOT NULL,
-                          is_active BOOLEAN NOT NULL,
-                          balance DOUBLE NOT NULL
-                    )""";
+    public static final String CREATE_CUSTOMERS_TABLE = CREATE_TABLE + Entities.CUSTOMER.getTableName() + Entities.CUSTOMER.getTableQuery();
+    
+    public static final String CREATE_SUBSCRIPTIONS_TABLE = CREATE_TABLE + Entities.SUBSCRIPTION.getTableName() + Entities.SUBSCRIPTION.getTableQuery();
+    
+    public static final String CREATE_VEHICLES_TABLE = CREATE_TABLE + Entities.VEHICLE.getTableName() + Entities.VEHICLE.getTableQuery();
+    
+    public static final String CREATE_RESERVATIONS_TABLE = CREATE_TABLE + Entities.RESERVATION.getTableName() + Entities.RESERVATION.getTableQuery();
+    
+    public static final String CREATE_PARKING_SPACES_TABLE = CREATE_TABLE + Entities.PARKING_SPACE.getTableName() + Entities.PARKING_SPACE.getTableQuery();
+    
+    
+    /* ----- Utility Methods ---------------------------------------- */
+    
+    public static String insertQueryToSelectQuery (@NotNull String insert) {
+        String table = insert.split(" ")[2];
+        StringBuilder select = new StringBuilder("SELECT * FROM " + table + " WHERE ");
+        insert = insert.replace("INSERT INTO " + table + " ", "");
+        String[] parts = insert.split(" VALUES ");
+        String[] fields = parts[0].replace("(", "").replace(")", "").split(", ");
+        String[] valuesList = parts[1].replaceAll("\\), \\(", " OR ").replace("(", "").replace(")", "").split(" OR ");
+        
+        for (String s : valuesList) {
+            String[] values = s.split(", ");
+            select.append("(");
+            for (int j = 0 ; j < fields.length ; j++) {
+                select.append(fields[j]).append(" = ").append(values[j]).append(", ");
+            }
+            select = new StringBuilder(select.substring(0, select.length() - 2));
+            select.append(") OR ");
+        }
+        return select.substring(0, select.length() - 4);
+    }
+    
+    public static String setQueryToSelectQuery (@NotNull String set) {
+        String table = set.split(" ")[1];
+        StringBuilder select = new StringBuilder("SELECT * FROM " + table + " WHERE ");
+        set = set.replace("UPDATE " + table + " SET ", "");
+        String[] parts = set.split(" WHERE ");
+        String[] fields = parts[0].split(", ");
+        String[] conditions = parts[1].split(" AND ");
+        
+        for (String s : conditions) {
+            String[] condition = s.split(" = ");
+            select.append(condition[0]).append(" = ").append(condition[1]).append(" AND ");
+        }
+        return select.substring(0, select.length() - 5);
+    }
 }

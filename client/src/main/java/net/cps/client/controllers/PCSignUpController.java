@@ -16,15 +16,14 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.scene.layout.VBox;
 import net.cps.client.App;
 import net.cps.client.CPSClient;
-import net.cps.client.events.CustomerCreationEvent;
 import net.cps.common.entities.Customer;
-import net.cps.common.utils.RequestType;
+import net.cps.common.messages.RequestMessage;
+import net.cps.common.messages.ResponseMessage;
+import net.cps.common.utils.RequestCallback;
 import net.cps.common.utils.ResponseStatus;
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
+import net.cps.common.utils.RequestType;
 
 
 public class PCSignUpController extends PageController {
@@ -48,67 +47,21 @@ public class PCSignUpController extends PageController {
     public Hyperlink loginLink;
     
     
+    /* ----- Scene Controller Initialization ------------------------ */
+    
     @Override
-    public void initialize (URL url, ResourceBundle resourceBundle) {
-        EventBus.getDefault().register(this);
-    }
+    public void initialize (URL url, ResourceBundle resourceBundle) {}
     
     
-    /* ----- Event Handlers ----------------------------------------- */
+    /* ----- GUI Events Handlers ------------------------------------ */
     
     @FXML
     public void goBackButtonClickHandler (MouseEvent mouseEvent) throws IOException {
-        App.setScene("PCLogin.fxml");
+        App.setPage("PCLogin.fxml");
     }
     
     @FXML
-    public void signUpBtnClickHandler (ActionEvent actionEvent) throws IOException {
-        String firstName = firstNameField.getText();
-        String lastName = lastNameField.getText();
-        String email = emailField.getText();
-        String password = passwordField.getText();
-        String passwordRepeat = passwordRepeatField.getText();
-        Boolean accepted = (Boolean) termsOfServiceCheckBox.isSelected();
-        
-        if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty() || passwordRepeat.isEmpty()) {
-            dialog.setTitleText("Error");
-            dialog.setBodyText("Please fill all the fields");
-            dialog.open();
-            return;
-        }
-        
-        if (!(email.contains("@") && email.contains("."))) {
-            dialog.setTitleText("Error");
-            dialog.setBodyText("Please enter a valid email");
-            dialog.open();
-            return;
-        }
-        
-        if (!password.equals(passwordRepeat)) {
-            dialog.setTitleText("Error");
-            dialog.setBodyText("Passwords don't match");
-            dialog.open();
-            return;
-        }
-        
-        if (!accepted) {
-            dialog.setTitleText("Error");
-            dialog.setBodyText("Please accept the terms of service");
-            dialog.open();
-            return;
-        }
-        
-        Customer customer = new Customer(email, "id", firstName, lastName, password);
-        //CPSClient.sendRequestToServer(RequestType.POST, "customer/sign-up", customer, "create a new customer account");
-    }
-    
-    @FXML
-    public void loginLinkClickHandler (MouseEvent mouseEvent) throws IOException {
-        App.setScene("PCLogin.fxml");
-    }
-    
-    @FXML
-    public void openTermsOfService (MouseEvent mouseEvent) {
+    public void termsOfServiceLinkClickHandler (MouseEvent mouseEvent) {
         dialog.setTitleText("CityPark Terms of Service");
         dialog.setBodyText("Welcome to CityPark's online application service (the \"Service\"). The Service is provided by CityPark and its affiliates (collectively, \"we,\" \"us,\" or \"our\"). These terms of service (these \"Terms\") govern your access to and use of the Service, including any content, functionality, and services offered on or through the Service.\n" +
                 "\n" +
@@ -140,39 +93,88 @@ public class PCSignUpController extends PageController {
         dialog.open();
     }
     
+    @FXML
+    public void signUpBtnClickHandler (ActionEvent actionEvent) throws IOException {
+        String firstName = firstNameField.getText();
+        String lastName = lastNameField.getText();
+        String email = emailField.getText();
+        String password = passwordField.getText();
+        String passwordRepeat = passwordRepeatField.getText();
+        Boolean acceptedTerms = (Boolean) termsOfServiceCheckBox.isSelected();
+        
+        if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty() || passwordRepeat.isEmpty()) {
+            dialog.setTitleText("Error");
+            dialog.setBodyText("Please fill all the fields on the form.");
+            dialog.open();
+            return;
+        }
+        if (!(email.contains("@") && email.contains("."))) {
+            dialog.setTitleText("Error");
+            dialog.setBodyText("Please enter a valid email.");
+            dialog.open();
+            return;
+        }
+        if (!password.equals(passwordRepeat)) {
+            dialog.setTitleText("Error");
+            dialog.setBodyText("The passwords you entered do not match.");
+            dialog.open();
+            return;
+        }
+        if (!acceptedTerms) {
+            dialog.setTitleText("Error");
+            dialog.setBodyText("Please read and accept the terms of service to continue.");
+            dialog.open();
+            return;
+        }
+        
+        Customer customer = new Customer(email, firstName, lastName, password);
+        CPSClient.sendRequestToServer(RequestType.AUTH, "register/email=" + email + "&password=" + password, "create a new customer account", customer, this::onCustomerCreation);
+    }
+    
+    @FXML
+    public void loginLinkClickHandler (MouseEvent mouseEvent) throws IOException {
+        App.setPage("PCLogin.fxml");
+    }
     
     
-    /* ----- Eventbus Listeners ------------------------------------- */
+    /* ----- EventBus Listeners ------------------------------------- */
     
-    @Subscribe
-    public void onCustomerCreation (CustomerCreationEvent event) {
+    @RequestCallback.Method
+    public void onCustomerCreation (RequestMessage request, ResponseMessage response) {
+        ResponseStatus status = response.getStatus();
+        
         Platform.runLater(() -> {
-            if (event.getResponse().getStatus() == ResponseStatus.OK) {
-                dialog.setTitleText("Success");
-                dialog.setBodyText("Your account has been created successfully");
-                
+            if (status == ResponseStatus.FINISHED) {
+                // Create the dialog buttons.
                 MFXButton confirmBtn = new MFXButton("Confirm");
                 confirmBtn.getStyleClass().add("button-primary");
                 confirmBtn.setOnAction(actionEvent -> {
                     try {
-                        App.setScene("PCLogin.fxml");
+                        App.setPage("PCLogin.fxml");
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 });
-                MFXButton cancelBtn = new MFXButton("Cancel");
-                cancelBtn.getStyleClass().add("button-secondary");
-                cancelBtn.setOnAction(actionEvent -> dialog.close());
+                MFXButton closeBtn = new MFXButton("Close");
+                closeBtn.getStyleClass().add("button-secondary");
+                closeBtn.setOnAction(actionEvent -> dialog.close());
                 
-                dialog.setActionButtons(confirmBtn, cancelBtn);
+                dialog.setTitleText("Success");
+                dialog.setBodyText("Your account has been created successfully");
+                dialog.setActionButtons(closeBtn, confirmBtn);
                 dialog.open();
             } else {
-                dialog.setTitleText("Error");
-                dialog.setBodyText(event.getResponse().getBody());
+                dialog.setTitleText("Something went wrong");
+                dialog.setBodyText(response.getMessage());
                 dialog.open();
             }
         });
     }
+    
+    
+    /* ----- Requests Callbacks (on server response) ---------------- */
+    
+    // ...
     
     
     /* ----- Utility Methods ---------------------------------------- */
