@@ -1,6 +1,7 @@
 package net.cps.server.utils;
 
 import net.cps.common.utils.Entities;
+import org.jetbrains.annotations.NotNull;
 
 public class MySQLQueries {
     public static final String CREATE_DATABASE = "CREATE DATABASE IF NOT EXISTS ";
@@ -40,7 +41,7 @@ public class MySQLQueries {
     
     /* ----- Utility Methods ---------------------------------------- */
     
-    public static String insertQueryToSelectQuery (String insert) {
+    public static String insertQueryToSelectQuery (@NotNull String insert) {
         String table = insert.split(" ")[2];
         StringBuilder select = new StringBuilder("SELECT * FROM " + table + " WHERE ");
         insert = insert.replace("INSERT INTO " + table + " ", "");
@@ -60,7 +61,7 @@ public class MySQLQueries {
         return select.substring(0, select.length() - 4);
     }
     
-    public static String setQueryToSelectQuery (String set) {
+    public static String setQueryToSelectQuery (@NotNull String set) {
         String table = set.split(" ")[1];
         StringBuilder select = new StringBuilder("SELECT * FROM " + table + " WHERE ");
         set = set.replace("UPDATE " + table + " SET ", "");

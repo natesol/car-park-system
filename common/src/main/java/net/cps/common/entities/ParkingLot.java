@@ -5,14 +5,15 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "parking_lots")
-@PrimaryKeyJoinColumn(name = "organization_id")
+@PrimaryKeyJoinColumn(name = "id")
 public class ParkingLot extends Organization implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", updatable = false, nullable = false, columnDefinition = "INT NOT NULL AUTO_INCREMENT")
+    @Column(name = "id", updatable = false, nullable = false)
     private Integer id;
     @NotNull
     @Column(name = "name", columnDefinition = "VARCHAR(55) NOT NULL")
@@ -33,22 +34,22 @@ public class ParkingLot extends Organization implements Serializable {
     @Column(name = "num_of_floors", columnDefinition = "TINYINT NOT NULL")
     private Integer numOfFloors;
     @NotNull
-    @Column(name = "floor_rows", columnDefinition = "TINYINT NOT NULL")
-    private Integer floorRows;
+    @Column(name = "num_of_rows", columnDefinition = "TINYINT NOT NULL")
+    private Integer numOfRows;
     @NotNull
-    @Column(name = "floor_cols", columnDefinition = "TINYINT NOT NULL")
-    private Integer floorCols;
+    @Column(name = "num_of_cols", columnDefinition = "TINYINT NOT NULL")
+    private Integer numOfCols;
     @NotNull
-    @OneToOne(mappedBy = "parkingLot", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "parkingLot", cascade = CascadeType.ALL)
     private Rates rates;
     @NotNull
     @OneToMany(mappedBy = "parkingLot", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<ParkingSpace> parkingSpace;
+    private List<ParkingSpace> parkingSpaces;
     @NotNull
     @OneToMany(mappedBy = "parkingLot", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Reservation> reservations;
     
-    public static final OrganizationType TYPE = OrganizationType.PARKING_LOT;
+    public static final OrganizationType DEFAULT_TYPE = OrganizationType.PARKING_LOT;
     public static final String DEFAULT_NAME = "Parking Lot Name";
     public static final Integer DEFAULT_FLOOR_NUM = 3;
     public static final Integer DEFAULT_FLOOR_ROWS = 3;
@@ -58,53 +59,59 @@ public class ParkingLot extends Organization implements Serializable {
     /* ----- Constructors ------------------------------------------- */
     
     public ParkingLot () {
-        super(TYPE);
+        super(DEFAULT_TYPE);
         this.name = DEFAULT_NAME;
         this.streetNumber = Organization.DEFAULT_STREET_NUMBER;
         this.streetName = Organization.DEFAULT_STREET;
         this.cityName = Organization.DEFAULT_CITY;
         this.countrySymbol = Organization.DEFAULT_STATE;
         this.numOfFloors = DEFAULT_FLOOR_NUM;
-        this.floorRows = DEFAULT_FLOOR_ROWS;
-        this.floorCols = DEFAULT_FLOOR_COLS;
+        this.numOfRows = DEFAULT_FLOOR_ROWS;
+        this.numOfCols = DEFAULT_FLOOR_COLS;
         this.rates = new Rates(this);
+        this.parkingSpaces = createParkingSpaces();
+        this.reservations = new ArrayList<>();
     }
     
-    public ParkingLot (@NotNull String name, @NotNull String streetName, @NotNull Integer streetNumber, @NotNull String cityName, @NotNull String countrySymbol, @NotNull Integer floorCols) {
-        super(TYPE);
+    public ParkingLot (@NotNull String name, @NotNull String streetName, @NotNull Integer streetNumber, @NotNull String cityName, @NotNull String countrySymbol, @NotNull Integer numOfCols) {
+        super(DEFAULT_TYPE);
         this.name = name;
         this.streetName = streetName;
         this.streetNumber = streetNumber;
         this.cityName = cityName;
         this.countrySymbol = countrySymbol;
         this.numOfFloors = DEFAULT_FLOOR_NUM;
-        this.floorRows = DEFAULT_FLOOR_ROWS;
-        this.floorCols = floorCols;
+        this.numOfRows = DEFAULT_FLOOR_ROWS;
+        this.numOfCols = numOfCols;
         this.rates = new Rates(this);
+        this.parkingSpaces = createParkingSpaces();
+        this.reservations = new ArrayList<>();
     }
     
-    public ParkingLot (@NotNull String name, @NotNull String streetName, @NotNull Integer streetNumber, @NotNull String cityName, @NotNull String countrySymbol, @NotNull Integer numOfFloors, @NotNull Integer floorRows, @NotNull Integer floorCols) {
-        super(TYPE);
+    public ParkingLot (@NotNull String name, @NotNull String streetName, @NotNull Integer streetNumber, @NotNull String cityName, @NotNull String countrySymbol, @NotNull Integer numOfFloors, @NotNull Integer numOfRows, @NotNull Integer numOfCols) {
+        super(DEFAULT_TYPE);
         this.name = name;
         this.streetName = streetName;
         this.streetNumber = streetNumber;
         this.cityName = cityName;
         this.countrySymbol = countrySymbol;
         this.numOfFloors = numOfFloors;
-        this.floorRows = floorRows;
-        this.floorCols = floorCols;
+        this.numOfRows = numOfRows;
+        this.numOfCols = numOfCols;
         this.rates = new Rates(this);
+        this.parkingSpaces = createParkingSpaces();
+        this.reservations = new ArrayList<>();
     }
     
     
     /* ----- Getters and Setters ------------------------------------ */
     
     public Integer getId () {
-        return id;
+        return super.getOrganizationId();
     }
     
     public void setId (Integer id) {
-        this.id = id;
+        super.setOrganizationId(id);
     }
     
     public @NotNull String getName () {
@@ -155,24 +162,24 @@ public class ParkingLot extends Organization implements Serializable {
         this.numOfFloors = numOfFloors;
     }
     
-    public @NotNull Integer getFloorRows () {
-        return floorRows;
+    public @NotNull Integer getNumOfRows () {
+        return numOfRows;
     }
     
-    public void setFloorRows (@NotNull Integer floorRows) {
-        this.floorRows = floorRows;
+    public void setNumOfRows (@NotNull Integer numOfRows) {
+        this.numOfRows = numOfRows;
     }
     
-    public @NotNull Integer getFloorCols () {
-        return this.floorCols;
+    public @NotNull Integer getNumOfCols () {
+        return this.numOfCols;
     }
     
-    public void setFloorCols (@NotNull Integer floorCols) {
-        this.floorCols = floorCols;
+    public void setNumOfCols (@NotNull Integer numOfCols) {
+        this.numOfCols = numOfCols;
     }
     
     public Integer getCapacity () {
-        return this.floorCols * floorRows * numOfFloors;
+        return this.numOfCols * numOfRows * numOfFloors;
     }
     
     public @NotNull Rates getRates () {
@@ -183,19 +190,19 @@ public class ParkingLot extends Organization implements Serializable {
         this.rates = rates;
     }
     
-    public List<ParkingSpace> getParkingSpace () {
-        return parkingSpace;
+    public @NotNull ArrayList<ParkingSpace> getParkingSpaces () {
+        return (ArrayList<ParkingSpace>) parkingSpaces;
     }
     
-    public void setParkingSpace (List<ParkingSpace> parkingSpace) {
-        this.parkingSpace = parkingSpace;
+    public void setParkingSpaces (@NotNull ArrayList<ParkingSpace> parkingSpaces) {
+        this.parkingSpaces = parkingSpaces;
     }
     
-    public List<Reservation> getReservations () {
-        return reservations;
+    public @NotNull ArrayList<Reservation> getReservations () {
+        return (ArrayList<Reservation>) reservations;
     }
     
-    public void setReservations (List<Reservation> reservations) {
+    public void setReservations (@NotNull ArrayList<Reservation> reservations) {
         this.reservations = reservations;
     }
     
@@ -220,15 +227,28 @@ public class ParkingLot extends Organization implements Serializable {
     
     /* ----- Utility Methods ---------------------------------------- */
     
+    public ArrayList<ParkingSpace> createParkingSpaces () {
+        ArrayList<ParkingSpace> parkingSpaces = new ArrayList<>();
+        for (int i = 0; i < this.numOfFloors; i++) {
+            for (int j = 0 ; j < this.numOfRows ; j++) {
+                for (int k = 0 ; k < this.numOfCols ; k++) {
+                    parkingSpaces.add(new ParkingSpace(this, i, j, k));
+                }
+            }
+        }
+        return parkingSpaces;
+    }
+    
+    
     @Override
     public String toString () {
         return "ParkingLot {" +
-                "id: " + id +
+                "id: " + getId() +
                 ", name: '" + name + "'" +
                 ", address: '" + getAddress() + "'" +
                 ", numOfFloors: " + numOfFloors +
-                ", floorRows: " + floorRows +
-                ", floorCols: " + floorCols +
+                ", floorRows: " + numOfRows +
+                ", floorCols: " + numOfCols +
                 ", rates: " + rates +
                 "}";
     }

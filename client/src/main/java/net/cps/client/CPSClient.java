@@ -1,6 +1,7 @@
 package net.cps.client;
 
 import net.cps.client.events.UserAuthEvent;
+import net.cps.client.events.UserLogoutEvent;
 import net.cps.client.ocsf.AbstractClient;
 import net.cps.common.messages.RequestMessage;
 import net.cps.common.messages.ResponseMessage;
@@ -138,7 +139,8 @@ public class CPSClient extends AbstractClient {
                 System.out.println("[CLIENT] unhandled response for DELETE request: " + response);
             }
             case AUTH -> {
-                EventBus.getDefault().post(new UserAuthEvent(response));
+                if (request.getHeader().startsWith("login")) EventBus.getDefault().post(new UserAuthEvent(response));
+                if (request.getHeader().startsWith("logout")) EventBus.getDefault().post(new UserLogoutEvent(response));
             }
             case CUSTOM -> {
                 System.out.println("[CLIENT] unhandled response for CUSTOM request: " + response);

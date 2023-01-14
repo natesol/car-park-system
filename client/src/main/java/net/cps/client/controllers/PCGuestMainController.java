@@ -52,27 +52,70 @@ public class PCGuestMainController extends PageController {
     /* ----- Event Handlers Methods ----------------------- */
     
     public void menuBtnHomeClickHandler (MouseEvent mouseEvent) throws IOException {
-        setSubPage("PCGuestMainHome.fxml");
-        activateMenuBtn(menuBtnHome);
+        if (menuBtnHome.getStyleClass().contains("active")) return;
+        
+        Platform.runLater(() -> {
+            try {
+                setSubPage("PCGuestMainHome.fxml");
+            }
+            catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            activateMenuBtn(menuBtnHome);
+        });
     }
     
     public void menuBtnReservationsClickHandler (MouseEvent mouseEvent) throws IOException {
-        setSubPage("PCGuestMainReservations.fxml");
-        activateMenuBtn(menuBtnReservations);
+        if (menuBtnReservations.getStyleClass().contains("active")) return;
+        
+        Platform.runLater(() -> {
+            try {
+                setSubPage("PCGuestMainReservations.fxml");
+            }
+            catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            activateMenuBtn(menuBtnReservations);
+        });
     }
     
     public void menuBtnComplaintsClickHandler (MouseEvent mouseEvent) throws IOException {
-        setSubPage("PCGuestMainComplaints.fxml");
-        activateMenuBtn(menuBtnComplaints);
+        if (menuBtnComplaints.getStyleClass().contains("active")) return;
+        
+        Platform.runLater(() -> {
+            try {
+                setSubPage("PCGuestMainComplaints.fxml");
+            }
+            catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            activateMenuBtn(menuBtnComplaints);
+        });
     }
     
     public void menuBtnProfileClickHandler (MouseEvent mouseEvent) throws IOException {
-        setSubPage("PCGuestMainProfile.fxml");
-        activateMenuBtn(menuBtnProfile);
+        if (menuBtnProfile.getStyleClass().contains("active")) return;
+        
+        Platform.runLater(() -> {
+            try {
+                setSubPage("PCGuestMainProfile.fxml");
+            }
+            catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            activateMenuBtn(menuBtnProfile);
+        });
     }
     
     public void menuBtnSignUpClickHandler (MouseEvent mouseEvent) throws IOException {
-        App.setPage("PCSignUp.fxml");
+        Platform.runLater(() -> {
+            try {
+                App.setPage("PCSignUp.fxml");
+            }
+            catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
     
     

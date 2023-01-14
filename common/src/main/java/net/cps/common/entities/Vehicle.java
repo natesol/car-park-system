@@ -3,55 +3,86 @@ package net.cps.common.entities;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 
 @Entity
 @Table(name = "vehicles")
-public class Vehicle {
+public class Vehicle implements Serializable {
     @Id
-    @NotNull
-    @Column(name = "number", columnDefinition = "CHAR(8) NOT NULL AUTO_INCREMENT")
-    private String number;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Integer id;
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "customer_id", referencedColumnName = "id")
+    @JoinColumn(name = "customer_email", referencedColumnName = "email")
     private Customer customer;
+    @NotNull
+    @Column(name = "license_plate", columnDefinition = "CHAR(8) NOT NULL UNIQUE")
+    private String licensePlate;
+    @ManyToMany
+    private List<Subscription> subscriptions;
     @OneToMany(mappedBy = "vehicle")
     private List<Reservation> reservations;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "parking_space_id", unique = true)
+    @JoinColumn(name = "parking_space_id", referencedColumnName = "id")
     private ParkingSpace parkingSpace;
     
-    public Vehicle (@NotNull Long vehicleNumber, Customer customer, Reservation reservation) {
-        this.number = String.valueOf(vehicleNumber);
+    
+    /* ----- Constructors ------------------------------------------- */
+    
+    public Vehicle () {}
+    
+    public Vehicle (@NotNull String licensePlate, @NotNull Customer customer) {
+        this.licensePlate = licensePlate;
         this.customer = customer;
-        //this.reservations.add(reservation);
+        this.subscriptions = null;
+        this.reservations = null;
+        this.parkingSpace = null;
     }
     
-    public Vehicle (@NotNull Long vehicleNumber, Customer customer) {
-        this.number = String.valueOf(vehicleNumber);
+    public Vehicle (@NotNull String licensePlate, @NotNull Customer customer, List<Subscription> subscriptions, List<Reservation> reservations, ParkingSpace parkingSpace) {
+        this.licensePlate = licensePlate;
         this.customer = customer;
+        this.subscriptions = subscriptions;
+        this.reservations = reservations;
+        this.parkingSpace = parkingSpace;
     }
     
-    public Vehicle () {
     
+    /* ----- Getters and Setters ------------------------------------ */
+    
+    public Integer getId () {
+        return id;
     }
     
-    public String getNumber () {
-        return number;
+    public void setId (Integer id) {
+        this.id = id;
     }
     
-    public void setNumber (String number) {
-        this.number = number;
+    public @NotNull String getLicensePlate () {
+        return licensePlate;
     }
     
-    public Customer getCustomer () {
+    public void setLicensePlate (@NotNull String licensePlate) {
+        this.licensePlate = licensePlate;
+    }
+    
+    public @NotNull Customer getCustomer () {
         return customer;
     }
     
-    public void setCustomer (Customer customer) {
+    public void setCustomer (@NotNull Customer customer) {
         this.customer = customer;
+    }
+
+    public List<Subscription> getSubscriptions () {
+        return subscriptions;
+    }
+    
+    public void setSubscriptions (List<Subscription> subscriptions) {
+        this.subscriptions = subscriptions;
     }
     
     public List<Reservation> getReservations () {
@@ -69,38 +100,5 @@ public class Vehicle {
     public void setParkingSpace (ParkingSpace parkingSpace) {
         this.parkingSpace = parkingSpace;
     }
-    //// In Customer class:
-    //@OneToMany(cascade=ALL, mappedBy="customer")
-    //public Set<Order> getOrders() { return orders; }
-    //// In Order class:
-    //@ManyToOne
-    //@JoinColumn(name="CUST_ID", nullable=false)
-    //public Customer getCustomer() { return customer; }
-    
-    //public Long getNumber () {
-    //    return number;
-    //}
-    //
-    //public Customer getCustomer () {
-    //    return customer;
-    //}
-    //
-    ////public List<Reservation> getReservations() {
-    ////    return reservations;
-    ////}
-    //
-    //public void setNumber (Long number) {
-    //    this.number = number;
-    //}
-    //
-    //public void setCustomer (Customer customer) {
-    //    this.customer = customer;
-    //}
-    
-    //public void setReservations(List<Reservation> reservations) {
-    //    this.reservations = reservations;
-    //}
-    //public void addReservation (Reservation reservation){
-    //    reservations.add(reservation);
-    //}
+   
 }

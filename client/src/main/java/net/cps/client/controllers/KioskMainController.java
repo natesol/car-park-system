@@ -1,6 +1,7 @@
 package net.cps.client.controllers;
 
 import io.github.palexdev.materialfx.controls.MFXButton;
+import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,14 +12,17 @@ import javafx.scene.text.Text;
 import net.cps.client.App;
 import net.cps.client.utils.ResourcesLoader;
 import net.cps.common.entities.ParkingLot;
-import org.greenrobot.eventbus.EventBus;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+
 public class KioskMainController extends PageController implements Initializable {
+
+    private ParkingLot parkingLot;
+    
     @FXML
     public VBox kioskMenu;
     @FXML
@@ -31,16 +35,44 @@ public class KioskMainController extends PageController implements Initializable
     public MFXButton bookNowBtn;
     @FXML
     public VBox subPageWrapper;
-    public Text parkingLotText;
     
+    /* Home Sub Page */
+    @FXML
+    public Text parkingLotName;
+    
+    /* Subscription Sub Page */
+    @FXML
+    public MFXButton enterSubscriptionBtn;
+    @FXML
+    public MFXTextField vehicleNumber;
+    @FXML
+    public MFXTextField subscriptionNumber;
+    
+    /* Reservation Sub Page */
+    @FXML
+    public MFXButton enterReservationBtn;
+    
+    /* Book Now Sub Page */
+    @FXML
+    public MFXTextField email;
+    @FXML
+    public MFXTextField departureHour;
+    @FXML
+    public MFXTextField departureMinute;
+    
+    
+    
+    
+    /* ----- Scene Controller Initialization ------------------------ */
     
     @Override
     public void initialize (URL url, ResourceBundle resourceBundle) {
-        //EventBus.getDefault().register(this);
+        parkingLot = (ParkingLot) App.getEntity();
+        
         Platform.runLater(() -> {
             try {
                 setSubPage("KioskMainHome.fxml");
-                parkingLotText.setText(((ParkingLot) App.entity).getName());
+                parkingLotName.setText(parkingLot.getName());
             }
             catch (IOException e) {
                 e.printStackTrace();
@@ -49,7 +81,75 @@ public class KioskMainController extends PageController implements Initializable
     }
     
     
-    // ----- Action Handlers Methods ----------------------
+    /* ----- GUI Events Handlers ------------------------------------ */
+    
+    @FXML
+    public void homeBtnClickHandler (ActionEvent actionEvent) {
+        if (homeBtn.getStyleClass().contains("active")) return;
+        
+        Platform.runLater(() -> {
+            try {
+                activateMenuBtn(homeBtn);
+                setSubPage("KioskMainHome.fxml");
+                parkingLotName.setText(parkingLot.getName());
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+    
+    @FXML
+    public void subscriptionBtnClickHandler (ActionEvent actionEvent) {
+        if (subscriptionBtn.getStyleClass().contains("active")) return;
+        
+        try {
+            setSubPage("KioskMainSubscription.fxml");
+            activateMenuBtn(subscriptionBtn);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    @FXML
+    public void reservationBtnClickHandler (ActionEvent actionEvent) {
+        if (reservationBtn.getStyleClass().contains("active")) return;
+        
+        try {
+            setSubPage("KioskMainReservation.fxml");
+            activateMenuBtn(reservationBtn);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    @FXML
+    public void bookNowBtnClickHandler (ActionEvent actionEvent) {
+        if (bookNowBtn.getStyleClass().contains("active")) return;
+        
+        try {
+            setSubPage("KioskMainBookNow.fxml");
+            activateMenuBtn(bookNowBtn);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    
+    /* ----- EventBus Listeners ------------------------------------- */
+    
+    // ...
+    
+    
+    /* ----- Requests Callbacks (on server response) ---------------- */
+    
+    // ...
+    
+    
+    /* ----- Utility Methods ---------------------------------------- */
     
     public void setSubPage (String fxml) throws IOException {
         Platform.runLater(() -> {
@@ -75,52 +175,5 @@ public class KioskMainController extends PageController implements Initializable
             kioskMenu.lookupAll(".kiosk-menu-button.active").forEach(node -> node.getStyleClass().remove("active"));
             btn.getStyleClass().add("active");
         });
-    }
-    
-    @FXML
-    public void homeBtnClickHandler (ActionEvent actionEvent) {
-        Platform.runLater(() -> {
-            try {
-                activateMenuBtn(homeBtn);
-                setSubPage("KioskMainHome.fxml");
-                parkingLotText.setText(((ParkingLot) App.entity).getName());
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-    }
-    
-    @FXML
-    public void subscriptionBtnClickHandler (ActionEvent actionEvent) {
-        try {
-            setSubPage("KioskMainSubscription.fxml");
-            activateMenuBtn(subscriptionBtn);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    
-    @FXML
-    public void reservationBtnClickHandler (ActionEvent actionEvent) {
-        try {
-            setSubPage("KioskMainReservation.fxml");
-            activateMenuBtn(reservationBtn);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    
-    @FXML
-    public void bookNowBtnClickHandler (ActionEvent actionEvent) {
-        try {
-            setSubPage("KioskMainBookNow.fxml");
-            activateMenuBtn(bookNowBtn);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

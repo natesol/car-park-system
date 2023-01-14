@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
 <?import java.lang.String?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
@@ -18,17 +20,41 @@
         <String fx:value="sub-page-body" />
         <String fx:value="color-scheme-light" />
     </styleClass>
-    <VBox alignment="TOP_CENTER" maxWidth="1024.0" minHeight="400.0" minWidth="600.0" prefHeight="600" prefWidth="1024.0">
-
-        <Text fx:id="subPageTitle" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sub-page-title" text="Kiosk Reservation">
-        </Text>
-        <VBox maxWidth="600.0">
+    <VBox alignment="TOP_CENTER" maxWidth="1024.0" minHeight="400.0" minWidth="600.0" prefHeight="600" prefWidth="1024.0" styleClass="sheet">
+        <HBox>
+            <!--            <TextFlow>-->
+            <!--                <HBox.margin>-->
+            <!--                    <Insets right="10.0"/>-->
+            <!--                </HBox.margin>-->
+            <!--                <FontAwesomeIconView glyphName="HOME" styleClass="sub-page-title" />-->
+            <!--            </TextFlow>-->
+            <TextFlow>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sub-page-title" text="Entrance Via Reservation">
+                </Text>
+            </TextFlow>
+        </HBox>
+        <VBox>
             <VBox.margin>
-                <Insets top="30.0" />
+                <Insets top="20.0" />
             </VBox.margin>
             <TextFlow>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="If you already booked a reservation in advanced, you can enter your reservation details and enter the parking lot." />
+                <VBox.margin>
+                    <Insets bottom="50.0" />
+                </VBox.margin>
             </TextFlow>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="You can choose an action from the menu on the left - and continue from there." />
+            <VBox styleClass="form">
+                <VBox>
+                    <VBox.margin>
+                        <Insets bottom="20.0" />
+                    </VBox.margin>
+                    <TextFlow>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="Vehicle Number" />
+                    </TextFlow>
+                    <MFXTextField fx:id="vehicleNumber" floatMode="DISABLED" floatingText="Vehicle Number" />
+                </VBox>
+                <MFXButton fx:id="enterReservationBtn" styleClass="button-primary" text="Enter Parking Lot" />
+            </VBox>
         </VBox>
     </VBox>
 </HBox>

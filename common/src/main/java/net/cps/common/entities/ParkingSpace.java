@@ -16,17 +16,19 @@ public class ParkingSpace implements Serializable {
     private Integer id;
     @NotNull
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "parking_lot_id", referencedColumnName = "id")
     private ParkingLot parkingLot;
     @NotNull
-    @Column(name = "floor_num")
-    private Integer floorNum;
+    @Column(name = "floor")
+    private Integer floor;
     @NotNull
-    @Column(name = "floor_row")
-    private Integer floorRow;
+    @Column(name = "row_num")
+    private Integer row;
     @NotNull
-    @Column(name = "floor_col")
-    private Integer floorCol;
+    @Column(name = "col_num")
+    private Integer col;
     @NotNull
+    @Enumerated(EnumType.STRING)
     @Column(name = "state")
     private ParkingSpaceState state;
     @OneToOne(mappedBy = "parkingSpace", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -34,13 +36,53 @@ public class ParkingSpace implements Serializable {
     @OneToOne(mappedBy = "parkingSpace", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Reservation reservation;
     
-    public ParkingSpace (int i, int j, int k, @NotNull ParkingLot parkingLot) {
-        this.floorNum = i;
-        this.floorRow = j;
-        this.floorCol = k;
+    
+    /* ----- Constructors ------------------------------------------- */
+    
+    public ParkingSpace () {}
+    
+    public ParkingSpace (@NotNull ParkingLot parkingLot, @NotNull Integer floor, @NotNull Integer row, @NotNull Integer col) {
         this.parkingLot = parkingLot;
+        this.floor = floor;
+        this.row = row;
+        this.col = col;
         this.state = ParkingSpaceState.AVAILABLE;
+        this.vehicle = null;
+        this.reservation = null;
     }
+    
+    public ParkingSpace (@NotNull ParkingLot parkingLot, @NotNull Integer floor, @NotNull Integer row, @NotNull Integer col, @NotNull ParkingSpaceState state) {
+        this.parkingLot = parkingLot;
+        this.floor = floor;
+        this.row = row;
+        this.col = col;
+        this.state = state;
+        this.vehicle = null;
+        this.reservation = null;
+    }
+    
+    public ParkingSpace (@NotNull ParkingLot parkingLot, @NotNull Integer floor, @NotNull Integer row, @NotNull Integer col, @NotNull Vehicle vehicle) {
+        this.parkingLot = parkingLot;
+        this.floor = floor;
+        this.row = row;
+        this.col = col;
+        this.state = ParkingSpaceState.OCCUPIED;
+        this.vehicle = vehicle;
+        this.reservation = null;
+    }
+    
+    public ParkingSpace (@NotNull ParkingLot parkingLot, @NotNull Integer floor, @NotNull Integer row, @NotNull Integer col, @NotNull Reservation reservation) {
+        this.parkingLot = parkingLot;
+        this.floor = floor;
+        this.row = row;
+        this.col = col;
+        this.state = ParkingSpaceState.RESERVED;
+        this.vehicle = null;
+        this.reservation = reservation;
+    }
+    
+    
+    /* ----- Getters & Setters -------------------------------------- */
     
     public Integer getId () {
         return id;
@@ -50,56 +92,45 @@ public class ParkingSpace implements Serializable {
         this.id = id;
     }
     
-    public ParkingLot getParkingLot () {
+    public @NotNull ParkingLot getParkingLot () {
         return parkingLot;
     }
     
-    public void setParkingLot (ParkingLot parkingLot) {
+    public void setParkingLot (@NotNull ParkingLot parkingLot) {
         this.parkingLot = parkingLot;
     }
     
-    public Integer getFloorNum () {
-        return floorNum;
+    public @NotNull Integer getFloor () {
+        return floor;
     }
     
-    public void setFloorNum (Integer floorNum) {
-        this.floorNum = floorNum;
+    public void setFloor (@NotNull Integer floor) {
+        this.floor = floor;
     }
     
-    public Integer getFloorRow () {
-        return floorRow;
+    public @NotNull Integer getRow () {
+        return row;
     }
     
-    public void setFloorRow (Integer floorRow) {
-        this.floorRow = floorRow;
+    public void setRow (@NotNull Integer row) {
+        this.row = row;
     }
     
-    public Integer getFloorCol () {
-        return floorCol;
+    public @NotNull Integer getCol () {
+        return col;
     }
     
-    public void setFloorCol (Integer floorCol) {
-        this.floorCol = floorCol;
+    public void setCol (@NotNull Integer col) {
+        this.col = col;
     }
     
-
+    public @NotNull ParkingSpaceState getState () {
+        return state;
+    }
     
-    public Reservation getReservation () {return reservation;}
-    
-    public void setReservation (Reservation reservation) {this.reservation = reservation;}
-    
-    public ParkingSpace(ParkingSpaceState state) {
+    public void setState (@NotNull ParkingSpaceState state) {
         this.state = state;
-        this.vehicle = null;
-        parkingLot = null;
     }
-    public ParkingSpace(Vehicle vehicle) {
-        this.state = ParkingSpaceState.OCCUPIED;
-        this.vehicle = vehicle;
-        parkingLot = null;
-    }
-    
-    public ParkingSpace () {parkingLot = null;}
     
     public Vehicle getVehicle () {
         return vehicle;
@@ -109,23 +140,40 @@ public class ParkingSpace implements Serializable {
         this.vehicle = vehicle;
     }
     
-    public ParkingSpaceState getState () {
-        return state;
-    }
-    public void setState (ParkingSpaceState state) {
-        this.state = state;
-    }
+    public Reservation getReservation () {return reservation;}
+    
+    public void setReservation (Reservation reservation) {this.reservation = reservation;}
     
     public Calendar getArrivalTime () {
         return reservation.getArrivalTime();
     }
+    
     public void setArrivalTime (Calendar arrivalTime) {
         reservation.setArrivalTime(arrivalTime);
     }
+    
     public Calendar getDepartureTime () {
         return reservation.getDepartureTime();
     }
+    
     public void setDepartureTime (Calendar departureTime) {
         reservation.setDepartureTime(departureTime);
+    }
+    
+    
+    /* ----- Utility Methods ---------------------------------------- */
+    
+    @Override
+    public String toString () {
+        return "ParkingSpace {" +
+                "id: " + id +
+                ", parkingLot: " + parkingLot +
+                ", floor: " + floor +
+                ", row: " + row +
+                ", col: " + col +
+                ", state: " + state +
+                ", vehicle: " + vehicle +
+                ", reservation: " + reservation +
+                '}';
     }
 }

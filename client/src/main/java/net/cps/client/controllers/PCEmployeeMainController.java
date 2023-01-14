@@ -12,6 +12,7 @@ import net.cps.client.App;
 import net.cps.client.events.EmployeeLoginEvent;
 import net.cps.client.utils.ResourcesLoader;
 import net.cps.common.entities.Employee;
+import net.cps.common.utils.EmployeeRole;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.jetbrains.annotations.NotNull;
@@ -25,9 +26,7 @@ public class PCEmployeeMainController extends PageController {
     private Employee employee;
     
     @FXML
-    public Text customerFirstName;
-    @FXML
-    public Text customerLastName;
+    public Text employeeName;
     @FXML
     public MFXButton menuBtnHome;
     @FXML
@@ -39,7 +38,7 @@ public class PCEmployeeMainController extends PageController {
     @FXML
     public MFXButton menuBtnProfile;
     @FXML
-    public MFXButton menuBtnSignOut;
+    public MFXButton menuBtnLogout;
     @FXML
     public Pane subPageWrapper;
     @FXML
@@ -59,11 +58,9 @@ public class PCEmployeeMainController extends PageController {
             catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            
             activateMenuBtn(menuBtnHome);
         });
     }
-    
     
     
     /* ----- Event Handlers ----------------------------------------- */
@@ -71,23 +68,27 @@ public class PCEmployeeMainController extends PageController {
     @Subscribe
     public void onEmployeeLogin (EmployeeLoginEvent event) throws IOException {
         employee = event.getEmployee();
-        String role = employee.getRole().toString();
+        EmployeeRole role = employee.getRole();
         
         Platform.runLater(() -> {
-            customerFirstName.setText(employee.getFirstName());
-            customerLastName.setText(employee.getLastName() + " (" + role + ")");
+            employeeName.setText(employee.getFirstName() + " " + employee.getLastName() + " (" + role + ")");
     
             switch (role) {
-                case "ADMIN" -> {
-                    menuBtnSubscriptions.setVisible(false);
-                    menuBtnReservations.setVisible(false);
-                    menuBtnComplaints.setVisible(false);
+                case NETWORK_MANAGER -> {
+                    //menuBtnSubscriptions.setVisible(false);
+                    //menuBtnReservations.setVisible(false);
+                    //menuBtnComplaints.setVisible(false);
                 }
-                case "MANAGER" -> {
-                    menuBtnSubscriptions.setVisible(false);
-                    menuBtnReservations.setVisible(false);
+                case CUSTOMER_SERVICE_EMPLOYEE -> {
+                    //menuBtnSubscriptions.setVisible(false);
+                    //menuBtnReservations.setVisible(false);
                 }
-                case "EMPLOYEE" -> menuBtnSubscriptions.setVisible(false);
+                case PARKING_LOT_MANAGER -> {
+                    //menuBtnSubscriptions.setVisible(false);
+                }
+                case PARKING_LOT_EMPLOYEE -> {
+                    //menuBtnSubscriptions.setVisible(false);
+                }
             }
         });
         
@@ -95,36 +96,81 @@ public class PCEmployeeMainController extends PageController {
     
     @FXML
     public void menuBtnHomeClickHandler (MouseEvent mouseEvent) throws IOException {
-        setSubPage("PCEmployeeMainHome.fxml");
-        activateMenuBtn(menuBtnHome);
+        if (menuBtnProfile.getStyleClass().contains("active")) return;
+        
+        Platform.runLater(() -> {
+            try {
+                setSubPage("PCEmployeeMainHome.fxml");
+            }
+            catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            activateMenuBtn(menuBtnHome);
+        });
     }
     
     @FXML
     public void menuBtnSubscriptionsClickHandler (MouseEvent mouseEvent) throws IOException {
-        setSubPage("PCEmployeeMainSubscriptions.fxml");
-        activateMenuBtn(menuBtnSubscriptions);
+        if (menuBtnProfile.getStyleClass().contains("active")) return;
+        
+        Platform.runLater(() -> {
+            try {
+                setSubPage("PCEmployeeMainSubscriptions.fxml");
+            }
+            catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            activateMenuBtn(menuBtnSubscriptions);
+        });
     }
     
     @FXML
     public void menuBtnReservationsClickHandler (MouseEvent mouseEvent) throws IOException {
-        setSubPage("PCEmployeeMainReservations.fxml");
-        activateMenuBtn(menuBtnReservations);
+        if (menuBtnProfile.getStyleClass().contains("active")) return;
+        
+        Platform.runLater(() -> {
+            try {
+                setSubPage("PCEmployeeMainReservations.fxml");
+            }
+            catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            activateMenuBtn(menuBtnReservations);
+        });
     }
     
     @FXML
     public void menuBtnComplaintsClickHandler (MouseEvent mouseEvent) throws IOException {
-        setSubPage("PCEmployeeMainComplaints.fxml");
-        activateMenuBtn(menuBtnComplaints);
+        if (menuBtnProfile.getStyleClass().contains("active")) return;
+        
+        Platform.runLater(() -> {
+            try {
+                setSubPage("PCEmployeeMainComplaints.fxml");
+            }
+            catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            activateMenuBtn(menuBtnComplaints);
+        });
     }
     
     @FXML
     public void menuBtnProfileClickHandler (MouseEvent mouseEvent) throws IOException {
-        setSubPage("PCEmployeeMainProfile.fxml");
-        activateMenuBtn(menuBtnProfile);
+        if (menuBtnProfile.getStyleClass().contains("active")) return;
+        
+        Platform.runLater(() -> {
+            try {
+                setSubPage("PCEmployeeMainProfile.fxml");
+            }
+            catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            activateMenuBtn(menuBtnProfile);
+        });
     }
     
     @FXML
-    public void menuBtnSignOutClickHandler (MouseEvent mouseEvent) throws IOException {
+    public void menuBtnLogoutClickHandler (MouseEvent mouseEvent) throws IOException {
         Platform.runLater(() -> {
             dialog.setTitleText("Log Out");
             dialog.setBodyText("Are you sure you want to log out?");

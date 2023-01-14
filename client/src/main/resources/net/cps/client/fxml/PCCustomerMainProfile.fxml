@@ -1,35 +1,100 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Text?>
-<?import javafx.scene.text.TextFlow?>
+<?import io.github.palexdev.materialfx.controls.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.String?>
 <?import java.net.URL?>
 <HBox fx:id="subPageBody" maxWidth="1024.0" minHeight="400.0" minWidth="600.0" prefWidth="1024.0"
       xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="net.cps.client.controllers.PCGuestMainController">
+      fx:controller="net.cps.client.controllers.PCCustomerMainController">
     <stylesheets>
         <URL value="@../styles/css/utils/GlobalStyles.css"/>
-        <URL value="@../styles/css/pages/PCCustomerMain.css" />
+        <URL value="@../styles/css/pages/PCCustomerMain.css"/>
         <URL value="@../styles/css/pages/PCCustomerMainSubPage.css"/>
     </stylesheets>
     <styleClass>
         <String fx:value="sub-page-body"/>
         <String fx:value="color-scheme-light"/>
     </styleClass>
-    <VBox alignment="TOP_CENTER" maxWidth="1024.0" minHeight="400.0" minWidth="600.0" prefWidth="1024.0">
-        <Text fx:id="subPageTitle" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sub-page-title" text="Customer Profile">
-        </Text>
-        <VBox maxWidth="600.0">
+    <VBox alignment="TOP_CENTER" maxWidth="1024.0" minHeight="400.0" minWidth="600.0" prefHeight="600"
+          prefWidth="1024.0" styleClass="sheet">
+        <HBox>
+            <TextFlow minWidth="200.0">
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sub-page-title" text="Profile">
+                </Text>
+                <HBox.margin>
+                    <Insets/>
+                </HBox.margin>
+            </TextFlow>
+            <VBox alignment="CENTER_RIGHT" prefWidth="10000.0">
+                <MFXButton fx:id="fileComplaintBtn" styleClass="button-primary" text="Edit Profile"/>
+            </VBox>
+        </HBox>
+        <VBox>
             <VBox.margin>
-                <Insets top="30.0"/>
+                <Insets bottom="50.0" top="20.0"/>
             </VBox.margin>
             <TextFlow>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0"
-                      text="As a 'Guest' you do not have an active profile on the app. But you can always sign-up and login for a better experience."/>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text"
+                      text="View your details that appear on our system, and edit them if necessary."/>
             </TextFlow>
+        </VBox>
+        <VBox>
+            <TextFlow>
+                <VBox.margin>
+                    <Insets bottom="8.0"/>
+                </VBox.margin>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="Your Name:"/>
+            </TextFlow>
+            <HBox>
+                <MFXTextField fx:id="firstName" editable="false" floatMode="DISABLED" text="FirstName"/>
+                <MFXTextField fx:id="lastName" editable="false" floatMode="DISABLED" text="LastNae"/>
+            </HBox>
+            <opaqueInsets>
+                <Insets/>
+            </opaqueInsets>
+            <VBox.margin>
+                <Insets bottom="20.0"/>
+            </VBox.margin>
+        </VBox>
+        <VBox>
+            <VBox.margin>
+                <Insets bottom="20.0"/>
+            </VBox.margin>
+            <TextFlow>
+                <VBox.margin>
+                    <Insets bottom="8.0"/>
+                </VBox.margin>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="Your Email:"/>
+            </TextFlow>
+            <HBox>
+                <MFXTextField fx:id="email" editable="false" floatMode="DISABLED" text="customer@email.com"/>
+            </HBox>
+        </VBox>
+        <VBox>
+            <Accordion>
+                <panes>
+                    <TitledPane animated="false" text="Edit Your Password">
+                        <VBox>
+                            <TextFlow>
+                                <VBox.margin>
+                                    <Insets bottom="10.0"/>
+                                </VBox.margin>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text"
+                                      text="Current Password:"/>
+                            </TextFlow>
+                            <HBox>
+                                <MFXTextField fx:id="email1" editable="false" floatMode="DISABLED"
+                                              text="customer@email.com"/>
+                            </HBox>
+                        </VBox>
+                    </TitledPane>
+                </panes>
+            </Accordion>
         </VBox>
     </VBox>
 </HBox>

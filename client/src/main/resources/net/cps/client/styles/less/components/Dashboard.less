@@ -14,8 +14,12 @@
 @border-color: @gray-1;
 @menu-width: 200px;
 
+.body .body-container {
+    -fx-padding: @spacing-2xl @spacing-xs;
+}
+
 .dashboard {
-    -fx-min-height: 550px;
+    -fx-min-height: 600px;
 
     &.sheet {
         -fx-padding: 0 !important;
@@ -61,6 +65,14 @@
                     -fx-text-fill: @sheet-text-color-dim !important;
                     -fx-padding: 0 !important;
                 }
+            }
+
+            MenuButton.button-icon:openvertically .arrow-button {
+                -fx-visible: false;
+                -fx-disabled: true;
+                -fx-opacity: 0;
+                -fx-padding: 0 !important;
+                -fx-max-width: 0 !important;
             }
         }
     }

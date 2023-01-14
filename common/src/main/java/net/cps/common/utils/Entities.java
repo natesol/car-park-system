@@ -34,15 +34,14 @@ public enum Entities {
             (Integer::parseInt),
             """
                     (
-                        id              INT NOT NULL AUTO_INCREMENT,
-                        organization_id INT NOT NULL,
+                        id INT NOT NULL,
                         name            VARCHAR(55) NOT NULL,
                         street_number   MEDIUMINT NOT NULL,
                         street_name     VARCHAR(55) NOT NULL,
                         city_name       VARCHAR(55) NOT NULL,
                         country_symbol  CHAR(2) NOT NULL,
                         PRIMARY KEY (id),
-                        FOREIGN KEY (organization_id) REFERENCES organizations(id)
+                        FOREIGN KEY (id) REFERENCES organizations(id)
                     )"""
     ),
     PARKING_LOT(
@@ -52,18 +51,17 @@ public enum Entities {
             Integer.class, (Integer::parseInt),
             """
                     (
-                        id              INT NOT NULL AUTO_INCREMENT,
-                        organization_id INT NOT NULL,
+                        id INT NOT NULL,
                         name            VARCHAR(55) NOT NULL,
                         street_number   MEDIUMINT NOT NULL,
                         street_name     VARCHAR(55) NOT NULL,
                         city_name       VARCHAR(55) NOT NULL,
                         country_symbol  CHAR(2) NOT NULL,
                         num_of_floors   TINYINT NOT NULL,
-                        floor_rows      TINYINT NOT NULL,
-                        floor_cols      TINYINT NOT NULL,
+                        num_of_rows     TINYINT NOT NULL,
+                        num_of_cols     TINYINT NOT NULL,
                         PRIMARY KEY (id),
-                        FOREIGN KEY (organization_id) REFERENCES organizations(id)
+                        FOREIGN KEY (id) REFERENCES organizations(id)
                     )"""
     ),
     RATES(Rates.class,
@@ -91,15 +89,16 @@ public enum Entities {
             """
                     (
                         id              INT NOT NULL AUTO_INCREMENT,
+                        organization_id INT NOT NULL,
+                        role            ENUM('ADMIN', 'NETWORK_MANAGER', 'CUSTOMER_SERVICE_EMPLOYEE', 'PARKING_LOT_MANAGER', 'PARKING_LOT_EMPLOYEE', 'EMPLOYEE') NOT NULL,
                         email           VARCHAR(100) UNIQUE NOT NULL,
                         first_name      VARCHAR(55) NOT NULL,
                         last_name       VARCHAR(55) NOT NULL,
                         password_hash   CHAR(128) NOT NULL,
                         password_salt   CHAR(24) NOT NULL,
                         is_active       BOOLEAN NOT NULL,
-                        role            ENUM('ADMIN', 'NETWORK_MANAGER', 'CUSTOMER_SERVICE_EMPLOYEE', 'PARKING_LOT_MANAGER', 'PARKING_LOT_EMPLOYEE', 'EMPLOYEE') NOT NULL,
-                        organization    VARCHAR(255),
-                        PRIMARY KEY (id)
+                        PRIMARY KEY (id),
+                        FOREIGN KEY (organization_id) REFERENCES organizations(id)
                     )"""
     ),
     CUSTOMER(Customer.class,
@@ -130,9 +129,12 @@ public enum Entities {
                         id              INT NOT NULL AUTO_INCREMENT,
                         customer_email  VARCHAR(100) NOT NULL,
                         parking_lot_id  INT NOT NULL,
-                        type            ENUM('REGULAR', 'FULL') NOT NULL,
-                        start_date      DATE NOT NULL,
-                        end_date        DATE NOT NULL,
+                        created_at      TIMESTAMP NOT NULL,
+                        expires_at      TIMESTAMP NOT NULL,
+                        type            ENUM('BASIC', 'PREMIUM') NOT NULL,
+                        departure_time  TIME NOT NULL,
+                        status          VARCHAR(255) NOT NULL,
+                        price           DOUBLE NOT NULL,
                         PRIMARY KEY (id),
                         FOREIGN KEY (customer_email) REFERENCES customers(email),
                         FOREIGN KEY (parking_lot_id) REFERENCES parking_lots(id)
@@ -154,19 +156,6 @@ public enum Entities {
                         FOREIGN KEY (parking_lot_id) REFERENCES parking_lots(id)
                     )"""
     ),
-    VEHICLE(Vehicle.class,
-            "vehicles",
-            "id",
-            Integer.class,
-            (Integer::parseInt),
-            """
-                    (
-                        id              INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-                        customer_email  VARCHAR(100) NOT NULL,
-                        license_plate   VARCHAR(8) NOT NULL,
-                        FOREIGN KEY (customer_email) REFERENCES customers(email)
-                    )"""
-    ),
     PARKING_SPACE(ParkingSpace.class,
             "parking_spaces",
             "id",
@@ -174,12 +163,30 @@ public enum Entities {
             (Integer::parseInt),
             """
                     (
-                        id              INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+                        id              INT NOT NULL AUTO_INCREMENT,
                         parking_lot_id  INT NOT NULL,
                         floor           TINYINT NOT NULL,
-                        row             TINYINT NOT NULL,
-                        col             TINYINT NOT NULL,
+                        row_num         TINYINT NOT NULL,
+                        col_num         TINYINT NOT NULL,
+                        state           ENUM('AVAILABLE', 'OCCUPIED', 'RESERVED', 'DISABLED', 'OUT_OF_ORDER') NOT NULL,
+                        PRIMARY KEY (id),
                         FOREIGN KEY (parking_lot_id) REFERENCES parking_lots(id)
+                    )"""
+    ),
+    VEHICLE(Vehicle.class,
+            "vehicles",
+            "id",
+            Integer.class,
+            (Integer::parseInt),
+            """
+                    (
+                        id                  INT NOT NULL AUTO_INCREMENT,
+                        customer_email      VARCHAR(100) NOT NULL,
+                        license_plate       CHAR(8) UNIQUE NOT NULL,
+                        parking_space_id    INT,
+                        PRIMARY KEY (id),
+                        FOREIGN KEY (customer_email) REFERENCES customers(email),
+                        FOREIGN KEY (parking_space_id) REFERENCES parking_spaces(id)
                     )"""
     );
     

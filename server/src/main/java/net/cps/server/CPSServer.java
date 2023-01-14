@@ -162,8 +162,8 @@ public class CPSServer extends AbstractServer {
                 // get the list of entities by ids.
                 if (!requestHeader.contains("=")) {
                     String[] ids = requestHeader.split("\\?");
-                    List<?> primaryKeyList = Arrays.stream(ids).map(entity.getPrimaryKeyConverter()).toList();
-                    data = Database.getMultipleEntities(sessionFactory, T, (List<Object>) primaryKeyList);
+                    ArrayList<Object> primaryKeyList = (ArrayList<Object>) Arrays.stream(ids).map(entity.getPrimaryKeyConverter()).toList();
+                    data = Database.getMultipleEntities(sessionFactory, T, primaryKeyList);
                     return new ResponseMessage(requestId, request, data != null && data.size() > 0 ? ResponseStatus.SUCCESS : ResponseStatus.NOT_FOUND, data);
                 }
                 
@@ -232,7 +232,7 @@ public class CPSServer extends AbstractServer {
             
             // create multiple entities by the data list given on the request.
             if (obj instanceof List) {
-                List<T> data = (List<T>) request.getData();
+                ArrayList<T> data = (ArrayList<T>) request.getData();
                 ArrayList<U> ids = (ArrayList<U>) Database.createMultipleEntities(sessionFactory, data);
                 return new ResponseMessage(requestId, request, ids.size() == data.size() ? ResponseStatus.FINISHED : ResponseStatus.SUCCESS, ids);
             }
@@ -268,7 +268,7 @@ public class CPSServer extends AbstractServer {
             
             // update multiple entities by the data list given on the request.
             if (obj instanceof List) {
-                List<T> data = (List<T>) request.getData();
+                ArrayList<T> data = (ArrayList<T>) request.getData();
                 ArrayList<Object> ids = Database.updateMultipleEntities(sessionFactory, data);
                 return new ResponseMessage(requestId, request, ids.size() == data.size() ? ResponseStatus.FINISHED : ResponseStatus.SUCCESS, ids);
             }
@@ -304,7 +304,7 @@ public class CPSServer extends AbstractServer {
             
             // delete multiple entities by the data list given on the request.
             if (obj instanceof List) {
-                List<T> data = (List<T>) request.getData();
+                ArrayList<T> data = (ArrayList<T>) request.getData();
                 ArrayList<Object> ids = Database.deleteMultipleEntities(sessionFactory, data);
                 return new ResponseMessage(requestId, request, ids.size() == data.size() ? ResponseStatus.FINISHED : ResponseStatus.SUCCESS, ids);
             }
@@ -337,18 +337,24 @@ public class CPSServer extends AbstractServer {
                 }
                 
                 Customer customer = (Customer) _obj;
-                if (Database.getEntity(sessionFactory, Customer.class, customer.getEmail()) != null) {
-                    return new ResponseMessage(requestId, request, ResponseStatus.UNAUTHORIZED, "Sorry, that email address is already in use. Please enter a different email address or try logging in with that address.", null);
+                if (Database.getEntity(sessionFactory, Customer.class, "email", customer.getEmail()) != null || Database.getEntity(sessionFactory, Employee.class, "email", customer.getEmail()) != null) {
+                    return new ResponseMessage(requestId, request, ResponseStatus.UNAUTHORIZED, "Sorry, this email address is already in use. Please enter a different email address or try logging in with that address.", null);
                 }
                 
-                String email = (String) Database.createEntity(sessionFactory, customer);
-                if (email == null || !email.equals(customer.getEmail())) {
-                    Logger.print("Error: On response to - AUTH: '" + request.getHeader() + "'.", "While creating an account with id: '" + customer.getEmail() + "', the id: '" + email + "' created instead.");
-                    Logger.error("On response to - AUTH: 'register'. While creating an account with id: '" + customer.getEmail() + "', the id: '" + email + "' created instead.");
-                    return new ResponseMessage(requestId, request, ResponseStatus.SUCCESS, "Sorry, its seems like something went wrong while creating the new account. Please try again later.", null);
+                Integer id = (Integer) Database.createEntity(sessionFactory, customer);
+                Customer createdCustomer = Database.getEntity(sessionFactory, Customer.class, id);
+                if (createdCustomer == null) {
+                    Logger.print("Error: On response to - AUTH: '" + request.getHeader() + "'.", "While creating an account with email: '" + customer.getEmail() + "', the account was not created.");
+                    Logger.error("On response to - AUTH: 'register'. While creating an account with id: '" + customer.getEmail() + "', the account was not created.");
+                    return new ResponseMessage(requestId, request, ResponseStatus.ERROR, "Sorry, its seems like something went wrong while creating the new account. Please try again later.", null);
+                }
+                if (!createdCustomer.getEmail().equals(customer.getEmail())) {
+                    Logger.print("Error: On response to - AUTH: '" + request.getHeader() + "'.", "While creating an account with email: '" + customer.getEmail() + "', the email: '" + createdCustomer.getEmail() + "' was created instead.");
+                    Logger.error("On response to - AUTH: 'register'. While creating an account with email: '" + customer.getEmail() + "', the email: '" + createdCustomer.getEmail() + "' was created instead.");
+                    return new ResponseMessage(requestId, request, ResponseStatus.ERROR, "Sorry, its seems like something went wrong while creating the new account. Please try again later.", null);
                 }
                 
-                return new ResponseMessage(requestId, request, ResponseStatus.FINISHED, "Account created successfully.", customer);
+                return new ResponseMessage(requestId, request, ResponseStatus.FINISHED, "Account created successfully.", createdCustomer);
             }
             
             // authenticate a user login (and return the user instance on approved credentials).

@@ -17,16 +17,16 @@ public class Reservation implements Serializable {
     private Integer id;
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "vehicle_number", referencedColumnName = "number")
-    private Vehicle vehicle;
-    @NotNull
-    @ManyToOne
     @JoinColumn(name = "parking_lot_id", referencedColumnName = "id")
     private ParkingLot parkingLot;
     @NotNull
     @ManyToOne
     @JoinColumn(name = "customer_email", referencedColumnName = "email")
     private Customer customer;
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "vehicle_license_plate", referencedColumnName = "license_plate")
+    private Vehicle vehicle;
     @NotNull
     @Column(name = "arrival_time")
     private Calendar arrivalTime;
@@ -36,13 +36,14 @@ public class Reservation implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "parking_space_id", unique = true)
     private ParkingSpace parkingSpace;
-    
     @NotNull
     @Column(name = "status")
     private ReservationStatus status;
     
     
-    //use if the car already entered the parking lot
+    public Reservation () {}
+    
+    
     public Reservation (@NotNull ParkingLot parkingLot, @NotNull Calendar arrivalDate, @NotNull Calendar departureTime, @NotNull Vehicle vehicle, ParkingSpace parkingSpace) {
         this.parkingLot = parkingLot;
         this.arrivalTime = arrivalDate;
@@ -51,9 +52,6 @@ public class Reservation implements Serializable {
         this.parkingSpace = parkingSpace;
     }
     
-    public Reservation () {
-    
-    }
     
     public Integer getId () {
         return id;

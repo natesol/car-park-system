@@ -8,11 +8,8 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "offices")
-@PrimaryKeyJoinColumn(name = "organization_id")
+@PrimaryKeyJoinColumn(name = "id")
 public class Office extends Organization implements Serializable {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", updatable = false, nullable = false, columnDefinition = "INT NOT NULL AUTO_INCREMENT")
-    private Integer id;
     @NotNull
     @Column(name = "name", columnDefinition = "VARCHAR(55) NOT NULL")
     private String name;
@@ -29,14 +26,14 @@ public class Office extends Organization implements Serializable {
     @Column(name = "country_symbol", columnDefinition = "CHAR(2) NOT NULL")
     private String countrySymbol;
     
-    public static final OrganizationType TYPE = OrganizationType.OFFICE;
+    public static final OrganizationType DEFAULT_TYPE = OrganizationType.OFFICE;
     public static final String DEFAULT_NAME = "Office Name";
     
     
     /* ----- Constructors ------------------------------------------- */
     
     public Office () {
-        super(TYPE);
+        super(DEFAULT_TYPE);
         this.name = DEFAULT_NAME;
         this.streetNumber = Organization.DEFAULT_STREET_NUMBER;
         this.streetName = Organization.DEFAULT_STREET;
@@ -54,7 +51,7 @@ public class Office extends Organization implements Serializable {
     }
     
     public Office (@NotNull String name, @NotNull String streetName, @NotNull Integer streetNumber, @NotNull String cityName, @NotNull String countrySymbol) {
-        super(TYPE);
+        super(DEFAULT_TYPE);
         this.name = name;
         this.streetName = streetName;
         this.streetNumber = streetNumber;
@@ -75,11 +72,11 @@ public class Office extends Organization implements Serializable {
     /* ----- Getters and Setters ------------------------------------ */
     
     public Integer getId () {
-        return id;
+        return super.getOrganizationId();
     }
     
     public void setId (Integer id) {
-        this.id = id;
+        super.setOrganizationId(id);
     }
     
     public @NotNull String getName () {
@@ -128,6 +125,19 @@ public class Office extends Organization implements Serializable {
     @Override
     public void setCountrySymbol (@NotNull String countrySymbol) {
         this.countrySymbol = countrySymbol;
+    }
+    
+    
+    /* ----- Utility Methods ---------------------------------------- */
+    
+    @Override
+    public String toString () {
+        return "Office {" +
+                "id: " + getId() +
+                ", type: '" + getType() + "'" +
+                ", name: '" + name + "'" +
+                ", address: '" + getAddress() + "'" +
+                "}";
     }
     
 }

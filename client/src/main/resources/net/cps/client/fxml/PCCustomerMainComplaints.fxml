@@ -1,56 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView?>
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
-<?import io.github.palexdev.materialfx.controls.MFXFilterComboBox?>
-<?import io.github.palexdev.materialfx.controls.MFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.*?>
 <?import java.lang.String?>
 <?import java.net.URL?>
 <HBox fx:id="subPageBody" maxWidth="1024.0" minHeight="400.0" minWidth="600.0" prefWidth="1024.0"
       xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="net.cps.client.controllers.PCGuestMainController">
+      fx:controller="net.cps.client.controllers.PCCustomerMainController">
     <stylesheets>
         <URL value="@../styles/css/utils/GlobalStyles.css"/>
-        <URL value="@../styles/css/pages/PCCustomerMain.css" />
+        <URL value="@../styles/css/pages/PCCustomerMain.css"/>
         <URL value="@../styles/css/pages/PCCustomerMainSubPage.css"/>
     </stylesheets>
     <styleClass>
         <String fx:value="sub-page-body"/>
         <String fx:value="color-scheme-light"/>
     </styleClass>
-    <VBox alignment="TOP_CENTER" minHeight="400.0" prefHeight="Infinity" minWidth="600.0" prefWidth="1024.0"  maxWidth="1024.0">
-
-        <Text fx:id="subPageTitle" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sub-page-title" text="Customer Complaints">
-        </Text>
-        <VBox maxWidth="600.0">
+    <VBox alignment="TOP_CENTER" maxWidth="1024.0" minHeight="400.0" minWidth="600.0" prefHeight="600"
+          prefWidth="1024.0" styleClass="sheet">
+        <HBox>
+            <TextFlow minWidth="200.0">
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sub-page-title" text="All Complaints">
+                </Text>
+                <HBox.margin>
+                    <Insets/>
+                </HBox.margin>
+            </TextFlow>
+            <VBox alignment="CENTER_RIGHT" prefWidth="10000.0">
+                <MFXButton fx:id="fileComplaintBtn" styleClass="button-primary" text="File New Complaint"/>
+            </VBox>
+        </HBox>
+        <VBox>
             <VBox.margin>
-                <Insets top="30.0"/>
+                <Insets bottom="50.0" top="20.0"/>
             </VBox.margin>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Track all your complaints on the 'CityPark' system."/>
+            <TextFlow>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text"
+                      text="You can file a new complaint to the system, and you can track all your former complaints."/>
+            </TextFlow>
         </VBox>
-        <VBox maxWidth="600.0" spacing="16.0">
-            <VBox.margin>
-                <Insets top="40.0"/>
-            </VBox.margin>
-            <VBox spacing="16.0">
-                <MFXButton text="File A New Complaint"/>
-            </VBox>
-            <VBox spacing="16.0">
-                <VBox.margin>
-                    <Insets top="40.0"/>
-                </VBox.margin>
-                <HBox>
-                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Parking Lot: "/>
-                    <MFXFilterComboBox floatMode="DISABLED" floatingText="test"/>
-                </HBox>
-                <HBox>
-                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Complain Number:"/>
-                    <MFXTextField floatMode="DISABLED"/>
-                </HBox>
-                <MFXButton text="Get Details"/>
-            </VBox>
+        <VBox>
+            <children>
+                <TextFlow>
+                    <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="Your Complaints:"/>
+                    </children>
+                    <VBox.margin>
+                        <Insets bottom="10.0"/>
+                    </VBox.margin>
+                </TextFlow>
+                <MFXLegacyTableView prefHeight="122.0" prefWidth="950.0"/>
+            </children>
         </VBox>
     </VBox>
 </HBox>

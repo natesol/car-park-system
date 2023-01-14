@@ -527,8 +527,11 @@
 }
 /* ------------------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------------ */
+.body .body-container {
+  -fx-padding: 32px 8px;
+}
 .dashboard {
-  -fx-min-height: 550px;
+  -fx-min-height: 600px;
 }
 .dashboard.sheet {
   -fx-padding: 0 !important;
@@ -568,6 +571,13 @@
   -fx-text-fill: #57606a !important;
   -fx-padding: 0 !important;
 }
+.dashboard .dashboard-top .dashboard-user-menu MenuButton.button-icon:openvertically .arrow-button {
+  -fx-visible: false;
+  -fx-disabled: true;
+  -fx-opacity: 0;
+  -fx-padding: 0 !important;
+  -fx-max-width: 0 !important;
+}
 .dashboard .dashboard-left {
   -fx-padding: 20px 16px;
   -fx-min-width: 200px;
@@ -606,15 +616,42 @@
 /* ------------------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------------ */
 .sub-page-body {
+  -fx-background-radius: 16px;
+  -fx-border-radius: 16px;
   -fx-background-color: #f6f8fa;
-  -fx-padding: 16px;
+  -fx-padding: 0 0 0 16px;
 }
 .sub-page-body .sub-page-title {
   -fx-font-family: "Poppins Bold", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Ubuntu", "Bitstream Vera Sans", "Liberation Sans", "Arial", "sans-serif";
   -fx-font-weight: 700;
-  -fx-font-size: 28px;
+  -fx-font-size: 40px;
   -fx-text-fill: #424a53;
-  -fx-padding: 16px 0 16px 0;
+  -fx-fill: #424a53;
+}
+.sub-page-body .sub-page-title.FontAwesomeIconView {
+  -fx-font-size: 40px;
+}
+.sub-page-body .sheet-text {
+  -fx-font-size: 16px;
+  -fx-text-fill: #424a53;
+  -fx-fill: #424a53;
+}
+.sub-page-body .form {
+  -fx-min-width: 300px;
+  -fx-max-width: 300px;
+}
+.sub-page-body .form .mfx-text-field {
+  -fx-min-width: 300px;
+  -fx-max-width: 300px;
+  -fx-font-size: 16px;
+}
+.sub-page-body .form #departureHour,
+.sub-page-body .form #departureMinute {
+  -fx-min-width: 142px;
+  -fx-max-width: 142px;
+}
+.sub-page-body .form .button {
+  -fx-font-size: 16px;
 }
 /* ------------------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------------ */

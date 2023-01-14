@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXScrollPane?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
 <?import java.lang.String?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
@@ -8,7 +11,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<HBox fx:id="subPageBody" maxWidth="1024.0" minHeight="400.0" minWidth="600.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.cps.client.controllers.KioskMainController">
+<HBox fx:id="subPageBody" maxWidth="1024.0" minHeight="400.0" minWidth="600.0" prefHeight="640.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.cps.client.controllers.KioskMainController">
     <stylesheets>
         <URL value="@../styles/css/utils/GlobalStyles.css" />
         <URL value="@../styles/css/pages/KioskMain.css" />
@@ -18,17 +21,78 @@
         <String fx:value="sub-page-body" />
         <String fx:value="color-scheme-light" />
     </styleClass>
-    <VBox alignment="TOP_CENTER" maxWidth="1024.0" minHeight="400.0" minWidth="600.0" prefHeight="600" prefWidth="1024.0">
-
-        <Text fx:id="subPageTitle" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sub-page-title" text="Kiosk Book Now ->">
-        </Text>
-        <VBox maxWidth="600.0">
-            <VBox.margin>
-                <Insets top="30.0" />
-            </VBox.margin>
-            <TextFlow>
-            </TextFlow>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="You can choose an action from the menu on the left - and continue from there." />
-        </VBox>
+    <VBox alignment="TOP_CENTER" maxWidth="1024.0" minHeight="400.0" minWidth="600.0" prefHeight="600" prefWidth="1024.0" styleClass="sheet">
+        <MFXScrollPane prefHeight="650.0" prefWidth="1000.0">
+            <VBox>
+                <HBox>
+                    <!--            <TextFlow>-->
+                    <!--                <HBox.margin>-->
+                    <!--                    <Insets right="10.0"/>-->
+                    <!--                </HBox.margin>-->
+                    <!--                <FontAwesomeIconView glyphName="HOME" styleClass="sub-page-title" />-->
+                    <!--            </TextFlow>-->
+                    <TextFlow>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sub-page-title" text="Book Now">
+                        </Text>
+                    </TextFlow>
+                </HBox>
+                <VBox>
+                    <TextFlow>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text"
+                              text="If you do not have a reservation in advance, you can fill in your details in the form and create a reservation on the spot."/>
+                        <VBox.margin>
+                            <Insets bottom="50.0"/>
+                        </VBox.margin>
+                    </TextFlow>
+                    <VBox styleClass="form">
+                        <VBox>
+                            <VBox.margin>
+                                <Insets bottom="10.0"/>
+                            </VBox.margin>
+                            <TextFlow>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="Email"/>
+                            </TextFlow>
+                            <MFXTextField fx:id="email" floatMode="DISABLED" floatingText="Email"/>
+                        </VBox>
+                        <VBox>
+                            <VBox.margin>
+                                <Insets bottom="10.0"/>
+                            </VBox.margin>
+                            <TextFlow>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text"
+                                      text="Vehicle Number"/>
+                            </TextFlow>
+                            <MFXTextField fx:id="vehicleNumber" floatMode="DISABLED" floatingText="Vehicle Number"/>
+                        </VBox>
+                        <VBox>
+                            <VBox.margin>
+                                <Insets bottom="20.0"/>
+                            </VBox.margin>
+                            <TextFlow>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text"
+                                      text="Departure Time"/>
+                            </TextFlow>
+                            <HBox>
+                                <MFXTextField fx:id="departureHour" floatMode="DISABLED"
+                                              floatingText="Vehicle Number"/>
+                                <TextFlow>
+                                    <HBox.margin>
+                                        <Insets/>
+                                    </HBox.margin>
+                                    <padding>
+                                        <Insets left="4.0" right="4.0" top="8.0"/>
+                                    </padding>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text=":"/>
+                                </TextFlow>
+                                <MFXTextField fx:id="departureMinute" floatMode="DISABLED"
+                                              floatingText="Vehicle Number"/>
+                            </HBox>
+                        </VBox>
+                        <MFXButton fx:id="enterSubscriptionBtn" styleClass="button-primary"
+                                   text="Enter Parking Lot"/>
+                    </VBox>
+                </VBox>
+            </VBox>
+        </MFXScrollPane>
     </VBox>
 </HBox>

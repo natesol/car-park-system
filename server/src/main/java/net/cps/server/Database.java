@@ -9,6 +9,7 @@ import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
@@ -115,7 +116,7 @@ public class Database {
      * @param entityObject   the entity to add.
      * @return the new entity given id (the primary key).
      **/
-    public static <T> Object createEntity (SessionFactory sessionFactory, T entityObject) {
+    public static <T> Object createEntity (@NotNull SessionFactory sessionFactory, @NotNull T entityObject) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         Object id = null;
@@ -150,7 +151,7 @@ public class Database {
      * @param entitiesList   the entities to add.
      * @return a list of the new entities given ids (primary keys).
      **/
-    public static <T> ArrayList<Object> createMultipleEntities (SessionFactory sessionFactory, List<T> entitiesList) {
+    public static <T> ArrayList<Object> createMultipleEntities (@NotNull SessionFactory sessionFactory, @NotNull ArrayList<T> entitiesList) {
         String entityClassName = entitiesList.get(0).getClass().getSimpleName();
         ArrayList<Object> ids = new ArrayList<>();
         Session session = sessionFactory.openSession();
@@ -190,7 +191,7 @@ public class Database {
      *                       the query must be in the following format: `INSERT INTO &lt;table_name&gt; (&lt;column_name&gt;, &lt;column_name&gt;, ...) VALUES (&lt;value&gt;, &lt;value&gt;, ...);`.
      * @return the new entities given ids (primary keys).
      **/
-    public static <T> ArrayList<Object> createCustomQuery (SessionFactory sessionFactory, String query) {
+    public static <T> ArrayList<Object> createCustomQuery (@NotNull SessionFactory sessionFactory, @NotNull String query) {
         ArrayList<Object> ids = null;
         Entities entity = Entities.fromString(query.split(" ")[2]);
         String entityClassName = entity.getClassName();
@@ -242,13 +243,13 @@ public class Database {
      * @param id             the entity id.
      * @return the entity instance.
      **/
-    public static <T> T getEntity (SessionFactory sessionFactory, Class<T> T, Object id) {
+    public static <T> T getEntity (@NotNull SessionFactory sessionFactory, @NotNull Class<T> T, @NotNull Object id) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         T data = null;
         
         try (session) {
-            data = (T) session.get(T, (Serializable) id);
+            data = session.get(T, (Serializable) id);
             session.flush();
             transaction.commit();
             session.clear();
@@ -267,13 +268,14 @@ public class Database {
         return data;
     }
     
-    public static <T> T getEntity (SessionFactory sessionFactory, Class<T> T, String fieldName, String fieldValue) {
+    public static <T> T getEntity (@NotNull SessionFactory sessionFactory, @NotNull Class<T> T, @NotNull String fieldName, @NotNull String fieldValue) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         T data = null;
         
         try (session) {
-            data = (T) session.createQuery("FROM " + Entities.fromString(T.getSimpleName()).getTableName() + " WHERE " + fieldName + " = '" + fieldValue + "'").getSingleResult();
+            data = (T) session.createNativeQuery("SELECT * FROM %s WHERE %s = '%s'".formatted(Entities.fromString(T.getSimpleName()).getTableName(), fieldName, fieldValue), T).getSingleResult();
+            
             session.flush();
             transaction.commit();
             session.clear();
@@ -293,7 +295,7 @@ public class Database {
         
     }
     
-    public static <T> T getEntity (SessionFactory sessionFactory, Class<T> T, List<SimpleEntry<String, String>>[] fields) {
+    public static <T> T getEntity (@NotNull SessionFactory sessionFactory, @NotNull Class<T> T, @NotNull ArrayList<SimpleEntry<String, String>>[] fields) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         T data = null;
@@ -306,7 +308,7 @@ public class Database {
                     query.append(" AND ");
                 }
             }
-            data = (T) session.createQuery(query.toString()).getSingleResult();
+            data = (T) session.createQuery(query.toString(), T).getSingleResult();
             
             session.flush();
             transaction.commit();
@@ -335,7 +337,7 @@ public class Database {
      * @param ids            the entities ids.
      * @return the entities instance.
      **/
-    public static <T> ArrayList<T> getMultipleEntities (SessionFactory sessionFactory, Class<T> T, List<Object> ids) {
+    public static <T> ArrayList<T> getMultipleEntities (@NotNull SessionFactory sessionFactory, @NotNull Class<T> T, @NotNull ArrayList<Object> ids) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         ArrayList<T> data = new ArrayList<>();
@@ -368,7 +370,7 @@ public class Database {
         return data.size() > 0 ? data : null;
     }
     
-    public static <T> ArrayList<T> getMultipleEntities (SessionFactory sessionFactory, Class<T> T, List<SimpleEntry<String, String>>[] fields) {
+    public static <T> ArrayList<T> getMultipleEntities (@NotNull SessionFactory sessionFactory, @NotNull Class<T> T, @NotNull ArrayList<SimpleEntry<String, String>>[] fields) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         ArrayList<T> data = new ArrayList<>();
@@ -381,7 +383,7 @@ public class Database {
                     query.append(" AND ");
                 }
             }
-            data = (ArrayList<T>) session.createQuery(query.toString()).list();
+            data = (ArrayList<T>) session.createQuery(query.toString(), T).list();
             
             session.flush();
             transaction.commit();
@@ -405,17 +407,17 @@ public class Database {
      * Read method - get all the instances of an entity type from the entity-related-table in the database.
      *
      * @param sessionFactory the 'SessionFactory' object to use.
-     * @param entityClass    the entity class.
+     * @param T    the entity class.
      *                       the entity must have a primary key.
      * @return the entities instance.
      **/
-    public static <T> ArrayList<T> getAllEntities (SessionFactory sessionFactory, Class<T> entityClass) {
+    public static <T> ArrayList<T> getAllEntities (@NotNull SessionFactory sessionFactory, @NotNull Class<T> T) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         ArrayList<T> data;
         
         try (session) {
-            data = (ArrayList<T>) session.createQuery("FROM " + entityClass.getSimpleName()).getResultList();
+            data = (ArrayList<T>) session.createQuery("FROM " + T.getSimpleName()).getResultList();
             
             session.flush();
             transaction.commit();
@@ -427,8 +429,8 @@ public class Database {
             }
             
             e.printStackTrace();
-            Logger.print("Error: failed to get all entities: " + entityClass.getSimpleName() + " from the database.", "'GET' transaction ended with the exception:" + e.getMessage());
-            Logger.error("failed to get all entities: " + entityClass.getSimpleName() + " from the database.");
+            Logger.print("Error: failed to get all entities: " + T.getSimpleName() + " from the database.", "'GET' transaction ended with the exception:" + e.getMessage());
+            Logger.error("failed to get all entities: " + T.getSimpleName() + " from the database.");
             
             throw new HibernateException(e);
         }
@@ -448,7 +450,7 @@ public class Database {
      *                       or in the following format: `SELECT * FROM &lt;table_name&gt;;`.
      * @return the entities instance.
      **/
-    public static <T> ArrayList<T> getCustomQuery (SessionFactory sessionFactory, Class<T> T, String query) {
+    public static <T> ArrayList<T> getCustomQuery (@NotNull SessionFactory sessionFactory, @NotNull Class<T> T, @NotNull String query) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         ArrayList<T> data;
@@ -484,7 +486,7 @@ public class Database {
      *                       the entity must have a primary key.
      * @return the entity id.
      **/
-    public static <T> Object updateEntity (SessionFactory sessionFactory, T entityObject) {
+    public static <T> Object updateEntity (@NotNull SessionFactory sessionFactory, @NotNull T entityObject) {
         Object id = null;
         String className = entityObject.getClass().getSimpleName();
         Session session = sessionFactory.openSession();
@@ -527,7 +529,7 @@ public class Database {
      *                       the entities must have a primary key.
      * @return a list of the updated entities ids.
      **/
-    public static <T> ArrayList<Object> updateMultipleEntities (SessionFactory sessionFactory, List<T> entitiesList) {
+    public static <T> ArrayList<Object> updateMultipleEntities (@NotNull SessionFactory sessionFactory, @NotNull ArrayList<T> entitiesList) {
         ArrayList<Object> ids = new ArrayList<>();
         String className = entitiesList.get(0).getClass().getSimpleName();
         Entities _entity = Entities.fromString(className);
@@ -576,7 +578,7 @@ public class Database {
      *                       or in the following format: `SET &lt;table_name&gt; SET &lt;column_name&gt; = &lt;value&gt;;`.
      * @return a list of the updated entities ids.
      **/
-    public static ArrayList<Object> updateCustomQuery (SessionFactory sessionFactory, String query) {
+    public static ArrayList<Object> updateCustomQuery (@NotNull SessionFactory sessionFactory, @NotNull String query) {
         ArrayList<Object> ids = new ArrayList<>();
         Entities _entity = Entities.fromString(query.split(" ")[1]);
         String className = _entity.getClassName();
@@ -617,7 +619,7 @@ public class Database {
      *                       the entity must have a primary key.
      * @return the deleted entity id.
      **/
-    public static <T> Object deleteEntity (SessionFactory sessionFactory, T entityObject) {
+    public static <T> Object deleteEntity (@NotNull SessionFactory sessionFactory, @NotNull T entityObject) {
         Object id = null;
         String className = entityObject.getClass().getSimpleName();
         Entities _entity = Entities.fromString(className);
@@ -661,7 +663,7 @@ public class Database {
      *                       the entities must have a primary key.
      * @return a list of the deleted entities ids.
      **/
-    public static <T> ArrayList<Object> deleteMultipleEntities (SessionFactory sessionFactory, List<T> entitiesList) {
+    public static <T> ArrayList<Object> deleteMultipleEntities (@NotNull SessionFactory sessionFactory, @NotNull ArrayList<T> entitiesList) {
         ArrayList<Object> ids = new ArrayList<>();
         String className = entitiesList.get(0).getClass().getSimpleName();
         Entities _entity = Entities.fromString(className);
@@ -705,7 +707,7 @@ public class Database {
      * @param entityClass    the entity class.
      * @return a list of the deleted entities ids.
      **/
-    public static <T> ArrayList<Object> deleteAllEntities (SessionFactory sessionFactory, Class<T> entityClass) {
+    public static <T> ArrayList<Object> deleteAllEntities (@NotNull SessionFactory sessionFactory, @NotNull Class<T> entityClass) {
         ArrayList<Object> ids = new ArrayList<>();
         String className = entityClass.getSimpleName();
         Session session = sessionFactory.openSession();
@@ -753,7 +755,7 @@ public class Database {
      *
      * !!!
      **/
-    public static ArrayList<Object> deleteCustomQuery (SessionFactory sessionFactory, String query) {
+    public static ArrayList<Object> deleteCustomQuery (@NotNull SessionFactory sessionFactory, @NotNull String query) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         ArrayList<Object> ids = new ArrayList<>();

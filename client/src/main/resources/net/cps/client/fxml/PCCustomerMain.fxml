@@ -50,9 +50,7 @@
                             <VBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
                                 <TextFlow styleClass="dashboard-user-message">
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="Hello " />
-                           <Text fx:id="customerFirstName" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="FirstName" />
-                           <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text=" " />
-                           <Text fx:id="customerLastName" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="LastName" />
+                                    <Text fx:id="customerName" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="FirstName" />
                                     <VBox.margin>
                                         <Insets />
                                     </VBox.margin>
@@ -95,11 +93,11 @@
                                             <FontAwesomeIconView glyphName="HOME" />
                                         </graphic>
                                     </MFXButton>
-                           <MFXButton fx:id="menuBtnSubscriptions" graphicTextGap="8.0" onMouseClicked="#menuBtnSubscriptionsClickHandler" styleClass="dashboard-menu-button" text="Subscriptions">
-                              <graphic>
-                                 <FontAwesomeIconView glyphName="DRIVERS_LICENSE" />
-                              </graphic>
-                           </MFXButton>
+                                    <MFXButton fx:id="menuBtnSubscriptions" graphicTextGap="8.0" onMouseClicked="#menuBtnSubscriptionsClickHandler" styleClass="dashboard-menu-button" text="Subscriptions">
+                                        <graphic>
+                                            <FontAwesomeIconView glyphName="DRIVERS_LICENSE" />
+                                        </graphic>
+                                    </MFXButton>
                                     <MFXButton fx:id="menuBtnReservations" graphicTextGap="8.0" onMouseClicked="#menuBtnReservationsClickHandler" text="Reservations">
                                         <styleClass>
                                             <String fx:value="dashboard-menu-button" />
@@ -133,7 +131,7 @@
                                                 <FontAwesomeIconView glyphName="USER" />
                                             </graphic>
                                         </MFXButton>
-                                        <MFXButton fx:id="menuBtnSignOut" graphicTextGap="8.0" onMouseClicked="#menuBtnSignOutClickHandler" styleClass="dashboard-menu-button" text="Sign-Out">
+                                        <MFXButton fx:id="menuBtnSignOut" graphicTextGap="8.0" onMouseClicked="#menuBtnLogoutClickHandler" styleClass="dashboard-menu-button" text="Logout">
                                             <graphic>
                                                 <FontAwesomeIconView glyphName="SIGN_OUT" />
                                             </graphic>
@@ -157,27 +155,22 @@
         </VBox> <!-- /body -->
     </MFXScrollPane> <!-- /root-scroll -->
 
-    <VBox fx:id="dialogRoot" alignment="CENTER" disable="true" styleClass="dialog-root" visible="false"
-          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-          AnchorPane.topAnchor="0.0">
-        <MFXGenericDialog fx:id="dialogControl" actionsOrientation="VERTICAL" contentText="..."
-                          headerText="Dialog Title" onClose="#closeDialog" showAlwaysOnTop="false" showMinimize="false">
+    <VBox fx:id="dialogRoot" alignment="CENTER" disable="true" styleClass="dialog-root" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <MFXGenericDialog fx:id="dialogControl" actionsOrientation="VERTICAL" contentText="..." headerText="Dialog Title" onClose="#closeDialog" showAlwaysOnTop="false" showMinimize="false">
             <styleClass>
-                <String fx:value="dialog"/>
-                <String fx:value="dialog-w-xs"/>
+                <String fx:value="dialog" />
+                <String fx:value="dialog-w-xs" />
             </styleClass>
             <center>
-                <MFXScrollPane fitToHeight="true" fitToWidth="true" styleClass="dialog-content-scroll"
-                               BorderPane.alignment="CENTER">
+                <MFXScrollPane fitToHeight="true" fitToWidth="true" styleClass="dialog-content-scroll" BorderPane.alignment="CENTER">
                     <VBox>
-                        <TextFlow fx:id="dialogContent" styleClass="dialog-content"/>
-                        <VBox fx:id="dialogCustomContent"/>
+                        <TextFlow fx:id="dialogContent" styleClass="dialog-content" />
+                        <VBox fx:id="dialogCustomContent" />
                     </VBox>
                 </MFXScrollPane>
             </center>
             <bottom>
-                <HBox fx:id="dialogAction" alignment="CENTER_RIGHT" styleClass="dialog-action"
-                      BorderPane.alignment="CENTER"/>
+                <HBox fx:id="dialogAction" alignment="CENTER_RIGHT" styleClass="dialog-action" BorderPane.alignment="CENTER" />
             </bottom>
         </MFXGenericDialog>
     </VBox>

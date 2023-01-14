@@ -4,7 +4,6 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import net.cps.client.utils.ResourcesLoader;
-import net.cps.common.entities.Employee;
 import net.cps.common.utils.AbstractUser;
 import net.cps.common.utils.Entities;
 import net.cps.common.utils.RequestType;
@@ -12,13 +11,13 @@ import net.cps.common.utils.RequestType;
 import java.io.IOException;
 
 /**
- *  Main JavaFX GUI Application.
+ * Main JavaFX GUI Application.
  **/
 public class App extends Application {
     private static Scene scene;
     
-    public static CPSClient client = null;
-    public static Object entity = null;
+    private static CPSClient client = null;
+    private static Object entity = null;
     
     
     @Override
@@ -50,20 +49,28 @@ public class App extends Application {
         System.out.println("[CLIENT] application closed successfully.");
     }
     
+    public static CPSClient getClient () {
+        return client;
+    }
     
-    /* ----- Utility Methods ---------------------------------------- */
+    public static Object getEntity () {
+        return entity;
+    }
     
-    public static void render (CPSClient client) {
-        App.client = client;
-        launch();
+    public static void setEntity (Object entity) {
+        App.entity = entity;
     }
     
     public static void setPage (String fxml) throws IOException {
         scene.setRoot(ResourcesLoader.loadFXML(fxml));
     }
     
-    public static void setEntity (Object entity) {
-        App.entity = entity;
+    
+    /* ----- Utility Methods ---------------------------------------- */
+    
+    public static void render (CPSClient client) {
+        App.client = client;
+        launch();
     }
     
 }
