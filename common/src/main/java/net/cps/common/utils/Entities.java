@@ -225,8 +225,8 @@ public enum Entities {
             """
                     (
                         id                      INT NOT NULL AUTO_INCREMENT,
-                        created_at              DATETIME NOT NULL,
                         parking_lot_id          INT NOT NULL,
+                        created_at              DATETIME NOT NULL,
                         total_reservations      INT NOT NULL,
                         total_fulfilled         INT NOT NULL,
                         total_cancellations     INT NOT NULL,

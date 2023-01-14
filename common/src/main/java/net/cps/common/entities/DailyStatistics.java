@@ -63,7 +63,8 @@ public class DailyStatistics {
         this.totalFulfilled = calculateTotalFulfilled(reservations);
         this.totalCancellations = calculateTotalCancellations(reservations);
         this.totalLatency = calculateTotalLatency(reservations);
-        this.dailyAverageLatency = calculateDailyAverageLatency(reservations, totalLatency);
+        //this.dailyAverageLatency = calculateDailyAverageLatency(reservations, totalLatency);
+        this.dailyAverageLatency = 0.0;
         //this.dailyMedianLatency = calculateDailyMedianLatency(reservations, totalLatency);
         this.dailyMedianLatency = 0.0;
     }

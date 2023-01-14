@@ -185,28 +185,28 @@ public class Main {
             Calendar arrival = Calendar.getInstance();
             departure.set(2023, Calendar.JANUARY, 24, 12, 30, 0);
             arrival.set(2023, Calendar.JANUARY, 24, 14, 30, 0);
-            reservations.add(new Reservation(parkingLots.get(0), customers.get(0), vehicles.get(1), departure, arrival));
+            reservations.add(new Reservation(parkingLots.get(0), customers.get(0), vehicles.get(1), (Calendar) departure.clone(), (Calendar) arrival.clone()));
             departure.set(2023, Calendar.OCTOBER, 18, 10, 30, 0);
             arrival.set(2023, Calendar.OCTOBER, 18, 16, 30, 0);
-            reservations.add(new Reservation(parkingLots.get(1), customers.get(1), vehicles.get(2), departure, arrival));
+            reservations.add(new Reservation(parkingLots.get(1), customers.get(1), vehicles.get(2), (Calendar) departure.clone(), (Calendar) arrival.clone()));
             
             // ended reservations
             arrival.set(2023, Calendar.JUNE, 12, 8, 30, 0);
             departure.set(2023, Calendar.JUNE, 12, 10, 30, 0);
-            reservations.add(new Reservation(parkingLots.get(0), customers.get(0), vehicles.get(0), departure, arrival));
-            reservations.get(2).setEntryTime(arrival);
+            reservations.add(new Reservation(parkingLots.get(0), customers.get(0), vehicles.get(0), (Calendar) departure.clone(), (Calendar) arrival.clone()));
+            reservations.get(2).setEntryTime((Calendar) arrival.clone());
             
             arrival.set(2023, Calendar.JUNE, 12, 11, 35, 0);
             departure.set(2023, Calendar.JUNE, 12, 13, 0, 0);
-            reservations.add(new Reservation(parkingLots.get(0), customers.get(3), vehicles.get(4), departure, arrival));
+            reservations.add(new Reservation(parkingLots.get(0), customers.get(3), vehicles.get(4), (Calendar) departure.clone(), (Calendar) arrival.clone()));
             arrival.add(Calendar.MINUTE, 15);
-            reservations.get(3).setEntryTime(arrival);
+            reservations.get(3).setEntryTime((Calendar) arrival.clone());
             
             arrival.set(2023, Calendar.JUNE, 12, 13, 0, 0);
             departure.set(2023, Calendar.JUNE, 12, 14, 0, 0);
-            reservations.add(new Reservation(parkingLots.get(0), customers.get(4), vehicles.get(5), departure, arrival));
+            reservations.add(new Reservation(parkingLots.get(0), customers.get(4), vehicles.get(5), (Calendar) departure.clone(), (Calendar) arrival.clone()));
             arrival.add(Calendar.MINUTE, 35);
-            reservations.get(4).setEntryTime(arrival);
+            reservations.get(4).setEntryTime((Calendar) arrival.clone());
             Database.createMultipleEntities(sessionFactory, reservations);
             
             // Complaints
@@ -222,6 +222,7 @@ public class Main {
             reservationsForStatistics.add(reservations.get(3));
             reservationsForStatistics.add(reservations.get(4));
             dailyStatistics.add(new DailyStatistics(parkingLots.get(0), reservationsForStatistics));
+            System.out.println(dailyStatistics);
             Database.createMultipleEntities(sessionFactory, dailyStatistics);
             
             
