@@ -12,10 +12,11 @@ import java.util.List;
 @Table(name = "customers")
 public class Customer extends AbstractUser implements Serializable {
     @Id
-    @Column(name = "email", unique = true, columnDefinition = "VARCHAR(100) UNIQUE NOT NULL PRIMARY KEY")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false, nullable = false, columnDefinition = "INT NOT NULL AUTO_INCREMENT")
+    private Integer id;
+    @Column(name = "email", unique = true, columnDefinition = "VARCHAR(100) UNIQUE NOT NULL")
     private String email;
-    @Column(name = "id")
-    private String id;
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")
@@ -42,10 +43,9 @@ public class Customer extends AbstractUser implements Serializable {
         super();
     }
     
-    public Customer (String email, String id, String firstName, String lastName, String password) {
+    public Customer (String email, String firstName, String lastName, String password) {
         super();
         this.email = email;
-        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.passwordSalt = generateSalt();
@@ -67,10 +67,10 @@ public class Customer extends AbstractUser implements Serializable {
         this.email = email;
     }
     
-    public String getId () {
+    public Integer getId () {
         return id;
     }
-    public void setId (String id) {
+    public void setId (Integer id) {
         this.id = id;
     }
     

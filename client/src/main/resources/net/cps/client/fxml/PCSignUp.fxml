@@ -97,11 +97,6 @@
                         <HBox>
                             <MFXTextField fx:id="emailField" floatMode="BORDER" floatingText="Email" />
                         </HBox>
-                  <HBox>
-                     <children>
-                        <MFXTextField fx:id="idField" floatMode="BORDER" floatingText="Id Number" />
-                     </children>
-                  </HBox>
                         <HBox>
                             <MFXPasswordField fx:id="passwordField" allowCopy="true" allowCut="true" allowPaste="true" floatMode="BORDER" floatingText="Password" />
                         </HBox>

@@ -73,12 +73,13 @@ public enum Entities {
             (Integer::parseInt),
             """
                     (
-                        id                                      INT NOT NULL PRIMARY KEY,
+                        id                                      INT NOT NULL,
                         hourly_occasional_parking               FLOAT NOT NULL,
                         hourly_onetime_parking                  FLOAT NOT NULL,
                         regular_subscription_single_vehicle     FLOAT NOT NULL,
                         regular_subscription_multiple_vehicles  FLOAT NOT NULL,
                         full_subscription_single_vehicle        FLOAT NOT NULL,
+                        PRIMARY KEY (id),
                         FOREIGN KEY (id) REFERENCES parking_lots(id)
                     )"""
     ),
@@ -89,7 +90,7 @@ public enum Entities {
             (Integer::parseInt),
             """
                     (
-                        id              INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+                        id              INT NOT NULL AUTO_INCREMENT,
                         email           VARCHAR(100) UNIQUE NOT NULL,
                         first_name      VARCHAR(55) NOT NULL,
                         last_name       VARCHAR(55) NOT NULL,
@@ -97,24 +98,26 @@ public enum Entities {
                         password_salt   CHAR(24) NOT NULL,
                         is_active       BOOLEAN NOT NULL,
                         role            ENUM('ADMIN', 'NETWORK_MANAGER', 'CUSTOMER_SERVICE_EMPLOYEE', 'PARKING_LOT_MANAGER', 'PARKING_LOT_EMPLOYEE', 'EMPLOYEE') NOT NULL,
-                        organization    VARCHAR(255)
+                        organization    VARCHAR(255),
+                        PRIMARY KEY (id)
                     )"""
     ),
     CUSTOMER(Customer.class,
             "customers",
-            "email",
-            String.class,
-            (s -> s),
+            "id",
+            Integer.class,
+            (Integer::parseInt),
             """
                     (
-                        email           VARCHAR(100) UNIQUE NOT NULL PRIMARY KEY,
-                        id              CHAR(9) UNIQUE NOT NULL,
+                        id              INT NOT NULL AUTO_INCREMENT,
+                        email           VARCHAR(100) UNIQUE NOT NULL,
                         first_name      VARCHAR(55) NOT NULL,
                         last_name       VARCHAR(55) NOT NULL,
                         password_hash   CHAR(128) NOT NULL,
                         password_salt   CHAR(24) NOT NULL,
                         is_active       BOOLEAN NOT NULL,
-                        balance         DOUBLE NOT NULL
+                        balance         DOUBLE NOT NULL,
+                        PRIMARY KEY (id)
                     )"""
     ),
     SUBSCRIPTION(Subscription.class,
@@ -124,12 +127,13 @@ public enum Entities {
             (Integer::parseInt),
             """
                     (
-                        id              INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+                        id              INT NOT NULL AUTO_INCREMENT,
                         customer_email  VARCHAR(100) NOT NULL,
                         parking_lot_id  INT NOT NULL,
                         type            ENUM('REGULAR', 'FULL') NOT NULL,
                         start_date      DATE NOT NULL,
                         end_date        DATE NOT NULL,
+                        PRIMARY KEY (id),
                         FOREIGN KEY (customer_email) REFERENCES customers(email),
                         FOREIGN KEY (parking_lot_id) REFERENCES parking_lots(id)
                     )"""

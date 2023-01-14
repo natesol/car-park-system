@@ -130,7 +130,7 @@ public class PCSignUpController extends PageController {
             return;
         }
         
-        Customer customer = new Customer(email, "id", firstName, lastName, password);
+        Customer customer = new Customer(email,  firstName, lastName, password);
         //CPSClient.sendRequestToServer(RequestType.POST, "customer/sign-up", customer, "create a new customer account");
     }
     

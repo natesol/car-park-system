@@ -358,7 +358,7 @@ public class CPSServer extends AbstractServer {
                 String password = fields[1].split("=")[1];
                 
                 // the given email belongs to a customer.
-                Customer customer = Database.getEntity(sessionFactory, Customer.class, email);
+                Customer customer = Database.getEntity(sessionFactory, Customer.class, "email", email);
                 if (customer != null) {
                     if (customer.getIsActive()) {
                         return new ResponseMessage(requestId, request, ResponseStatus.UNAUTHORIZED, "Sorry, but you are currently logged in on another device. Users not allowed to connect to the system via different devices at the same time. Please log out and try again.", null);

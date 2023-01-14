@@ -115,12 +115,12 @@ public class Main {
     private static void createDummyData (SessionFactory sessionFactory) {
         try {
             ArrayList<Customer> customers = new ArrayList<>();
-            customers.add(new Customer("netanelshlomo@gmail.com", "357357357", "Netanel", "Shlomo", "123456"));
-            customers.add(new Customer("john.doe@gmail.com", "321321321", "John", "Doe", "123456"));
-            customers.add(new Customer("jane.doe@gmail.com", "456456465", "Jane", "Doe", "123456"));
-            customers.add(new Customer("bob.smith@gmail.com", "654654654", "Bob", "Smith", "123456"));
-            customers.add(new Customer("alice.smith@gmail.com", "258258258", "Alice", "Smith", "123456"));
-            customers.add(new Customer("foo.bar@gmail.com", "987987987", "Foo", "Bar", "123456"));
+            customers.add(new Customer("netanelshlomo@gmail.com", "Netanel", "Shlomo", "123456"));
+            customers.add(new Customer("john.doe@gmail.com",  "John", "Doe", "123456"));
+            customers.add(new Customer("jane.doe@gmail.com",  "Jane", "Doe", "123456"));
+            customers.add(new Customer("bob.smith@gmail.com",  "Bob", "Smith", "123456"));
+            customers.add(new Customer("alice.smith@gmail.com", "Alice", "Smith", "123456"));
+            customers.add(new Customer("foo.bar@gmail.com",  "Foo", "Bar", "123456"));
             Database.createMultipleEntities(sessionFactory, customers);
             
             ArrayList<ParkingLot> parkingLots = new ArrayList<>();
