@@ -18,7 +18,7 @@ public class Robot {
     
     /* ----- Constructors ------------------------------------------- */
     
-    public Robot (ParkingLot parkingLot) {
+    public Robot (ParkingLot parkingLot /*, ArrayList<ParkingSpace> parkingSpaces */) {
         this.parkingLot = parkingLot;
         this.floors = parkingLot.getNumOfFloors(); //3
         this.rows = parkingLot.getNumOfRows(); //3

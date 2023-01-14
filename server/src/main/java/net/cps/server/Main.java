@@ -175,7 +175,26 @@ public class Main {
             subscriptions.add(new Subscription(customers.get(1), parkingLots.get(0), SubscriptionType.BASIC, List.of(new Vehicle[] {vehicles.get(2)}), LocalTime.of(12,30)));
             Database.createMultipleEntities(sessionFactory, subscriptions);
             
-            //(@NotNull Customer customer, ParkingLot parkingLot, @NotNull SubscriptionType type, @NotNull List<Vehicle> vehicles, @NotNull Calendar departureTime) {
+            // Reservations
+            ArrayList<Reservation> reservations = new ArrayList<>();
+            //reservations.add(new Reservation());
+            //Database.createMultipleEntities(sessionFactory, reservations);
+            
+            // Reports
+            ArrayList<Report> reports = new ArrayList<>();
+            //reports.add(new Report());
+            Database.createMultipleEntities(sessionFactory, reports);
+            
+            // Complaints
+            ArrayList<Complaint> complaints = new ArrayList<>();
+            //complaints.add(new Complaint());
+            //Database.createMultipleEntities(sessionFactory, complaints);
+            
+            // Daily Statistics
+            ArrayList<DailyStatistics> dailyStatistics = new ArrayList<>();
+            //dailyStatistics.add(new DailyStatistics());
+            //Database.createMultipleEntities(sessionFactory, dailyStatistics);
+            
             
             
             // TEST !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
