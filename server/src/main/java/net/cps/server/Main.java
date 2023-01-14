@@ -13,7 +13,10 @@ import org.hibernate.SessionFactory;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Timer;
 
 
 /**
@@ -93,7 +96,8 @@ public class Main {
             session.createNativeQuery(MySQLQueries.CREATE_PARKING_SPACES_TABLE).executeUpdate();
             session.createNativeQuery(MySQLQueries.CREATE_VEHICLES_TABLE).executeUpdate();
             session.createNativeQuery(MySQLQueries.CREATE_RESERVATIONS_TABLE).executeUpdate();
-            
+            session.createNativeQuery(MySQLQueries.CREATE_COMPLAINTS_TABLE).executeUpdate();
+            session.createNativeQuery(MySQLQueries.CREATE_DAILY_STATISTICS_TABLE).executeUpdate();
             
             session.flush();
             session.getTransaction().commit();
@@ -171,30 +175,54 @@ public class Main {
             
             // Create a list of Subscriptions for Customers.
             ArrayList<Subscription> subscriptions = new ArrayList<>();
-            subscriptions.add(new Subscription(customers.get(0), parkingLots.get(0), SubscriptionType.PREMIUM, List.of(new Vehicle[] {vehicles.get(0), vehicles.get(1)}), LocalTime.of(0,0)));
-            subscriptions.add(new Subscription(customers.get(1), parkingLots.get(0), SubscriptionType.BASIC, List.of(new Vehicle[] {vehicles.get(2)}), LocalTime.of(12,30)));
+            subscriptions.add(new Subscription(customers.get(0), parkingLots.get(0), SubscriptionType.PREMIUM, List.of(new Vehicle[] {vehicles.get(0), vehicles.get(1)}), LocalTime.of(0, 0)));
+            subscriptions.add(new Subscription(customers.get(1), parkingLots.get(0), SubscriptionType.BASIC, List.of(new Vehicle[] {vehicles.get(2)}), LocalTime.of(12, 30)));
             Database.createMultipleEntities(sessionFactory, subscriptions);
             
             // Reservations
             ArrayList<Reservation> reservations = new ArrayList<>();
-            //reservations.add(new Reservation());
-            //Database.createMultipleEntities(sessionFactory, reservations);
+            Calendar departure = Calendar.getInstance();
+            Calendar arrival = Calendar.getInstance();
+            departure.set(2023, Calendar.JANUARY, 24, 12, 30, 0);
+            arrival.set(2023, Calendar.JANUARY, 24, 14, 30, 0);
+            reservations.add(new Reservation(parkingLots.get(0), customers.get(0), vehicles.get(1), departure, arrival));
+            departure.set(2023, Calendar.OCTOBER, 18, 10, 30, 0);
+            arrival.set(2023, Calendar.OCTOBER, 18, 16, 30, 0);
+            reservations.add(new Reservation(parkingLots.get(1), customers.get(1), vehicles.get(2), departure, arrival));
             
-            // Reports
-            ArrayList<Report> reports = new ArrayList<>();
-            //reports.add(new Report());
-            Database.createMultipleEntities(sessionFactory, reports);
+            // ended reservations
+            arrival.set(2023, Calendar.JUNE, 12, 8, 30, 0);
+            departure.set(2023, Calendar.JUNE, 12, 10, 30, 0);
+            reservations.add(new Reservation(parkingLots.get(0), customers.get(0), vehicles.get(0), departure, arrival));
+            reservations.get(2).setEntryTime(arrival);
+            
+            arrival.set(2023, Calendar.JUNE, 12, 11, 35, 0);
+            departure.set(2023, Calendar.JUNE, 12, 13, 0, 0);
+            reservations.add(new Reservation(parkingLots.get(0), customers.get(3), vehicles.get(4), departure, arrival));
+            arrival.add(Calendar.MINUTE, 15);
+            reservations.get(3).setEntryTime(arrival);
+            
+            arrival.set(2023, Calendar.JUNE, 12, 13, 0, 0);
+            departure.set(2023, Calendar.JUNE, 12, 14, 0, 0);
+            reservations.add(new Reservation(parkingLots.get(0), customers.get(4), vehicles.get(5), departure, arrival));
+            arrival.add(Calendar.MINUTE, 35);
+            reservations.get(4).setEntryTime(arrival);
+            Database.createMultipleEntities(sessionFactory, reservations);
             
             // Complaints
             ArrayList<Complaint> complaints = new ArrayList<>();
-            //complaints.add(new Complaint());
-            //Database.createMultipleEntities(sessionFactory, complaints);
+            complaints.add(new Complaint(customers.get(0), "I was charged for a reservation that I didn't make."));
+            complaints.add(new Complaint(customers.get(1), "My reservation was cancelled without my consent."));
+            Database.createMultipleEntities(sessionFactory, complaints);
             
             // Daily Statistics
             ArrayList<DailyStatistics> dailyStatistics = new ArrayList<>();
-            //dailyStatistics.add(new DailyStatistics());
-            //Database.createMultipleEntities(sessionFactory, dailyStatistics);
-            
+            ArrayList<Reservation> reservationsForStatistics = new ArrayList<>();
+            reservationsForStatistics.add(reservations.get(2));
+            reservationsForStatistics.add(reservations.get(3));
+            reservationsForStatistics.add(reservations.get(4));
+            dailyStatistics.add(new DailyStatistics(parkingLots.get(0), reservationsForStatistics));
+            Database.createMultipleEntities(sessionFactory, dailyStatistics);
             
             
             // TEST !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -209,6 +237,9 @@ public class Main {
             //ids.add(2);
             //ids.add(3);
             //System.out.println(Database.getMultipleEntities(sessionFactory, ParkingLot.class, ids));
+            //System.out.println(Database.getAllEntities(sessionFactory, Reservation.class));
+            //System.out.println(Database.getAllEntities(sessionFactory, Complaint.class));
+            System.out.println(Database.getAllEntities(sessionFactory, DailyStatistics.class));
             // TEST !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         }
         catch (HibernateException e) {

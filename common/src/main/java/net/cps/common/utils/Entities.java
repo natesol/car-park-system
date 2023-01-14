@@ -147,13 +147,21 @@ public enum Entities {
             (Integer::parseInt),
             """
                     (
-                        id              INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-                        customer_email  VARCHAR(100) NOT NULL,
-                        parking_lot_id  INT NOT NULL,
-                        start_date      DATETIME NOT NULL,
-                        end_date        DATETIME NOT NULL,
+                        id                      INT NOT NULL AUTO_INCREMENT,
+                        parking_lot_id          INT NOT NULL,
+                        customer_email          VARCHAR(100) NOT NULL,
+                        vehicle_license_plate   CHAR(8) UNIQUE NOT NULL,
+                        arrival_time            DATETIME NOT NULL,
+                        departure_time          DATETIME NOT NULL,
+                        entry_time              DATETIME,
+                        status                  ENUM('PENDING', 'CANCELLED', 'CHECKED_IN', 'CHECKED_OUT') NOT NULL,
+                        payed                   DOUBLE NOT NULL,
+                        parking_space_id        INT UNIQUE,
+                        PRIMARY KEY (id),
+                        FOREIGN KEY (parking_lot_id) REFERENCES parking_lots(id),
                         FOREIGN KEY (customer_email) REFERENCES customers(email),
-                        FOREIGN KEY (parking_lot_id) REFERENCES parking_lots(id)
+                        FOREIGN KEY (vehicle_license_plate) REFERENCES vehicles(license_plate),
+                        FOREIGN KEY (parking_space_id) REFERENCES parking_spaces(id)
                     )"""
     ),
     PARKING_SPACE(ParkingSpace.class,
@@ -187,6 +195,46 @@ public enum Entities {
                         PRIMARY KEY (id),
                         FOREIGN KEY (customer_email) REFERENCES customers(email),
                         FOREIGN KEY (parking_space_id) REFERENCES parking_spaces(id)
+                    )"""
+    ),
+    COMPLAINT(Complaint.class,
+            "complaints",
+            "id",
+            Integer.class,
+            (Integer::parseInt),
+            """
+                    (
+                        id                  INT NOT NULL AUTO_INCREMENT,
+                        customer_email      VARCHAR(100) NOT NULL,
+                        status              ENUM('ACTIVE', 'RESOLVED', 'CANCELLED') NOT NULL,
+                        submission_time     DATETIME NOT NULL,
+                        resolution_time     DATETIME,
+                        content             TEXT NOT NULL,
+                        resolution          TEXT,
+                        employee_id         INT,
+                        PRIMARY KEY (id),
+                        FOREIGN KEY (customer_email) REFERENCES customers(email),
+                        FOREIGN KEY (employee_id) REFERENCES employees(id)
+                    )"""
+    ),
+    DAILY_STATISTICS(DailyStatistics.class,
+            "daily_statistics",
+            "id",
+            Integer.class,
+            (Integer::parseInt),
+            """
+                    (
+                        id                      INT NOT NULL AUTO_INCREMENT,
+                        created_at              DATETIME NOT NULL,
+                        parking_lot_id          INT NOT NULL,
+                        total_reservations      INT NOT NULL,
+                        total_fulfilled         INT NOT NULL,
+                        total_cancellations     INT NOT NULL,
+                        total_latency           INT NOT NULL,
+                        daily_average_latency   DOUBLE NOT NULL,
+                        daily_median_latency    DOUBLE NOT NULL,
+                        PRIMARY KEY (id),
+                        FOREIGN KEY (parking_lot_id) REFERENCES parking_lots(id)
                     )"""
     );
     

@@ -1,6 +1,7 @@
 package net.cps.common.entities;
 
 import net.cps.common.utils.ComplaintStatus;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.util.Calendar;
@@ -12,31 +13,45 @@ public class Complaint {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
+    @NotNull
     @ManyToOne
-    @JoinColumn(name = "customer_id", referencedColumnName = "id")
+    @JoinColumn(name = "customer_email", referencedColumnName = "email")
     private Customer customer;
+    @NotNull
+    @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private ComplaintStatus status;
+    @NotNull
     @Column(name = "submission_time", nullable = false)
     private Calendar submissionTime;
     @Column(name = "resolution_time")
     private Calendar resolutionTime;
+    @NotNull
     @Column(name = "content", nullable = false)
     private String content;
-    @Column(name = "resolution", nullable = false)
+    @Column(name = "resolution")
     private String resolution;
     @ManyToOne
     @JoinColumn(name = "employee_id", referencedColumnName = "id")
     private Employee employee;
     
-    public Complaint (Customer customer, String content) {
+    
+    /* ----- Constructors ------------------------------------------- */
+    
+    public Complaint () {}
+    
+    public Complaint (@NotNull Customer customer, @NotNull String content) {
         this.customer = customer;
         this.status = ComplaintStatus.ACTIVE;
         this.submissionTime = Calendar.getInstance();
         this.content = content;
+        this.employee = null;
+        this.resolution = null;
+        this.resolutionTime = null;
     }
     
-    public Complaint () {}
+    
+    /* ----- Getters and Setters ------------------------------------ */
     
     public Integer getId () {
         return id;
@@ -100,5 +115,29 @@ public class Complaint {
     
     public void setEmployee (Employee employee) {
         this.employee = employee;
+    }
+    
+    
+    /* ----- Utility Methods ---------------------------------------- */
+    
+    public void resolve (String resolution) {
+        this.resolution = resolution;
+        this.resolutionTime = Calendar.getInstance();
+        this.status = ComplaintStatus.RESOLVED;
+    }
+    
+    
+    @Override
+    public String toString () {
+        return "Complaint{" +
+                "id: " + id +
+                ", customer: " + customer.getEmail() +
+                ", status: " + status +
+                ", submissionTime: " + submissionTime.getTime() +
+                ", resolutionTime: " + (resolutionTime == null ? "null" : resolutionTime.getTime()) +
+                ", content: " + content +
+                ", resolution: " + resolution +
+                ", employee: " + employee +
+                '}';
     }
 }

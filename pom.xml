@@ -67,7 +67,7 @@
                     <version>3.7.1</version>
                 </plugin>
                 <plugin>
-                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <artifactId>maven-project-info-report1111111111s-plugin</artifactId>
                     <version>3.0.0</version>
                 </plugin>
             </plugins>

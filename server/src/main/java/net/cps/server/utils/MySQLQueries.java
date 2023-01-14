@@ -38,6 +38,10 @@ public class MySQLQueries {
     
     public static final String CREATE_PARKING_SPACES_TABLE = CREATE_TABLE + Entities.PARKING_SPACE.getTableName() + Entities.PARKING_SPACE.getTableQuery();
     
+    public static final String CREATE_COMPLAINTS_TABLE = CREATE_TABLE + Entities.COMPLAINT.getTableName() + Entities.COMPLAINT.getTableQuery();
+    
+    public static final String CREATE_DAILY_STATISTICS_TABLE = CREATE_TABLE + Entities.DAILY_STATISTICS.getTableName() + Entities.DAILY_STATISTICS.getTableQuery();
+    
     
     /* ----- Utility Methods ---------------------------------------- */
     

@@ -33,25 +33,56 @@ public class Reservation implements Serializable {
     @NotNull
     @Column(name = "departure_time")
     private Calendar departureTime;
+    @Column(name = "entry_time")
+    private Calendar entryTime;
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private ReservationStatus status;
+    @NotNull
+    @Column(name = "payed")
+    private Double payed;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "parking_space_id", unique = true)
     private ParkingSpace parkingSpace;
-    @NotNull
-    @Column(name = "status")
-    private ReservationStatus status;
     
+    
+    /* ----- Constructors ------------------------------------------- */
     
     public Reservation () {}
     
-    
-    public Reservation (@NotNull ParkingLot parkingLot, @NotNull Calendar arrivalDate, @NotNull Calendar departureTime, @NotNull Vehicle vehicle, ParkingSpace parkingSpace) {
+    public Reservation (@NotNull ParkingLot parkingLot, @NotNull Customer customer, @NotNull Vehicle vehicle, @NotNull Calendar arrivalTime, @NotNull Calendar departureTime) {
         this.parkingLot = parkingLot;
-        this.arrivalTime = arrivalDate;
-        this.departureTime = departureTime;
+        this.customer = customer;
         this.vehicle = vehicle;
-        this.parkingSpace = parkingSpace;
+        this.arrivalTime = arrivalTime;
+        this.departureTime = departureTime;
+        this.status = ReservationStatus.PENDING;
+        this.payed = 0.0;
     }
     
+    public Reservation (@NotNull ParkingLot parkingLot, @NotNull Customer customer, @NotNull Vehicle vehicle, @NotNull Calendar arrivalTime, @NotNull Calendar departureTime, @NotNull ReservationStatus status) {
+        this.parkingLot = parkingLot;
+        this.customer = customer;
+        this.vehicle = vehicle;
+        this.arrivalTime = arrivalTime;
+        this.departureTime = departureTime;
+        this.status = status;
+        this.payed = 0.0;
+    }
+    
+    public Reservation (@NotNull ParkingLot parkingLot, @NotNull Customer customer, @NotNull Vehicle vehicle, @NotNull Calendar arrivalTime, @NotNull Calendar departureTime, @NotNull ReservationStatus status, @NotNull Double payed) {
+        this.parkingLot = parkingLot;
+        this.customer = customer;
+        this.vehicle = vehicle;
+        this.arrivalTime = arrivalTime;
+        this.departureTime = departureTime;
+        this.status = status;
+        this.payed = payed;
+    }
+    
+    
+    /* ----- Getters & Setters -------------------------------------- */
     
     public Integer getId () {
         return id;
@@ -59,14 +90,6 @@ public class Reservation implements Serializable {
     
     public void setId (Integer id) {
         this.id = id;
-    }
-    
-    public Vehicle getVehicle () {
-        return vehicle;
-    }
-    
-    public void setVehicle (Vehicle vehicle) {
-        this.vehicle = vehicle;
     }
     
     public ParkingLot getParkingLot () {
@@ -85,6 +108,14 @@ public class Reservation implements Serializable {
         this.customer = customer;
     }
     
+    public Vehicle getVehicle () {
+        return vehicle;
+    }
+    
+    public void setVehicle (Vehicle vehicle) {
+        this.vehicle = vehicle;
+    }
+    
     public Calendar getArrivalTime () {
         return arrivalTime;
     }
@@ -101,27 +132,55 @@ public class Reservation implements Serializable {
         this.departureTime = departureTime;
     }
     
-    public ParkingSpace getParkingSpace () {
-        return parkingSpace;
+    public Calendar getEntryTime () {
+        return entryTime;
     }
     
-    public ReservationStatus getStatus () {
+    public void setEntryTime (Calendar entryTime) {
+        this.entryTime = entryTime;
+    }
+    
+    public @NotNull ReservationStatus getStatus () {
         return status;
     }
     
-    public void setStatus (ReservationStatus status) {
+    public void setStatus (@NotNull ReservationStatus status) {
         this.status = status;
+    }
+    
+    public @NotNull Double getPayed () {
+        return payed;
+    }
+    
+    public void setPayed (@NotNull Double payed) {
+        this.payed = payed;
+    }
+    
+    public ParkingSpace getParkingSpace () {
+        return parkingSpace;
     }
     
     public void setParkingSpace (ParkingSpace parkingSpace) {
         this.parkingSpace = parkingSpace;
     }
     
-    public Reservation (@NotNull ParkingLot parkingLot, @NotNull Calendar arrivalDate, @NotNull Calendar departureTime, @NotNull Vehicle vehicle) {
-        this.parkingLot = parkingLot;
-        this.arrivalTime = arrivalDate;
-        this.departureTime = departureTime;
-        this.vehicle = vehicle;
+    
+    /* ----- Utility Methods ---------------------------------------- */
+    
+    @Override
+    public String toString () {
+        return "Reservation {" +
+                "id: " + id +
+                ", parkingLot: " + parkingLot +
+                ", customer: " + customer +
+                ", vehicle: " + vehicle +
+                ", arrivalTime: " + arrivalTime.getTime() +
+                ", departureTime: " + departureTime.getTime() +
+                ", entryTime: " + entryTime.getTime() +
+                ", status: " + status +
+                ", payed: " + payed +
+                ", parkingSpace: " + parkingSpace +
+                '}';
     }
     
 }
