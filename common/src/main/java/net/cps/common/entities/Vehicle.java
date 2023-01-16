@@ -19,14 +19,13 @@ public class Vehicle implements Serializable {
     @JoinColumn(name = "customer_email", referencedColumnName = "email")
     private Customer customer;
     @NotNull
-    @Column(name = "license_plate", columnDefinition = "CHAR(8) NOT NULL UNIQUE")
-    private String licensePlate;
+    @Column(name = "number", columnDefinition = "CHAR(8) NOT NULL UNIQUE")
+    private String number;
     @ManyToMany
     private List<Subscription> subscriptions;
     @OneToMany(mappedBy = "vehicle")
     private List<Reservation> reservations;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "parking_space_id", referencedColumnName = "id")
+    @OneToOne(mappedBy = "vehicle", cascade = CascadeType.ALL)
     private ParkingSpace parkingSpace;
     
     
@@ -34,24 +33,24 @@ public class Vehicle implements Serializable {
     
     public Vehicle () {}
     
-    public Vehicle (@NotNull String licensePlate, @NotNull Customer customer) {
-        this.licensePlate = licensePlate;
+    public Vehicle (@NotNull String number, @NotNull Customer customer) {
+        this.number = number;
         this.customer = customer;
         this.subscriptions = null;
         this.reservations = null;
         this.parkingSpace = null;
     }
     
-    public Vehicle (@NotNull String licensePlate, @NotNull Customer customer, List<Subscription> subscriptions) {
-        this.licensePlate = licensePlate;
+    public Vehicle (@NotNull String number, @NotNull Customer customer, List<Subscription> subscriptions) {
+        this.number = number;
         this.customer = customer;
         this.subscriptions = subscriptions;
         this.reservations = null;
         this.parkingSpace = null;
     }
     
-    public Vehicle (@NotNull String licensePlate, @NotNull Customer customer, List<Subscription> subscriptions, List<Reservation> reservations, ParkingSpace parkingSpace) {
-        this.licensePlate = licensePlate;
+    public Vehicle (@NotNull String number, @NotNull Customer customer, List<Subscription> subscriptions, List<Reservation> reservations, ParkingSpace parkingSpace) {
+        this.number = number;
         this.customer = customer;
         this.subscriptions = subscriptions;
         this.reservations = reservations;
@@ -69,12 +68,12 @@ public class Vehicle implements Serializable {
         this.id = id;
     }
     
-    public @NotNull String getLicensePlate () {
-        return licensePlate;
+    public @NotNull String getNumber () {
+        return number;
     }
     
-    public void setLicensePlate (@NotNull String licensePlate) {
-        this.licensePlate = licensePlate;
+    public void setNumber (@NotNull String number) {
+        this.number = number;
     }
     
     public @NotNull Customer getCustomer () {
@@ -107,6 +106,21 @@ public class Vehicle implements Serializable {
     
     public void setParkingSpace (ParkingSpace parkingSpace) {
         this.parkingSpace = parkingSpace;
+    }
+    
+    
+    /* ----- Utility Methods ---------------------------------------- */
+    
+    @Override
+    public String toString () {
+        return "Vehicle {" +
+                "id: " + id +
+                ", licensePlate: " + number +
+                ", customer: " + customer +
+                //", subscriptions: " + (subscriptions != null ? subscriptions : "null") +
+                //", reservations: " + (reservations != null ? reservations : "null") +
+                //", parkingSpace: " + (parkingSpace != null ? parkingSpace : "null") +
+                '}';
     }
    
 }

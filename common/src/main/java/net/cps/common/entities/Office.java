@@ -10,6 +10,8 @@ import java.io.Serializable;
 @Table(name = "offices")
 @PrimaryKeyJoinColumn(name = "id")
 public class Office extends Organization implements Serializable {
+    @Column(name = "id", updatable = false, nullable = false)
+    private Integer id;
     @NotNull
     @Column(name = "name", columnDefinition = "VARCHAR(55) NOT NULL")
     private String name;

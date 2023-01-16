@@ -13,7 +13,7 @@ public class Employee extends AbstractUser implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "organization_id", referencedColumnName = "id")
     private Organization organization;
     @Enumerated(EnumType.STRING)

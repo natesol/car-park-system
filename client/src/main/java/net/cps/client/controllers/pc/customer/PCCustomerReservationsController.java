@@ -41,7 +41,8 @@ import java.util.Date;
 import java.util.ResourceBundle;
 
 
-public class PCCustomerSubscriptionsController extends AbstractPageController {
+public class PCCustomerReservationsController extends AbstractPageController {
+    public MFXButton newReservationBtn;
     private Customer customer;
     private ArrayList<ParkingLot> allParkingLots = new ArrayList<>();
     private ArrayList<Subscription> allCustomerSubscriptions = new ArrayList<>();

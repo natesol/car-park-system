@@ -7,8 +7,8 @@ import org.jetbrains.annotations.NotNull;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -19,7 +19,7 @@ public class Subscription implements Serializable {
     @Column(name = "id", nullable = false)
     private Integer id;
     @NotNull
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_email", referencedColumnName = "email", nullable = false)
     private Customer customer;
     @ManyToOne(fetch = FetchType.EAGER)
@@ -112,6 +112,10 @@ public class Subscription implements Serializable {
         return parkingLot.getId();
     }
     
+    public String getParkingLotName () {
+        return (parkingLot != null ? parkingLot.getName() : "All");
+    }
+    
     public @NotNull Calendar getCreatedAt () {
         return createdAt;
     }
@@ -120,12 +124,20 @@ public class Subscription implements Serializable {
         this.createdAt = createdAt;
     }
     
+    public @NotNull Date getCreatedAtTime () {
+        return createdAt.getTime();
+    }
+    
     public @NotNull Calendar getExpiresAt () {
         return expiresAt;
     }
     
     public void setExpiresAt (@NotNull Calendar expiresAt) {
         this.expiresAt = expiresAt;
+    }
+    
+    public @NotNull Date getExpiresAtTime () {
+        return expiresAt.getTime();
     }
     
     public @NotNull SubscriptionType getType () {
@@ -166,5 +178,24 @@ public class Subscription implements Serializable {
     
     public void setDepartureTime (@NotNull LocalTime departureTime) {
         this.departureTime = departureTime;
+    }
+    
+    
+    /* ----- Utility Methods ---------------------------------------- */
+    
+    @Override
+    public String toString () {
+        return "Subscription {" +
+                "id: " + id +
+                //", customer: " + customer +
+                //", parkingLot: " + parkingLot +
+                ", createdAt: " + createdAt.getTime() +
+                ", expiresAt: " + expiresAt.getTime() +
+                ", type: " + type +
+                //", vehicles: " + vehicles +
+                ", departureTime: " + departureTime +
+                ", state: " + state +
+                ", price: " + price +
+                '}';
     }
 }

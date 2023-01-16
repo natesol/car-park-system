@@ -7,11 +7,9 @@ import java.io.Serializable;
 @Table(name = "rates")
 public class Rates implements Serializable {
     @Id
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne
     @JoinColumn(name = "id")
     private ParkingLot parkingLot;
-    @Column(name = "id", nullable = false, insertable = false, updatable = false)
-    private Integer parkingLotId;
     @Column(name = "hourly_occasional_parking", nullable = false)
     private Double hourlyOccasionalParking; // ILS per Hour.
     @Column(name = "hourly_onetime_parking", nullable = false)
@@ -55,11 +53,11 @@ public class Rates implements Serializable {
     }
     
     public Integer getId () {
-        return this.parkingLotId;
+        return this.parkingLot.getId();
     }
     
     public Integer getParkingLotId () {
-        return parkingLotId;
+        return parkingLot.getId();
     }
     
     public double getHourlyOccasionalParking () {
@@ -108,7 +106,7 @@ public class Rates implements Serializable {
     @Override
     public String toString () {
         return "Rates {" +
-                "parkingLotId: " + this.parkingLotId +
+                "parkingLotId: " + (parkingLot != null ? this.parkingLot.getId() : "null") +
                 ", hourlyOccasionalParking: " + hourlyOccasionalParking +
                 ", hourlyOnetimeParking: " + hourlyOnetimeParking +
                 ", regularSubscriptionSingleVehicle: " + regularSubscriptionSingleVehicle +

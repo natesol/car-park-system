@@ -158,7 +158,7 @@ public class Robot {
             for (int j = 0 ; j < columns ; j++) {
                 for (int i = 0 ; i < rows ; i++) {
                     if (array[i][j][k].getState() == ParkingSpaceState.OCCUPIED) {
-                        System.out.print(array[i][j][k].getVehicle().getLicensePlate() + ": " + array[i][j][k].getReservation().getDepartureTime().getTime() + "| ");
+                        System.out.print(array[i][j][k].getVehicle().getNumber() + ": " + array[i][j][k].getReservation().getDepartureTime().getTime() + "| ");
                     }
                     else {
                         System.out.print(array[i][j][k].getState() + "| ");

@@ -340,6 +340,70 @@
   -fx-font-family: "Poppins", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Ubuntu", "Bitstream Vera Sans", "Liberation Sans", "Arial", "sans-serif";
   -fx-text-fill: #32383f;
 }
+/* Base */
+.mfx-legacy-table-view {
+  -fx-focus-color: transparent;
+  -fx-faint-focus-color: transparent;
+  -fx-border-color: #eaeef2;
+}
+/* Look up colors */
+.mfx-legacy-table-view {
+  -mfx-selection-bar: transparent;
+  -mfx-selection-bar-non-focused: transparent;
+  -mfx-box-border: transparent;
+  -fx-table-cell-border-color: transparent;
+  -fx-selection-bar: -mfx-selection-bar;
+  -fx-selection-bar-non-focused: -mfx-selection-bar;
+  -fx-box-border: -mfx-box-border;
+  -mfx-track-color: #afb8c1;
+  -mfx-thumb-color: #6e7781;
+  -mfx-thumb-hover-color: #424a53;
+}
+.mfx-legacy-table-view .column-header,
+.mfx-legacy-table-view .column-header-background,
+.mfx-legacy-table-view .column-header-background .filler {
+  -fx-background-color: transparent;
+  -fx-border-color: transparent;
+}
+.mfx-legacy-table-view .column-header {
+  -fx-border-color: #eaeef2 #eaeef2 #eaeef2 transparent;
+}
+.mfx-legacy-table-view .column-header .label {
+  -fx-text-fill: #32383f;
+}
+.mfx-legacy-table-view .column-header .arrow,
+.mfx-legacy-table-view .column-header .sort-order-dot {
+  -fx-background-color: #424a53;
+}
+.mfx-legacy-table-view .column-header-background {
+  -fx-border-color: #eaeef2;
+}
+.mfx-legacy-table-view .column-overlay {
+  -fx-background-color: #d0d7de;
+}
+.mfx-legacy-table-view .column-resize-line,
+.mfx-legacy-table-view .column-drag-header {
+  -fx-background-color: #d0d7de;
+}
+.mfx-legacy-table-row {
+  -fx-text-fill: #424a53;
+  -mfx-hover-color: #eaeef2;
+  -mfx-ripple-color: rgba(0, 0, 0, 0.2);
+}
+.mfx-legacy-table-row:odd,
+.mfx-legacy-table-row:even {
+  -fx-background-color: white;
+}
+.mfx-legacy-table-row:filled:hover,
+.mfx-legacy-table-row:selected .label {
+  -fx-text-fill: #32383f;
+}
+.table-row-cell .text {
+  -fx-fill: #424a53;
+}
+.table-row-cell:selected .text {
+  -fx-fill: #32383f;
+}
 /* ------------------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------------ */
@@ -415,12 +479,9 @@
 }
 .button .mfx-font-icon,
 .button .glyph-icon {
-  -fx-font-size: 1em !important;
-  -fx-font-weight: inherit !important;
   -fx-text-fill: inherit !important;
   -fx-fill: inherit !important;
   -mfx-color: inherit !important;
-  -fx-font-smoothing-type: gray !important;
   -mfx-size: 16px;
   -fx-stroke-width: 0 !important;
 }

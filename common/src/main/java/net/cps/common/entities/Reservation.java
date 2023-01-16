@@ -25,7 +25,7 @@ public class Reservation implements Serializable {
     private Customer customer;
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "vehicle_license_plate", referencedColumnName = "license_plate")
+    @JoinColumn(name = "vehicle_number", referencedColumnName = "number")
     private Vehicle vehicle;
     @NotNull
     @Column(name = "arrival_time")

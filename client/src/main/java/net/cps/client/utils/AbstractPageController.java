@@ -77,8 +77,9 @@ public abstract class AbstractPageController implements Initializable {
             dialogRoot.setDisable(true);
             body.setEffect(null);
             
-            dialogAction.getChildren().clear();
             dialogContent.getChildren().clear();
+            dialogCustomContent.getChildren().clear();
+            dialogAction.getChildren().clear();
             dialogControl.getStyleClass().clear();
             dialogControl.getStyleClass().add("dialog");
             dialogControl.getStyleClass().add("dialog-w-xs");
@@ -88,9 +89,11 @@ public abstract class AbstractPageController implements Initializable {
         }
         public void setBodyText (String @NotNull ... content) {
             dialogContent.getChildren().clear();
+            VBox contentBox = new VBox();
             for (String str : content) {
-                dialogContent.getChildren().add(new Text(str));
+                contentBox.getChildren().add(new TextFlow(new Text(str)));
             }
+            dialogContent.getChildren().add(contentBox);
         }
         public void setBodyText (@NotNull List<Node> content) {
             dialogContent.getChildren().clear();

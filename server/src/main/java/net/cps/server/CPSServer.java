@@ -154,18 +154,22 @@ public class CPSServer extends AbstractServer {
                 return new ResponseMessage(requestId, request, data != null ? ResponseStatus.SUCCESS : ResponseStatus.NOT_FOUND, data);
             }
             
-            // get entities of type `T` by parameters.
+            // get a list of entities of type `T` by one parameter.
             if (!requestHeader.contains("?") && requestHeader.contains("=")) {
-                List<T> data;
-                
-                String[] params = requestHeader.split("&");
-                SimpleEntry<String, String>[] fields = new SimpleEntry[params.length];
-                for (int i = 0 ; i < params.length ; i++) {
-                    String[] param = params[i].split("=");
-                    fields[i] = new SimpleEntry<>(param[0], param[1]);
-                }
-                data = Database.getMultipleEntities(sessionFactory, T, fields);
-                return new ResponseMessage(requestId, request, data != null ? ResponseStatus.SUCCESS : ResponseStatus.NOT_FOUND, data);
+                //List<T> data;
+                //
+                //String[] params = requestHeader.split("&");
+                //SimpleEntry<String, String>[] fields = new SimpleEntry[params.length];
+                //for (int i = 0 ; i < params.length ; i++) {
+                //    String[] param = params[i].split("=");
+                //    fields[i] = new SimpleEntry<>(param[0], param[1]);
+                //}
+                //data = Database.getMultipleEntities(sessionFactory, T, fields);
+                //System.out.println(data);
+                //System.out.println(data.size());
+                //System.out.println(fields[0].getKey() + "=" + fields[0].getValue());
+                //return new ResponseMessage(requestId, request, data != null ? ResponseStatus.SUCCESS : ResponseStatus.NOT_FOUND, data);
+                requestHeader = requestHeader + "?";
             }
             
             // get a list of entities of type `T`.

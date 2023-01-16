@@ -13,7 +13,6 @@ import java.util.List;
 @Table(name = "parking_lots")
 @PrimaryKeyJoinColumn(name = "id")
 public class ParkingLot extends Organization implements Serializable {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
     private Integer id;
     @NotNull
@@ -41,14 +40,17 @@ public class ParkingLot extends Organization implements Serializable {
     @Column(name = "num_of_cols", columnDefinition = "TINYINT NOT NULL")
     private Integer numOfCols;
     @NotNull
-    @OneToOne(mappedBy = "parkingLot", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "parkingLot", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Rates rates;
     @NotNull
-    @OneToMany(mappedBy = "parkingLot", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "parkingLot", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<ParkingSpace> parkingSpaces;
     @NotNull
-    @OneToMany(mappedBy = "parkingLot", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "parkingLot", cascade = CascadeType.ALL)
     private List<Reservation> reservations;
+    @NotNull
+    @OneToMany(mappedBy = "parkingLot", cascade = CascadeType.ALL)
+    private List<Subscription> subscriptions;
     
     @Transient
     public static final OrganizationType DEFAULT_TYPE = OrganizationType.PARKING_LOT;
@@ -59,7 +61,7 @@ public class ParkingLot extends Organization implements Serializable {
     @Transient
     public static final Integer DEFAULT_FLOOR_ROWS = 3;
     @Transient
-    public static final Integer DEFAULT_FLOOR_COLS = 1;
+    public static final Integer DEFAULT_FLOOR_COLS = 3;
     @Transient
     private transient Robot robot;
     
@@ -79,6 +81,7 @@ public class ParkingLot extends Organization implements Serializable {
         this.rates = new Rates(this);
         this.parkingSpaces = createParkingSpaces();
         this.reservations = new ArrayList<>();
+        this.subscriptions = new ArrayList<>();
         this.robot = new Robot(this);
     }
     
@@ -95,6 +98,7 @@ public class ParkingLot extends Organization implements Serializable {
         this.rates = new Rates(this);
         this.parkingSpaces = createParkingSpaces();
         this.reservations = new ArrayList<>();
+        this.subscriptions = new ArrayList<>();
         this.robot = new Robot(this);
     }
     
@@ -111,6 +115,7 @@ public class ParkingLot extends Organization implements Serializable {
         this.rates = new Rates(this);
         this.parkingSpaces = createParkingSpaces();
         this.reservations = new ArrayList<>();
+        this.subscriptions = new ArrayList<>();
         this.robot = new Robot(this);
     }
     
@@ -211,6 +216,14 @@ public class ParkingLot extends Organization implements Serializable {
     
     public @NotNull ArrayList<Reservation> getReservations () {
         return (ArrayList<Reservation>) reservations;
+    }
+    
+    public ArrayList<Subscription> getSubscriptions () {
+        return (ArrayList<Subscription>) subscriptions;
+    }
+    
+    public void setSubscriptions (ArrayList<Subscription> subscriptions) {
+        this.subscriptions = subscriptions;
     }
     
     public void setReservations (@NotNull ArrayList<Reservation> reservations) {

@@ -15,7 +15,7 @@ public class ParkingSpace implements Serializable {
     @Column(name = "id", updatable = false, nullable = false)
     private Integer id;
     @NotNull
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "parking_lot_id", referencedColumnName = "id")
     private ParkingLot parkingLot;
     @NotNull
@@ -31,10 +31,12 @@ public class ParkingSpace implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "state")
     private ParkingSpaceState state;
-    @OneToOne(mappedBy = "parkingSpace", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "vehicle_number", referencedColumnName = "number")
     private Vehicle vehicle;
-    @OneToOne(mappedBy = "parkingSpace", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "parkingSpace", cascade = CascadeType.ALL)
     private Reservation reservation;
+    
     
     
     /* ----- Constructors ------------------------------------------- */

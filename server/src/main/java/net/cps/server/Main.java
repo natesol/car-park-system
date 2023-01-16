@@ -93,8 +93,8 @@ public class Main {
             session.createNativeQuery(MySQLQueries.CREATE_EMPLOYEES_TABLE).executeUpdate();
             session.createNativeQuery(MySQLQueries.CREATE_CUSTOMERS_TABLE).executeUpdate();
             session.createNativeQuery(MySQLQueries.CREATE_SUBSCRIPTIONS_TABLE).executeUpdate();
-            session.createNativeQuery(MySQLQueries.CREATE_PARKING_SPACES_TABLE).executeUpdate();
             session.createNativeQuery(MySQLQueries.CREATE_VEHICLES_TABLE).executeUpdate();
+            session.createNativeQuery(MySQLQueries.CREATE_PARKING_SPACES_TABLE).executeUpdate();
             session.createNativeQuery(MySQLQueries.CREATE_RESERVATIONS_TABLE).executeUpdate();
             session.createNativeQuery(MySQLQueries.CREATE_COMPLAINTS_TABLE).executeUpdate();
             session.createNativeQuery(MySQLQueries.CREATE_DAILY_STATISTICS_TABLE).executeUpdate();

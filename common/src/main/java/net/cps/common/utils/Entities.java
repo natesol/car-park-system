@@ -150,7 +150,7 @@ public enum Entities {
                         id                      INT NOT NULL AUTO_INCREMENT,
                         parking_lot_id          INT NOT NULL,
                         customer_email          VARCHAR(100) NOT NULL,
-                        vehicle_license_plate   CHAR(8) UNIQUE NOT NULL,
+                        vehicle_number          CHAR(8) UNIQUE NOT NULL,
                         arrival_time            DATETIME NOT NULL,
                         departure_time          DATETIME NOT NULL,
                         entry_time              DATETIME,
@@ -160,8 +160,22 @@ public enum Entities {
                         PRIMARY KEY (id),
                         FOREIGN KEY (parking_lot_id) REFERENCES parking_lots(id),
                         FOREIGN KEY (customer_email) REFERENCES customers(email),
-                        FOREIGN KEY (vehicle_license_plate) REFERENCES vehicles(license_plate),
+                        FOREIGN KEY (vehicle_number) REFERENCES vehicles(number),
                         FOREIGN KEY (parking_space_id) REFERENCES parking_spaces(id)
+                    )"""
+    ),
+    VEHICLE(Vehicle.class,
+            "vehicles",
+            "id",
+            Integer.class,
+            (Integer::parseInt),
+            """
+                    (
+                        id                  INT NOT NULL AUTO_INCREMENT,
+                        customer_email      VARCHAR(100) NOT NULL,
+                        number              CHAR(8) UNIQUE NOT NULL,
+                        PRIMARY KEY (id),
+                        FOREIGN KEY (customer_email) REFERENCES customers(email)
                     )"""
     ),
     PARKING_SPACE(ParkingSpace.class,
@@ -177,24 +191,10 @@ public enum Entities {
                         row_num         TINYINT NOT NULL,
                         col_num         TINYINT NOT NULL,
                         state           ENUM('AVAILABLE', 'OCCUPIED', 'RESERVED', 'DISABLED', 'OUT_OF_ORDER') NOT NULL,
+                        vehicle_number  CHAR(8) UNIQUE,
                         PRIMARY KEY (id),
-                        FOREIGN KEY (parking_lot_id) REFERENCES parking_lots(id)
-                    )"""
-    ),
-    VEHICLE(Vehicle.class,
-            "vehicles",
-            "id",
-            Integer.class,
-            (Integer::parseInt),
-            """
-                    (
-                        id                  INT NOT NULL AUTO_INCREMENT,
-                        customer_email      VARCHAR(100) NOT NULL,
-                        license_plate       CHAR(8) UNIQUE NOT NULL,
-                        parking_space_id    INT,
-                        PRIMARY KEY (id),
-                        FOREIGN KEY (customer_email) REFERENCES customers(email),
-                        FOREIGN KEY (parking_space_id) REFERENCES parking_spaces(id)
+                        FOREIGN KEY (parking_lot_id) REFERENCES parking_lots(id),
+                        FOREIGN KEY (vehicle_number) REFERENCES vehicles(number)
                     )"""
     ),
     COMPLAINT(Complaint.class,

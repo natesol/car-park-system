@@ -7,9 +7,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import net.cps.client.App;
 import net.cps.client.CPSClient;
+import net.cps.client.events.CustomerLoginEvent;
 import net.cps.client.utils.AbstractPageController;
 import net.cps.common.entities.Customer;
 import net.cps.common.utils.RequestType;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
 import java.net.URL;
@@ -39,6 +42,7 @@ public class PCCustomerHomeController extends AbstractPageController {
     
     @Override
     public void initialize (URL url, ResourceBundle resourceBundle) {
+        EventBus.getDefault().register(this);
         customer = (Customer) App.getEntity();
         
         Platform.runLater(() -> {
@@ -150,7 +154,15 @@ public class PCCustomerHomeController extends AbstractPageController {
     
     /* ----- EventBus Listeners ------------------------------------- */
     
-    
+    @Subscribe
+    public void onCustomerLogin (CustomerLoginEvent event) throws IOException {
+        customer = event.getCustomer();
+        App.setEntity(customer);
+        
+        Platform.runLater(() -> {
+            customerName.setText(customer.getFirstName() + " " + customer.getLastName());
+        });
+    }
     
     
     /* ----- Requests Callbacks (on server response) ---------------- */

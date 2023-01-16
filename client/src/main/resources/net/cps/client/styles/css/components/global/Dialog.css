@@ -35,6 +35,15 @@
 .sheet .sheet-text {
   -fx-font-family: "Poppins", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Ubuntu", "Bitstream Vera Sans", "Liberation Sans", "Arial", "sans-serif";
 }
+.sheet .table {
+  -fx-background-color: #ffffff !important;
+  -fx-border-color: #eaeef2 !important;
+  -fx-border-width: 1px !important;
+  -fx-border-style: solid !important;
+  -fx-background-radius: 8px !important;
+  -fx-border-radius: 8px !important;
+  -mfx-auto-clip: true !important;
+}
 /* ------------------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------------ */
 .dialog-root {
