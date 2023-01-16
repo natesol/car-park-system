@@ -1,10 +1,11 @@
 Time                      ID                   Type                 Message
-2023-01-14 23:28:20       1                    INFO                 a new entity added to the database. entity: Office, id: 1
-2023-01-14 23:28:20       2                    INFO                 a list of entities added to the database. entities: ParkingLot, ids: [2, 3, 4, 5]
-2023-01-14 23:28:20       3                    INFO                 a list of entities added to the database. entities: Employee, ids: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-2023-01-14 23:28:20       4                    INFO                 a list of entities added to the database. entities: Customer, ids: [1, 2, 3, 4, 5, 6]
-2023-01-14 23:28:20       5                    INFO                 a list of entities added to the database. entities: Vehicle, ids: [1, 2, 3, 4, 5, 6, 7]
-2023-01-14 23:28:20       6                    INFO                 a list of entities added to the database. entities: Subscription, ids: [1, 2]
-2023-01-14 23:28:20       7                    INFO                 a list of entities added to the database. entities: Reservation, ids: [1, 2, 3, 4, 5]
-2023-01-14 23:28:20       8                    INFO                 a list of entities added to the database. entities: Complaint, ids: [1, 2]
-2023-01-14 23:28:20       9                    INFO                 a list of entities added to the database. entities: DailyStatistics, ids: [1]
+2023-01-16 08:42:50       1                    INFO                 a new entity added to the database. entity: Office, id: 1
+2023-01-16 08:42:50       2                    INFO                 a list of entities added to the database. entities: ParkingLot, ids: [2, 3, 4, 5]
+2023-01-16 08:42:50       3                    INFO                 a list of entities added to the database. entities: Employee, ids: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+2023-01-16 08:42:50       4                    INFO                 a list of entities added to the database. entities: Customer, ids: [1, 2, 3, 4, 5, 6]
+2023-01-16 08:42:50       5                    INFO                 a list of entities added to the database. entities: Vehicle, ids: [1, 2, 3, 4, 5, 6, 7]
+2023-01-16 08:42:50       6                    INFO                 a list of entities added to the database. entities: Subscription, ids: [1, 2]
+2023-01-16 08:42:50       7                    INFO                 a list of entities added to the database. entities: Reservation, ids: [1, 2, 3, 4, 5]
+2023-01-16 08:42:50       8                    INFO                 a list of entities added to the database. entities: Complaint, ids: [1, 2]
+2023-01-16 08:42:50       9                    INFO                 a list of entities added to the database. entities: DailyStatistics, ids: [1]
+2023-01-16 08:43:12       10                   INFO                 an entity updated on the database. entity: Customer, id: 1

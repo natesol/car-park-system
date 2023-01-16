@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXFilterComboBox?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<HBox fx:id="subPageBody" maxWidth="1024.0" minHeight="400.0" minWidth="600.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.cps.client.controllers.pc.guest.PCGuestMainController">
+    <stylesheets>
+        <URL value="@../../../styles/css/utils/GlobalStyles.css" />
+        <URL value="@../../../styles/css/pages/PCGuestMain.css" />
+        <URL value="@../../../styles/css/pages/PCGuestMainSubPage.css" />
+    </stylesheets>
+    <styleClass>
+        <String fx:value="sub-page-body" />
+        <String fx:value="color-scheme-light" />
+    </styleClass>
+    <VBox alignment="TOP_CENTER" maxWidth="1024.0" minHeight="400.0" minWidth="600.0" prefWidth="1024.0">
+
+        <Text fx:id="subPageTitle" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sub-page-title" text="Reservations">
+        </Text>
+        <VBox maxWidth="600.0">
+            <VBox.margin>
+                <Insets top="30.0" />
+            </VBox.margin>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Track all your reservations on the 'CityPark' system." />
+        </VBox>
+        <VBox maxWidth="600.0" spacing="16.0">
+            <VBox.margin>
+                <Insets top="40.0"/>
+            </VBox.margin>
+            <HBox>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Parking Lot: "/>
+                <MFXFilterComboBox floatMode="DISABLED" floatingText="test"/>
+            </HBox>
+            <HBox>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Reservation Number:"/>
+                <MFXTextField floatMode="DISABLED"/>
+            </HBox>
+            <MFXButton text="Get Details"/>
+        </VBox>
+    </VBox>
+</HBox>

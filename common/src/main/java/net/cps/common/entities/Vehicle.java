@@ -42,6 +42,14 @@ public class Vehicle implements Serializable {
         this.parkingSpace = null;
     }
     
+    public Vehicle (@NotNull String licensePlate, @NotNull Customer customer, List<Subscription> subscriptions) {
+        this.licensePlate = licensePlate;
+        this.customer = customer;
+        this.subscriptions = subscriptions;
+        this.reservations = null;
+        this.parkingSpace = null;
+    }
+    
     public Vehicle (@NotNull String licensePlate, @NotNull Customer customer, List<Subscription> subscriptions, List<Reservation> reservations, ParkingSpace parkingSpace) {
         this.licensePlate = licensePlate;
         this.customer = customer;

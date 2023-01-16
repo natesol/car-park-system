@@ -295,16 +295,16 @@ public class Database {
         
     }
     
-    public static <T> T getEntity (@NotNull SessionFactory sessionFactory, @NotNull Class<T> T, @NotNull ArrayList<SimpleEntry<String, String>>[] fields) {
+    public static <T> T getEntity (@NotNull SessionFactory sessionFactory, @NotNull Class<T> T, @NotNull ArrayList<SimpleEntry<String, String>> fields) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         T data = null;
         
         try (session) {
             StringBuilder query = new StringBuilder("FROM " + Entities.fromString(T.getSimpleName()).getTableName() + " WHERE ");
-            for (int i = 0 ; i < fields.length ; i++) {
-                query.append(fields[i].get(0)).append(" = '").append(fields[i].get(1)).append("'");
-                if (i < fields.length - 1) {
+            for (int i = 0 ; i < fields.size() ; i++) {
+                query.append(fields.get(i).getKey()).append(" = '").append(fields.get(i).getValue()).append("'");
+                if (i < fields.size() - 1) {
                     query.append(" AND ");
                 }
             }
@@ -370,20 +370,20 @@ public class Database {
         return data.size() > 0 ? data : null;
     }
     
-    public static <T> ArrayList<T> getMultipleEntities (@NotNull SessionFactory sessionFactory, @NotNull Class<T> T, @NotNull ArrayList<SimpleEntry<String, String>>[] fields) {
+    public static <T> ArrayList<T> getMultipleEntities (@NotNull SessionFactory sessionFactory, @NotNull Class<T> T, @NotNull SimpleEntry<String, String>[] fields) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         ArrayList<T> data = new ArrayList<>();
         
         try (session) {
-            StringBuilder query = new StringBuilder("FROM " + Entities.fromString(T.getSimpleName()).getTableName() + " WHERE ");
+            StringBuilder query = new StringBuilder("SELECT * FROM " + Entities.fromString(T.getSimpleName()).getTableName() + " WHERE ");
             for (int i = 0 ; i < fields.length ; i++) {
-                query.append(fields[i].get(0)).append(" = '").append(fields[i].get(1)).append("'");
+                query.append(fields[i].getKey()).append(" = '").append(fields[i].getValue()).append("'");
                 if (i < fields.length - 1) {
                     query.append(" AND ");
                 }
             }
-            data = (ArrayList<T>) session.createQuery(query.toString(), T).list();
+            data = (ArrayList<T>) session.createNativeQuery(query.toString()).list();
             
             session.flush();
             transaction.commit();

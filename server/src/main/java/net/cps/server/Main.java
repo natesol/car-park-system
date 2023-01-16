@@ -154,7 +154,7 @@ public class Main {
             
             // Create a list of Customers.
             ArrayList<Customer> customers = new ArrayList<>();
-            customers.add(new Customer("netanelshlomo@gmail.com", "Netanel", "Shlomo", "123456"));
+            customers.add(new Customer("net@net.net", "Netanel", "Shlomo", "123456"));
             customers.add(new Customer("john.doe@gmail.com", "John", "Doe", "123456"));
             customers.add(new Customer("jane.doe@gmail.com", "Jane", "Doe", "123456"));
             customers.add(new Customer("bob.smith@gmail.com", "Bob", "Smith", "123456"));
@@ -240,7 +240,7 @@ public class Main {
             //System.out.println(Database.getMultipleEntities(sessionFactory, ParkingLot.class, ids));
             //System.out.println(Database.getAllEntities(sessionFactory, Reservation.class));
             //System.out.println(Database.getAllEntities(sessionFactory, Complaint.class));
-            System.out.println(Database.getAllEntities(sessionFactory, DailyStatistics.class));
+            //System.out.println(Database.getAllEntities(sessionFactory, DailyStatistics.class));
             // TEST !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         }
         catch (HibernateException e) {

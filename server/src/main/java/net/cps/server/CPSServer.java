@@ -15,6 +15,7 @@ import org.hibernate.SessionFactory;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -152,6 +153,20 @@ public class CPSServer extends AbstractServer {
                 
                 String id = requestHeader.split("/")[1];
                 data = Database.getEntity(sessionFactory, T, entity.getPrimaryKeyConverter().apply(id));
+                return new ResponseMessage(requestId, request, data != null ? ResponseStatus.SUCCESS : ResponseStatus.NOT_FOUND, data);
+            }
+            
+            // get entities of type `T` by parameters.
+            if (!requestHeader.contains("?") && requestHeader.contains("=")) {
+                List<T> data;
+                
+                String[] params = requestHeader.split("&");
+                SimpleEntry<String, String>[] fields = new SimpleEntry[params.length];
+                for (int i = 0 ; i < params.length ; i++) {
+                    String[] param = params[i].split("=");
+                    fields[i] = new SimpleEntry<>(param[0], param[1]);
+                }
+                data = Database.getMultipleEntities(sessionFactory, T, fields);
                 return new ResponseMessage(requestId, request, data != null ? ResponseStatus.SUCCESS : ResponseStatus.NOT_FOUND, data);
             }
             
@@ -399,17 +414,17 @@ public class CPSServer extends AbstractServer {
             
             // logout a user from the system.
             if (query.startsWith("logout")) {
-                if (_obj.getClass() == Customer.class ) {
+                if (_obj.getClass() == Customer.class) {
                     ((Customer) _obj).setIsActive(false);
                 }
-                else if (_obj.getClass() == Employee.class ) {
+                else if (_obj.getClass() == Employee.class) {
                     ((Employee) _obj).setIsActive(false);
                 }
                 
                 Database.updateEntity(sessionFactory, _obj);
                 return new ResponseMessage(requestId, request, ResponseStatus.SUCCESS);
             }
-    
+            
             return new ResponseMessage(requestId, request, ResponseStatus.BAD_REQUEST, "Bad Request: response to 'AUTH: " + query + "'.", null);
         }
         catch (Throwable e) {

@@ -133,7 +133,7 @@ public enum Entities {
                         expires_at      TIMESTAMP NOT NULL,
                         type            ENUM('BASIC', 'PREMIUM') NOT NULL,
                         departure_time  TIME NOT NULL,
-                        status          VARCHAR(255) NOT NULL,
+                        state           ENUM('ACTIVE', 'EXPIRED', 'RENEWED', 'CANCELLED') NOT NULL,
                         price           DOUBLE NOT NULL,
                         PRIMARY KEY (id),
                         FOREIGN KEY (customer_email) REFERENCES customers(email),

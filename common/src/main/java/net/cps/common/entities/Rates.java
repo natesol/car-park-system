@@ -29,7 +29,12 @@ public class Rates implements Serializable {
     public static final double DEFAULT_REGULAR_SUBSCRIPTION_SINGLE_VEHICLE = 60;
     public static final double DEFAULT_REGULAR_SUBSCRIPTION_MULTIPLE_VEHICLE = 54;
     public static final double DEFAULT_FULL_SUBSCRIPTION_SINGLE_VEHICLE = 72;
+    public static final double CANCELLATION_FEE_MORE_THAN_3_HOURS = 0.9;
+    public static final double CANCELLATION_FEE_LESS_THAN_3_HOURS = 0.5;
+    public static final double CANCELLATION_FEE_LESS_THAN_1_HOURS = 0.1;
     
+
+    /* ----- Constructors ------------------------------------------- */
     
     public Rates () {}
     
@@ -41,6 +46,9 @@ public class Rates implements Serializable {
         this.regularSubscriptionMultipleVehicles = DEFAULT_REGULAR_SUBSCRIPTION_MULTIPLE_VEHICLE;
         this.fullSubscriptionSingleVehicle = DEFAULT_FULL_SUBSCRIPTION_SINGLE_VEHICLE;
     }
+    
+    
+    /* ----- Getters & Setters -------------------------------------- */
     
     public ParkingLot getParkingLot () {
         return this.parkingLot;
@@ -93,6 +101,9 @@ public class Rates implements Serializable {
     public void setFullSubscriptionSingleVehicle (double fullSubscriptionSingleVehicle) {
         this.fullSubscriptionSingleVehicle = fullSubscriptionSingleVehicle;
     }
+    
+    
+    /* ----- Utility Methods ---------------------------------------- */
     
     @Override
     public String toString () {

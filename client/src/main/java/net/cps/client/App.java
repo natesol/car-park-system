@@ -41,7 +41,7 @@ public class App extends Application {
         
         // Logout the current user
         if (entity != null && !entity.getClass().equals(Entities.PARKING_LOT.getEntityClass())) {
-            CPSClient.sendRequestToServer(RequestType.AUTH, "logout/" + ((AbstractUser) entity).getEmail(), "logout on application close.", entity, null);
+            CPSClient.sendRequestToServer(RequestType.AUTH, "logout/email=" + ((AbstractUser) entity).getEmail(), "logout on application close.", entity, null);
         }
         
         // Close the connection with the server

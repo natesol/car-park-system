@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.lang.annotation.Native;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,11 +50,18 @@ public class ParkingLot extends Organization implements Serializable {
     @OneToMany(mappedBy = "parkingLot", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Reservation> reservations;
     
+    @Transient
     public static final OrganizationType DEFAULT_TYPE = OrganizationType.PARKING_LOT;
+    @Transient
     public static final String DEFAULT_NAME = "Parking Lot Name";
+    @Transient
     public static final Integer DEFAULT_FLOOR_NUM = 3;
+    @Transient
     public static final Integer DEFAULT_FLOOR_ROWS = 3;
+    @Transient
     public static final Integer DEFAULT_FLOOR_COLS = 1;
+    @Transient
+    private final Robot robot;
     
     
     /* ----- Constructors ------------------------------------------- */
@@ -71,6 +79,7 @@ public class ParkingLot extends Organization implements Serializable {
         this.rates = new Rates(this);
         this.parkingSpaces = createParkingSpaces();
         this.reservations = new ArrayList<>();
+        this.robot = new Robot(this);
     }
     
     public ParkingLot (@NotNull String name, @NotNull String streetName, @NotNull Integer streetNumber, @NotNull String cityName, @NotNull String countrySymbol, @NotNull Integer numOfCols) {
@@ -86,6 +95,7 @@ public class ParkingLot extends Organization implements Serializable {
         this.rates = new Rates(this);
         this.parkingSpaces = createParkingSpaces();
         this.reservations = new ArrayList<>();
+        this.robot = new Robot(this);
     }
     
     public ParkingLot (@NotNull String name, @NotNull String streetName, @NotNull Integer streetNumber, @NotNull String cityName, @NotNull String countrySymbol, @NotNull Integer numOfFloors, @NotNull Integer numOfRows, @NotNull Integer numOfCols) {
@@ -101,6 +111,7 @@ public class ParkingLot extends Organization implements Serializable {
         this.rates = new Rates(this);
         this.parkingSpaces = createParkingSpaces();
         this.reservations = new ArrayList<>();
+        this.robot = new Robot(this);
     }
     
     
@@ -239,6 +250,16 @@ public class ParkingLot extends Organization implements Serializable {
         return parkingSpaces;
     }
     
+    public Boolean addReservation (Reservation reservation) {
+        if (this.robot.getAvailableCapacityByTime(reservation.getArrivalTime(), reservation.getDepartureTime()) > 0) {
+            return this.reservations.add(reservation);
+        }
+        return false;
+    }
+    
+    public Boolean removeReservation (Reservation reservation) {
+        return this.reservations.remove(reservation);
+    }
     
     @Override
     public String toString () {

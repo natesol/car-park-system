@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXFilterComboBox?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+<?import java.lang.String?>
+<?import java.net.URL?>
+<HBox fx:id="subPageBody" maxWidth="1024.0" minHeight="400.0" minWidth="600.0" prefWidth="1024.0"
+      xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="net.cps.client.controllers.pc.guest.PCGuestMainController">
+    <stylesheets>
+        <URL value="@../../../styles/css/utils/GlobalStyles.css"/>
+        <URL value="@../../../styles/css/pages/PCGuestMain.css"/>
+        <URL value="@../../../styles/css/pages/PCGuestMainSubPage.css"/>
+    </stylesheets>
+    <styleClass>
+        <String fx:value="sub-page-body"/>
+        <String fx:value="color-scheme-light"/>
+    </styleClass>
+    <VBox alignment="TOP_CENTER" minHeight="400.0" prefHeight="Infinity" minWidth="600.0" prefWidth="1024.0"  maxWidth="1024.0">
+
+        <Text fx:id="subPageTitle" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sub-page-title" text="Complaints">
+        </Text>
+        <VBox maxWidth="600.0">
+            <VBox.margin>
+                <Insets top="30.0"/>
+            </VBox.margin>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Track all your complaints on the 'CityPark' system."/>
+        </VBox>
+        <VBox maxWidth="600.0" spacing="16.0">
+            <VBox.margin>
+                <Insets top="40.0"/>
+            </VBox.margin>
+            <VBox spacing="16.0">
+                <MFXButton text="File A New Complaint"/>
+            </VBox>
+            <VBox spacing="16.0">
+                <VBox.margin>
+                    <Insets top="40.0"/>
+                </VBox.margin>
+                <HBox>
+                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Parking Lot: "/>
+                    <MFXFilterComboBox floatMode="DISABLED" floatingText="test"/>
+                </HBox>
+                <HBox>
+                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Complain Number:"/>
+                    <MFXTextField floatMode="DISABLED"/>
+                </HBox>
+                <MFXButton text="Get Details"/>
+            </VBox>
+        </VBox>
+    </VBox>
+</HBox>

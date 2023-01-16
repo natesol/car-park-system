@@ -13,6 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.util.StringConverter;
 import net.cps.client.App;
 import net.cps.client.CPSClient;
+import net.cps.client.utils.AbstractPageController;
 import net.cps.common.entities.ParkingLot;
 import javafx.collections.ObservableList;
 import net.cps.common.messages.RequestMessage;
@@ -30,7 +31,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 
-public class IndexController extends PageController {
+public class IndexController extends AbstractPageController {
     @FXML
     public MFXButton kioskBtn;
     @FXML
@@ -52,7 +53,7 @@ public class IndexController extends PageController {
     
     @FXML
     public void pcAppBtnClickHandler (ActionEvent event) throws IOException {
-        App.setPage("PCLogin.fxml");
+        App.setPage("pc/auth/PCLogin.fxml");
     }
     
     
@@ -90,7 +91,7 @@ public class IndexController extends PageController {
                 confirmBtn.setOnAction(actionEvent -> {
                     try {
                         App.setEntity(filterCombo.getValue());
-                        App.setPage("KioskMain.fxml");
+                        App.setPage("kiosk/KioskMain.fxml");
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

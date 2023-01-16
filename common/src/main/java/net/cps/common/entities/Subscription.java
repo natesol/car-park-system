@@ -1,5 +1,6 @@
 package net.cps.common.entities;
 
+import net.cps.common.utils.SubscriptionState;
 import net.cps.common.utils.SubscriptionType;
 import org.jetbrains.annotations.NotNull;
 
@@ -16,10 +17,10 @@ public class Subscription {
     @Column(name = "id", nullable = false)
     private Integer id;
     @NotNull
-    @ManyToOne
-    @JoinColumn(name = "customer_email", referencedColumnName = "email")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "customer_email", referencedColumnName = "email", nullable = false)
     private Customer customer;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "parking_lot_id", referencedColumnName = "id")
     private ParkingLot parkingLot;
     @NotNull
@@ -39,8 +40,9 @@ public class Subscription {
     @Column(name = "departure_time", nullable = false)
     private LocalTime departureTime;
     @NotNull
-    @Column(name = "status", nullable = false)
-    private String status;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "state", nullable = false)
+    private SubscriptionState state;
     @NotNull
     @Column(name = "price", nullable = false)
     private Double price;
@@ -54,12 +56,26 @@ public class Subscription {
         this.customer = customer;
         this.parkingLot = parkingLot;
         this.createdAt = Calendar.getInstance();
+        createdAt.clear(Calendar.HOUR_OF_DAY);
         this.expiresAt = Calendar.getInstance();
         this.expiresAt.add(Calendar.DATE, 28);
         this.type = type;
         this.vehicles = vehicles;
         this.departureTime = departureTime;
-        this.status = "active";
+        this.state = SubscriptionState.ACTIVE;
+        this.price = 0.0;
+    }
+    
+    public Subscription (@NotNull Customer customer, ParkingLot parkingLot, @NotNull Calendar startAt, @NotNull SubscriptionType type, @NotNull List<Vehicle> vehicles, @NotNull LocalTime departureTime) {
+        this.customer = customer;
+        this.parkingLot = parkingLot;
+        this.createdAt = startAt;
+        this.expiresAt = (Calendar) startAt.clone();
+        this.expiresAt.add(Calendar.DATE, 28);
+        this.type = type;
+        this.vehicles = vehicles;
+        this.departureTime = departureTime;
+        this.state = SubscriptionState.ACTIVE;
         this.price = 0.0;
     }
     
@@ -88,6 +104,10 @@ public class Subscription {
     
     public void setParkingLot (ParkingLot parkingLot) {
         this.parkingLot = parkingLot;
+    }
+    
+    public Integer getParkingLotId () {
+        return parkingLot.getId();
     }
     
     public Calendar getCreatedAt () {
@@ -122,12 +142,12 @@ public class Subscription {
         this.vehicles = vehicles;
     }
     
-    public String getStatus () {
-        return status;
+    public SubscriptionState getState () {
+        return state;
     }
     
-    public void setStatus (String status) {
-        this.status = status;
+    public void setState (SubscriptionState state) {
+        this.state = state;
     }
     
     public Double getPrice () {
