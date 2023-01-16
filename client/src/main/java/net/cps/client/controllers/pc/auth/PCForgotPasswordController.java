@@ -12,8 +12,13 @@ import net.cps.client.utils.AbstractPageController;
 import net.cps.client.events.CustomerLoginEvent;
 import net.cps.client.events.EmployeeLoginEvent;
 import net.cps.client.events.UserAuthEvent;
+import net.cps.client.CPSClient;
 import net.cps.common.entities.Customer;
 import net.cps.common.entities.Employee;
+import net.cps.common.messages.RequestMessage;
+import net.cps.common.messages.ResponseMessage;
+import net.cps.common.utils.RequestType;
+import net.cps.common.utils.RequestCallback;
 import net.cps.common.utils.ResponseStatus;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -54,8 +59,7 @@ public class PCForgotPasswordController extends AbstractPageController {
     @FXML
     public void sendBtnClickHandler (ActionEvent actionEvent) {
         String email = emailField.getText();
-        
-        //CPSClient.sendRequest(RequestType.FORGOT_PASSWORD, emailField.getText());
+        CPSClient.sendRequestToServer(RequestType.AUTH, "forgot-password/email=" + email, this::onForgotPassword);
     }
     
     @FXML
@@ -103,6 +107,24 @@ public class PCForgotPasswordController extends AbstractPageController {
             }
         });
     }
+    
+    
+    @RequestCallback.Method
+    public void onForgotPassword (RequestMessage request, ResponseMessage response) {
+        Platform.runLater(() -> {
+            if (response.getStatus() == ResponseStatus.SUCCESS) {
+                dialog.setTitleText("Success");
+                dialog.setBodyText("Reset code has been sent to your email. ", response.getMessage());
+                dialog.open();
+            }
+            else {
+                dialog.setTitleText("Error");
+                dialog.setBodyText(response.getBody());
+                dialog.open();
+            }
+        });
+    }
+    
     
 
     /* ----- Utility Methods ---------------------------------------- */

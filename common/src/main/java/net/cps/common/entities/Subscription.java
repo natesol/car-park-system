@@ -5,13 +5,15 @@ import net.cps.common.utils.SubscriptionType;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 @Entity
 @Table(name = "subscriptions")
-public class Subscription {
+public class Subscription implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -21,7 +23,7 @@ public class Subscription {
     @JoinColumn(name = "customer_email", referencedColumnName = "email", nullable = false)
     private Customer customer;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "parking_lot_id", referencedColumnName = "id")
+    @JoinColumn(name = "parking_lot_id", referencedColumnName = "id", nullable = true)
     private ParkingLot parkingLot;
     @NotNull
     @Column(name = "created_at", nullable = false)
@@ -90,11 +92,11 @@ public class Subscription {
         this.id = id;
     }
     
-    public Customer getCustomer () {
+    public @NotNull Customer getCustomer () {
         return customer;
     }
     
-    public void setCustomer (Customer customer) {
+    public void setCustomer (@NotNull Customer customer) {
         this.customer = customer;
     }
     
@@ -110,51 +112,51 @@ public class Subscription {
         return parkingLot.getId();
     }
     
-    public Calendar getCreatedAt () {
+    public @NotNull Calendar getCreatedAt () {
         return createdAt;
     }
     
-    public void setCreatedAt (Calendar createdAt) {
+    public void setCreatedAt (@NotNull Calendar createdAt) {
         this.createdAt = createdAt;
     }
     
-    public Calendar getExpiresAt () {
+    public @NotNull Calendar getExpiresAt () {
         return expiresAt;
     }
     
-    public void setExpiresAt (Calendar expiresAt) {
+    public void setExpiresAt (@NotNull Calendar expiresAt) {
         this.expiresAt = expiresAt;
     }
     
-    public SubscriptionType getType () {
+    public @NotNull SubscriptionType getType () {
         return type;
     }
     
-    public void setType (SubscriptionType type) {
+    public void setType (@NotNull SubscriptionType type) {
         this.type = type;
     }
     
-    public List<Vehicle> getVehicles () {
+    public @NotNull List<Vehicle> getVehicles () {
         return vehicles;
     }
     
-    public void setVehicles (List<Vehicle> vehicles) {
+    public void setVehicles (@NotNull List<Vehicle> vehicles) {
         this.vehicles = vehicles;
     }
     
-    public SubscriptionState getState () {
+    public @NotNull SubscriptionState getState () {
         return state;
     }
     
-    public void setState (SubscriptionState state) {
+    public void setState (@NotNull SubscriptionState state) {
         this.state = state;
     }
     
-    public Double getPrice () {
+    public @NotNull Double getPrice () {
         return price;
     }
     
-    public void setPrice (Double price) {
+    public void setPrice (@NotNull Double price) {
         this.price = price;
     }
     

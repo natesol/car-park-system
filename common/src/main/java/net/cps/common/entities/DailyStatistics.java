@@ -5,13 +5,14 @@ import net.cps.common.utils.ReservationStatus;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 
 @Entity
 @Table(name = "daily_statistics")
-public class DailyStatistics {
+public class DailyStatistics implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)

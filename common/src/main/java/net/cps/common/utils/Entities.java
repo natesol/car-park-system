@@ -128,7 +128,7 @@ public enum Entities {
                     (
                         id              INT NOT NULL AUTO_INCREMENT,
                         customer_email  VARCHAR(100) NOT NULL,
-                        parking_lot_id  INT NOT NULL,
+                        parking_lot_id  INT,
                         created_at      TIMESTAMP NOT NULL,
                         expires_at      TIMESTAMP NOT NULL,
                         type            ENUM('BASIC', 'PREMIUM') NOT NULL,

@@ -1,36 +1,18 @@
 package net.cps.client.controllers.pc.customer;
 
 import io.github.palexdev.materialfx.controls.MFXButton;
-import io.github.palexdev.materialfx.controls.MFXComboBox;
-import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
 import javafx.application.Platform;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import net.cps.client.App;
 import net.cps.client.CPSClient;
 import net.cps.client.utils.AbstractPageController;
-import net.cps.client.events.CustomerLoginEvent;
-import net.cps.client.utils.ResourcesLoader;
 import net.cps.common.entities.Customer;
-import net.cps.common.entities.ParkingLot;
-import net.cps.common.entities.Subscription;
-import net.cps.common.messages.RequestMessage;
-import net.cps.common.messages.ResponseMessage;
-import net.cps.common.utils.*;
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.jetbrains.annotations.NotNull;
+import net.cps.common.utils.RequestType;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Calendar;
 import java.util.ResourceBundle;
 
 
@@ -39,8 +21,6 @@ public class PCCustomerHomeController extends AbstractPageController {
     
     @FXML
     public Text customerName;
-    @FXML
-    public VBox dashboardLeft;
     @FXML
     public MFXButton menuBtnHome;
     @FXML
@@ -53,49 +33,16 @@ public class PCCustomerHomeController extends AbstractPageController {
     public MFXButton menuBtnProfile;
     @FXML
     public MFXButton menuBtnSignOut;
-    @FXML
-    public Pane subPageWrapper;
-    @FXML
-    public HBox subPageBody;
-    
-    /* Home Sub Page */
-    
-    /* Subscriptions Sub Page */
-    @FXML
-    public MFXComboBox<ParkingLot> allParkingLotsCombo;
-    @FXML
-    public MFXButton addSubscriptionBtn;
-    @FXML
-    public MFXLegacyTableView<Subscription> subscriptionsTable;
-    @FXML
-    public TableColumn<String, ParkingLot> parkingLotColSubTable;
-    @FXML
-    public TableColumn<String, SubscriptionType> subTypeColSubTable;
-    @FXML
-    public TableColumn<String, Calendar> createTimeColSubTable;
-    @FXML
-    public TableColumn<String, Calendar> expireTimeColSubTable;
-    @FXML
-    public TableColumn<String, SubscriptionState> stateColSubTable;
-    
-    /* Reservations Sub Page */
-    @FXML
-    public MFXButton newReservationBtn;
-    
-    /* Complaints Sub Page */
-    @FXML
-    public MFXButton fileComplaintBtn;
-    
     
     
     /* ----- Scene Controller Initialization ------------------------ */
     
     @Override
     public void initialize (URL url, ResourceBundle resourceBundle) {
-        EventBus.getDefault().register(this);
+        customer = (Customer) App.getEntity();
         
         Platform.runLater(() -> {
-
+            customerName.setText(customer.getFirstName() + " " + customer.getLastName());
         });
     }
     
@@ -203,45 +150,37 @@ public class PCCustomerHomeController extends AbstractPageController {
     
     /* ----- EventBus Listeners ------------------------------------- */
     
-    @Subscribe
-    public void onCustomerLogin (CustomerLoginEvent event) throws IOException {
-        customer = event.getCustomer();
-        App.setEntity(customer);
-        
-        Platform.runLater(() -> {
-            customerName.setText(customer.getFirstName() + " " + customer.getLastName());
-        });
-    }
+    
     
     
     /* ----- Requests Callbacks (on server response) ---------------- */
     
-    @RequestCallback.Method
-    public void onGetSubscriptions (RequestMessage request, ResponseMessage response) {
-        ObservableList<Subscription> subscriptions = (ObservableList<Subscription>) response.getData();
-    
-        System.out.println("onGetSubscriptions !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
-        System.out.println("subscriptions: " + subscriptions);
-        
-        if (response.getStatus() == ResponseStatus.SUCCESS) {
-            Platform.runLater(() -> {
-    
-                parkingLotColSubTable.setCellValueFactory(new PropertyValueFactory<>("parkingLotId"));
-                //subTypeColSubTable.setCellValueFactory(new PropertyValueFactory<>("name"));
-                //createTimeColSubTable.setCellValueFactory(new PropertyValueFactory<>("address"));
-                //expireTimeColSubTable.setCellValueFactory(new PropertyValueFactory<>("floorWidth"));
-                //stateColSubTable.setCellValueFactory(new PropertyValueFactory<>("totalSpace"));
-    
-                subscriptionsTable.setItems(subscriptions);
-            
-                parkingLotColSubTable.setText("Parking Lot!!!!!");
-            
-            });
-        }
-    }
+    //@RequestCallback.Method
+    //public void onGetSubscriptions (RequestMessage request, ResponseMessage response) {
+    //    ObservableList<Subscription> subscriptions = (ObservableList<Subscription>) response.getData();
+    //
+    //    System.out.println("onGetSubscriptions !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
+    //    System.out.println("subscriptions: " + subscriptions);
+    //
+    //    if (response.getStatus() == ResponseStatus.SUCCESS) {
+    //        Platform.runLater(() -> {
+    //
+    //            parkingLotColSubTable.setCellValueFactory(new PropertyValueFactory<>("parkingLotId"));
+    //            //subTypeColSubTable.setCellValueFactory(new PropertyValueFactory<>("name"));
+    //            //createTimeColSubTable.setCellValueFactory(new PropertyValueFactory<>("address"));
+    //            //expireTimeColSubTable.setCellValueFactory(new PropertyValueFactory<>("floorWidth"));
+    //            //stateColSubTable.setCellValueFactory(new PropertyValueFactory<>("totalSpace"));
+    //
+    //            subscriptionsTable.setItems(subscriptions);
+    //
+    //            parkingLotColSubTable.setText("Parking Lot!!!!!");
+    //
+    //        });
+    //    }
+    //}
     
     
     /* ----- Utility Methods ---------------------------------------- */
     
-
+    
 }

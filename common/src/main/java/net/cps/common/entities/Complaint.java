@@ -4,11 +4,12 @@ import net.cps.common.utils.ComplaintStatus;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Calendar;
 
 @Entity
 @Table(name = "complaints")
-public class Complaint {
+public class Complaint implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)

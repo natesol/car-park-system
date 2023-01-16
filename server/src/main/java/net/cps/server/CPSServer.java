@@ -11,15 +11,13 @@ import net.cps.server.ocsf.AbstractServer;
 import net.cps.server.ocsf.ConnectionToClient;
 import net.cps.server.ocsf.SubscribedClient;
 import net.cps.server.utils.Logger;
+import net.cps.server.utils.MailSender;
 import org.hibernate.SessionFactory;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.AbstractMap.SimpleEntry;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 
 /**
@@ -423,6 +421,54 @@ public class CPSServer extends AbstractServer {
                 
                 Database.updateEntity(sessionFactory, _obj);
                 return new ResponseMessage(requestId, request, ResponseStatus.SUCCESS);
+            }
+            
+            // reset a user password.
+            if (query.startsWith("forgot-password")) {
+                String email = query.split("=")[1];
+    
+                //public class StringRandomizer {
+                //    private static final String CHAR_LIST = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                //    private static final int RANDOM_STRING_LENGTH = 6;
+                //
+                //    public static String generateRandomString() {
+                //        StringBuilder randomStr = new StringBuilder();
+                //        Random rand = new SecureRandom();
+                //        for (int i = 0; i < RANDOM_STRING_LENGTH; i++) {
+                //            int number = rand.nextInt(CHAR_LIST.length());
+                //            char ch = CHAR_LIST.charAt(number);
+                //            randomStr.append(ch);
+                //        }
+                //        return randomStr.toString();
+                //    }
+                //}
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0 ; i < 6 ; i++) {
+                    int randomNum = (int) (Math.random() * 36);
+                    if (randomNum < 10) {
+                        sb.append(randomNum);
+                    }
+                    else {
+                        sb.append((char) (randomNum + 87));
+                    }
+                }
+                
+                String resetCode = sb.toString();
+                String toAccountEmail = email;
+                String userName = "John Smith";
+                String emailType = "parkingCancellation";
+                String parkingLotName = "Parking lot #1";
+                int refundAmount = 10;
+                Date time = new Date();
+                String info = "text";
+                try {
+                    MailSender.sendMail(resetCode, toAccountEmail, userName, emailType, parkingLotName, refundAmount, time, info);
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+                
+                return new ResponseMessage(requestId, request, ResponseStatus.SUCCESS, resetCode);
             }
             
             return new ResponseMessage(requestId, request, ResponseStatus.BAD_REQUEST, "Bad Request: response to 'AUTH: " + query + "'.", null);

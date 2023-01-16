@@ -2,7 +2,11 @@ package net.cps.client.controllers.pc.customer;
 
 import io.github.palexdev.materialfx.controls.*;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
+import io.github.palexdev.materialfx.enums.FloatMode;
+import io.github.palexdev.materialfx.utils.StringUtils;
+import io.github.palexdev.materialfx.utils.others.FunctionalStringConverter;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,6 +20,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.util.StringConverter;
 import net.cps.client.App;
 import net.cps.client.CPSClient;
 import net.cps.client.utils.AbstractPageController;
@@ -30,10 +35,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.Instant;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.*;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 
 public class PCCustomerSubscriptionsController extends AbstractPageController {
@@ -56,8 +62,8 @@ public class PCCustomerSubscriptionsController extends AbstractPageController {
     @FXML
     public MFXButton menuBtnSignOut;
     
-    @FXML
-    public MFXComboBox<ParkingLot> allParkingLotsCombo;
+    //@FXML
+    //public MFXComboBox<ParkingLot> allParkingLotsCombo;
     @FXML
     public MFXButton addSubscriptionBtn;
     @FXML
@@ -97,9 +103,8 @@ public class PCCustomerSubscriptionsController extends AbstractPageController {
     
     @Override
     public void initialize (URL url, ResourceBundle resourceBundle) {
-        //EventBus.getDefault().register(this);
-        
         customer = (Customer) App.getEntity();
+        
         Platform.runLater(() -> {
             customerName.setText(customer.getFirstName() + " " + customer.getLastName());
             addSubscriptionForm.setManaged(false);
@@ -108,7 +113,7 @@ public class PCCustomerSubscriptionsController extends AbstractPageController {
         });
         
         CPSClient.sendRequestToServer(RequestType.GET, Entities.SUBSCRIPTION.getTableName() + "/customer_email=" + customer.getEmail(), this::onGetSubscriptions);
-        CPSClient.sendRequestToServer(RequestType.GET, Entities.PARKING_LOT.getTableName(), ((request, response) -> allParkingLots = (ArrayList<ParkingLot>) response.getData()));
+        CPSClient.sendRequestToServer(RequestType.GET, Entities.PARKING_LOT.getTableName(), this::onGetParkingLots);
     }
     
     
@@ -215,7 +220,9 @@ public class PCCustomerSubscriptionsController extends AbstractPageController {
     @FXML
     public void addSubscriptionBtnClickHandler (ActionEvent actionEvent) {
         Platform.runLater(() -> {
-            
+            StringConverter<ParkingLot> converter = FunctionalStringConverter.to(parkingLot -> (parkingLot == null) ? "-" : parkingLot.getName());
+            parkingLotsListCombo.setConverter(converter);
+            parkingLotsListCombo.setItems(FXCollections.observableArrayList(allParkingLots));
             
             MFXButton confirmBtn = new MFXButton("Add");
             confirmBtn.setOnAction(event -> {
@@ -330,24 +337,28 @@ public class PCCustomerSubscriptionsController extends AbstractPageController {
     
     @RequestCallback.Method
     private void onGetSubscriptions (RequestMessage request, ResponseMessage response) {
+        allSubscriptions = (ArrayList<Subscription>) response.getData();
         ObservableList<Subscription> subscriptions = (ObservableList<Subscription>) response.getData();
         
-        System.out.println("onGetSubscriptions !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
         System.out.println("subscriptions: " + subscriptions);
         
         if (response.getStatus() == ResponseStatus.SUCCESS) {
             Platform.runLater(() -> {
-                
                 parkingLotColSubTable.setCellValueFactory(new PropertyValueFactory<>("parkingLotId"));
-                //subTypeColSubTable.setCellValueFactory(new PropertyValueFactory<>("name"));
-                //createTimeColSubTable.setCellValueFactory(new PropertyValueFactory<>("address"));
-                //expireTimeColSubTable.setCellValueFactory(new PropertyValueFactory<>("floorWidth"));
-                //stateColSubTable.setCellValueFactory(new PropertyValueFactory<>("totalSpace"));
-                
+                subTypeColSubTable.setCellValueFactory(new PropertyValueFactory<>("type"));
+                createTimeColSubTable.setCellValueFactory(new PropertyValueFactory<>("createdAt"));
+                expireTimeColSubTable.setCellValueFactory(new PropertyValueFactory<>("expiresAt"));
+                stateColSubTable.setCellValueFactory(new PropertyValueFactory<>("state"));
                 subscriptionsTable.setItems(subscriptions);
-                
-                parkingLotColSubTable.setText("Parking Lot!!!!!");
-                
+            });
+        }
+    }
+    
+    @RequestCallback.Method
+    private void onGetParkingLots (RequestMessage request, ResponseMessage response) {
+        if (response.getStatus() == ResponseStatus.SUCCESS) {
+            Platform.runLater(() -> {
+                allParkingLots = (ArrayList<ParkingLot>) response.getData();
             });
         }
     }
@@ -387,7 +398,7 @@ public class PCCustomerSubscriptionsController extends AbstractPageController {
         Subscription subscription;
         ParkingLot parkingLot;
         Calendar startAt = Calendar.getInstance();
-        List<Vehicle> vehicles = new ArrayList<>();
+        ArrayList<Vehicle> vehicles = new ArrayList<>();
         LocalTime departureTime = LocalTime.of(0, 0);
         
         if (subscriptionType.getSelectedToggle() == regularSubRadio) {

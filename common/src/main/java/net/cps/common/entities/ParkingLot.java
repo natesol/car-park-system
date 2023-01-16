@@ -61,7 +61,7 @@ public class ParkingLot extends Organization implements Serializable {
     @Transient
     public static final Integer DEFAULT_FLOOR_COLS = 1;
     @Transient
-    private final Robot robot;
+    private transient Robot robot;
     
     
     /* ----- Constructors ------------------------------------------- */

@@ -175,7 +175,8 @@ public class Main {
             
             // Create a list of Subscriptions for Customers.
             ArrayList<Subscription> subscriptions = new ArrayList<>();
-            subscriptions.add(new Subscription(customers.get(0), parkingLots.get(0), SubscriptionType.PREMIUM, List.of(new Vehicle[] {vehicles.get(0), vehicles.get(1)}), LocalTime.of(0, 0)));
+            subscriptions.add(new Subscription(customers.get(0), null, SubscriptionType.PREMIUM, List.of(new Vehicle[] {vehicles.get(0)}), LocalTime.of(0, 0)));
+            subscriptions.add(new Subscription(customers.get(0), parkingLots.get(0), SubscriptionType.BASIC, List.of(new Vehicle[] {vehicles.get(0), vehicles.get(1)}), LocalTime.of(23, 59)));
             subscriptions.add(new Subscription(customers.get(1), parkingLots.get(0), SubscriptionType.BASIC, List.of(new Vehicle[] {vehicles.get(2)}), LocalTime.of(12, 30)));
             Database.createMultipleEntities(sessionFactory, subscriptions);
             
@@ -222,7 +223,6 @@ public class Main {
             reservationsForStatistics.add(reservations.get(3));
             reservationsForStatistics.add(reservations.get(4));
             dailyStatistics.add(new DailyStatistics(parkingLots.get(0), reservationsForStatistics));
-            System.out.println(dailyStatistics);
             Database.createMultipleEntities(sessionFactory, dailyStatistics);
             
             

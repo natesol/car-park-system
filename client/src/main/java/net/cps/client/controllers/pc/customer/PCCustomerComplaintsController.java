@@ -41,8 +41,6 @@ public class PCCustomerComplaintsController extends AbstractPageController {
     @FXML
     public Text customerName;
     @FXML
-    public VBox dashboardLeft;
-    @FXML
     public MFXButton menuBtnHome;
     @FXML
     public MFXButton menuBtnSubscriptions;
@@ -54,49 +52,19 @@ public class PCCustomerComplaintsController extends AbstractPageController {
     public MFXButton menuBtnProfile;
     @FXML
     public MFXButton menuBtnSignOut;
-    @FXML
-    public Pane subPageWrapper;
-    @FXML
-    public HBox subPageBody;
     
-    /* Home Sub Page */
-    
-    /* Subscriptions Sub Page */
-    @FXML
-    public MFXComboBox<ParkingLot> allParkingLotsCombo;
-    @FXML
-    public MFXButton addSubscriptionBtn;
-    @FXML
-    public MFXLegacyTableView<Subscription> subscriptionsTable;
-    @FXML
-    public TableColumn<String, ParkingLot> parkingLotColSubTable;
-    @FXML
-    public TableColumn<String, SubscriptionType> subTypeColSubTable;
-    @FXML
-    public TableColumn<String, Calendar> createTimeColSubTable;
-    @FXML
-    public TableColumn<String, Calendar> expireTimeColSubTable;
-    @FXML
-    public TableColumn<String, SubscriptionState> stateColSubTable;
-    
-    /* Reservations Sub Page */
-    @FXML
-    public MFXButton newReservationBtn;
-    
-    /* Complaints Sub Page */
     @FXML
     public MFXButton fileComplaintBtn;
-    
     
     
     /* ----- Scene Controller Initialization ------------------------ */
     
     @Override
     public void initialize (URL url, ResourceBundle resourceBundle) {
-        EventBus.getDefault().register(this);
-        
+        customer = (Customer) App.getEntity();
+    
         Platform.runLater(() -> {
-        
+            customerName.setText(customer.getFirstName() + " " + customer.getLastName());
         });
     }
     
@@ -201,22 +169,6 @@ public class PCCustomerComplaintsController extends AbstractPageController {
         });
     }
     
-    @FXML
-    public void addSubscriptionBtnClickHandler (ActionEvent actionEvent) {
-        Platform.runLater(() -> {
-            dialog.setWidth(Dialog.Width.EXTRA_SMALL);
-            dialog.setTitleText("Add Subscription");
-            dialog.setBodyText("Are you sure you want to add a subscription to " + allParkingLotsCombo.getValue().getName() + "?");
-            try {
-                dialog.setCustomContent(ResourcesLoader.loadFXML("PCCustomerMainSubscriptionAddForm.fxml"));
-            }
-            catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-    
-            dialog.open();
-        });
-    }
     
     /* ----- EventBus Listeners ------------------------------------- */
     
@@ -233,29 +185,29 @@ public class PCCustomerComplaintsController extends AbstractPageController {
     
     /* ----- Requests Callbacks (on server response) ---------------- */
     
-    @RequestCallback.Method
-    public void onGetSubscriptions (RequestMessage request, ResponseMessage response) {
-        ObservableList<Subscription> subscriptions = (ObservableList<Subscription>) response.getData();
-    
-        System.out.println("onGetSubscriptions !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
-        System.out.println("subscriptions: " + subscriptions);
-        
-        if (response.getStatus() == ResponseStatus.SUCCESS) {
-            Platform.runLater(() -> {
-    
-                parkingLotColSubTable.setCellValueFactory(new PropertyValueFactory<>("parkingLotId"));
-                //subTypeColSubTable.setCellValueFactory(new PropertyValueFactory<>("name"));
-                //createTimeColSubTable.setCellValueFactory(new PropertyValueFactory<>("address"));
-                //expireTimeColSubTable.setCellValueFactory(new PropertyValueFactory<>("floorWidth"));
-                //stateColSubTable.setCellValueFactory(new PropertyValueFactory<>("totalSpace"));
-    
-                subscriptionsTable.setItems(subscriptions);
-            
-                parkingLotColSubTable.setText("Parking Lot!!!!!");
-            
-            });
-        }
-    }
+    //@RequestCallback.Method
+    //public void onGetSubscriptions (RequestMessage request, ResponseMessage response) {
+    //    ObservableList<Subscription> subscriptions = (ObservableList<Subscription>) response.getData();
+    //
+    //    System.out.println("onGetSubscriptions !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
+    //    System.out.println("subscriptions: " + subscriptions);
+    //
+    //    if (response.getStatus() == ResponseStatus.SUCCESS) {
+    //        Platform.runLater(() -> {
+    //
+    //            parkingLotColSubTable.setCellValueFactory(new PropertyValueFactory<>("parkingLotId"));
+    //            //subTypeColSubTable.setCellValueFactory(new PropertyValueFactory<>("name"));
+    //            //createTimeColSubTable.setCellValueFactory(new PropertyValueFactory<>("address"));
+    //            //expireTimeColSubTable.setCellValueFactory(new PropertyValueFactory<>("floorWidth"));
+    //            //stateColSubTable.setCellValueFactory(new PropertyValueFactory<>("totalSpace"));
+    //
+    //            subscriptionsTable.setItems(subscriptions);
+    //
+    //            parkingLotColSubTable.setText("Parking Lot!!!!!");
+    //
+    //        });
+    //    }
+    //}
     
     
     /* ----- Utility Methods ---------------------------------------- */
