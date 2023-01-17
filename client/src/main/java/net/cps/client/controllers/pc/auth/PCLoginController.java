@@ -89,7 +89,7 @@ public class PCLoginController extends AbstractPageController {
     }
     
     
-    /* ----- EventBus Listeners ------------------------------------- */
+    /* ----- Event Bus Listeners ------------------------------------ */
     
     @Subscribe
     public void onServerAuth (UserAuthEvent event) {

@@ -88,6 +88,10 @@ public class Employee extends AbstractUser implements Serializable {
         this.lastName = last_name;
     }
     
+    public String getFullName () {
+        return firstName + " " + lastName;
+    }
+    
     @Override
     public String getPasswordSalt () {
         return passwordSalt;
@@ -104,6 +108,10 @@ public class Employee extends AbstractUser implements Serializable {
     
     public void setPasswordHash (String passwordHash) {
         this.passwordHash = passwordHash;
+    }
+    
+    public void setPassword (String password) {
+        this.passwordHash = hashPassword(password, passwordSalt);
     }
     
     public EmployeeRole getRole () {

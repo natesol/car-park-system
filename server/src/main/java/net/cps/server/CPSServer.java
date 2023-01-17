@@ -12,6 +12,7 @@ import net.cps.server.ocsf.ConnectionToClient;
 import net.cps.server.ocsf.SubscribedClient;
 import net.cps.server.utils.Logger;
 import net.cps.server.utils.MailSender;
+import net.cps.server.utils.RandomCode;
 import org.hibernate.SessionFactory;
 import org.jetbrains.annotations.NotNull;
 
@@ -437,49 +438,25 @@ public class CPSServer extends AbstractServer {
             // reset a user password.
             if (query.startsWith("forgot-password")) {
                 String email = query.split("=")[1];
+                String resetCode = RandomCode.generate(6);
+                
+                // the given email belongs to a customer.
+                Customer customer = Database.getEntity(sessionFactory, Customer.class, "email", email);
+                if (customer != null) {
+                    MailSender.sendMail(resetCode, email, customer.getFullName(), "passwordReset", null, null, null, null);
+                    
+                    return new ResponseMessage(requestId, request, ResponseStatus.SUCCESS, Entities.CUSTOMER.getClassName() + "/" + resetCode, customer);
+                }
     
-                //public class StringRandomizer {
-                //    private static final String CHAR_LIST = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-                //    private static final int RANDOM_STRING_LENGTH = 6;
-                //
-                //    public static String generateRandomString() {
-                //        StringBuilder randomStr = new StringBuilder();
-                //        Random rand = new SecureRandom();
-                //        for (int i = 0; i < RANDOM_STRING_LENGTH; i++) {
-                //            int number = rand.nextInt(CHAR_LIST.length());
-                //            char ch = CHAR_LIST.charAt(number);
-                //            randomStr.append(ch);
-                //        }
-                //        return randomStr.toString();
-                //    }
-                //}
-                StringBuilder sb = new StringBuilder();
-                for (int i = 0 ; i < 6 ; i++) {
-                    int randomNum = (int) (Math.random() * 36);
-                    if (randomNum < 10) {
-                        sb.append(randomNum);
-                    }
-                    else {
-                        sb.append((char) (randomNum + 87));
-                    }
+                // the given email belongs to an employee.
+                Employee employee = Database.getEntity(sessionFactory, Employee.class, "email", email);
+                if (employee != null) {
+                    MailSender.sendMail(resetCode, email, employee.getFullName(), "passwordReset", null, null, null, null);
+                    
+                    return new ResponseMessage(requestId, request, ResponseStatus.SUCCESS, Entities.EMPLOYEE.getClassName() + "/" + resetCode, employee);
                 }
                 
-                String resetCode = sb.toString();
-                String toAccountEmail = email;
-                String userName = "John Smith";
-                String emailType = "parkingCancellation";
-                String parkingLotName = "Parking lot #1";
-                int refundAmount = 10;
-                Date time = new Date();
-                String info = "text";
-                try {
-                    MailSender.sendMail(resetCode, toAccountEmail, userName, emailType, parkingLotName, refundAmount, time, info);
-                }
-                catch (Exception e) {
-                    e.printStackTrace();
-                }
-                
-                return new ResponseMessage(requestId, request, ResponseStatus.SUCCESS, resetCode);
+                return new ResponseMessage(requestId, request, ResponseStatus.UNAUTHORIZED, "Sorry, but the email you entered does not exist in our system. Please check the email and try again, or sign-up for a new account.", null);
             }
             
             return new ResponseMessage(requestId, request, ResponseStatus.BAD_REQUEST, "Bad Request: response to 'AUTH: " + query + "'.", null);

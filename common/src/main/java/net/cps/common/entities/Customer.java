@@ -93,6 +93,10 @@ public class Customer extends AbstractUser implements Serializable {
         this.lastName = lastName;
     }
     
+    public String getFullName () {
+        return firstName + " " + lastName;
+    }
+    
     @Override
     public String getPasswordSalt () {
         return passwordSalt;
@@ -109,6 +113,10 @@ public class Customer extends AbstractUser implements Serializable {
     
     public void setPasswordHash (String passwordHash) {
         this.passwordHash = passwordHash;
+    }
+    
+    public void setPassword (String password) {
+        this.passwordHash = hashPassword(password, passwordSalt);
     }
     
     public Boolean getIsActive () {

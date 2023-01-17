@@ -32,7 +32,7 @@ public class MailSender {
     private static final String HOST = "smtp.gmail.com";
     private static final String PORT = "587";
     
-    public static void sendMail (String resetCode,String toAccountEmail, String userName, String emailType, String parkingLot, int refundAmount, Date time, String responseFromCustomerService) throws Exception {
+    public static void sendMail (String resetCode, String toAccountEmail, String userName, String emailType, String parkingLot, Integer refundAmount, Date time, String responseFromCustomerService) throws Exception {
         try {
             Properties properties = new Properties();
             properties.put("mail.smtp.auth", "true");
@@ -58,9 +58,9 @@ public class MailSender {
                 }
                 case "passwordReset" -> {
                     subject = "Password reset instruction";
-                    template = "We received a request to reset your password. Your password reset code is: "
+                    template = "We received a request to reset your password. Your password reset code is: \n"
                             + resetCode
-                            + "\n\nPlease enter this code in the password reset page to reset your password."
+                            + "\n\n\nPlease enter this code in the password reset page to reset your password."
                             + "If you didn't request a password reset, please contact us immediately.";
                 }
                 case "subscriptionExpiration" -> {
@@ -115,7 +115,7 @@ public class MailSender {
         }
         catch (Exception e) {
             e.printStackTrace();
-            Logger.error("Error while sending email to " + toAccountEmail);
+            Logger.error("Error: while sending email to " + toAccountEmail);
         }
     }
     

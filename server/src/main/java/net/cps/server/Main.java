@@ -154,7 +154,7 @@ public class Main {
             
             // Create a list of Customers.
             ArrayList<Customer> customers = new ArrayList<>();
-            customers.add(new Customer("net@net.net", "Netanel", "Shlomo", "123456"));
+            customers.add(new Customer("netanelshlomo@gmail.com", "Netanel", "Shlomo", "123456"));
             customers.add(new Customer("john.doe@gmail.com", "John", "Doe", "123456"));
             customers.add(new Customer("jane.doe@gmail.com", "Jane", "Doe", "123456"));
             customers.add(new Customer("bob.smith@gmail.com", "Bob", "Smith", "123456"));
