@@ -58,7 +58,7 @@ public class PCSignUpController extends AbstractPageController {
     
     @FXML
     public void goBackButtonClickHandler (MouseEvent mouseEvent) throws IOException {
-        App.setPage("PCLogin.fxml");
+        App.setPage("pc/auth/PCLogin.fxml");
     }
     
     @FXML
@@ -134,7 +134,7 @@ public class PCSignUpController extends AbstractPageController {
     
     @FXML
     public void loginLinkClickHandler (MouseEvent mouseEvent) throws IOException {
-        App.setPage("PCLogin.fxml");
+        App.setPage("pc/auth/PCLogin.fxml");
     }
     
     
@@ -151,7 +151,7 @@ public class PCSignUpController extends AbstractPageController {
                 confirmBtn.getStyleClass().add("button-primary");
                 confirmBtn.setOnAction(actionEvent -> {
                     try {
-                        App.setPage("PCLogin.fxml");
+                        App.setPage("pc/auth/PCLogin.fxml");
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

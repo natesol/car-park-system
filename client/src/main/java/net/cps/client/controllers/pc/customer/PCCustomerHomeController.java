@@ -59,7 +59,7 @@ public class PCCustomerHomeController extends AbstractPageController {
         
         Platform.runLater(() -> {
             try {
-                App.setPage("pc/customer/PCCustomerHome.fxml");
+                App.setPage("pc/customer/PCEmployeeHome.fxml");
             }
             catch (IOException e) {
                 throw new RuntimeException(e);
@@ -152,7 +152,7 @@ public class PCCustomerHomeController extends AbstractPageController {
     }
     
     
-    /* ----- EventBus Listeners ------------------------------------- */
+    /* ----- Event Bus Listeners ------------------------------------ */
     
     @Subscribe
     public void onCustomerLogin (CustomerLoginEvent event) throws IOException {
@@ -167,32 +167,11 @@ public class PCCustomerHomeController extends AbstractPageController {
     
     /* ----- Requests Callbacks (on server response) ---------------- */
     
-    //@RequestCallback.Method
-    //public void onGetSubscriptions (RequestMessage request, ResponseMessage response) {
-    //    ObservableList<Subscription> subscriptions = (ObservableList<Subscription>) response.getData();
-    //
-    //    System.out.println("onGetSubscriptions !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
-    //    System.out.println("subscriptions: " + subscriptions);
-    //
-    //    if (response.getStatus() == ResponseStatus.SUCCESS) {
-    //        Platform.runLater(() -> {
-    //
-    //            parkingLotColSubTable.setCellValueFactory(new PropertyValueFactory<>("parkingLotId"));
-    //            //subTypeColSubTable.setCellValueFactory(new PropertyValueFactory<>("name"));
-    //            //createTimeColSubTable.setCellValueFactory(new PropertyValueFactory<>("address"));
-    //            //expireTimeColSubTable.setCellValueFactory(new PropertyValueFactory<>("floorWidth"));
-    //            //stateColSubTable.setCellValueFactory(new PropertyValueFactory<>("totalSpace"));
-    //
-    //            subscriptionsTable.setItems(subscriptions);
-    //
-    //            parkingLotColSubTable.setText("Parking Lot!!!!!");
-    //
-    //        });
-    //    }
-    //}
+    // ...
     
     
     /* ----- Utility Methods ---------------------------------------- */
     
+    // ...
     
 }

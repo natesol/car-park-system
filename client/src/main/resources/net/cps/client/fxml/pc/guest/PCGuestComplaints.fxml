@@ -4,25 +4,24 @@
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import io.github.palexdev.materialfx.controls.MFXScrollPane?>
 <?import io.github.palexdev.materialfx.controls.MFXTextField?>
-<?import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView?>
 <?import io.github.palexdev.materialfx.dialogs.MFXGenericDialog?>
 <?import java.lang.String?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Hyperlink?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane fx:id="root" maxHeight="800.0" maxWidth="1024.0" minHeight="400.0" minWidth="800.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.cps.client.controllers.pc.customer.PCCustomerProfileController">
+<AnchorPane fx:id="root" maxHeight="800.0" maxWidth="1024.0" minHeight="400.0" minWidth="800.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.cps.client.controllers.pc.guest.PCGuestComplaintsController">
     <stylesheets>
         <URL value="@../../../styles/css/utils/GlobalStyles.css" />
-        <URL value="@../../../styles/css/pages/PCCustomerMain.css" />
-        <URL value="@../../../styles/css/pages/PCCustomerMainSubPage.css" />
+        <URL value="@../../../styles/css/pages/PCGuestMain.css" />
+        <URL value="@../../../styles/css/pages/PCGuestMainSubPage.css" />
     </stylesheets>
     <styleClass>
         <String fx:value="root" />
@@ -54,7 +53,7 @@
                             <VBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
                                 <TextFlow styleClass="dashboard-user-message">
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="Hello " />
-                                    <Text fx:id="customerName" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="FirstName" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="Guest !" />
                                     <VBox.margin>
                                         <Insets />
                                     </VBox.margin>
@@ -92,20 +91,19 @@
                                             <FontAwesomeIconView glyphName="HOME" />
                                         </graphic>
                                     </MFXButton>
-                                    <MFXButton fx:id="menuBtnSubscriptions" graphicTextGap="8.0" onMouseClicked="#menuBtnSubscriptionsClickHandler" styleClass="dashboard-menu-button" text="Subscriptions">
-                                        <graphic>
-                                            <FontAwesomeIconView glyphName="DRIVERS_LICENSE" />
-                                        </graphic>
-                                    </MFXButton>
                                     <MFXButton fx:id="menuBtnReservations" graphicTextGap="8.0" onMouseClicked="#menuBtnReservationsClickHandler" styleClass="dashboard-menu-button" text="Reservations">
                                         <graphic>
                                             <FontAwesomeIconView glyphName="AUTOMOBILE" />
                                         </graphic>
                                     </MFXButton>
-                                    <MFXButton fx:id="menuBtnComplaints" graphicTextGap="8.0" onMouseClicked="#menuBtnComplaintsClickHandler" styleClass="dashboard-menu-button" text="Complaints">
+                                    <MFXButton fx:id="menuBtnComplaints" graphicTextGap="8.0" onMouseClicked="#menuBtnComplaintsClickHandler" text="Complaints">
                                         <graphic>
                                             <FontAwesomeIconView glyphName="LIST_ALT" />
                                         </graphic>
+                                        <styleClass>
+                                            <String fx:value="dashboard-menu-button" />
+                                            <String fx:value="active" />
+                                        </styleClass>
                                     </MFXButton>
                                 </VBox>
                             </VBox>
@@ -121,18 +119,9 @@
                                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="USER" />
                                     </TextFlow>
                                     <VBox alignment="TOP_CENTER" spacing="2.0">
-                                        <MFXButton fx:id="menuBtnProfile" graphicTextGap="8.0" onMouseClicked="#menuBtnProfileClickHandler" text="Profile">
+                                        <MFXButton fx:id="menuBtnRegister" graphicTextGap="8.0" onMouseClicked="#menuBtnRegisterClickHandler" styleClass="dashboard-menu-button" text="Register Now">
                                             <graphic>
-                                                <FontAwesomeIconView glyphName="USER" />
-                                            </graphic>
-                                            <styleClass>
-                                                <String fx:value="dashboard-menu-button" />
-                                                <String fx:value="active" />
-                                            </styleClass>
-                                        </MFXButton>
-                                        <MFXButton fx:id="menuBtnSignOut" graphicTextGap="8.0" onMouseClicked="#menuBtnLogoutClickHandler" styleClass="dashboard-menu-button" text="Logout">
-                                            <graphic>
-                                                <FontAwesomeIconView glyphName="SIGN_OUT" />
+                                                <FontAwesomeIconView glyphName="SIGN_IN" />
                                             </graphic>
                                         </MFXButton>
                                     </VBox>
@@ -143,110 +132,78 @@
                     <center>
                         <VBox fx:id="subPageWrapper" BorderPane.alignment="CENTER">
                             <HBox fx:id="subPageBody" maxWidth="1024.0" minHeight="400.0" minWidth="600.0" prefWidth="1024.0" styleClass="sub-page-body">
+                                <styleClass>
+                                    <String fx:value="" />
+                                </styleClass>
                                 <VBox alignment="TOP_CENTER" maxWidth="1024.0" minHeight="400.0" minWidth="600.0" prefHeight="600" prefWidth="1024.0" styleClass="sheet">
                                     <HBox>
-                                        <TextFlow minWidth="200.0">
-                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sub-page-title" text="Profile">
+                              <VBox prefHeight="44.0" prefWidth="600.0">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                                 <children>
+                                              <TextFlow>
+                                                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sub-page-title" text="Complaints">
                                             </Text>
-                                            <HBox.margin>
-                                                <Insets />
-                                            </HBox.margin>
-                                        </TextFlow>
-                                        <VBox alignment="CENTER_RIGHT" prefWidth="10000.0">
-                                            <MFXButton fx:id="fileComplaintBtn" styleClass="button-primary" text="Edit Profile" />
-                                        </VBox>
+                                              </TextFlow>
+                                 </children>
+                              </VBox>
+                              <VBox minWidth="190.0">
+                                 <children>
+                                              <MFXButton minHeight="44.0" prefHeight="44.0" prefWidth="189.0" styleClass="button-primary" text="File New Complaint" />
+                                 </children>
+                              </VBox>
                                     </HBox>
                                     <VBox>
                                         <VBox.margin>
-                                            <Insets bottom="50.0" top="20.0" />
+                                            <Insets bottom="10.0" top="20.0" />
                                         </VBox.margin>
                                         <TextFlow>
-                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="View your information in our system, and edit it if necessary." />
+                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="You can file a new complaint, or you can track your past complaints.">
+                                                <font>
+                                                    <Font size="14.0" />
+                                                </font>
+                                            </Text>
+                                            <VBox.margin>
+                                                <Insets bottom="10.0" />
+                                            </VBox.margin>
+                                        </TextFlow>
+                                        <TextFlow>
+                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="Because you are a guest who is not connected to the system, for security reasons, you are required to fill in the following details regarding the reservation in order to be able to view it.">
+                                                <font>
+                                                    <Font size="14.0" />
+                                                </font>
+                                            </Text>
+                                        </TextFlow>
+                                        <TextFlow>
+                                            <children>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="After submitting this form, you will get an email with the required information.">
+                                                    <font>
+                                                        <Font size="14.0" />
+                                                    </font>
+                                                </Text>
+                                            </children>
+                                        </TextFlow>
+                                        <TextFlow>
+                                            <children>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="Please enter - email and complaint number:">
+                                                    <font>
+                                                        <Font size="14.0" />
+                                                    </font>
+                                                </Text>
+                                            </children>
+                                            <VBox.margin>
+                                                <Insets top="10.0" />
+                                            </VBox.margin>
                                         </TextFlow>
                                     </VBox>
-                           <HBox>
-                              <children>
-                                 <VBox spacing="16.0">
-                                    <children>
-                                                <VBox>
-                                                    <TextFlow>
-                                                        <VBox.margin>
-                                                            <Insets bottom="4.0" />
-                                                        </VBox.margin>
-                                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="Your Name:" />
-                                                    </TextFlow>
-                                                    <HBox>
-                                                        <MFXTextField fx:id="firstName" editable="false" floatMode="DISABLED" minWidth="130.0" prefHeight="40.0" text="FirstName">
-                                                <HBox.margin>
-                                                   <Insets right="10.0" />
-                                                </HBox.margin>
-                                             </MFXTextField>
-                                                        <MFXTextField fx:id="lastName" editable="false" floatMode="DISABLED" minWidth="130.0" prefHeight="40.0" text="LastNae" />
-                                                    </HBox>
-                                                    <opaqueInsets>
-                                                        <Insets />
-                                                    </opaqueInsets>
-                                                </VBox>
-                                                <VBox>
-                                                    <TextFlow>
-                                                        <VBox.margin>
-                                                            <Insets bottom="4.0" />
-                                                        </VBox.margin>
-                                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="Your Email:" />
-                                                    </TextFlow>
-                                                    <HBox>
-                                                        <MFXTextField fx:id="email" editable="false" floatMode="DISABLED" prefHeight="40.0" prefWidth="270.0" text="customer@email.com" />
-                                                    </HBox>
-                                                </VBox>
-                                                    <VBox>
-                                                        <TextFlow>
-                                                            <VBox.margin>
-                                                                <Insets bottom="4.0" />
-                                                            </VBox.margin>
-                                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="Change Password:" />
-                                                        </TextFlow>
-                                          <VBox spacing="8.0">
-                                             <children>
-                                                              <HBox>
-                                                                  <MFXTextField fx:id="email1" editable="false" floatMode="DISABLED" minWidth="270.0" prefHeight="40.0" text="123456789" />
-                                                              </HBox>
-                                                <HBox>
-                                                   <children>
-                                                      <MFXTextField fx:id="email11" editable="false" floatMode="DISABLED" minWidth="270.0" prefHeight="40.0" text="123456789" />
-                                                   </children>
-                                                </HBox>
-                                             </children>
-                                          </VBox>
-                                                    </VBox>
-                                    </children>
-                                    <HBox.margin>
-                                       <Insets right="110.0" />
-                                    </HBox.margin>
-                                 </VBox>
-                                 <VBox>
-                                    <children>
-                                       <TextFlow>
-                                          <children>
-                                             <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="Your Vehicles:" />
-                                          </children>
-                                          <VBox.margin>
-                                             <Insets bottom="4.0" />
-                                          </VBox.margin>
-                                       </TextFlow>
-                                       <MFXLegacyTableView prefHeight="242.0" prefWidth="350.0" styleClass="table">
-                                          <columns>
-                                             <TableColumn prefWidth="50.0" text="ID" />
-                                             <TableColumn prefWidth="299.0" text="Vehicle Number" />
-                                          </columns>
-                                          <VBox.margin>
-                                             <Insets bottom="8.0" />
-                                          </VBox.margin>
-                                       </MFXLegacyTableView>
-                                       <MFXButton text="Remove Vehicle" />
-                                    </children>
-                                 </VBox>
-                              </children>
-                           </HBox>
+                                    <VBox prefHeight="349.0" prefWidth="730.0" spacing="8.0">
+                                        <children>
+                                            <MFXTextField floatingText="Email" prefWidth="270.0" />
+                                            <MFXTextField floatingText="Complaint Number" prefHeight="13.0" prefWidth="270.0" textLimit="8" />
+                                            <MFXButton prefWidth="162.0" styleClass="button-primary" text="Submit Request" />
+                                        </children>
+                                    </VBox>
                                 </VBox>
                             </HBox>
                         </VBox>

@@ -77,7 +77,7 @@ public class PCCustomerComplaintsController extends AbstractPageController {
         
         Platform.runLater(() -> {
             try {
-                App.setPage("pc/customer/PCCustomerHome.fxml");
+                App.setPage("pc/customer/PCEmployeeHome.fxml");
             }
             catch (IOException e) {
                 throw new RuntimeException(e);

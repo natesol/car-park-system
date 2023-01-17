@@ -679,7 +679,7 @@
   -fx-font-weight: 400 !important;
 }
 .dashboard .dashboard-left .dashboard-menu-button.active {
-  -fx-background-color: #6e7781 !important;
+  -fx-background-color: #8c959f !important;
   -fx-text-fill: #ffffff !important;
   -fx-fill: #ffffff !important;
 }
@@ -700,7 +700,7 @@
   -fx-fill: #424a53;
   -fx-background-radius: 16px;
   -fx-border-radius: 16px;
-  -fx-padding: 32px 0;
+  -fx-padding: 24px 0;
   -fx-pref-width: 94px;
   -fx-min-width: 94px;
   -fx-max-width: 94px;
@@ -710,9 +710,9 @@
   -fx-pref-width: 92px;
   -fx-min-width: 92px;
   -fx-max-width: 92px;
-  -fx-pref-height: 92px;
-  -fx-min-height: 92px;
-  -fx-max-height: 92px;
+  -fx-pref-height: 82.8px;
+  -fx-min-height: 82.8px;
+  -fx-max-height: 82.8px;
   -fx-border-width: 0 !important;
   -fx-border-radius: 2px !important;
   -fx-background-radius: 2px !important;
@@ -722,9 +722,13 @@
   -fx-font-size: 20px !important;
 }
 #kioskMenu.kiosk-menu .kiosk-menu-button.active {
-  -fx-background-color: #2196f3 !important;
-  -fx-fill: #ffffff !important;
+  -fx-background-color: #8c959f !important;
   -fx-text-fill: #ffffff !important;
+  -fx-fill: #ffffff !important;
+}
+.kiosk-title {
+  -fx-font-size: 28px;
+  -fx-font-weight: bold;
 }
 /* ------------------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------------ */

@@ -127,7 +127,7 @@ public class PCCustomerSubscriptionsController extends AbstractPageController {
         
         Platform.runLater(() -> {
             try {
-                App.setPage("pc/customer/PCCustomerHome.fxml");
+                App.setPage("pc/customer/PCEmployeeHome.fxml");
             }
             catch (IOException e) {
                 throw new RuntimeException(e);
@@ -409,7 +409,7 @@ public class PCCustomerSubscriptionsController extends AbstractPageController {
                 dialog.open();
                 
                 allCustomerSubscriptions.add(selectedSubscription);
-                ObservableList<Subscription> subscriptions = FXCollections.observableArrayList((ArrayList<Subscription>) response.getData());
+                ObservableList<Subscription> subscriptions = FXCollections.observableArrayList(allCustomerSubscriptions);
                 subscriptionsTable.setItems(subscriptions);
                 
                 customer.chargeBalance(calculatePrice(selectedSubscription));

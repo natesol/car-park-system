@@ -679,7 +679,7 @@
   -fx-font-weight: 400 !important;
 }
 .dashboard .dashboard-left .dashboard-menu-button.active {
-  -fx-background-color: #6e7781 !important;
+  -fx-background-color: #8c959f !important;
   -fx-text-fill: #ffffff !important;
   -fx-fill: #ffffff !important;
 }
@@ -695,6 +695,9 @@
   -fx-font-size: 28px;
   -fx-text-fill: #424a53;
   -fx-padding: 16px 0 16px 0;
+}
+.sheet-text {
+  -fx-font-size: 14px;
 }
 /* ------------------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------------ */

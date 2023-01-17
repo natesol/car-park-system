@@ -101,12 +101,12 @@ public class PCLoginController extends AbstractPageController {
                 try {
                     if (message.equals(Entities.CUSTOMER.getClassName())) {
                         App.setPage("pc/customer/PCCustomerHome.fxml");
-                        App.setEntity(event.getResponse().getData());
+                        App.setEntity((Customer) event.getResponse().getData());
                         EventBus.getDefault().post(new CustomerLoginEvent((Customer) event.getResponse().getData()));
                     }
                     else if (message.equals(Entities.EMPLOYEE.getClassName())) {
                         App.setPage("pc/employee/PCEmployeeHome.fxml");
-                        App.setEntity(event.getResponse().getData());
+                        App.setEntity((Employee) event.getResponse().getData());
                         EventBus.getDefault().post(new EmployeeLoginEvent((Employee) event.getResponse().getData()));
                     }
                     else {

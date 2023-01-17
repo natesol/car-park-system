@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXScrollPane?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import io.github.palexdev.materialfx.dialogs.MFXGenericDialog?>
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+
+<AnchorPane fx:id="root" maxHeight="600.0" maxWidth="960.0" minHeight="400.0" minWidth="800.0" prefHeight="600.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.cps.client.controllers.kiosk.KioskSubscriptionsController">
+    <stylesheets>
+        <URL value="@../../styles/css/utils/GlobalStyles.css" />
+        <URL value="@../../styles/css/pages/KioskMain.css" />
+        <URL value="@../../styles/css/pages/KioskMainSubPage.css" />
+    </stylesheets>
+    <styleClass>
+        <String fx:value="root" />
+        <String fx:value="color-scheme-light" />
+    </styleClass>
+
+    <Hyperlink maxHeight="0.0" maxWidth="0.0" text="focus-fix" textFill="TRANSPARENT" />
+
+    <MFXScrollPane fitToHeight="true" fitToWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+
+        <VBox fx:id="body" alignment="TOP_CENTER" styleClass="body">
+            <VBox alignment="TOP_CENTER" styleClass="body-container">
+                <HBox>
+                    <VBox.margin>
+                        <Insets bottom="20.0" />
+                    </VBox.margin>
+                    <VBox alignment="CENTER">
+                        <AnchorPane prefWidth="77.0" styleClass="logo">
+                            <VBox styleClass="logo-wrapper">
+                                <Text styleClass="logo-top" text="CITY" textAlignment="CENTER">
+                                </Text>
+                                <Text styleClass="logo-bottom" text="PARK" textAlignment="CENTER">
+                                </Text>
+                            </VBox>
+                        </AnchorPane>
+                    </VBox>
+                    <VBox alignment="CENTER" prefHeight="72.0" prefWidth="840.0">
+                        <TextFlow prefHeight="17.0" prefWidth="697.0" textAlignment="CENTER">
+                            <Text fx:id="parkingLotNameTitle" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="kiosk-title" text="Parking Lot Name" />
+                        </TextFlow>
+                    </VBox>
+                </HBox>
+                <HBox>
+                    <VBox fx:id="kioskMenu" fillWidth="false" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" styleClass="kiosk-menu">
+                        <MFXButton fx:id="homeMenuBtn" contentDisplay="TOP" graphicTextGap="0.0" onAction="#homeMenuBtnClickHandler" styleClass="kiosk-menu-button" text="Home">
+                            <graphic>
+                                <FontAwesomeIconView glyphName="HOME" />
+                            </graphic>
+                        </MFXButton>
+                        <MFXButton fx:id="bookNowMenuBtn" contentDisplay="TOP" graphicTextGap="0.0" onAction="#bookNowMenuBtnClickHandler" styleClass="kiosk-menu-button" text="Book Now">
+                            <graphic>
+                                <FontAwesomeIconView glyphName="PENCIL_SQUARE">
+                                    <font>
+                                        <Font size="36.0" />
+                                    </font>
+                                </FontAwesomeIconView>
+                            </graphic>
+                        </MFXButton>
+                        <MFXButton fx:id="subscriptionMenuBtn" contentDisplay="TOP" graphicTextGap="0.0" onAction="#subscriptionMenuBtnClickHandler" text="Subscription">
+                            <graphic>
+                                <FontAwesomeIconView glyphName="DRIVERS_LICENSE">
+                                    <font>
+                                        <Font size="36.0" />
+                                    </font>
+                                </FontAwesomeIconView>
+                            </graphic>
+                     <styleClass>
+                        <String fx:value="kiosk-menu-button" />
+                        <String fx:value="active" />
+                     </styleClass>
+                        </MFXButton>
+                        <MFXButton fx:id="reservationMenuBtn" contentDisplay="TOP" graphicTextGap="0.0" onAction="#reservationMenuBtnClickHandler" styleClass="kiosk-menu-button" text="Reservation">
+                            <graphic>
+                                <FontAwesomeIconView glyphName="AUTOMOBILE">
+                                    <font>
+                                        <Font size="36.0" />
+                                    </font>
+                                </FontAwesomeIconView>
+                            </graphic>
+                        </MFXButton>
+                        <MFXButton fx:id="exitMenuBtn" contentDisplay="TOP" graphicTextGap="0.0" onAction="#exitMenuBtnClickHandler" styleClass="kiosk-menu-button" text="Exit Now">
+                            <graphic>
+                                <FontAwesomeIconView glyphName="SIGN_OUT">
+                                    <font>
+                                        <Font size="36.0" />
+                                    </font>
+                                </FontAwesomeIconView>
+                            </graphic>
+                        </MFXButton>
+                    </VBox>
+                    <VBox prefWidth="1000.0" BorderPane.alignment="CENTER">
+                        <padding>
+                            <Insets left="20.0" right="10.0" />
+                        </padding>
+                        <VBox alignment="TOP_CENTER" maxWidth="1024.0" minHeight="400.0" minWidth="600.0" prefHeight="600" prefWidth="1024.0" styleClass="sheet">
+                            <HBox>
+                                <TextFlow>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sub-page-title" text="Subscribers Entrance">
+                                    </Text>
+                                </TextFlow>
+                            </HBox>
+                            <VBox>
+                                <VBox.margin>
+                                    <Insets bottom="20.0" top="20.0" />
+                                </VBox.margin>
+                                <TextFlow>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="Please fill your subscription information to enter the parking lot." />
+                                </TextFlow>
+                            </VBox>
+                            <HBox>
+                                <VBox styleClass="form">
+                                    <VBox>
+                                        <VBox.margin>
+                                            <Insets bottom="10.0" />
+                                        </VBox.margin>
+                                        <TextFlow>
+                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Subscription Number">
+                                                <styleClass>
+                                                    <String fx:value="sheet-text" />
+                                                    <String fx:value="form-label" />
+                                                </styleClass>
+                                            </Text>
+                                        </TextFlow>
+                                        <MFXTextField fx:id="subscriptionNumber" floatMode="DISABLED" minHeight="45.0" prefHeight="45.0" prefWidth="400.0" />
+                                    </VBox>
+                                    <VBox>
+                                        <VBox.margin>
+                                            <Insets bottom="10.0" />
+                                        </VBox.margin>
+                                        <TextFlow>
+                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Vehicle Number">
+                                                <styleClass>
+                                                    <String fx:value="sheet-text" />
+                                                    <String fx:value="form-label" />
+                                                </styleClass>
+                                            </Text>
+                                        </TextFlow>
+                                        <MFXTextField fx:id="vehicleNumber" floatMode="DISABLED" floatingText="Vehicle Number" minHeight="45.0" prefHeight="45.0" prefWidth="467.0" textLimit="8" />
+                                    </VBox>
+                                    <MFXButton fx:id="enterSubscriptionBtn" minHeight="45.0" styleClass="button-primary" text="Enter Parking Lot" />
+                                </VBox>
+                            </HBox>
+                        </VBox>
+                    </VBox>
+                </HBox>
+
+
+            </VBox> <!-- /body-container -->
+        </VBox> <!-- /body -->
+    </MFXScrollPane> <!-- /(root)scrollPane -->
+
+    <VBox fx:id="dialogRoot" alignment="CENTER" disable="true" styleClass="dialog-root" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <MFXGenericDialog fx:id="dialogControl" actionsOrientation="VERTICAL" contentText="..." headerText="Dialog Title" onClose="#closeDialog" showAlwaysOnTop="false" showMinimize="false">
+            <styleClass>
+                <String fx:value="dialog" />
+                <String fx:value="dialog-w-xs" />
+            </styleClass>
+            <center>
+                <MFXScrollPane fitToHeight="true" fitToWidth="true" styleClass="dialog-content-scroll" BorderPane.alignment="CENTER">
+                    <VBox>
+                        <TextFlow fx:id="dialogContent" styleClass="dialog-content" />
+                        <VBox fx:id="dialogCustomContent" />
+                    </VBox>
+                </MFXScrollPane>
+            </center>
+            <bottom>
+                <HBox fx:id="dialogAction" alignment="CENTER_RIGHT" styleClass="dialog-action" BorderPane.alignment="CENTER" />
+            </bottom>
+        </MFXGenericDialog>
+    </VBox>
+
+</AnchorPane>

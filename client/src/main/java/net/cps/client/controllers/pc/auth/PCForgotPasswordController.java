@@ -53,7 +53,7 @@ public class PCForgotPasswordController extends AbstractPageController {
     
     @FXML
     public void goBackBtnClickHandler (ActionEvent event) throws IOException {
-        App.setPage("PCLogin.fxml");
+        App.setPage("pc/auth/PCLogin.fxml");
     }
     
     @FXML
@@ -71,7 +71,7 @@ public class PCForgotPasswordController extends AbstractPageController {
     
     @FXML
     public void loginLinkClickHandler (ActionEvent actionEvent) throws IOException {
-        App.setPage("PCLogin.fxml");
+        App.setPage("pc/auth/PCLogin.fxml");
     }
     
     
@@ -83,11 +83,11 @@ public class PCForgotPasswordController extends AbstractPageController {
             if (event.getResponse().getStatus() == ResponseStatus.SUCCESS) {
                 try {
                     if (event.getResponse().getBody().equals("customer")) {
-                        App.setPage("PCCustomerMain.fxml");
+                        App.setPage("pc/auth/PCCustomerHome.fxml");
                         EventBus.getDefault().post(new CustomerLoginEvent((Customer) event.getResponse().getData()));
                     }
                     else if (event.getResponse().getBody().equals("employee")) {
-                        App.setPage("PCEmployeeMain.fxml");
+                        App.setPage("pc/auth/PCEmployeeHome.fxml");
                         EventBus.getDefault().post(new EmployeeLoginEvent((Employee) event.getResponse().getData()));
                     }
                     else {

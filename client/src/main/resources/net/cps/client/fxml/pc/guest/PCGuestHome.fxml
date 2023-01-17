@@ -3,7 +3,7 @@
 <?import de.jensd.fx.glyphs.fontawesome.*?>
 <?import io.github.palexdev.materialfx.controls.*?>
 <?import io.github.palexdev.materialfx.dialogs.MFXGenericDialog?>
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
@@ -11,17 +11,18 @@
 <?import java.net.URL?>
 <AnchorPane fx:id="root" maxHeight="800.0" maxWidth="1024.0" minHeight="400.0" minWidth="800.0" prefWidth="1024.0"
             xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="net.cps.client.controllers.pc.employee.PCEmployeeMainController">
+            fx:controller="net.cps.client.controllers.pc.guest.PCGuestHomeController">
     <stylesheets>
         <URL value="@../../../styles/css/utils/GlobalStyles.css"/>
-        <URL value="@../../../styles/css/pages/PCEmployeeMain.css"/>
+        <URL value="@../../../styles/css/pages/PCGuestMain.css"/>
+        <URL value="@../../../styles/css/pages/PCGuestMainSubPage.css"/>
     </stylesheets>
     <styleClass>
         <String fx:value="root"/>
         <String fx:value="color-scheme-light"/>
     </styleClass>
 
-    <Hyperlink maxHeight="0.0" maxWidth="0.0" text="focus-fix" textFill="TRANSPARENT"/>
+    <Hyperlink maxHeight="0.0" maxWidth="0.0" styleClass="focus-fix" text="focus-fix" textFill="TRANSPARENT"/>
 
     <MFXScrollPane fx:id="rootScroll" fitToHeight="true" fitToWidth="true" AnchorPane.bottomAnchor="0.0"
                    AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -47,8 +48,8 @@
                             <VBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
                                 <TextFlow styleClass="dashboard-user-message">
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="Hello "/>
-                                    <Text fx:id="employeeName" strokeType="OUTSIDE" strokeWidth="0.0"
-                                          styleClass="sheet-text" text="FirstName LastName"/>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text"
+                                          text="Guest !"/>
                                     <VBox.margin>
                                         <Insets/>
                                     </VBox.margin>
@@ -63,19 +64,13 @@
                                     <MFXButton contentDisplay="GRAPHIC_ONLY" prefHeight="20.0" prefWidth="32.0"
                                                styleClass="button-icon" text=" ">
                                         <graphic>
-                                            <FontAwesomeIconView glyphName="COG"/>
-                                        </graphic>
-                                    </MFXButton>
-                                    <MFXButton contentDisplay="GRAPHIC_ONLY" prefHeight="20.0" prefWidth="32.0"
-                                               styleClass="button-icon" text=" ">
-                                        <graphic>
                                             <FontAwesomeIconView glyphName="ADJUST"/>
                                         </graphic>
                                     </MFXButton>
                                     <MFXButton contentDisplay="GRAPHIC_ONLY" prefHeight="20.0" prefWidth="32.0"
                                                styleClass="button-icon" text=" ">
                                         <graphic>
-                                            <FontAwesomeIconView glyphName="USER"/>
+                                            <FontAwesomeIconView glyphName="COG"/>
                                         </graphic>
                                     </MFXButton>
                                 </HBox>
@@ -100,46 +95,18 @@
                                             <String fx:value="active"/>
                                         </styleClass>
                                     </MFXButton>
-                                    <MFXButton fx:id="menuBtnParkingLots" graphicTextGap="8.0"
-                                               onMouseClicked="#menuBtnSubscriptionsClickHandler"
-                                               styleClass="dashboard-menu-button" text="Parking Lots">
-                                        <graphic>
-                                            <FontAwesomeIconView glyphName="MAP" text=""/>
-                                        </graphic>
-                                    </MFXButton>
-                                    <MFXButton fx:id="menuBtnEmployees" graphicTextGap="8.0"
-                                               onMouseClicked="#menuBtnSubscriptionsClickHandler"
-                                               styleClass="dashboard-menu-button" text="Employees">
-                                        <graphic>
-                                            <FontAwesomeIconView glyphName="INSTAGRAM" text=""/>
-                                        </graphic>
-                                    </MFXButton>
-                                    <MFXButton fx:id="menuBtnReports" graphicTextGap="8.0"
+                                    <MFXButton fx:id="menuBtnReservations" graphicTextGap="8.0"
                                                onMouseClicked="#menuBtnReservationsClickHandler"
-                                               styleClass="dashboard-menu-button" text="Reports">
+                                               styleClass="dashboard-menu-button" text="Reservations">
                                         <graphic>
-                                            <FontAwesomeIconView glyphName="AUTOMOBILE" text=""/>
-                                        </graphic>
-                                    </MFXButton>
-                                    <MFXButton fx:id="menuBtnStatistics" graphicTextGap="8.0"
-                                               onMouseClicked="#menuBtnComplaintsClickHandler"
-                                               styleClass="dashboard-menu-button" text="Statistics">
-                                        <graphic>
-                                            <FontAwesomeIconView glyphName="COG" text=""/>
+                                            <FontAwesomeIconView glyphName="AUTOMOBILE"/>
                                         </graphic>
                                     </MFXButton>
                                     <MFXButton fx:id="menuBtnComplaints" graphicTextGap="8.0"
                                                onMouseClicked="#menuBtnComplaintsClickHandler"
                                                styleClass="dashboard-menu-button" text="Complaints">
                                         <graphic>
-                                            <FontAwesomeIconView glyphName="COG" text=""/>
-                                        </graphic>
-                                    </MFXButton>
-                                    <MFXButton fx:id="menuBtnComplaints1" graphicTextGap="8.0"
-                                               onMouseClicked="#menuBtnComplaintsClickHandler"
-                                               styleClass="dashboard-menu-button" text="Parking Spaces">
-                                        <graphic>
-                                            <FontAwesomeIconView glyphName="COG" text=""/>
+                                            <FontAwesomeIconView glyphName="LIST_ALT"/>
                                         </graphic>
                                     </MFXButton>
                                 </VBox>
@@ -156,18 +123,11 @@
                                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="USER"/>
                                     </TextFlow>
                                     <VBox alignment="TOP_CENTER" spacing="2.0">
-                                        <MFXButton fx:id="menuBtnProfile" graphicTextGap="8.0"
-                                                   onMouseClicked="#menuBtnProfileClickHandler"
-                                                   styleClass="dashboard-menu-button" text="Profile">
+                                        <MFXButton fx:id="menuBtnRegister" graphicTextGap="8.0"
+                                                   onMouseClicked="#menuBtnRegisterClickHandler"
+                                                   styleClass="dashboard-menu-button" text="Register Now">
                                             <graphic>
-                                                <FontAwesomeIconView glyphName="USER"/>
-                                            </graphic>
-                                        </MFXButton>
-                                        <MFXButton fx:id="menuBtnLogout" graphicTextGap="8.0"
-                                                   onMouseClicked="#menuBtnLogoutClickHandler"
-                                                   styleClass="dashboard-menu-button" text="Logout">
-                                            <graphic>
-                                                <FontAwesomeIconView glyphName="SIGN_OUT"/>
+                                                <FontAwesomeIconView glyphName="SIGN_IN"/>
                                             </graphic>
                                         </MFXButton>
                                     </VBox>
@@ -177,6 +137,59 @@
                     </left>
                     <center>
                         <VBox fx:id="subPageWrapper" BorderPane.alignment="CENTER">
+                            <HBox fx:id="subPageBody" maxWidth="1024.0" minHeight="400.0" minWidth="600.0"
+                                  prefWidth="1024.0" styleClass="sub-page-body">
+                                <styleClass>
+                                    <String fx:value=""/>
+                                </styleClass>
+                                <VBox alignment="TOP_CENTER" maxWidth="1024.0" minHeight="400.0" minWidth="600.0"
+                                      prefHeight="600" prefWidth="1024.0" styleClass="sheet">
+                                    <HBox>
+                                        <TextFlow>
+                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sub-page-title"
+                                                  text="Home">
+                                            </Text>
+                                        </TextFlow>
+                                    </HBox>
+                                    <VBox>
+                                        <VBox.margin>
+                                            <Insets top="20.0"/>
+                                        </VBox.margin>
+                                        <TextFlow>
+                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text"
+                                                  text="Welcome to the 'CityPark' Guest Portal!">
+                                                <font>
+                                                    <Font size="14.0"/>
+                                                </font>
+                                            </Text>
+                                        </TextFlow>
+                                        <TextFlow>
+                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text"
+                                                  text="You can choose an action from the menu on the left - and continue from there.">
+                                                <font>
+                                                    <Font size="14.0"/>
+                                                </font>
+                                            </Text>
+                                        </TextFlow>
+                                        <TextFlow>
+                                            <children>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text"
+                                                      text="Please note - as a guest who's not connected to the system, the range of actions available for you is very limited.">
+                                                    <font>
+                                                        <Font size="14.0"/>
+                                                    </font>
+                                                </Text>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text"
+                                                      text=" We recommened you to sgin-in for a better user experience.">
+                                                    <font>
+                                                        <Font size="14.0"/>
+                                                    </font>
+                                                </Text>
+                                            </children>
+                                        </TextFlow>
+                                    </VBox>
+                                </VBox>
+                            </HBox>
                         </VBox>
                     </center>
                     <styleClass>

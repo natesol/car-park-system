@@ -8,24 +8,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
-import javafx.scene.Node;
-import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.StringConverter;
 import net.cps.client.App;
 import net.cps.client.CPSClient;
 import net.cps.client.utils.AbstractPageController;
-import net.cps.common.entities.Customer;
-import net.cps.common.entities.ParkingLot;
-import net.cps.common.entities.Subscription;
-import net.cps.common.entities.Vehicle;
+import net.cps.common.entities.*;
 import net.cps.common.messages.RequestMessage;
 import net.cps.common.messages.ResponseMessage;
 import net.cps.common.utils.*;
@@ -34,19 +26,16 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.ResourceBundle;
 
 
 public class PCCustomerReservationsController extends AbstractPageController {
-    public MFXButton newReservationBtn;
     private Customer customer;
     private ArrayList<ParkingLot> allParkingLots = new ArrayList<>();
-    private ArrayList<Subscription> allCustomerSubscriptions = new ArrayList<>();
-    private Subscription selectedSubscription = null;
+    private ArrayList<Reservation> allCustomerReservations = new ArrayList<>();
+    private Reservation selectedReservation = null;
     private ArrayList<Vehicle> allCustomerVehicles = new ArrayList<>();
     
     @FXML
@@ -65,39 +54,33 @@ public class PCCustomerReservationsController extends AbstractPageController {
     public MFXButton menuBtnSignOut;
     
     @FXML
-    public MFXButton addSubscriptionBtn;
+    public MFXButton newReservationBtn;
     @FXML
-    public MFXLegacyTableView<Subscription> subscriptionsTable;
+    public MFXButton cancelSelectedBtn;
     @FXML
-    public TableColumn<String, Subscription> subIdColSubTable;
+    public MFXLegacyTableView<Reservation> reservationsTable;
     @FXML
-    public TableColumn<String, ParkingLot> parkingLotColSubTable;
+    public TableColumn<String, ParkingLot> parkingLotColResTable;
     @FXML
-    public TableColumn<String, SubscriptionType> subTypeColSubTable;
+    public TableColumn<String, Vehicle> vehicleColResTable;
     @FXML
-    public TableColumn<String, Calendar> createTimeColSubTable;
+    public TableColumn<String, Calendar> arrivalTimeColResTable;
     @FXML
-    public TableColumn<String, Calendar> expireTimeColSubTable;
+    public TableColumn<String, Calendar> departureTimeColResTable;
     @FXML
-    public TableColumn<String, SubscriptionState> stateColSubTable;
+    public TableColumn<String, ReservationStatus> statusColResTable;
     
-    /* Add Subscription Form Controls */
-    public HBox addSubscriptionForm;
-    public ToggleGroup subscriptionType;
-    public MFXRadioButton regularSubRadio;
-    public MFXRadioButton premiumSubRadio;
+    /* New Reservation Form Controls */
+    public HBox newReservationForm;
     public MFXComboBox<ParkingLot> parkingLotsListCombo;
     public MFXTextField vehicleNumberField;
-    public VBox vehicleNumbersFieldsWrapper;
-    public VBox vehicleNumbersFields;
-    public MFXTextField vehicleNumberField1;
-    public Hyperlink addVehicleLink;
-    public Hyperlink removeVehicleLink;
-    public MFXDatePicker startAtDate;
-    public HBox departureTimeFieldsWrapper;
-    public MFXToggleButton departureTimeToggle;
+    public MFXDatePicker arrivalDate;
+    public MFXTextField arrivalTimeHourField;
+    public MFXTextField arrivalTimeMinutesField;
+    public MFXDatePicker departureDate;
     public MFXTextField departureTimeHourField;
     public MFXTextField departureTimeMinutesField;
+    public Text priceField;
     
     
     
@@ -109,14 +92,14 @@ public class PCCustomerReservationsController extends AbstractPageController {
         
         Platform.runLater(() -> {
             customerName.setText(customer.getFirstName() + " " + customer.getLastName());
-            addSubscriptionForm.setManaged(false);
-            addSubscriptionForm.setVisible(false);
-            addSubscriptionForm.setDisable(true);
+            newReservationForm.setManaged(false);
+            newReservationForm.setVisible(false);
+            newReservationForm.setDisable(true);
         });
         
         CPSClient.sendRequestToServer(RequestType.GET, Entities.PARKING_LOT.getTableName(), this::onGetParkingLots);
         CPSClient.sendRequestToServer(RequestType.GET, Entities.VEHICLE.getTableName() + "/customer_email=" + customer.getEmail(), this::onGetVehicles);
-        CPSClient.sendRequestToServer(RequestType.GET, Entities.SUBSCRIPTION.getTableName() + "/customer_email=" + customer.getEmail(), this::onGetSubscriptions);
+        CPSClient.sendRequestToServer(RequestType.GET, Entities.RESERVATION.getTableName() + "/customer_email=" + customer.getEmail(), this::onGetReservation);
     }
     
     
@@ -128,7 +111,7 @@ public class PCCustomerReservationsController extends AbstractPageController {
         
         Platform.runLater(() -> {
             try {
-                App.setPage("pc/customer/PCCustomerHome.fxml");
+                App.setPage("pc/customer/PCEmployeeHome.fxml");
             }
             catch (IOException e) {
                 throw new RuntimeException(e);
@@ -221,16 +204,16 @@ public class PCCustomerReservationsController extends AbstractPageController {
     }
     
     @FXML
-    public void addSubscriptionBtnClickHandler (ActionEvent actionEvent) {
+    public void newReservationBtnClickHandler (ActionEvent actionEvent) {
         Platform.runLater(() -> {
             StringConverter<ParkingLot> converter = FunctionalStringConverter.to(parkingLot -> (parkingLot == null) ? "-" : parkingLot.getName());
             parkingLotsListCombo.setConverter(converter);
             parkingLotsListCombo.setItems(FXCollections.observableArrayList(allParkingLots));
             
-            MFXButton confirmBtn = new MFXButton("Add");
+            MFXButton confirmBtn = new MFXButton("Book");
             confirmBtn.setOnAction(event -> {
-                selectedSubscription = createSubscriptionObject();
-                CPSClient.sendRequestToServer(RequestType.CREATE, Entities.SUBSCRIPTION.getTableName(), "create a new subscription for customer: " + customer.getEmail(), selectedSubscription, this::onCreateSubscription);
+                selectedReservation = createReservationObject();
+                CPSClient.sendRequestToServer(RequestType.CREATE, Entities.RESERVATION.getTableName(), "create a new reservation for customer: " + customer.getEmail(), selectedReservation, this::onCreateReservation);
                 dialog.close();
             });
             confirmBtn.getStyleClass().add("button-primary");
@@ -239,106 +222,17 @@ public class PCCustomerReservationsController extends AbstractPageController {
             cancelBtn.getStyleClass().add("button-secondary");
             
             dialog.setWidth(Dialog.Width.EXTRA_SMALL);
-            dialog.setTitleText("Add Subscription");
-            dialog.setBodyText("Fill the form below to create a new subscription.");
+            dialog.setTitleText("Book New Reservation");
+            dialog.setBodyText("Fill the form below to create a new reservation.");
             
-            dialog.setCustomContent(addSubscriptionForm);
-            addSubscriptionForm.setManaged(true);
-            addSubscriptionForm.setVisible(true);
-            addSubscriptionForm.setDisable(false);
+            dialog.setCustomContent(newReservationForm);
+            newReservationForm.setManaged(true);
+            newReservationForm.setVisible(true);
+            newReservationForm.setDisable(false);
             
             dialog.setActionButtons(cancelBtn, confirmBtn);
             
             dialog.open();
-        });
-    }
-    
-    @FXML
-    private void addSubscriptionFormStateToggleHandler (ActionEvent actionEvent) {
-        Platform.runLater(() -> {
-            if (subscriptionType.getSelectedToggle() == regularSubRadio) {
-                parkingLotsListCombo.setDisable(false);
-                parkingLotsListCombo.setVisible(true);
-                parkingLotsListCombo.setManaged(true);
-                VBox.setMargin(parkingLotsListCombo, new Insets(0, 0, 0, 0));
-                
-                vehicleNumberField.setDisable(true);
-                vehicleNumberField.setVisible(false);
-                vehicleNumberField.setManaged(false);
-                VBox.setMargin(vehicleNumberField, new Insets(-65, 0, 0, 0));
-                
-                vehicleNumbersFieldsWrapper.setDisable(false);
-                vehicleNumbersFieldsWrapper.setVisible(true);
-                vehicleNumbersFieldsWrapper.setManaged(true);
-                VBox.setMargin(vehicleNumbersFieldsWrapper, new Insets(0, 0, 0, 0));
-            }
-            else {
-                parkingLotsListCombo.setDisable(true);
-                parkingLotsListCombo.setVisible(false);
-                parkingLotsListCombo.setManaged(false);
-                VBox.setMargin(parkingLotsListCombo, new Insets(-65, 0, 0, 0));
-                
-                vehicleNumberField.setDisable(false);
-                vehicleNumberField.setVisible(true);
-                vehicleNumberField.setManaged(true);
-                VBox.setMargin(vehicleNumberField, new Insets(0, 0, 0, 0));
-                
-                vehicleNumbersFieldsWrapper.setDisable(true);
-                vehicleNumbersFieldsWrapper.setVisible(false);
-                vehicleNumbersFieldsWrapper.setManaged(false);
-                VBox.setMargin(vehicleNumbersFieldsWrapper, new Insets((vehicleNumbersFields.getChildren().size() * -65) - 29, 0, 0, 0));
-            }
-        });
-    }
-    
-    @FXML
-    private void addVehicleLinkClickHandler (ActionEvent actionEvent) {
-        ObservableList<Node> children = vehicleNumbersFields.getChildren();
-        int newVehicleNumberFieldIndex = children.size() + 1;
-        MFXTextField vehicleNumber = new MFXTextField();
-        vehicleNumber.setId("vehicleNumberField" + newVehicleNumberFieldIndex);
-        vehicleNumber.setFloatingText("Vehicle Number #" + newVehicleNumberFieldIndex);
-        vehicleNumber.setPrefWidth(300.0);
-        vehicleNumber.setTextLimit(8);
-        children.add(vehicleNumber);
-        
-        if (children.size() > 1) {
-            removeVehicleLink.setDisable(false);
-            removeVehicleLink.setVisible(true);
-            removeVehicleLink.setManaged(true);
-        }
-    }
-    
-    @FXML
-    private void removeVehicleLinkClickHandler (ActionEvent actionEvent) {
-        ObservableList<Node> children = vehicleNumbersFields.getChildren();
-        if (children.size() > 1) {
-            children.remove(children.size() - 1);
-        }
-        if (children.size() == 1) {
-            removeVehicleLink.setDisable(true);
-            removeVehicleLink.setVisible(false);
-            removeVehicleLink.setManaged(false);
-        }
-    }
-    
-    @FXML
-    private void departureTimeToggleHandler (ActionEvent actionEvent) {
-        Platform.runLater(() -> {
-            if (departureTimeToggle.isSelected()) {
-                departureTimeHourField.setDisable(false);
-                departureTimeHourField.setEditable(true);
-                departureTimeMinutesField.setDisable(false);
-                departureTimeMinutesField.setEditable(true);
-            }
-            else {
-                departureTimeHourField.setDisable(true);
-                departureTimeHourField.setEditable(false);
-                departureTimeHourField.setText("0");
-                departureTimeMinutesField.setDisable(true);
-                departureTimeMinutesField.setEditable(false);
-                departureTimeMinutesField.setText("0");
-            }
         });
     }
     
@@ -352,19 +246,18 @@ public class PCCustomerReservationsController extends AbstractPageController {
     /* ----- Requests Callbacks (on server response) ---------------- */
     
     @RequestCallback.Method
-    private void onGetSubscriptions (RequestMessage request, ResponseMessage response) {
+    private void onGetReservation (RequestMessage request, ResponseMessage response) {
         if (response.getStatus() == ResponseStatus.SUCCESS) {
             Platform.runLater(() -> {
-                allCustomerSubscriptions = (ArrayList<Subscription>) response.getData();
-                ObservableList<Subscription> subscriptions = FXCollections.observableArrayList((ArrayList<Subscription>) response.getData());
+                allCustomerReservations = (ArrayList<Reservation>) response.getData();
+                ObservableList<Reservation> reservations = FXCollections.observableArrayList((ArrayList<Reservation>) response.getData());
     
-                subIdColSubTable.setCellValueFactory(new PropertyValueFactory<>("id"));
-                parkingLotColSubTable.setCellValueFactory(new PropertyValueFactory<>("parkingLotName"));
-                subTypeColSubTable.setCellValueFactory(new PropertyValueFactory<>("type"));
-                createTimeColSubTable.setCellValueFactory(new PropertyValueFactory<>("createdAtTime"));
-                expireTimeColSubTable.setCellValueFactory(new PropertyValueFactory<>("expiresAtTime"));
-                stateColSubTable.setCellValueFactory(new PropertyValueFactory<>("state"));
-                subscriptionsTable.setItems(subscriptions);
+                parkingLotColResTable.setCellValueFactory(new PropertyValueFactory<>("parkingLotName"));
+                vehicleColResTable.setCellValueFactory(new PropertyValueFactory<>("number"));
+                arrivalTimeColResTable.setCellValueFactory(new PropertyValueFactory<>("arrivalTime"));
+                departureTimeColResTable.setCellValueFactory(new PropertyValueFactory<>("departureTime"));
+                statusColResTable.setCellValueFactory(new PropertyValueFactory<>("status"));
+                reservationsTable.setItems(reservations);
             });
         }
     }
@@ -388,10 +281,10 @@ public class PCCustomerReservationsController extends AbstractPageController {
     }
     
     @RequestCallback.Method
-    private void onCreateSubscription (RequestMessage request, ResponseMessage response) {
+    private void onCreateReservation (RequestMessage request, ResponseMessage response) {
         if (response.getStatus() == ResponseStatus.FINISHED) {
             Integer id = (Integer) response.getData();
-            selectedSubscription.setId(id);
+            selectedReservation.setId(id);
             
             Platform.runLater(() -> {
                 dialog.close();
@@ -399,7 +292,7 @@ public class PCCustomerReservationsController extends AbstractPageController {
                 MFXButton okBtn = new MFXButton("OK");
                 okBtn.setOnAction(event -> {
                     dialog.close();
-                    subscriptionsTable.setItems(FXCollections.observableArrayList(allCustomerSubscriptions));
+                    reservationsTable.setItems(FXCollections.observableArrayList(allCustomerReservations));
                 });
                 okBtn.getStyleClass().add("button-primary");
                 
@@ -409,11 +302,11 @@ public class PCCustomerReservationsController extends AbstractPageController {
                 dialog.setActionButtons(okBtn);
                 dialog.open();
                 
-                allCustomerSubscriptions.add(selectedSubscription);
-                ObservableList<Subscription> subscriptions = FXCollections.observableArrayList((ArrayList<Subscription>) response.getData());
-                subscriptionsTable.setItems(subscriptions);
+                allCustomerReservations.add(selectedReservation);
+                ObservableList<Reservation> reservations = FXCollections.observableArrayList(allCustomerReservations);
+                reservationsTable.setItems(reservations);
                 
-                customer.chargeBalance(calculatePrice(selectedSubscription));
+                customer.chargeBalance(calculatePrice(selectedReservation));
                 CPSClient.sendRequestToServer(RequestType.UPDATE, Entities.CUSTOMER.getTableName(), null, customer, (req, res) -> {
                     if (res.getStatus() == ResponseStatus.SUCCESS) {
                         System.out.println("Customer balance updated successfully.");
@@ -437,82 +330,42 @@ public class PCCustomerReservationsController extends AbstractPageController {
                 dialog.open();
             });
         }
-        selectedSubscription = null;
+        selectedReservation = null;
     }
     
     
     /* ----- Utility Methods ---------------------------------------- */
     
-    private @NotNull Subscription createSubscriptionObject () {
+    private @NotNull Reservation createReservationObject () {
         ParkingLot parkingLot;
         Calendar startAt = Calendar.getInstance();
         SubscriptionType type;
         ArrayList<Vehicle> vehicles = new ArrayList<>();
         ArrayList<Vehicle> newVehicles = new ArrayList<>();
         LocalTime departureTime = LocalTime.of(0, 0);
+
         
-        if (subscriptionType.getSelectedToggle() == regularSubRadio) {
-            parkingLot = parkingLotsListCombo.getSelectionModel().getSelectedItem();
-            startAt.setTime(Date.from(startAtDate.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
-            startAt.clear(Calendar.HOUR_OF_DAY);
-            type = SubscriptionType.BASIC;
-            vehicleNumbersFields.getChildren().forEach(node -> {
-                if (node instanceof MFXTextField) {
-                    String vehicleNumber = ((MFXTextField) node).getText();
-                    vehicles.add(new Vehicle(vehicleNumber, customer));
-                    
-                    if (allCustomerVehicles.stream().noneMatch(vehicle -> vehicle.getNumber().equals(vehicleNumber))) {
-                        newVehicles.add(new Vehicle(vehicleNumber, customer));
-                    }
-                }
-            });
-        }
-        else {
-            parkingLot = null;
-            startAt.setTime(Date.from(startAtDate.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
-            startAt.clear(Calendar.HOUR_OF_DAY);
-            type = SubscriptionType.PREMIUM;
-            String vehicleNumber = vehicleNumberField.getText();
-            vehicles.add(new Vehicle(vehicleNumber, customer));
-            if (allCustomerVehicles.stream().noneMatch(vehicle -> vehicle.getNumber().equals(vehicleNumber))) {
-                newVehicles.add(new Vehicle(vehicleNumber, customer));
-            }
-        }
-        if (departureTimeToggle.isSelected()) {
-            departureTime = LocalTime.of(Integer.parseInt(departureTimeHourField.getText()), Integer.parseInt(departureTimeMinutesField.getText()));
-        }
-        if (!newVehicles.isEmpty()) {
-            CPSClient.sendRequestToServer(RequestType.CREATE, Entities.VEHICLE.getTableName(), null, newVehicles, (req, res) -> {
-                if (res.getStatus() == ResponseStatus.SUCCESS) {
-                    allCustomerVehicles.addAll(newVehicles);
-                }
-            });
-        }
-        
-        return new Subscription(customer, parkingLot, startAt, type, vehicles, departureTime);
+        return new Reservation();
     }
     
-    private Double calculatePrice (@NotNull Subscription subscription) {
+    private Double calculatePrice (@NotNull Reservation subscription) {
         Double price = 0.0;
-        SubscriptionType type = subscription.getType();
-        ParkingLot parkingLot = subscription.getParkingLot();
-        Integer numOfVehicles = subscription.getVehicles().size();
-        
-        if (type == SubscriptionType.BASIC) {
-            if (numOfVehicles == 1) {
-                price = parkingLot.getRates().getRegularSubscriptionSingleVehicle() * parkingLot.getRates().getHourlyOnetimeParking();
-            }
-            else {
-                price = parkingLot.getRates().getRegularSubscriptionMultipleVehicles() * parkingLot.getRates().getHourlyOnetimeParking() * numOfVehicles;
-            }
-        }
-        else if (type == SubscriptionType.PREMIUM) {
-            price = parkingLot.getRates().getFullSubscriptionSingleVehicle() * parkingLot.getRates().getHourlyOnetimeParking();
-        }
-        
+        //SubscriptionType type = subscription.getType();
+        //ParkingLot parkingLot = subscription.getParkingLot();
+        //Integer numOfVehicles = subscription.getVehicles().size();
+        //
+        //if (type == SubscriptionType.BASIC) {
+        //    if (numOfVehicles == 1) {
+        //        price = parkingLot.getRates().getRegularSubscriptionSingleVehicle() * parkingLot.getRates().getHourlyOnetimeParking();
+        //    }
+        //    else {
+        //        price = parkingLot.getRates().getRegularSubscriptionMultipleVehicles() * parkingLot.getRates().getHourlyOnetimeParking() * numOfVehicles;
+        //    }
+        //}
+        //else if (type == SubscriptionType.PREMIUM) {
+        //    price = parkingLot.getRates().getFullSubscriptionSingleVehicle() * parkingLot.getRates().getHourlyOnetimeParking();
+        //}
+        //
         return price;
-    }
-    
-    public void newReservationBtnClickHandler (ActionEvent actionEvent) {
     }
 }

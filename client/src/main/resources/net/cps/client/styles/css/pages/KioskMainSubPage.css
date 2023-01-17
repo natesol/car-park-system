@@ -679,48 +679,38 @@
   -fx-font-weight: 400 !important;
 }
 .dashboard .dashboard-left .dashboard-menu-button.active {
-  -fx-background-color: #6e7781 !important;
+  -fx-background-color: #8c959f !important;
   -fx-text-fill: #ffffff !important;
   -fx-fill: #ffffff !important;
 }
 /* ------------------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------------ */
-.sub-page-body {
-  -fx-background-radius: 16px;
-  -fx-border-radius: 16px;
-  -fx-background-color: #f6f8fa;
-  -fx-padding: 0 0 0 16px;
-}
-.sub-page-body .sub-page-title {
+.sub-page-title {
   -fx-font-family: "Poppins Bold", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Ubuntu", "Bitstream Vera Sans", "Liberation Sans", "Arial", "sans-serif";
   -fx-font-weight: 700;
   -fx-font-size: 40px;
   -fx-text-fill: #424a53;
   -fx-fill: #424a53;
 }
-.sub-page-body .sub-page-title.FontAwesomeIconView {
+.sub-page-title.FontAwesomeIconView {
   -fx-font-size: 40px;
 }
-.sub-page-body .sheet-text {
+.sheet-text {
   -fx-font-size: 16px;
   -fx-text-fill: #424a53;
   -fx-fill: #424a53;
 }
-.sub-page-body .form {
-  -fx-min-width: 300px;
-  -fx-max-width: 300px;
+.form {
+  -fx-min-width: 350px;
+  -fx-max-width: 350px;
 }
-.sub-page-body .form .mfx-text-field {
-  -fx-min-width: 300px;
-  -fx-max-width: 300px;
+.form .mfx-text-field {
   -fx-font-size: 16px;
 }
-.sub-page-body .form #departureHour,
-.sub-page-body .form #departureMinute {
-  -fx-min-width: 142px;
-  -fx-max-width: 142px;
+.form .form-label {
+  -fx-font-size: 14px;
 }
-.sub-page-body .form .button {
+.form .button {
   -fx-font-size: 16px;
 }
 /* ------------------------------------------------------------------------------------------------ */

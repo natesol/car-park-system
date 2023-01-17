@@ -1,6 +1,7 @@
 package net.cps.client.controllers;
 
 import io.github.palexdev.materialfx.controls.MFXButton;
+import io.github.palexdev.materialfx.controls.MFXComboBox;
 import io.github.palexdev.materialfx.controls.MFXFilterComboBox;
 import io.github.palexdev.materialfx.enums.FloatMode;
 import io.github.palexdev.materialfx.utils.StringUtils;
@@ -13,7 +14,10 @@ import javafx.scene.layout.HBox;
 import javafx.util.StringConverter;
 import net.cps.client.App;
 import net.cps.client.CPSClient;
+import net.cps.client.events.CustomerLoginEvent;
+import net.cps.client.events.KioskEnterEvent;
 import net.cps.client.utils.AbstractPageController;
+import net.cps.common.entities.Customer;
 import net.cps.common.entities.ParkingLot;
 import javafx.collections.ObservableList;
 import net.cps.common.messages.RequestMessage;
@@ -22,6 +26,7 @@ import net.cps.common.utils.Entities;
 import net.cps.common.utils.RequestCallback;
 import net.cps.common.utils.RequestType;
 import net.cps.common.utils.ResponseStatus;
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.net.URL;
@@ -71,15 +76,13 @@ public class IndexController extends AbstractPageController {
         Platform.runLater(() -> {
             if (response.getStatus() == ResponseStatus.SUCCESS) {
                 // Create the filter combo-box and set its items.
-                MFXFilterComboBox<ParkingLot> filterCombo = new MFXFilterComboBox<>();
+                MFXComboBox<ParkingLot> filterCombo = new MFXComboBox<>();
                 filterCombo.setFloatMode(FloatMode.DISABLED);
                 filterCombo.setPrefWidth(400);
                 StringConverter<ParkingLot> converter = FunctionalStringConverter.to(parkingLot -> (parkingLot == null) ? "" : parkingLot.getName());
-                Function<String, Predicate<ParkingLot>> filterFunction = str -> parkingLot -> StringUtils.containsIgnoreCase(converter.toString(parkingLot), str);
                 filterCombo.setItems(parkingLots);
-                filterCombo.setValue(parkingLots.get(0));
                 filterCombo.setConverter(converter);
-                filterCombo.setFilterFunction(filterFunction);
+                filterCombo.setValue(parkingLots.get(0));
                 
                 // Create a HBox as wrapper to hold the filter combo-box.
                 HBox wrapper = new HBox();
@@ -91,7 +94,8 @@ public class IndexController extends AbstractPageController {
                 confirmBtn.setOnAction(actionEvent -> {
                     try {
                         App.setEntity(filterCombo.getValue());
-                        App.setPage("kiosk/KioskMain.fxml");
+                        App.setPage("kiosk/KioskHome.fxml");
+                        EventBus.getDefault().post(new KioskEnterEvent(filterCombo.getValue()));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

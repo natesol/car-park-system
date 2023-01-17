@@ -15,17 +15,18 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane fx:id="root" maxHeight="800.0" maxWidth="1024.0" minHeight="400.0" minWidth="800.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.cps.client.controllers.pc.guest.PCGuestMainController">
+<AnchorPane fx:id="root" maxHeight="800.0" maxWidth="1024.0" minHeight="400.0" minWidth="800.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.cps.client.controllers.pc.employee.PCEmployeeHomeController">
     <stylesheets>
         <URL value="@../../../styles/css/utils/GlobalStyles.css" />
-        <URL value="@../../../styles/css/pages/PCGuestMain.css" />
+        <URL value="@../../../styles/css/pages/PCEmployeeMain.css" />
+        <URL value="@../../../styles/css/pages/PCEmployeeMainSubPage.css" />
     </stylesheets>
     <styleClass>
         <String fx:value="root" />
         <String fx:value="color-scheme-light" />
     </styleClass>
 
-    <Hyperlink maxHeight="0.0" maxWidth="0.0" styleClass="focus-fix" text="focus-fix" textFill="TRANSPARENT" />
+    <Hyperlink maxHeight="0.0" maxWidth="0.0" text="focus-fix" textFill="TRANSPARENT" />
 
     <MFXScrollPane fx:id="rootScroll" fitToHeight="true" fitToWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <styleClass>
@@ -34,7 +35,7 @@
 
         <VBox fx:id="body" alignment="TOP_CENTER" styleClass="body">
             <VBox alignment="TOP_CENTER" styleClass="body-container">
-                <BorderPane prefHeight="100.0">
+                <BorderPane prefHeight="200.0" prefWidth="200.0">
                     <top>
                         <HBox alignment="CENTER" styleClass="dashboard-top" BorderPane.alignment="CENTER">
                             <VBox alignment="CENTER_LEFT" styleClass="dashboard-logo-wrapper">
@@ -49,7 +50,8 @@
                             </VBox>
                             <VBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
                                 <TextFlow styleClass="dashboard-user-message">
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="Hello GUEST... " />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="Hello " />
+                                    <Text fx:id="employeeName" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="Employee Name (Role)" />
                                     <VBox.margin>
                                         <Insets />
                                     </VBox.margin>
@@ -62,17 +64,12 @@
                                 <HBox alignment="CENTER_RIGHT" prefHeight="27.0" prefWidth="202.0" spacing="2.0" styleClass="dashboard-user-menu">
                                     <MFXButton contentDisplay="GRAPHIC_ONLY" prefHeight="20.0" prefWidth="32.0" styleClass="button-icon" text=" ">
                                         <graphic>
-                                            <FontAwesomeIconView glyphName="COG" />
-                                        </graphic>
-                                    </MFXButton>
-                                    <MFXButton contentDisplay="GRAPHIC_ONLY" prefHeight="20.0" prefWidth="32.0" styleClass="button-icon" text=" ">
-                                        <graphic>
                                             <FontAwesomeIconView glyphName="ADJUST" />
                                         </graphic>
                                     </MFXButton>
                                     <MFXButton contentDisplay="GRAPHIC_ONLY" prefHeight="20.0" prefWidth="32.0" styleClass="button-icon" text=" ">
                                         <graphic>
-                                            <FontAwesomeIconView glyphName="USER" />
+                                            <FontAwesomeIconView glyphName="COG" />
                                         </graphic>
                                     </MFXButton>
                                 </HBox>
@@ -80,35 +77,55 @@
                         </HBox>
                     </top>
                     <left>
-                        <VBox fx:id="dashboardLeft" styleClass="dashboard-left" BorderPane.alignment="CENTER">
+                        <VBox styleClass="dashboard-left" BorderPane.alignment="CENTER">
                             <VBox>
                                 <TextFlow styleClass="dashboard-menu-title">
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="MENU" />
                                 </TextFlow>
 
                                 <VBox alignment="TOP_CENTER" spacing="2.0">
-                                    <MFXButton fx:id="menuBtnHome" graphicTextGap="8.0" onMouseClicked="#menuBtnHomeClickHandler" styleClass="dashboard-menu-button" text="Home">
+                                    <MFXButton fx:id="menuBtnHome" graphicTextGap="8.0" onMouseClicked="#menuBtnHomeClickHandler" text="Home">
                                         <graphic>
                                             <FontAwesomeIconView glyphName="HOME" />
                                         </graphic>
-                                    </MFXButton>
-                                    <MFXButton fx:id="menuBtnReservations" graphicTextGap="8.0" onMouseClicked="#menuBtnReservationsClickHandler" text="Reservations">
                                         <styleClass>
                                             <String fx:value="dashboard-menu-button" />
                                             <String fx:value="active" />
                                         </styleClass>
+                                    </MFXButton>
+                                    <MFXButton fx:id="menuBtnParkingLots" disable="true" graphicTextGap="8.0" onMouseClicked="#menuBtnParkingLotsClickHandler" styleClass="dashboard-menu-button" text="Parking Lots" visible="false">
                                         <graphic>
-                                            <FontAwesomeIconView glyphName="AUTOMOBILE" />
+                                            <FontAwesomeIconView glyphName="MAP" />
                                         </graphic>
                                     </MFXButton>
-                                    <MFXButton fx:id="menuBtnComplaints" graphicTextGap="8.0" onMouseClicked="#menuBtnComplaintsClickHandler" styleClass="dashboard-menu-button" text="Complaints">
+                                    <MFXButton fx:id="menuBtnRates" disable="true" graphicTextGap="8.0" onMouseClicked="#menuBtnRatesClickHandler" styleClass="dashboard-menu-button" text="Rates" visible="false">
+                                        <graphic>
+                                            <FontAwesomeIconView glyphName="CREDIT_CARD" />
+                                        </graphic>
+                                    </MFXButton>
+                                    <MFXButton fx:id="menuBtnParkingSpaces" disable="true" graphicTextGap="8.0" onMouseClicked="#menuBtnParkingSpacesClickHandler" styleClass="dashboard-menu-button" text=" Parking Spaces" visible="false">
+                                        <graphic>
+                                            <FontAwesomeIconView glyphName="MAP_MARKER" />
+                                        </graphic>
+                                    </MFXButton>
+                                    <MFXButton fx:id="menuBtnReports" disable="true" graphicTextGap="8.0" onMouseClicked="#menuBtnReportsClickHandler" styleClass="dashboard-menu-button" text="Reports" visible="false">
+                                        <graphic>
+                                            <FontAwesomeIconView glyphName="PENCIL_SQUARE_ALT" />
+                                        </graphic>
+                                    </MFXButton>
+                                    <MFXButton fx:id="menuBtnStatistics" disable="true" graphicTextGap="8.0" onMouseClicked="#menuBtnStatisticsClickHandler" styleClass="dashboard-menu-button" text="Statistics" visible="false">
+                                        <graphic>
+                                            <FontAwesomeIconView glyphName="BAR_CHART" />
+                                        </graphic>
+                                    </MFXButton>
+                                    <MFXButton fx:id="menuBtnComplaints" disable="true" graphicTextGap="8.0" onMouseClicked="#menuBtnComplaintsClickHandler" styleClass="dashboard-menu-button" text="Complaints" visible="false">
                                         <graphic>
                                             <FontAwesomeIconView glyphName="LIST_ALT" />
                                         </graphic>
                                     </MFXButton>
                                 </VBox>
                             </VBox>
-                            <AnchorPane prefHeight="10000.0">
+                            <AnchorPane prefHeight="1000.0">
                                 <VBox.margin>
                                     <Insets />
                                 </VBox.margin>
@@ -125,9 +142,9 @@
                                                 <FontAwesomeIconView glyphName="USER" />
                                             </graphic>
                                         </MFXButton>
-                                        <MFXButton fx:id="menuBtnSignUp" graphicTextGap="8.0" onMouseClicked="#menuBtnSignUpClickHandler" styleClass="dashboard-menu-button" text="Sign-In">
+                                        <MFXButton fx:id="menuBtnLogout" graphicTextGap="8.0" onMouseClicked="#menuBtnLogoutClickHandler" styleClass="dashboard-menu-button" text="Logout">
                                             <graphic>
-                                                <FontAwesomeIconView glyphName="SIGN_IN" />
+                                                <FontAwesomeIconView glyphName="SIGN_OUT" />
                                             </graphic>
                                         </MFXButton>
                                     </VBox>
@@ -136,7 +153,28 @@
                         </VBox>
                     </left>
                     <center>
-                        <VBox fx:id="subPageWrapper" BorderPane.alignment="CENTER">
+                        <VBox BorderPane.alignment="CENTER">
+                            <HBox maxWidth="1024.0" minHeight="400.0" minWidth="600.0" prefWidth="1024.0" styleClass="sub-page-body">
+                                <VBox alignment="TOP_CENTER" maxWidth="1024.0" minHeight="400.0" minWidth="600.0" prefHeight="600" prefWidth="1024.0" styleClass="sheet">
+                                    <HBox>
+                                        <TextFlow>
+                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sub-page-title" text="Home">
+                                            </Text>
+                                        </TextFlow>
+                                    </HBox>
+                                    <VBox>
+                                        <VBox.margin>
+                                            <Insets top="20.0" />
+                                        </VBox.margin>
+                                        <TextFlow>
+                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="Welcome to 'CityPark' employees application." />
+                                        </TextFlow>
+                                        <TextFlow>
+                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="You can choose an action from the menu on the left - and continue from there." />
+                                        </TextFlow>
+                                    </VBox>
+                                </VBox>
+                            </HBox>
                         </VBox>
                     </center>
                     <styleClass>

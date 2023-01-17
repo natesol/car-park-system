@@ -31,7 +31,7 @@
     -fx-background-radius: @sheet-radius;
     -fx-border-radius: @sheet-radius;
 
-    -fx-padding: @spacing-2xl 0;
+    -fx-padding: @spacing-xl 0;
 
     -fx-pref-width: @spacing-4xl + 2;
     -fx-min-width: @spacing-4xl + 2;
@@ -43,9 +43,9 @@
         -fx-pref-width: @spacing-4xl;
         -fx-min-width: @spacing-4xl;
         -fx-max-width: @spacing-4xl;
-        -fx-pref-height: @spacing-4xl;
-        -fx-min-height: @spacing-4xl;
-        -fx-max-height: @spacing-4xl;
+        -fx-pref-height: @spacing-4xl * 0.9;
+        -fx-min-height: @spacing-4xl * 0.9;
+        -fx-max-height: @spacing-4xl * 0.9;
 
         -fx-border-width: 0 !important;
 
@@ -59,13 +59,17 @@
         }
 
         &.active {
-            -fx-background-color: @primary !important;
-
-            -fx-fill: @sheet-bg-color !important;
-            -fx-text-fill: @sheet-bg-color !important;
+            -fx-background-color: @gray-4 !important;
+            -fx-text-fill: @white !important;
+            -fx-fill: @white !important;
         }
 
     }
+}
+
+.kiosk-title {
+    -fx-font-size: @font-size-xl;
+    -fx-font-weight: bold;
 }
 
 

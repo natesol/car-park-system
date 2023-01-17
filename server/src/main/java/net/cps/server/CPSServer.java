@@ -16,6 +16,7 @@ import org.hibernate.SessionFactory;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.net.SocketException;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.*;
 
@@ -118,6 +119,12 @@ public class CPSServer extends AbstractServer {
                     Logger.print("Warning: The request '" + requestType + ": " + request.getHeader() + "' from the client passed unaddressed.");
                 }
             }
+        }
+        catch (SocketException e) {
+            if (!(requestType == RequestType.AUTH && request.getHeader().startsWith("logout"))) {
+                Logger.print("Warning: The socket connection for the request: '" + requestType + ": " + request.getHeader() + "' from the client has been closed.");
+            }
+            // else: Client has disconnected
         }
         catch (IOException e) {
             e.printStackTrace();

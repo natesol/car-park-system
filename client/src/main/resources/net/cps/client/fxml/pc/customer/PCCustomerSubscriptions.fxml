@@ -1,34 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import de.jensd.fx.glyphs.fontawesome.*?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXComboBox?>
+<?import io.github.palexdev.materialfx.controls.MFXDatePicker?>
+<?import io.github.palexdev.materialfx.controls.MFXRadioButton?>
+<?import io.github.palexdev.materialfx.controls.MFXScrollPane?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import io.github.palexdev.materialfx.controls.MFXToggleButton?>
 <?import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView?>
-<?import io.github.palexdev.materialfx.controls.*?>
 <?import io.github.palexdev.materialfx.dialogs.MFXGenericDialog?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
+<?import java.lang.String?>
 <?import java.net.URL?>
-<AnchorPane fx:id="root" maxHeight="800.0" maxWidth="1024.0" minHeight="400.0" minWidth="800.0" prefWidth="1024.0"
-            xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="net.cps.client.controllers.pc.customer.PCCustomerSubscriptionsController">
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+
+<AnchorPane fx:id="root" maxHeight="800.0" maxWidth="1024.0" minHeight="400.0" minWidth="800.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.cps.client.controllers.pc.customer.PCCustomerSubscriptionsController">
     <stylesheets>
-        <URL value="@../../../styles/css/utils/GlobalStyles.css"/>
-        <URL value="@../../../styles/css/pages/PCCustomerMain.css"/>
-        <URL value="@../../../styles/css/pages/PCCustomerMainSubPage.css"/>
+        <URL value="@../../../styles/css/utils/GlobalStyles.css" />
+        <URL value="@../../../styles/css/pages/PCCustomerMain.css" />
+        <URL value="@../../../styles/css/pages/PCCustomerMainSubPage.css" />
     </stylesheets>
     <styleClass>
-        <String fx:value="root"/>
-        <String fx:value="color-scheme-light"/>
+        <String fx:value="root" />
+        <String fx:value="color-scheme-light" />
     </styleClass>
 
-    <Hyperlink maxHeight="0.0" maxWidth="0.0" text="focus-fix" textFill="TRANSPARENT"/>
+    <Hyperlink maxHeight="0.0" maxWidth="0.0" text="focus-fix" textFill="TRANSPARENT" />
 
-    <MFXScrollPane fx:id="rootScroll" fitToHeight="true" fitToWidth="true" AnchorPane.bottomAnchor="0.0"
-                   AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <MFXScrollPane fx:id="rootScroll" fitToHeight="true" fitToWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <styleClass>
-            <String fx:value="root-scroll"/>
+            <String fx:value="root-scroll" />
         </styleClass>
 
         <VBox fx:id="body" alignment="TOP_CENTER" styleClass="body">
@@ -48,36 +59,26 @@
                             </VBox>
                             <VBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
                                 <TextFlow styleClass="dashboard-user-message">
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="Hello "/>
-                                    <Text fx:id="customerName" strokeType="OUTSIDE" strokeWidth="0.0"
-                                          styleClass="sheet-text" text="Customer Name"/>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="Hello " />
+                                    <Text fx:id="customerName" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="Customer Name" />
                                     <VBox.margin>
-                                        <Insets/>
+                                        <Insets />
                                     </VBox.margin>
                                     <padding>
-                                        <Insets top="10.0"/>
+                                        <Insets top="10.0" />
                                     </padding>
                                 </TextFlow>
                             </VBox>
                             <VBox alignment="CENTER">
-                                <HBox alignment="CENTER_RIGHT" prefHeight="27.0" prefWidth="202.0" spacing="2.0"
-                                      styleClass="dashboard-user-menu">
-                                    <MFXButton contentDisplay="GRAPHIC_ONLY" prefHeight="20.0" prefWidth="32.0"
-                                               styleClass="button-icon" text=" ">
+                                <HBox alignment="CENTER_RIGHT" prefHeight="27.0" prefWidth="202.0" spacing="2.0" styleClass="dashboard-user-menu">
+                                    <MFXButton contentDisplay="GRAPHIC_ONLY" prefHeight="20.0" prefWidth="32.0" styleClass="button-icon" text=" ">
                                         <graphic>
-                                            <FontAwesomeIconView glyphName="COG"/>
+                                            <FontAwesomeIconView glyphName="ADJUST" />
                                         </graphic>
                                     </MFXButton>
-                                    <MFXButton contentDisplay="GRAPHIC_ONLY" prefHeight="20.0" prefWidth="32.0"
-                                               styleClass="button-icon" text=" ">
+                                    <MFXButton contentDisplay="GRAPHIC_ONLY" prefHeight="20.0" prefWidth="32.0" styleClass="button-icon" text=" ">
                                         <graphic>
-                                            <FontAwesomeIconView glyphName="ADJUST"/>
-                                        </graphic>
-                                    </MFXButton>
-                                    <MFXButton contentDisplay="GRAPHIC_ONLY" prefHeight="20.0" prefWidth="32.0"
-                                               styleClass="button-icon" text=" ">
-                                        <graphic>
-                                            <FontAwesomeIconView glyphName="USER"/>
+                                            <FontAwesomeIconView glyphName="COG" />
                                         </graphic>
                                     </MFXButton>
                                 </HBox>
@@ -88,67 +89,56 @@
                         <VBox styleClass="dashboard-left" BorderPane.alignment="CENTER">
                             <VBox>
                                 <TextFlow styleClass="dashboard-menu-title">
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="MENU"/>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="MENU" />
                                 </TextFlow>
 
                                 <VBox alignment="TOP_CENTER" spacing="2.0">
-                                    <MFXButton fx:id="menuBtnHome" graphicTextGap="8.0"
-                                               onMouseClicked="#menuBtnHomeClickHandler"
-                                               styleClass="dashboard-menu-button" text="Home">
+                                    <MFXButton fx:id="menuBtnHome" graphicTextGap="8.0" onMouseClicked="#menuBtnHomeClickHandler" styleClass="dashboard-menu-button" text="Home">
                                         <graphic>
-                                            <FontAwesomeIconView glyphName="HOME"/>
+                                            <FontAwesomeIconView glyphName="HOME" />
                                         </graphic>
                                     </MFXButton>
-                                    <MFXButton fx:id="menuBtnSubscriptions" graphicTextGap="8.0"
-                                               onMouseClicked="#menuBtnSubscriptionsClickHandler" text="Subscriptions">
+                                    <MFXButton fx:id="menuBtnSubscriptions" graphicTextGap="8.0" onMouseClicked="#menuBtnSubscriptionsClickHandler" text="Subscriptions">
                                         <graphic>
-                                            <FontAwesomeIconView glyphName="DRIVERS_LICENSE"/>
+                                            <FontAwesomeIconView glyphName="DRIVERS_LICENSE" />
                                         </graphic>
                                         <styleClass>
-                                            <String fx:value="dashboard-menu-button"/>
-                                            <String fx:value="active"/>
+                                            <String fx:value="dashboard-menu-button" />
+                                            <String fx:value="active" />
                                         </styleClass>
                                     </MFXButton>
-                                    <MFXButton fx:id="menuBtnReservations" graphicTextGap="8.0"
-                                               onMouseClicked="#menuBtnReservationsClickHandler"
-                                               styleClass="dashboard-menu-button" text="Reservations">
+                                    <MFXButton fx:id="menuBtnReservations" graphicTextGap="8.0" onMouseClicked="#menuBtnReservationsClickHandler" styleClass="dashboard-menu-button" text="Reservations">
                                         <graphic>
-                                            <FontAwesomeIconView glyphName="AUTOMOBILE"/>
+                                            <FontAwesomeIconView glyphName="AUTOMOBILE" />
                                         </graphic>
                                     </MFXButton>
-                                    <MFXButton fx:id="menuBtnComplaints" graphicTextGap="8.0"
-                                               onMouseClicked="#menuBtnComplaintsClickHandler"
-                                               styleClass="dashboard-menu-button" text="Complaints">
+                                    <MFXButton fx:id="menuBtnComplaints" graphicTextGap="8.0" onMouseClicked="#menuBtnComplaintsClickHandler" styleClass="dashboard-menu-button" text="Complaints">
                                         <graphic>
-                                            <FontAwesomeIconView glyphName="LIST_ALT"/>
+                                            <FontAwesomeIconView glyphName="LIST_ALT" />
                                         </graphic>
                                     </MFXButton>
                                 </VBox>
                             </VBox>
                             <AnchorPane prefHeight="10000.0">
                                 <VBox.margin>
-                                    <Insets/>
+                                    <Insets />
                                 </VBox.margin>
                                 <VBox AnchorPane.bottomAnchor="0.0">
                                     <padding>
-                                        <Insets top="20.0"/>
+                                        <Insets top="20.0" />
                                     </padding>
                                     <TextFlow styleClass="dashboard-menu-title">
-                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="USER"/>
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="USER" />
                                     </TextFlow>
                                     <VBox alignment="TOP_CENTER" spacing="2.0">
-                                        <MFXButton fx:id="menuBtnProfile" graphicTextGap="8.0"
-                                                   onMouseClicked="#menuBtnProfileClickHandler"
-                                                   styleClass="dashboard-menu-button" text="Profile">
+                                        <MFXButton fx:id="menuBtnProfile" graphicTextGap="8.0" onMouseClicked="#menuBtnProfileClickHandler" styleClass="dashboard-menu-button" text="Profile">
                                             <graphic>
-                                                <FontAwesomeIconView glyphName="USER"/>
+                                                <FontAwesomeIconView glyphName="USER" />
                                             </graphic>
                                         </MFXButton>
-                                        <MFXButton fx:id="menuBtnSignOut" graphicTextGap="8.0"
-                                                   onMouseClicked="#menuBtnLogoutClickHandler"
-                                                   styleClass="dashboard-menu-button" text="Logout">
+                                        <MFXButton fx:id="menuBtnSignOut" graphicTextGap="8.0" onMouseClicked="#menuBtnLogoutClickHandler" styleClass="dashboard-menu-button" text="Logout">
                                             <graphic>
-                                                <FontAwesomeIconView glyphName="SIGN_OUT"/>
+                                                <FontAwesomeIconView glyphName="SIGN_OUT" />
                                             </graphic>
                                         </MFXButton>
                                     </VBox>
@@ -158,62 +148,49 @@
                     </left>
                     <center>
                         <VBox BorderPane.alignment="CENTER">
-                            <HBox maxWidth="1024.0" minHeight="400.0" minWidth="600.0" prefWidth="1024.0"
-                                  styleClass="sub-page-body">
+                            <HBox maxWidth="1024.0" minHeight="400.0" minWidth="600.0" prefWidth="1024.0" styleClass="sub-page-body">
                                 <styleClass>
-                                    <String fx:value=""/>
+                                    <String fx:value="" />
                                 </styleClass>
-                                <VBox alignment="TOP_CENTER" maxWidth="1024.0" minHeight="400.0" minWidth="600.0"
-                                      prefHeight="600" prefWidth="1024.0" styleClass="sheet">
+                                <VBox alignment="TOP_CENTER" maxWidth="1024.0" minHeight="400.0" minWidth="600.0" prefHeight="600" prefWidth="1024.0" styleClass="sheet">
                                     <HBox>
                                         <TextFlow minWidth="250.0">
-                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sub-page-title"
-                                                  text="Subscriptions">
+                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sub-page-title" text="Subscriptions">
                                             </Text>
                                             <HBox.margin>
-                                                <Insets/>
+                                                <Insets />
                                             </HBox.margin>
                                         </TextFlow>
                                         <VBox alignment="CENTER_RIGHT" prefWidth="10000.0">
                                             <HBox alignment="CENTER_RIGHT" spacing="8.0">
-                                                <MFXComboBox fx:id="allParkingLotsCombo" disable="true"
-                                                             floatingText="Filter By Parking Lot" text="All"
-                                                             visible="false"/>
-                                                <MFXButton fx:id="addSubscriptionBtn"
-                                                           onAction="#addSubscriptionBtnClickHandler"
-                                                           styleClass="button-primary" text="Add Subscription"/>
+                                                <MFXComboBox fx:id="allParkingLotsCombo" disable="true" floatingText="Filter By Parking Lot" text="All" visible="false" />
+                                                <MFXButton fx:id="addSubscriptionBtn" onAction="#addSubscriptionBtnClickHandler" styleClass="button-primary" text="Add Subscription" />
                                             </HBox>
                                         </VBox>
                                     </HBox>
                                     <VBox>
                                         <VBox.margin>
-                                            <Insets bottom="50.0" top="20.0"/>
+                                            <Insets bottom="50.0" top="20.0" />
                                         </VBox.margin>
                                         <TextFlow>
-                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text"
-                                                  text="You can create a new subscription, and you can track all your former subscriptions."/>
+                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="You can create a new subscription, and you can track all your former subscriptions." />
                                         </TextFlow>
                                     </VBox>
                                     <VBox>
                                         <TextFlow>
                                             <VBox.margin>
-                                                <Insets bottom="10.0"/>
+                                                <Insets bottom="10.0" />
                                             </VBox.margin>
-                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text"
-                                                  text="Your Subscriptions:"/>
+                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="Your Subscriptions:" />
                                         </TextFlow>
-                                        <MFXLegacyTableView fx:id="subscriptionsTable" prefHeight="300.0"
-                                                            styleClass="table">
+                                        <MFXLegacyTableView fx:id="subscriptionsTable" prefHeight="300.0" styleClass="table">
                                             <columns>
-                                                <TableColumn fx:id="subIdColSubTable" prefWidth="50.0" text="ID"/>
-                                                <TableColumn fx:id="parkingLotColSubTable" prefWidth="150.0"
-                                                             text="Parking Lot"/>
-                                                <TableColumn fx:id="subTypeColSubTable" prefWidth="88.0" text="Type"/>
-                                                <TableColumn fx:id="createTimeColSubTable" prefWidth="188.0"
-                                                             text="Creation Time"/>
-                                                <TableColumn fx:id="expireTimeColSubTable" prefWidth="174.0"
-                                                             text="Expiration Time"/>
-                                                <TableColumn fx:id="stateColSubTable" prefWidth="79.0" text="State"/>
+                                                <TableColumn fx:id="subIdColSubTable" prefWidth="50.0" text="ID" />
+                                                <TableColumn fx:id="parkingLotColSubTable" prefWidth="150.0" text="Parking Lot" />
+                                                <TableColumn fx:id="subTypeColSubTable" prefWidth="88.0" text="Type" />
+                                                <TableColumn fx:id="createTimeColSubTable" prefWidth="188.0" text="Creation Time" />
+                                                <TableColumn fx:id="expireTimeColSubTable" prefWidth="174.0" text="Expiration Time" />
+                                                <TableColumn fx:id="stateColSubTable" prefWidth="79.0" text="State" />
                                             </columns>
                                         </MFXLegacyTableView>
                                     </VBox>
@@ -222,8 +199,8 @@
                         </VBox>
                     </center>
                     <styleClass>
-                        <String fx:value="sheet"/>
-                        <String fx:value="dashboard"/>
+                        <String fx:value="sheet" />
+                        <String fx:value="dashboard" />
                     </styleClass>
                 </BorderPane>
 
@@ -231,109 +208,94 @@
         </VBox> <!-- /body -->
     </MFXScrollPane> <!-- /root-scroll -->
 
-    <VBox fx:id="dialogRoot" alignment="CENTER" disable="true" styleClass="dialog-root" visible="false"
-          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-          AnchorPane.topAnchor="0.0">
-        <MFXGenericDialog fx:id="dialogControl" actionsOrientation="VERTICAL" contentText="..."
-                          headerText="Dialog Title" onClose="#closeDialog" showAlwaysOnTop="false" showMinimize="false">
+    <VBox fx:id="dialogRoot" alignment="CENTER" disable="true" styleClass="dialog-root" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <MFXGenericDialog fx:id="dialogControl" actionsOrientation="VERTICAL" contentText="..." headerText="Dialog Title" onClose="#closeDialog" showAlwaysOnTop="false" showMinimize="false">
             <styleClass>
-                <String fx:value="dialog"/>
-                <String fx:value="dialog-w-xs"/>
+                <String fx:value="dialog" />
+                <String fx:value="dialog-w-xs" />
             </styleClass>
             <center>
-                <MFXScrollPane fitToHeight="true" fitToWidth="true" styleClass="dialog-content-scroll"
-                               BorderPane.alignment="CENTER">
+                <MFXScrollPane fitToHeight="true" fitToWidth="true" styleClass="dialog-content-scroll" BorderPane.alignment="CENTER">
                     <VBox>
-                        <TextFlow fx:id="dialogContent" styleClass="dialog-content"/>
-                        <VBox fx:id="dialogCustomContent"/>
+                        <TextFlow fx:id="dialogContent" styleClass="dialog-content" />
+                        <VBox fx:id="dialogCustomContent" />
                     </VBox>
                 </MFXScrollPane>
             </center>
             <bottom>
-                <HBox fx:id="dialogAction" alignment="CENTER_RIGHT" styleClass="dialog-action"
-                      BorderPane.alignment="CENTER"/>
+                <HBox fx:id="dialogAction" alignment="CENTER_RIGHT" styleClass="dialog-action" BorderPane.alignment="CENTER" />
             </bottom>
         </MFXGenericDialog>
     </VBox>
-    <HBox fx:id="addSubscriptionForm" alignment="CENTER" disable="true" layoutX="-6.0" prefWidth="450.0"
-          visible="false">
+    <HBox fx:id="addSubscriptionForm" alignment="CENTER" disable="true" layoutX="-6.0" prefWidth="450.0" visible="false">
         <VBox maxHeight="-Infinity" minHeight="-Infinity" prefWidth="300.0" spacing="16.0">
             <styleClass>
-                <String fx:value="dialog-form"/>
+                <String fx:value="dialog-form" />
             </styleClass>
             <HBox spacing="14.0">
-                <MFXRadioButton fx:id="regularSubRadio" gap="4.0" onAction="#addSubscriptionFormStateToggleHandler"
-                                selected="true" text="Regular Subscription">
+                <MFXRadioButton fx:id="regularSubRadio" gap="4.0" onAction="#addSubscriptionFormStateToggleHandler" selected="true" text="Regular Subscription">
                     <toggleGroup>
-                        <ToggleGroup fx:id="subscriptionType"/>
+                        <ToggleGroup fx:id="subscriptionType" />
                     </toggleGroup>
                 </MFXRadioButton>
-                <MFXRadioButton fx:id="premiumSubRadio" gap="4.0" onAction="#addSubscriptionFormStateToggleHandler"
-                                text="Premium Subscription" toggleGroup="$subscriptionType"/>
+                <MFXRadioButton fx:id="premiumSubRadio" gap="4.0" onAction="#addSubscriptionFormStateToggleHandler" text="Premium Subscription" toggleGroup="$subscriptionType" />
             </HBox>
-            <MFXComboBox fx:id="parkingLotsListCombo" floatingText="Parking Lot" prefHeight="49.0" prefWidth="300.0"
-                         styleClass="regular-field"/>
-            <MFXTextField fx:id="vehicleNumberField" disable="true" floatingText="Vehicle Number" prefWidth="300.0"
-                          styleClass="premium-field" textLimit="8" visible="false">
+            <MFXComboBox fx:id="parkingLotsListCombo" floatingText="Parking Lot" prefHeight="49.0" prefWidth="300.0" styleClass="regular-field" />
+            <MFXTextField fx:id="vehicleNumberField" disable="true" floatingText="Vehicle Number" prefWidth="300.0" styleClass="premium-field" textLimit="8" visible="false">
                 <VBox.margin>
-                    <Insets top="-65.0"/>
+                    <Insets top="-65.0" />
                 </VBox.margin>
             </MFXTextField>
             <VBox fx:id="vehicleNumbersFieldsWrapper" spacing="8.0" styleClass="regular-field">
                 <VBox fx:id="vehicleNumbersFields" spacing="16.0">
-                    <MFXTextField fx:id="vehicleNumberField1" floatingText="Vehicle Number #1" prefWidth="300.0"
-                                  textLimit="8"/>
+                    <MFXTextField fx:id="vehicleNumberField1" floatingText="Vehicle Number #1" prefWidth="300.0" textLimit="8" />
                 </VBox>
                 <HBox alignment="TOP_RIGHT" spacing="115.0">
-                    <Hyperlink fx:id="removeVehicleLink" disable="true" onAction="#removeVehicleLinkClickHandler"
-                               text="Remove vehicle" visible="false">
+                    <Hyperlink fx:id="removeVehicleLink" disable="true" onAction="#removeVehicleLinkClickHandler" text="Remove vehicle" visible="false">
                         <graphic>
-                            <FontAwesomeIconView glyphName="MINUS"/>
+                            <FontAwesomeIconView glyphName="MINUS" />
                         </graphic>
                     </Hyperlink>
                     <Hyperlink fx:id="addVehicleLink" onAction="#addVehicleLinkClickHandler" text="Add vehicle">
                         <graphic>
-                            <FontAwesomeIconView glyphName="PLUS"/>
+                            <FontAwesomeIconView glyphName="PLUS" />
                         </graphic>
                     </Hyperlink>
                 </HBox>
             </VBox>
             <MFXDatePicker fx:id="startAtDate" floatMode="INLINE" floatingText="Start Date" prefWidth="300.0">
                 <styleClass>
-                    <String fx:value="regular-field"/>
-                    <String fx:value="premium-field"/>
+                    <String fx:value="regular-field" />
+                    <String fx:value="premium-field" />
                 </styleClass>
             </MFXDatePicker>
             <HBox fx:id="departureTimeFieldsWrapper">
-                <MFXToggleButton fx:id="departureTimeToggle" contentDisposition="TOP" gap="4.0"
-                                 onAction="#departureTimeToggleHandler" text="Usual departure time?">
+                <MFXToggleButton fx:id="departureTimeToggle" contentDisposition="TOP" gap="4.0" onAction="#departureTimeToggleHandler" text="Usual departure time?">
                     <HBox.margin>
-                        <Insets bottom="-8.0" left="-7.0" right="6.0" top="-8.0"/>
+                        <Insets bottom="-8.0" left="-7.0" right="6.0" top="-8.0" />
                     </HBox.margin>
                 </MFXToggleButton>
                 <HBox alignment="CENTER">
-                    <MFXTextField fx:id="departureTimeHourField" disable="true" floatingText="hour" prefColumnCount="4"
-                                  text="0" textLimit="2"/>
+                    <MFXTextField fx:id="departureTimeHourField" disable="true" floatingText="hour" prefColumnCount="4" text="0" textLimit="2" />
                     <TextFlow textAlignment="CENTER">
                         <padding>
-                            <Insets left="4.0" right="4.0" top="10.0"/>
+                            <Insets left="4.0" right="4.0" top="10.0" />
                         </padding>
                         <Text disable="true" strokeType="OUTSIDE" strokeWidth="0.0" text=":" wrappingWidth="1.0">
                             <font>
-                                <Font size="18.0"/>
+                                <Font size="18.0" />
                             </font>
                         </Text>
                     </TextFlow>
-                    <MFXTextField fx:id="departureTimeMinutesField" disable="true" floatingText="minutes"
-                                  prefColumnCount="4" text="0" textLimit="2"/>
+                    <MFXTextField fx:id="departureTimeMinutesField" disable="true" floatingText="minutes" prefColumnCount="4" text="0" textLimit="2" />
                 </HBox>
                 <styleClass>
-                    <String fx:value="regular-field"/>
-                    <String fx:value="premium-field"/>
+                    <String fx:value="regular-field" />
+                    <String fx:value="premium-field" />
                 </styleClass>
             </HBox>
             <padding>
-                <Insets bottom="24.0" left="1.0" right="1.0" top="24.0"/>
+                <Insets bottom="24.0" left="1.0" right="1.0" top="24.0" />
             </padding>
         </VBox>
     </HBox>

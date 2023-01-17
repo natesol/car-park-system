@@ -8,9 +8,11 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.NativeQuery;
 import org.hibernate.service.ServiceRegistry;
 import org.jetbrains.annotations.NotNull;
 
+import javax.persistence.NoResultException;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -274,11 +276,15 @@ public class Database {
         T data = null;
         
         try (session) {
-            data = (T) session.createNativeQuery("SELECT * FROM %s WHERE %s = '%s'".formatted(Entities.fromString(T.getSimpleName()).getTableName(), fieldName, fieldValue), T).getSingleResult();
+            NativeQuery<T> query = session.createNativeQuery("SELECT * FROM %s WHERE %s = '%s'".formatted(Entities.fromString(T.getSimpleName()).getTableName(), fieldName, fieldValue), T);
+            data = (T) query.getSingleResult();
             
             session.flush();
             transaction.commit();
             session.clear();
+        }
+        catch (NoResultException ignored) {
+            data = null;
         }
         catch (Throwable e) {
             if (e instanceof HibernateException && session.isOpen() && transaction != null) {
