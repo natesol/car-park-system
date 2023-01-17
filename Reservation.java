@@ -1,60 +1,204 @@
-package org.example;
+package net.cps.common.entities;
+
+import net.cps.common.utils.ReservationStatus;
+import org.jetbrains.annotations.NotNull;
+
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Calendar;
 
-public class Reservation {
 
-    private Long id;
+@Entity
+@Table(name = "reservations")
+public class Reservation implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false, nullable = false)
+    private Integer id;
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "parking_lot_id", referencedColumnName = "id")
     private ParkingLot parkingLot;
-    private Calendar arrivalTime;
-    private Calendar departureTime;
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "customer_email", referencedColumnName = "email")
+    private Customer customer;
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "vehicle_number", referencedColumnName = "number")
     private Vehicle vehicle;
-    private boolean statusReservation = true; //true for active reservation, false for cancel reservation
-    private boolean EnterParkingLot = false; //make true if you enter to Parking Lot
-    private boolean reportSend = false; //make true if you send overdue report, to avoid duplicate mails
-    private boolean subscribedCustomer;
-
-    public Reservation(ParkingLot parkingLot, Calendar arrivalTime, Calendar departureTime, Vehicle vehicle, boolean isSubscribed) {
+    @NotNull
+    @Column(name = "arrival_time")
+    private Calendar arrivalTime;
+    @NotNull
+    @Column(name = "departure_time")
+    private Calendar departureTime;
+    @Column(name = "entry_time")
+    private Calendar entryTime;
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private ReservationStatus status;
+    @NotNull
+    @Column(name = "payed")
+    private Double payed;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "parking_space_id", unique = true)
+    private ParkingSpace parkingSpace;
+    
+    
+    /* ----- Constructors ------------------------------------------- */
+    
+    public Reservation () {}
+    
+    public Reservation (@NotNull ParkingLot parkingLot, @NotNull Customer customer, @NotNull Vehicle vehicle, @NotNull Calendar arrivalTime, @NotNull Calendar departureTime) {
+//        Robot robot = new Robot(parkingLot);
+//        if (robot.getAvailableCapacityByTime(arrivalTime,departureTime)<1){
+//            System.out.println("Sorry, full parking Lot\n");
+//            return;
+//        }
         this.parkingLot = parkingLot;
-        this.arrivalTime = arrivalTime;
-        this.departureTime = departureTime;
+        this.customer = customer;
         this.vehicle = vehicle;
-        this.subscribedCustomer = isSubscribed;
+        this.arrivalTime = arrivalTime;
+        this.entryTime = arrivalTime;
+        this.departureTime = departureTime;
+        this.status = ReservationStatus.PENDING;
+        this.payed = 0.0;
     }
-    public Reservation() {}
-
-    public Long getId() {return id;}
-
-    public ParkingLot getParkingLot() {return parkingLot;}
-    public void setParkingLot(ParkingLot parkingLot) {this.parkingLot = parkingLot;}
-
-    public Calendar getArrivalTime() {return arrivalTime;}
-    public void setArrivalTime(Calendar arrivalTime) {this.arrivalTime = arrivalTime;}
-
-    public Calendar getDepartureTime() {return departureTime;}
-    public void setDepartureTime(Calendar departureTime) {this.departureTime = departureTime;}
-
-    public Vehicle getVehicle() {return vehicle;}
-    public void setVehicle(Vehicle vehicle) {this.vehicle = vehicle;}
-
-    public boolean getStatusReservation() {return statusReservation;}
-    public void setStatusReservation(boolean statusReservation) {this.statusReservation = statusReservation;}
-
-    public void cancelReservation (){
-        this.statusReservation = false;
+    
+    public Reservation (@NotNull ParkingLot parkingLot, @NotNull Customer customer, @NotNull Vehicle vehicle, @NotNull Calendar arrivalTime, @NotNull Calendar departureTime, @NotNull ReservationStatus status) {
+//        Robot robot = new Robot(parkingLot);
+//        if (robot.getAvailableCapacityByTime(arrivalTime,departureTime)<1){
+//            System.out.println("Sorry, full parking Lot\n");
+//            return;
+//        }
+        this.parkingLot = parkingLot;
+        this.customer = customer;
+        this.vehicle = vehicle;
+        this.arrivalTime = arrivalTime;
+        this.entryTime = arrivalTime;
+        this.departureTime = departureTime;
+        this.status = status;
+        this.payed = 0.0;
     }
-
-    public boolean getEnterParkingLot() {return EnterParkingLot;}
-    public void setEnterParkingLot(boolean enterParkingLot) {EnterParkingLot = enterParkingLot;}
-
-    public boolean getReportSend() {return reportSend;}
-    public void setReportSend(boolean reportSend) {this.reportSend = reportSend;}
-
-    public boolean getSubscribedCustomer() {return subscribedCustomer;}
-    public void setSubscribedCustomer(boolean subscribedCustomer) {this.subscribedCustomer = subscribedCustomer;}
-
-    //public Reservation makeReservation(); //USE CONSTRUCTOR
-
-    //public Reservation updateReservation(); //USE SETTERS
-
-    //reservation overdue? do it in rates...
+    
+    public Reservation (@NotNull ParkingLot parkingLot, @NotNull Customer customer, @NotNull Vehicle vehicle, @NotNull Calendar arrivalTime, @NotNull Calendar departureTime, @NotNull ReservationStatus status, @NotNull Double payed) {
+//        Robot robot = new Robot(parkingLot);
+//        if (robot.getAvailableCapacityByTime(arrivalTime,departureTime)<1){
+//            System.out.println("Sorry, full parking Lot\n");
+//            return;
+//        }
+        this.parkingLot = parkingLot;
+        this.customer = customer;
+        this.vehicle = vehicle;
+        this.arrivalTime = arrivalTime;
+        this.entryTime = arrivalTime;
+        this.departureTime = departureTime;
+        this.status = status;
+        this.payed = payed;
+    }
+    
+    
+    /* ----- Getters & Setters -------------------------------------- */
+    
+    public Integer getId () {
+        return id;
+    }
+    
+    public void setId (Integer id) {
+        this.id = id;
+    }
+    
+    public ParkingLot getParkingLot () {
+        return parkingLot;
+    }
+    
+    public void setParkingLot (ParkingLot parkingLot) {
+        this.parkingLot = parkingLot;
+    }
+    
+    public Customer getCustomer () {
+        return customer;
+    }
+    
+    public void setCustomer (Customer customer) {
+        this.customer = customer;
+    }
+    
+    public Vehicle getVehicle () {
+        return vehicle;
+    }
+    
+    public void setVehicle (Vehicle vehicle) {
+        this.vehicle = vehicle;
+    }
+    
+    public Calendar getArrivalTime () {
+        return arrivalTime;
+    }
+    
+    public void setArrivalTime (Calendar arrivalTime) {
+        this.arrivalTime = arrivalTime;
+    }
+    
+    public Calendar getDepartureTime () {
+        return departureTime;
+    }
+    
+    public void setDepartureTime (Calendar departureTime) {
+        this.departureTime = departureTime;
+    }
+    
+    public Calendar getEntryTime () {
+        return entryTime;
+    }
+    
+    public void setEntryTime (Calendar entryTime) {
+        this.entryTime = entryTime;
+    }
+    
+    public @NotNull ReservationStatus getStatus () {
+        return status;
+    }
+    
+    public void setStatus (@NotNull ReservationStatus status) {
+        this.status = status;
+    }
+    
+    public @NotNull Double getPayed () {
+        return payed;
+    }
+    
+    public void setPayed (@NotNull Double payed) {
+        this.payed = payed;
+    }
+    
+    public ParkingSpace getParkingSpace () {
+        return parkingSpace;
+    }
+    
+    public void setParkingSpace (ParkingSpace parkingSpace) {
+        this.parkingSpace = parkingSpace;
+    }
+    
+    
+    /* ----- Utility Methods ---------------------------------------- */
+    
+    @Override
+    public String toString () {
+        return "Reservation {" +
+                "id: " + id +
+                ", parkingLot: " + parkingLot +
+                ", customer: " + customer +
+                ", vehicle: " + vehicle +
+              //  ", arrivalTime: " + arrivalTime.getTime() +
+               // ", departureTime: " + departureTime.getTime() +
+                ", entryTime: " + entryTime.getTime() +
+                ", status: " + status +
+                ", payed: " + payed +
+                ", parkingSpace: " + parkingSpace +
+                '}';
+    }
+    
 }

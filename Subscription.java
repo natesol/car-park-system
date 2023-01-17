@@ -1,111 +1,201 @@
-package org.example;
+package net.cps.common.entities;
 
+import net.cps.common.utils.SubscriptionState;
+import net.cps.common.utils.SubscriptionType;
+import org.jetbrains.annotations.NotNull;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.time.LocalTime;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
-public class Subscription {
-    private Long id;
-    private Long customerId;
-    private Long carId;
-    private ParkingLot parkingLot; //if type==full, parkingLot=null;
-    private Vehicle vehicle;
-    private String subscriptionType; //full or ordinary
-    private Calendar startDate;
-    private Calendar endDate; //startDate+28 days
+@Entity
+@Table(name = "subscriptions")
+public class Subscription implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Integer id;
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_email", referencedColumnName = "email", nullable = false)
     private Customer customer;
-    private Integer departureTimeHour; //please send default 0
-    private Integer departureTimeMinuets; //please send default 0
-    private boolean sendReminder = false;
-
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "parking_lot_id", referencedColumnName = "id", nullable = true)
+    private ParkingLot parkingLot;
+    @NotNull
+    @Column(name = "created_at", nullable = false)
+    private Calendar createdAt;
+    @NotNull
+    @Column(name = "expires_at", nullable = false)
+    private Calendar expiresAt;
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type", nullable = false)
+    private SubscriptionType type;
+    @NotNull
+    @ManyToMany(mappedBy = "subscriptions")
+    private List<Vehicle> vehicles;
+    @NotNull
+    @Column(name = "departure_time", nullable = false)
+    private LocalTime departureTime;
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "state", nullable = false)
+    private SubscriptionState state;
+    @NotNull
+    @Column(name = "price", nullable = false)
+    private Double price;
+    
+    
+    /* ----- Constructors ------------------------------------------- */
+    
     public Subscription () {}
-    //ORDINARY SUBSCRIPTION
-    public Subscription(Long customerId, Long carId, ParkingLot parkingLot, Vehicle vehicle, String subscriptionType, Calendar startDate, Customer customer, Integer departureTimeHour, Integer departureTimeMinuets) {
-        this.customerId = customerId;
-        this.carId = carId;
+    
+    public Subscription (@NotNull Customer customer, ParkingLot parkingLot, @NotNull SubscriptionType type, @NotNull List<Vehicle> vehicles, @NotNull LocalTime departureTime) {
+        this.customer = customer;
         this.parkingLot = parkingLot;
-        this.vehicle = vehicle;
-        this.subscriptionType = subscriptionType;
-        this.startDate = startDate;
-        this.endDate = startDate;
-        endDate.add(Calendar.DAY_OF_MONTH, 28); // add 28 days
+        this.createdAt = Calendar.getInstance();
+        createdAt.clear(Calendar.HOUR_OF_DAY);
+        this.expiresAt = Calendar.getInstance();
+        this.expiresAt.add(Calendar.DATE, 28);
+        this.type = type;
+        this.vehicles = vehicles;
+        this.departureTime = departureTime;
+        this.state = SubscriptionState.ACTIVE;
+        this.price = 0.0;
+    }
+    
+    public Subscription (@NotNull Customer customer, ParkingLot parkingLot, @NotNull Calendar startAt, @NotNull SubscriptionType type, @NotNull List<Vehicle> vehicles, @NotNull LocalTime departureTime) {
         this.customer = customer;
-        this.departureTimeHour = departureTimeHour;
-        this.departureTimeMinuets = departureTimeMinuets;
+        this.parkingLot = parkingLot;
+        this.createdAt = startAt;
+        this.expiresAt = (Calendar) startAt.clone();
+        this.expiresAt.add(Calendar.DATE, 28);
+        this.type = type;
+        this.vehicles = vehicles;
+        this.departureTime = departureTime;
+        this.state = SubscriptionState.ACTIVE;
+        this.price = 0.0;
     }
-    //FULL SUBSCRIPTION
-    public Subscription(Long customerId, Long carId, Vehicle vehicle, String subscriptionType, Calendar startDate, Customer customer) {
-        if (subscriptionType != "full"){
-            System.out.println("ERROR, you need to enter specific parking lot\n");
-        }
-        this.customerId = customerId;
-        this.carId = carId;
-        this.vehicle = vehicle;
-        this.subscriptionType = subscriptionType;
-        this.startDate = startDate;
-        this.endDate = startDate;
-        endDate.add(Calendar.DAY_OF_MONTH, 28); // add 28 days
+    
+    
+    /* ----- Getters and Setters ------------------------------------ */
+    
+    public Integer getId () {
+        return id;
+    }
+    
+    public void setId (Integer id) {
+        this.id = id;
+    }
+    
+    public @NotNull Customer getCustomer () {
+        return customer;
+    }
+    
+    public void setCustomer (@NotNull Customer customer) {
         this.customer = customer;
-        this.departureTimeHour = 0;
-        this.departureTimeMinuets = 0;
     }
-
-    //GETTERS AND SETTERS
-
-    public Long getId() {return id;}
-
-    public Calendar getEndDate() {return endDate;}
-    public void setEndDate(Calendar endDate) {this.endDate = endDate;}
-
-    public Long getCustomerId() {return customerId;}
-    public void setCustomerId(Long customerId) {this.customerId = customerId;}
-
-    public Long getCarId() {return carId;}
-    public void setCarId(Long carId) {}
-
-    public ParkingLot getParkingLot() {return parkingLot;}
-    public void setParkingLot(ParkingLot parkingLot) {this.parkingLot = parkingLot;}
-
-    public Vehicle getVehicle() {return vehicle;}
-    public void setVehicle(Vehicle vehicle) {this.vehicle = vehicle;}
-
-    public String getSubscriptionType() {return subscriptionType;}
-    public void setSubscriptionType(String subscriptionType) {this.subscriptionType = subscriptionType;}
-
-    public Calendar getStartDate() {return startDate;}
-    public void setStartDate(Calendar startDate) {this.startDate = startDate;}
-
-    public Customer getCustomer() {return customer;}
-    public void setCustomer(Customer customer) {this.customer = customer;}
-
-    public int getDepartureTimeHour() {return departureTimeHour;}
-    public void setDepartureTimeHour(int departureTimeHour) {this.departureTimeHour = departureTimeHour;}
-
-    public int getDepartureTimeMinuets() {return departureTimeMinuets;}
-    public void setDepartureTimeMinuets(int departureTimeMinuets) {this.departureTimeMinuets = departureTimeMinuets;}
-
-    public boolean getSendReminder() {return sendReminder;}
-    public void setSendReminder(boolean sendReminder) {this.sendReminder = sendReminder;}
-
-    public Reservation makeReservation(Calendar arrivalDate, ParkingLot parkingLot){
-        Calendar departureTime=Calendar.getInstance();
-        departureTime.set(Calendar.MINUTE, departureTimeMinuets);
-        departureTime.set(Calendar.HOUR_OF_DAY, departureTimeHour);
-        if(departureTime.before(arrivalDate)){ //hour time after 0:00
-            departureTime.add(Calendar.DAY_OF_MONTH,1);//add 1 day
-        }
-        Reservation reservation = new Reservation(parkingLot, arrivalDate, departureTime, vehicle, true);
-        return reservation;
+    
+    public ParkingLot getParkingLot () {
+        return parkingLot;
     }
-
-    public Reservation updateReservation(Reservation reservation, Calendar arrivalDate, Calendar departureTime){
-        reservation.setDepartureTime(departureTime);
-        reservation.setArrivalTime(arrivalDate);
-        return reservation;
+    
+    public void setParkingLot (ParkingLot parkingLot) {
+        this.parkingLot = parkingLot;
     }
-
-    public void cancelReservation(Reservation reservation){
-        reservation.cancelReservation();
-        return;
+    
+    public Integer getParkingLotId () {
+        return parkingLot.getId();
     }
-
-
+    
+    public String getParkingLotName () {
+        return (parkingLot != null ? parkingLot.getName() : "All");
+    }
+    
+    public @NotNull Calendar getCreatedAt () {
+        return createdAt;
+    }
+    
+    public void setCreatedAt (@NotNull Calendar createdAt) {
+        this.createdAt = createdAt;
+    }
+    
+    public @NotNull Date getCreatedAtTime () {
+        return createdAt.getTime();
+    }
+    
+    public @NotNull Calendar getExpiresAt () {
+        return expiresAt;
+    }
+    
+    public void setExpiresAt (@NotNull Calendar expiresAt) {
+        this.expiresAt = expiresAt;
+    }
+    
+    public @NotNull Date getExpiresAtTime () {
+        return expiresAt.getTime();
+    }
+    
+    public @NotNull SubscriptionType getType () {
+        return type;
+    }
+    
+    public void setType (@NotNull SubscriptionType type) {
+        this.type = type;
+    }
+    
+    public @NotNull List<Vehicle> getVehicles () {
+        return vehicles;
+    }
+    
+    public void setVehicles (@NotNull List<Vehicle> vehicles) {
+        this.vehicles = vehicles;
+    }
+    
+    public @NotNull SubscriptionState getState () {
+        return state;
+    }
+    
+    public void setState (@NotNull SubscriptionState state) {
+        this.state = state;
+    }
+    
+    public @NotNull Double getPrice () {
+        return price;
+    }
+    
+    public void setPrice (@NotNull Double price) {
+        this.price = price;
+    }
+    
+    public @NotNull LocalTime getDepartureTime () {
+        return departureTime;
+    }
+    
+    public void setDepartureTime (@NotNull LocalTime departureTime) {
+        this.departureTime = departureTime;
+    }
+    
+    
+    /* ----- Utility Methods ---------------------------------------- */
+    
+    @Override
+    public String toString () {
+        return "Subscription {" +
+                "id: " + id +
+                //", customer: " + customer +
+                //", parkingLot: " + parkingLot +
+                ", createdAt: " + createdAt.getTime() +
+                ", expiresAt: " + expiresAt.getTime() +
+                ", type: " + type +
+                //", vehicles: " + vehicles +
+                ", departureTime: " + departureTime +
+                ", state: " + state +
+                ", price: " + price +
+                '}';
+    }
 }

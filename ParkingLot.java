@@ -1,128 +1,299 @@
-package org.example;
+package net.cps.common.entities;
 
+import net.cps.common.utils.OrganizationType;
+import org.jetbrains.annotations.NotNull;
 
+import javax.persistence.*;
 import java.io.Serializable;
+import java.lang.annotation.Native;
+import java.util.ArrayList;
 import java.util.List;
 
-public class ParkingLot  implements Serializable {
-    public static final String DEFAULT_NAME = "Parking Lot";
-    public static final String DEFAULT_ADDRESS = "Address";
-    public static final int DEFAULT_FLOOR_WIDTH = 1;
-    
-    public static final int floorLength = 3; // x axes
-    public static final int numOfFloors = 3; // y axes
-    private List<Reservation> reservationsList;
-    private List<Subscription> subscriptionList;
-    private Robot robot;
+@Entity
+@Table(name = "parking_lots")
+@PrimaryKeyJoinColumn(name = "id")
+public class ParkingLot extends Organization implements Serializable {
+    @Column(name = "id", updatable = false, nullable = false)
     private Integer id;
+    @NotNull
+    @Column(name = "name", columnDefinition = "VARCHAR(55) NOT NULL")
     private String name;
-    private String address;
-    private int floorWidth; // z axes
+    @NotNull
+    @Column(name = "street_number", columnDefinition = "MEDIUMINT NOT NULL")
+    private Integer streetNumber;
+    @NotNull
+    @Column(name = "street_name", columnDefinition = "VARCHAR(55) NOT NULL")
+    private String streetName;
+    @NotNull
+    @Column(name = "city_name", columnDefinition = "VARCHAR(55) NOT NULL")
+    private String cityName;
+    @NotNull
+    @Column(name = "country_symbol", columnDefinition = "CHAR(2) NOT NULL")
+    private String countrySymbol;
+    @NotNull
+    @Column(name = "num_of_floors", columnDefinition = "TINYINT NOT NULL")
+    private Integer numOfFloors;
+    @NotNull
+    @Column(name = "num_of_rows", columnDefinition = "TINYINT NOT NULL")
+    private Integer numOfRows;
+    @NotNull
+    @Column(name = "num_of_cols", columnDefinition = "TINYINT NOT NULL")
+    private Integer numOfCols;
+    @NotNull
+    @OneToOne(mappedBy = "parkingLot", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Rates rates;
+    @NotNull
+    @OneToMany(mappedBy = "parkingLot", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<ParkingSpace> parkingSpaces;
+    @NotNull
+    @OneToMany(mappedBy = "parkingLot", cascade = CascadeType.ALL)
+    private List<Reservation> reservations;
+    @NotNull
+    @OneToMany(mappedBy = "parkingLot", cascade = CascadeType.ALL)
+    private List<Subscription> subscriptions;
     
-    //private Rates rates;
+    @Transient
+    public static final OrganizationType DEFAULT_TYPE = OrganizationType.PARKING_LOT;
+    @Transient
+    public static final String DEFAULT_NAME = "Parking Lot Name";
+    @Transient
+    public static final Integer DEFAULT_FLOOR_NUM = 3;
+    @Transient
+    public static final Integer DEFAULT_FLOOR_ROWS = 3;
+    @Transient
+    public static final Integer DEFAULT_FLOOR_COLS = 3;
+    @Transient
+    private transient Robot robot;
     
-    public ParkingLot() {
-        this.name = DEFAULT_NAME;
-        this.address = DEFAULT_ADDRESS;
-        this.floorWidth = DEFAULT_FLOOR_WIDTH;
-     //   this.rates = new Rates(this);
-    }
     
-    public ParkingLot(String name, String address, int floorWidth) {
+    /* ----- Constructors ------------------------------------------- */
+
+    public ParkingLot() {}
+    //    public ParkingLot () {
+//        super(DEFAULT_TYPE);
+//        this.name = DEFAULT_NAME;
+//        this.streetNumber = Organization.DEFAULT_STREET_NUMBER;
+//        this.streetName = Organization.DEFAULT_STREET;
+//        this.cityName = Organization.DEFAULT_CITY;
+//        this.countrySymbol = Organization.DEFAULT_STATE;
+//        this.numOfFloors = DEFAULT_FLOOR_NUM;
+//        this.numOfRows = DEFAULT_FLOOR_ROWS;
+//        System.out.println("constructor pl ERROR , cols: "+numOfCols);
+//
+//        this.numOfCols = DEFAULT_FLOOR_COLS;
+//        this.rates = new Rates(this);
+//        this.parkingSpaces = createParkingSpaces();
+//        this.reservations = new ArrayList<>();
+//        this.subscriptions = new ArrayList<>();
+//        this.robot = new Robot(this);
+//    }
+    
+    public ParkingLot (@NotNull String name, @NotNull String streetName, @NotNull Integer streetNumber, @NotNull String cityName, @NotNull String countrySymbol, @NotNull Integer numOfCols) {
+        super(DEFAULT_TYPE);
         this.name = name;
-        this.address = address;
-        this.floorWidth = floorWidth;
-       // this.rates = new Rates(this);
+        this.streetName = streetName;
+        this.streetNumber = streetNumber;
+        this.cityName = cityName;
+        this.countrySymbol = countrySymbol;
+        this.numOfFloors = DEFAULT_FLOOR_NUM;
+        this.numOfRows = DEFAULT_FLOOR_ROWS;
+        System.out.println("constructor pl , cols: "+numOfCols);
+        this.numOfCols = numOfCols;
+        this.rates = new Rates(this);
+        this.parkingSpaces = createParkingSpaces();
+        this.reservations = new ArrayList<>();
+        this.subscriptions = new ArrayList<>();
+        this.robot = new Robot(this);
     }
     
-    public int getId () {
-        return this.id;
+    public ParkingLot (@NotNull String name, @NotNull String streetName, @NotNull Integer streetNumber, @NotNull String cityName, @NotNull String countrySymbol, @NotNull Integer numOfFloors, @NotNull Integer numOfRows, @NotNull Integer numOfCols) {
+        super(DEFAULT_TYPE);
+        this.name = name;
+        this.streetName = streetName;
+        this.streetNumber = streetNumber;
+        this.cityName = cityName;
+        this.countrySymbol = countrySymbol;
+        this.numOfFloors = numOfFloors;
+        this.numOfRows = numOfRows;
+        System.out.println("constructor pl 2 , cols: "+numOfCols);
+        this.numOfCols = numOfCols;
+        this.rates = new Rates(this);
+        this.parkingSpaces = createParkingSpaces();
+        this.reservations = new ArrayList<>();
+        this.subscriptions = new ArrayList<>();
+        this.robot = new Robot(this);
     }
     
-    public String getName () {
-        return this.name;
+    
+    /* ----- Getters and Setters ------------------------------------ */
+    
+    public Integer getId () {
+        return super.getOrganizationId();
     }
     
-    public String getAddress () {
-        return this.address;
+    public void setId (Integer id) {
+        super.setOrganizationId(id);
     }
     
-    public int getFloorWidth () {
-        return this.floorWidth;
+    public @NotNull String getName () {
+        return name;
     }
     
-  /*  public @NotNull Rates getRates () {
+    public void setName (@NotNull String name) {
+        this.name = name;
+    }
+    
+    public @NotNull Integer getStreetNumber () {
+        return streetNumber;
+    }
+    
+    public void setStreetNumber (@NotNull Integer streetNumber) {
+        this.streetNumber = streetNumber;
+    }
+    
+    public @NotNull String getStreetName () {
+        return streetName;
+    }
+    
+    public void setStreetName (@NotNull String streetName) {
+        this.streetName = streetName;
+    }
+    
+    public @NotNull String getCityName () {
+        return cityName;
+    }
+    
+    public void setCityName (@NotNull String cityName) {
+        this.cityName = cityName;
+    }
+    
+    public @NotNull String getCountrySymbol () {
+        return countrySymbol;
+    }
+    
+    public void setCountrySymbol (@NotNull String countrySymbol) {
+        this.countrySymbol = countrySymbol;
+    }
+    
+    public @NotNull Integer getNumOfFloors () {
+        return numOfFloors;
+    }
+    
+    public void setNumOfFloors (@NotNull Integer numOfFloors) {
+        this.numOfFloors = numOfFloors;
+    }
+    
+    public @NotNull Integer getNumOfRows () {
+        return numOfRows;
+    }
+    
+    public void setNumOfRows (@NotNull Integer numOfRows) {
+        this.numOfRows = numOfRows;
+    }
+    
+    public @NotNull Integer getNumOfCols () {
+        return this.numOfCols;
+    }
+    
+    public void setNumOfCols (@NotNull Integer numOfCols) {
+        this.numOfCols = numOfCols;
+    }
+    
+    public Integer getCapacity () {
+        return this.numOfCols * numOfRows * numOfFloors;
+    }
+    
+    public @NotNull Rates getRates () {
         return this.rates;
     }
-    */
-    public int getTotalSpace () {
-        return this.floorWidth * floorLength * numOfFloors;
+    
+    public void setRates (@NotNull Rates rates) {
+        this.rates = rates;
     }
     
-    public void setName (String name) {
-        this.name = name;
-    }
-
-    public List<Reservation> getReservationsList() {
-        return reservationsList;
-    }
-
-    public void setReservationsList(List<Reservation> reservationsList) {
-        this.reservationsList = reservationsList;
-    }
-
-    public void setAddress (String address) {
-        this.address = address;
+    public @NotNull List<ParkingSpace> getParkingSpaces () {
+        return parkingSpaces;
     }
     
-    public void setFloorWidth (int floorWidth) {
-        this.floorWidth = floorWidth;
-    }
-
-    public List<Subscription> getSubscriptionList() {
-        return subscriptionList;
-    }
-
-    public void setSubscriptionList(List<Subscription> subscriptionList) {
-        this.subscriptionList = subscriptionList;
-    }
-
-    public void setRates (Double hourlyOccasionalParking, Double hourlyOnetimeParking, Double regularSubscriptionSingleVehicle, Double regularSubscriptionMultipleVehicles, Double fullSubscriptionSingleVehicle) {
-        if (hourlyOccasionalParking != null) {
-          //  this.rates.setHourlyOccasionalParking(hourlyOccasionalParking);
-        }
-        if (hourlyOnetimeParking != null) {
-         //   this.rates.setHourlyOnetimeParking(hourlyOnetimeParking);
-        }
-        if (regularSubscriptionSingleVehicle != null) {
-            //this.rates.setRegularSubscriptionSingleVehicle(regularSubscriptionSingleVehicle);
-        }
-        if (regularSubscriptionMultipleVehicles != null) {
-            //this.rates.setRegularSubscriptionMultipleVehicles(regularSubscriptionMultipleVehicles);
-        }
-        if (fullSubscriptionSingleVehicle != null) {
-          //  this.rates.setFullSubscriptionSingleVehicle(fullSubscriptionSingleVehicle);
-        }
+    public void setParkingSpaces (@NotNull ArrayList<ParkingSpace> parkingSpaces) {
+        this.parkingSpaces = parkingSpaces;
     }
 
     public Robot getRobot() {
         return robot;
     }
 
-    public void setRobot(Robot robot) {
-        this.robot = robot;
+    public @NotNull List<Reservation> getReservations () {
+        return reservations;
     }
+    
+    public ArrayList<Subscription> getSubscriptions () {
+        return (ArrayList<Subscription>) subscriptions;
+    }
+    
+    public void setSubscriptions (ArrayList<Subscription> subscriptions) {
+        this.subscriptions = subscriptions;
+    }
+    
+    public void setReservations (@NotNull ArrayList<Reservation> reservations) {
+        this.reservations = reservations;
+    }
+    
+    public void setRates (Double hourlyOccasionalParking, Double hourlyOnetimeParking, Double regularSubscriptionSingleVehicle, Double regularSubscriptionMultipleVehicles, Double fullSubscriptionSingleVehicle) {
+        if (hourlyOccasionalParking != null) {
+            this.rates.setHourlyOccasionalParking(hourlyOccasionalParking);
+        }
+        if (hourlyOnetimeParking != null) {
+            this.rates.setHourlyOnetimeParking(hourlyOnetimeParking);
+        }
+        if (regularSubscriptionSingleVehicle != null) {
+            this.rates.setRegularSubscriptionSingleVehicle(regularSubscriptionSingleVehicle);
+        }
+        if (regularSubscriptionMultipleVehicles != null) {
+            this.rates.setRegularSubscriptionMultipleVehicles(regularSubscriptionMultipleVehicles);
+        }
+        if (fullSubscriptionSingleVehicle != null) {
+            this.rates.setFullSubscriptionSingleVehicle(fullSubscriptionSingleVehicle);
+        }
+    }
+    
+    
+    /* ----- Utility Methods ---------------------------------------- */
+    
+    public ArrayList<ParkingSpace> createParkingSpaces () {
+        ArrayList<ParkingSpace> parkingSpaces = new ArrayList<>();
+        for (int i = 0; i < this.numOfFloors; i++) {
+            for (int j = 0 ; j < this.numOfRows ; j++) {
+                for (int k = 0 ; k < this.numOfCols ; k++) {
+                    parkingSpaces.add(new ParkingSpace(this, i, j, k));
 
+                }
+            }
+        }
+        return parkingSpaces;
+    }
+    
+    public Boolean addReservation (Reservation reservation) {
+        if (this.robot.getAvailableCapacityByTime(reservation.getArrivalTime(), reservation.getDepartureTime()) > 0) {
+            return this.reservations.add(reservation);
+        }
+        return false;
+    }
+    
+    public Boolean removeReservation (Reservation reservation) {
+        return this.reservations.remove(reservation);
+    }
+    
     @Override
     public String toString () {
         return "ParkingLot {" +
-                "id: " + id +
+                "id: " + getId() +
                 ", name: '" + name + "'" +
-                ", address: '" + address + "'" +
-                ", floorWidth: " + floorWidth +
-              //  ", rates: " + rates +
+                ", address: '" + getAddress() + "'" +
+                ", numOfFloors: " + numOfFloors +
+                ", floorRows: " + numOfRows +
+                ", floorCols: " + numOfCols +
+                ", rates: " + rates +
                 "}";
     }
-
-
 }
