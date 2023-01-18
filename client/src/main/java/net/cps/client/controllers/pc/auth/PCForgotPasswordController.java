@@ -15,9 +15,6 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import net.cps.client.App;
 import net.cps.client.CPSClient;
-import net.cps.client.events.CustomerLoginEvent;
-import net.cps.client.events.EmployeeLoginEvent;
-import net.cps.client.events.UserAuthEvent;
 import net.cps.client.utils.AbstractPageController;
 import net.cps.common.entities.Customer;
 import net.cps.common.entities.Employee;
@@ -27,13 +24,10 @@ import net.cps.common.utils.Entities;
 import net.cps.common.utils.RequestCallback;
 import net.cps.common.utils.RequestType;
 import net.cps.common.utils.ResponseStatus;
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
 
 
 public class PCForgotPasswordController extends AbstractPageController {
@@ -81,9 +75,10 @@ public class PCForgotPasswordController extends AbstractPageController {
             resetCodeField.setFloatMode(FloatMode.DISABLED);
             resetCodeField.setTextLimit(6);
             resetCodeField.setMinHeight(45);
-    
+            
             Text errorText = new Text("Wrong reset code, please try again.");
-            errorText.setStyle("-fx-fill: #730721; -fx-text-fill: #730721; -fx-font-size: 12px;");
+            errorText.setStyle("-fx-font-size: 12px;");
+            errorText.getStyleClass().add("danger-text");
             errorText.setVisible(false);
             
             TextFlow textFlow = new TextFlow(errorText);
@@ -105,7 +100,7 @@ public class PCForgotPasswordController extends AbstractPageController {
             MFXButton cancelBtn = new MFXButton("Cancel");
             cancelBtn.getStyleClass().add("button-secondary");
             cancelBtn.setOnAction(event -> dialog.close());
-
+            
             dialog.setTitleText("Enter Reset Code");
             dialog.setBodyText("Please enter the reset code sent to your email.");
             dialog.setCustomContent(vBox);
@@ -118,7 +113,7 @@ public class PCForgotPasswordController extends AbstractPageController {
     public void changePasswordBtnClickHandler (ActionEvent actionEvent) {
         Platform.runLater(() -> {
             dialog.close();
-    
+            
             MFXPasswordField passwordField = new MFXPasswordField();
             passwordField.setFloatMode(FloatMode.BORDER);
             passwordField.setFloatingText("Password");
@@ -147,7 +142,8 @@ public class PCForgotPasswordController extends AbstractPageController {
                                     dialog.close();
                                     try {
                                         App.setPage("pc/auth/PCLogin.fxml");
-                                    } catch (IOException e) {
+                                    }
+                                    catch (IOException e) {
                                         e.printStackTrace();
                                     }
                                 });
@@ -183,7 +179,8 @@ public class PCForgotPasswordController extends AbstractPageController {
                                     dialog.close();
                                     try {
                                         App.setPage("pc/auth/PCLogin.fxml");
-                                    } catch (IOException e) {
+                                    }
+                                    catch (IOException e) {
                                         e.printStackTrace();
                                     }
                                 });

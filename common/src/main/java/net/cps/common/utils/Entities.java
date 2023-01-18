@@ -299,13 +299,17 @@ public enum Entities {
     public static String toString (Entities entity) {
         return switch (entity) {
             case ORGANIZATION -> "Organization";
-            case OFFICE -> "Management";
+            case OFFICE -> "Office";
             case PARKING_LOT -> "Parking Lot";
             case RATES -> "Rates";
             case EMPLOYEE -> "Employee";
             case CUSTOMER -> "Customer";
             case SUBSCRIPTION -> "Subscription";
             case VEHICLE -> "Vehicle";
+            case PARKING_SPACE -> "Parking Space";
+            case RESERVATION -> "Reservation";
+            case COMPLAINT -> "Complaint";
+            case DAILY_STATISTICS -> "Daily Statistics";
             default -> throw new IllegalArgumentException("Invalid entity: " + entity);
         };
     }
@@ -318,14 +322,18 @@ public enum Entities {
         
         String entityFormatted = camelCaseToSnakeCase(entity).trim().toUpperCase().replace(" ", "_").replace("-", "_");
         return switch (entityFormatted) {
-            case "ABSTRACT_ORGANIZATION" -> ORGANIZATION;
-            case "MANAGEMENT" -> OFFICE;
+            case "ORGANIZATION" -> ORGANIZATION;
+            case "OFFICE" -> OFFICE;
             case "PARKING_LOT" -> PARKING_LOT;
             case "RATES" -> RATES;
             case "EMPLOYEE" -> EMPLOYEE;
             case "CUSTOMER" -> CUSTOMER;
             case "SUBSCRIPTION" -> SUBSCRIPTION;
             case "VEHICLE" -> VEHICLE;
+            case "PARKING_SPACE" -> PARKING_SPACE;
+            case "RESERVATION" -> RESERVATION;
+            case "COMPLAINT" -> COMPLAINT;
+            case "DAILY_STATISTICS" -> DAILY_STATISTICS;
             default -> throw new IllegalArgumentException("Invalid entity: " + entity);
         };
     }

@@ -29,7 +29,6 @@ import net.cps.common.entities.Vehicle;
 import net.cps.common.messages.RequestMessage;
 import net.cps.common.messages.ResponseMessage;
 import net.cps.common.utils.*;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.net.URL;
@@ -97,6 +96,8 @@ public class PCCustomerSubscriptionsController extends AbstractPageController {
     public MFXToggleButton departureTimeToggle;
     public MFXTextField departureTimeHourField;
     public MFXTextField departureTimeMinutesField;
+    public Text priceField;
+    public MFXButton calcPriceBtn;
     
     
     
@@ -341,6 +342,16 @@ public class PCCustomerSubscriptionsController extends AbstractPageController {
         });
     }
     
+    @FXML
+    public void calcPriceBtnClickHandler (ActionEvent actionEvent) {
+        Platform.runLater(() -> {
+            Subscription subscription = createSubscriptionObject();
+            if (subscription == null) return;
+            Double price = subscription.calculatePrice();
+            if (price == null) return;
+            priceField.setText(String.format("%.2f", price));
+        });
+    }
     
     
     /* ----- EventBus Listeners ------------------------------------- */
@@ -356,14 +367,15 @@ public class PCCustomerSubscriptionsController extends AbstractPageController {
             Platform.runLater(() -> {
                 allCustomerSubscriptions = (ArrayList<Subscription>) response.getData();
                 ObservableList<Subscription> subscriptions = FXCollections.observableArrayList((ArrayList<Subscription>) response.getData());
-    
+                
                 subIdColSubTable.setCellValueFactory(new PropertyValueFactory<>("id"));
                 parkingLotColSubTable.setCellValueFactory(new PropertyValueFactory<>("parkingLotName"));
                 subTypeColSubTable.setCellValueFactory(new PropertyValueFactory<>("type"));
-                createTimeColSubTable.setCellValueFactory(new PropertyValueFactory<>("createdAtTime"));
-                expireTimeColSubTable.setCellValueFactory(new PropertyValueFactory<>("expiresAtTime"));
+                createTimeColSubTable.setCellValueFactory(new PropertyValueFactory<>("createdAtFormatted"));
+                expireTimeColSubTable.setCellValueFactory(new PropertyValueFactory<>("expiresAtFormatted"));
                 stateColSubTable.setCellValueFactory(new PropertyValueFactory<>("state"));
                 subscriptionsTable.setItems(subscriptions);
+                subscriptionsTable.refresh();
             });
         }
     }
@@ -391,6 +403,7 @@ public class PCCustomerSubscriptionsController extends AbstractPageController {
         if (response.getStatus() == ResponseStatus.FINISHED) {
             Integer id = (Integer) response.getData();
             selectedSubscription.setId(id);
+            Double price = selectedSubscription.calculatePrice();
             
             Platform.runLater(() -> {
                 dialog.close();
@@ -399,20 +412,22 @@ public class PCCustomerSubscriptionsController extends AbstractPageController {
                 okBtn.setOnAction(event -> {
                     dialog.close();
                     subscriptionsTable.setItems(FXCollections.observableArrayList(allCustomerSubscriptions));
+                    subscriptionsTable.refresh();
                 });
                 okBtn.getStyleClass().add("button-primary");
                 
                 dialog.setWidth(Dialog.Width.EXTRA_SMALL);
                 dialog.setTitleText("Subscription Created");
-                dialog.setBodyText("Your subscription has been created successfully.", "Your subscription ID is: '" + id + "', keep it safe.", "Please note, your subscription id is required for any future actions - such as parking lot entrance.");
+                dialog.setBodyText("Your subscription has been created successfully, and your account where charged: " + price + "ILS.", " ", "Your subscription ID is: '" + id + "', keep it safe.", "Please note, your subscription id is required for any future actions - such as parking lot entrance.");
                 dialog.setActionButtons(okBtn);
                 dialog.open();
                 
                 allCustomerSubscriptions.add(selectedSubscription);
                 ObservableList<Subscription> subscriptions = FXCollections.observableArrayList(allCustomerSubscriptions);
                 subscriptionsTable.setItems(subscriptions);
+                subscriptionsTable.refresh();
                 
-                customer.chargeBalance(calculatePrice(selectedSubscription));
+                customer.chargeBalance(price);
                 CPSClient.sendRequestToServer(RequestType.UPDATE, Entities.CUSTOMER.getTableName(), null, customer, (req, res) -> {
                     if (res.getStatus() == ResponseStatus.SUCCESS) {
                         System.out.println("Customer balance updated successfully.");
@@ -442,76 +457,57 @@ public class PCCustomerSubscriptionsController extends AbstractPageController {
     
     /* ----- Utility Methods ---------------------------------------- */
     
-    private @NotNull Subscription createSubscriptionObject () {
-        ParkingLot parkingLot;
-        Calendar startAt = Calendar.getInstance();
-        SubscriptionType type;
-        ArrayList<Vehicle> vehicles = new ArrayList<>();
-        ArrayList<Vehicle> newVehicles = new ArrayList<>();
-        LocalTime departureTime = LocalTime.of(0, 0);
-        
-        if (subscriptionType.getSelectedToggle() == regularSubRadio) {
-            parkingLot = parkingLotsListCombo.getSelectionModel().getSelectedItem();
-            startAt.setTime(Date.from(startAtDate.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
-            startAt.clear(Calendar.HOUR_OF_DAY);
-            type = SubscriptionType.BASIC;
-            vehicleNumbersFields.getChildren().forEach(node -> {
-                if (node instanceof MFXTextField) {
-                    String vehicleNumber = ((MFXTextField) node).getText();
-                    vehicles.add(new Vehicle(vehicleNumber, customer));
-                    
-                    if (allCustomerVehicles.stream().noneMatch(vehicle -> vehicle.getNumber().equals(vehicleNumber))) {
-                        newVehicles.add(new Vehicle(vehicleNumber, customer));
+    private Subscription createSubscriptionObject () {
+        try {
+            ParkingLot parkingLot;
+            Calendar startAt = Calendar.getInstance();
+            SubscriptionType type;
+            ArrayList<Vehicle> vehicles = new ArrayList<>();
+            ArrayList<Vehicle> newVehicles = new ArrayList<>();
+            LocalTime departureTime = LocalTime.of(0, 0);
+            
+            if (subscriptionType.getSelectedToggle() == regularSubRadio) {
+                parkingLot = parkingLotsListCombo.getSelectionModel().getSelectedItem();
+                startAt.setTime(Date.from(startAtDate.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+                startAt.clear(Calendar.HOUR_OF_DAY);
+                type = SubscriptionType.BASIC;
+                vehicleNumbersFields.getChildren().forEach(node -> {
+                    if (node instanceof MFXTextField) {
+                        String vehicleNumber = ((MFXTextField) node).getText();
+                        vehicles.add(new Vehicle(vehicleNumber, customer));
+                        
+                        if (allCustomerVehicles.stream().noneMatch(vehicle -> vehicle.getNumber().equals(vehicleNumber))) {
+                            newVehicles.add(new Vehicle(vehicleNumber, customer));
+                        }
                     }
-                }
-            });
-        }
-        else {
-            parkingLot = null;
-            startAt.setTime(Date.from(startAtDate.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
-            startAt.clear(Calendar.HOUR_OF_DAY);
-            type = SubscriptionType.PREMIUM;
-            String vehicleNumber = vehicleNumberField.getText();
-            vehicles.add(new Vehicle(vehicleNumber, customer));
-            if (allCustomerVehicles.stream().noneMatch(vehicle -> vehicle.getNumber().equals(vehicleNumber))) {
-                newVehicles.add(new Vehicle(vehicleNumber, customer));
-            }
-        }
-        if (departureTimeToggle.isSelected()) {
-            departureTime = LocalTime.of(Integer.parseInt(departureTimeHourField.getText()), Integer.parseInt(departureTimeMinutesField.getText()));
-        }
-        if (!newVehicles.isEmpty()) {
-            CPSClient.sendRequestToServer(RequestType.CREATE, Entities.VEHICLE.getTableName(), null, newVehicles, (req, res) -> {
-                if (res.getStatus() == ResponseStatus.SUCCESS) {
-                    allCustomerVehicles.addAll(newVehicles);
-                }
-            });
-        }
-        
-        return new Subscription(customer, parkingLot, startAt, type, vehicles, departureTime);
-    }
-    
-    private Double calculatePrice (@NotNull Subscription subscription) {
-        Double price = 0.0;
-        SubscriptionType type = subscription.getType();
-        ParkingLot parkingLot = subscription.getParkingLot();
-        Integer numOfVehicles = subscription.getVehicles().size();
-        
-        if (type == SubscriptionType.BASIC) {
-            if (numOfVehicles == 1) {
-                price = parkingLot.getRates().getRegularSubscriptionSingleVehicle() * parkingLot.getRates().getHourlyOnetimeParking();
+                });
             }
             else {
-                price = parkingLot.getRates().getRegularSubscriptionMultipleVehicles() * parkingLot.getRates().getHourlyOnetimeParking() * numOfVehicles;
+                parkingLot = null;
+                startAt.setTime(Date.from(startAtDate.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+                startAt.clear(Calendar.HOUR_OF_DAY);
+                type = SubscriptionType.PREMIUM;
+                String vehicleNumber = vehicleNumberField.getText();
+                vehicles.add(new Vehicle(vehicleNumber, customer));
+                if (allCustomerVehicles.stream().noneMatch(vehicle -> vehicle.getNumber().equals(vehicleNumber))) {
+                    newVehicles.add(new Vehicle(vehicleNumber, customer));
+                }
             }
+            if (departureTimeToggle.isSelected()) {
+                departureTime = LocalTime.of(Integer.parseInt(departureTimeHourField.getText()), Integer.parseInt(departureTimeMinutesField.getText()));
+            }
+            if (!newVehicles.isEmpty()) {
+                CPSClient.sendRequestToServer(RequestType.CREATE, Entities.VEHICLE.getTableName(), null, newVehicles, (req, res) -> {
+                    if (res.getStatus() == ResponseStatus.SUCCESS) {
+                        allCustomerVehicles.addAll(newVehicles);
+                    }
+                });
+            }
+            
+            return new Subscription(customer, parkingLot, startAt, type, vehicles, departureTime);
         }
-        else if (type == SubscriptionType.PREMIUM) {
-            price = parkingLot.getRates().getFullSubscriptionSingleVehicle() * parkingLot.getRates().getHourlyOnetimeParking();
+        catch (Throwable e) {
+            return null;
         }
-        
-        return price;
-    }
-    
-    public void newReservationBtnClickHandler (ActionEvent actionEvent) {
     }
 }

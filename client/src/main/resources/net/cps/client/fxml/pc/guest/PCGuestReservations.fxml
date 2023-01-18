@@ -205,7 +205,6 @@
                         <String fx:value="dashboard" />
                     </styleClass>
                 </BorderPane>
-
             </VBox> <!-- /body-container -->
         </VBox> <!-- /body -->
     </MFXScrollPane> <!-- /root-scroll -->
@@ -219,7 +218,7 @@
             <center>
                 <MFXScrollPane fitToHeight="true" fitToWidth="true" styleClass="dialog-content-scroll" BorderPane.alignment="CENTER">
                     <VBox>
-                        <TextFlow fx:id="dialogContent" styleClass="dialog-content" />
+                        <VBox fx:id="dialogContent" styleClass="dialog-content" />
                         <VBox fx:id="dialogCustomContent" />
                     </VBox>
                 </MFXScrollPane>

@@ -117,9 +117,9 @@ public class Vehicle implements Serializable {
                 "id: " + id +
                 ", licensePlate: " + number +
                 ", customer: " + customer +
-                //", subscriptions: " + (subscriptions != null ? subscriptions : "null") +
-                //", reservations: " + (reservations != null ? reservations : "null") +
-                //", parkingSpace: " + (parkingSpace != null ? parkingSpace : "null") +
+                ", subscriptions: " + (subscriptions != null ? subscriptions : "null") +
+                ", reservations: " + (reservations != null ? reservations : "null") +
+                ", parkingSpace: " + (parkingSpace != null ? parkingSpace : "null") +
                 '}';
     }
    

@@ -97,7 +97,7 @@
     -fx-padding: 3 5 3 5;
 }
 .mfx-combo-box .caret .mfx-ripple-generator {
-    -mfx-ripple-color: @button-ripple-color;
+    -mfx-ripple-color: @button-ripple-color !important;
 }
 .mfx-combo-box:focus-within .caret .mfx-font-icon {
     -mfx-color: -mfx-main;
@@ -250,7 +250,7 @@
 
 
 
-
+// TABLE -----------------
 /* Base */
 .mfx-legacy-table-view {
     -fx-focus-color: transparent;
@@ -316,6 +316,13 @@
 }
 .table-row-cell:selected .text {
     -fx-fill: @sheet-text-color-emp;
+}
+.mfx-table-row .mfx-ripple-generator {
+    -mfx-ripple-color: @button-ripple-color !important;
+}
+.mfx-legacy-table-row:selected,
+.mfx-table-row:selected .mfx-table-row-cell {
+    -fx-background-color: @gray-2 !important;
 }
 
 

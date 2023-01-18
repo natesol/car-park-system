@@ -5,8 +5,8 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.lang.annotation.Native;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 @Entity
@@ -52,6 +52,8 @@ public class ParkingLot extends Organization implements Serializable {
     @OneToMany(mappedBy = "parkingLot", cascade = CascadeType.ALL)
     private List<Subscription> subscriptions;
     
+    public static final Integer MINUTE = 60 * 1000;
+    public static final Integer HOUR = 60 * MINUTE;
     @Transient
     public static final OrganizationType DEFAULT_TYPE = OrganizationType.PARKING_LOT;
     @Transient
@@ -253,7 +255,7 @@ public class ParkingLot extends Organization implements Serializable {
     
     public ArrayList<ParkingSpace> createParkingSpaces () {
         ArrayList<ParkingSpace> parkingSpaces = new ArrayList<>();
-        for (int i = 0; i < this.numOfFloors; i++) {
+        for (int i = 0 ; i < this.numOfFloors ; i++) {
             for (int j = 0 ; j < this.numOfRows ; j++) {
                 for (int k = 0 ; k < this.numOfCols ; k++) {
                     parkingSpaces.add(new ParkingSpace(this, i, j, k));
@@ -263,7 +265,7 @@ public class ParkingLot extends Organization implements Serializable {
         return parkingSpaces;
     }
     
-    public Boolean addReservation (Reservation reservation) {
+    public Boolean addReservation (@NotNull Reservation reservation) {
         if (this.robot.getAvailableCapacityByTime(reservation.getArrivalTime(), reservation.getDepartureTime()) > 0) {
             return this.reservations.add(reservation);
         }
@@ -273,6 +275,27 @@ public class ParkingLot extends Organization implements Serializable {
     public Boolean removeReservation (Reservation reservation) {
         return this.reservations.remove(reservation);
     }
+    
+    public Double calculateReservationPrice (@NotNull Calendar arrivalTime, @NotNull Calendar departureTime) {
+        return ((departureTime.getTimeInMillis() - arrivalTime.getTimeInMillis()) / HOUR) * this.rates.getHourlyOnetimeParking();
+    }
+    
+    public Double calculateOccasionalParkingPrice (@NotNull Calendar arrivalTime, @NotNull Calendar departureTime) {
+        return ((departureTime.getTimeInMillis() - arrivalTime.getTimeInMillis()) / HOUR) * this.rates.getHourlyOccasionalParking();
+    }
+    
+    public Double calculateCancellationPrice (@NotNull Reservation reservation) {
+        if (reservation.getArrivalTime().getTimeInMillis() - Calendar.getInstance().getTimeInMillis() <= HOUR) {
+            return reservation.getPayed() * Reservation.CANCELLATION_FEE_LESS_THAN_1_HOURS;
+        }
+        else if (reservation.getArrivalTime().getTimeInMillis() - Calendar.getInstance().getTimeInMillis() <= HOUR * 3L) {
+            return reservation.getPayed() * Reservation.CANCELLATION_FEE_LESS_THAN_3_HOURS;
+        }
+        else {
+            return reservation.getPayed() * Reservation.CANCELLATION_FEE_MORE_THAN_3_HOURS;
+        }
+    }
+    
     
     @Override
     public String toString () {

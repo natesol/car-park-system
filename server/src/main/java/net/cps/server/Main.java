@@ -63,13 +63,6 @@ public class Main {
         catch (IOException e) {
             e.printStackTrace();
         }
-        
-        // !!!!!!!!!!!!!!!!!!!!!!!!
-        // !!! v Test Methods v !!!
-        sendEmail("test@tset", "test", "test message");
-        printMessageOnGivenTime("test message", LocalDateTime.now().plusSeconds(10));
-        // !!! ^ Test Methods ^ !!!
-        // !!!!!!!!!!!!!!!!!!!!
     }
     
     /**
@@ -114,7 +107,6 @@ public class Main {
             assert session != null;
             session.close();
         }
-        
     }
     
     /**
@@ -224,46 +216,11 @@ public class Main {
             reservationsForStatistics.add(reservations.get(4));
             dailyStatistics.add(new DailyStatistics(parkingLots.get(0), reservationsForStatistics));
             Database.createMultipleEntities(sessionFactory, dailyStatistics);
-            
-            
-            // TEST !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            //System.out.println(Database.getEntity(sessionFactory, ParkingLot.class, 1));
-            //System.out.println(Database.getEntity(sessionFactory, Office.class, 5));
-            //System.out.println(Database.getEntity(sessionFactory, Customer.class, 1));
-            //System.out.println(Database.getEntity(sessionFactory, Customer.class, "email", "foo.bar@gmail.com"));
-            //System.out.println(Database.getEntity(sessionFactory, Employee.class, "email", "amirdhdlive@gmail.com"));
-            //System.out.println(Database.getEntity(sessionFactory, Employee.class, 1));
-            //ArrayList<Object> ids = new ArrayList<>();
-            //ids.add(1);
-            //ids.add(2);
-            //ids.add(3);
-            //System.out.println(Database.getMultipleEntities(sessionFactory, ParkingLot.class, ids));
-            //System.out.println(Database.getAllEntities(sessionFactory, Reservation.class));
-            //System.out.println(Database.getAllEntities(sessionFactory, Complaint.class));
-            //System.out.println(Database.getAllEntities(sessionFactory, DailyStatistics.class));
-            // TEST !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         }
         catch (HibernateException e) {
             Logger.print("Error: database dummy data creation failed.", "ended with error: " + e.getMessage());
             e.printStackTrace();
         }
     }
-    
-    
-    /* -------------------------------------------------------------------------------------------- */
-    /* ------- v Test Methods v ------------------------------------------------------------------- */
-    
-    private static void sendEmail (String to, String subject, String body) {
-        // TODO: implement...
-    }
-    
-    private static void printMessageOnGivenTime (String message, LocalDateTime time) {
-        // TODO: implement...
-        Timer timer = new Timer();
-    }
-    
-    /* ------- ^ Test Methods ^ ------------------------------------------------------------------- */
-    /* -------------------------------------------------------------------------------------------- */
-    
     
 }

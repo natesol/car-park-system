@@ -8,7 +8,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalTime;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -124,8 +123,8 @@ public class Subscription implements Serializable {
         this.createdAt = createdAt;
     }
     
-    public @NotNull Date getCreatedAtTime () {
-        return createdAt.getTime();
+    public @NotNull String getCreatedAtFormatted () {
+        return String.format("%02d/%02d/%02d %02d:%02d", createdAt.get(Calendar.DAY_OF_MONTH), createdAt.get(Calendar.MONTH), createdAt.get(Calendar.YEAR), createdAt.get(Calendar.HOUR_OF_DAY), createdAt.get(Calendar.MINUTE));
     }
     
     public @NotNull Calendar getExpiresAt () {
@@ -136,8 +135,8 @@ public class Subscription implements Serializable {
         this.expiresAt = expiresAt;
     }
     
-    public @NotNull Date getExpiresAtTime () {
-        return expiresAt.getTime();
+    public @NotNull String getExpiresAtFormatted () {
+        return String.format("%02d/%02d/%02d %02d:%02d", expiresAt.get(Calendar.DAY_OF_MONTH), expiresAt.get(Calendar.MONTH), expiresAt.get(Calendar.YEAR), expiresAt.get(Calendar.HOUR_OF_DAY), expiresAt.get(Calendar.MINUTE));
     }
     
     public @NotNull SubscriptionType getType () {
@@ -183,17 +182,41 @@ public class Subscription implements Serializable {
     
     /* ----- Utility Methods ---------------------------------------- */
     
+    public Double calculatePrice () {
+        Double price = 0.0;
+        SubscriptionType type = this.getType();
+        ParkingLot parkingLot = this.getParkingLot();
+        Integer numOfVehicles = this.getVehicles().size();
+        
+        if (type == SubscriptionType.BASIC) {
+            if (numOfVehicles == 1) {
+                price = parkingLot.getRates().getRegularSubscriptionSingleVehicle() * parkingLot.getRates().getHourlyOnetimeParking();
+            }
+            else {
+                price = (parkingLot.getRates().getRegularSubscriptionMultipleVehicles() * parkingLot.getRates().getHourlyOnetimeParking()) * numOfVehicles;
+            }
+        }
+        else if (type == SubscriptionType.PREMIUM) {
+            price = parkingLot.getRates().getFullSubscriptionSingleVehicle() * parkingLot.getRates().getHourlyOnetimeParking();
+        }
+        return price;
+    }
+    
+    public void updatePrice () {
+        this.setPrice(this.calculatePrice());
+    }
+    
     @Override
     public String toString () {
         return "Subscription {" +
                 "id: " + id +
-                //", customer: " + customer +
-                //", parkingLot: " + parkingLot +
+                ", customer: " + (customer != null ? customer : "null") +
+                ", parkingLot: " + (parkingLot != null ? parkingLot : "null") +
                 ", createdAt: " + createdAt.getTime() +
                 ", expiresAt: " + expiresAt.getTime() +
                 ", type: " + type +
-                //", vehicles: " + vehicles +
-                ", departureTime: " + departureTime +
+                ", vehicles: " + (vehicles != null ? vehicles : "null") +
+                ", departureTime: " + (departureTime != null ? departureTime : "null") +
                 ", state: " + state +
                 ", price: " + price +
                 '}';

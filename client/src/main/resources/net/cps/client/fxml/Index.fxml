@@ -9,6 +9,7 @@
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.net.URL?>
+
 <AnchorPane fx:id="root" maxHeight="600.0" maxWidth="960.0" minHeight="400.0" minWidth="800.0" prefHeight="600.0"
             prefWidth="960.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="net.cps.client.controllers.IndexController">
@@ -68,33 +69,26 @@
                         </styleClass>
                     </MFXButton>
                 </VBox>
-
-
             </VBox> <!-- /body-container -->
         </VBox> <!-- /body -->
     </MFXScrollPane> <!-- /(root)scrollPane -->
 
-    <VBox fx:id="dialogRoot" alignment="CENTER" disable="true" styleClass="dialog-root" visible="false"
-          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-          AnchorPane.topAnchor="0.0">
-        <MFXGenericDialog fx:id="dialogControl" actionsOrientation="VERTICAL" contentText="..."
-                          headerText="Dialog Title" onClose="#closeDialog" showAlwaysOnTop="false" showMinimize="false">
+    <VBox fx:id="dialogRoot" alignment="CENTER" disable="true" styleClass="dialog-root" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <MFXGenericDialog fx:id="dialogControl" actionsOrientation="VERTICAL" contentText="..." headerText="Dialog Title" onClose="#closeDialog" showAlwaysOnTop="false" showMinimize="false">
             <styleClass>
-                <String fx:value="dialog"/>
-                <String fx:value="dialog-w-xs"/>
+                <String fx:value="dialog" />
+                <String fx:value="dialog-w-xs" />
             </styleClass>
             <center>
-                <MFXScrollPane fitToHeight="true" fitToWidth="true" styleClass="dialog-content-scroll"
-                               BorderPane.alignment="CENTER">
+                <MFXScrollPane fitToHeight="true" fitToWidth="true" styleClass="dialog-content-scroll" BorderPane.alignment="CENTER">
                     <VBox>
-                        <TextFlow fx:id="dialogContent" styleClass="dialog-content"/>
-                        <VBox fx:id="dialogCustomContent"/>
+                        <VBox fx:id="dialogContent" styleClass="dialog-content" />
+                        <VBox fx:id="dialogCustomContent" />
                     </VBox>
                 </MFXScrollPane>
             </center>
             <bottom>
-                <HBox fx:id="dialogAction" alignment="CENTER_RIGHT" styleClass="dialog-action"
-                      BorderPane.alignment="CENTER"/>
+                <HBox fx:id="dialogAction" alignment="CENTER_RIGHT" styleClass="dialog-action" BorderPane.alignment="CENTER" />
             </bottom>
         </MFXGenericDialog>
     </VBox>

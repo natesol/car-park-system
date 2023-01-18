@@ -31,7 +31,7 @@ public abstract class AbstractPageController implements Initializable {
     @FXML
     public MFXGenericDialog dialogControl;
     @FXML
-    public TextFlow dialogContent;
+    public VBox dialogContent;
     @FXML
     public VBox dialogCustomContent;
     @FXML
