@@ -160,14 +160,12 @@
                                             </HBox.margin>
                                         </TextFlow>
                                         <AnchorPane>
-                                            <HBox spacing="8.0">
-                                                <MFXComboBox fx:id="allParkingLotsCombo" disable="true"
-                                                             floatingText="Filter By Parking Lot" text="All"
-                                                             visible="false"/>
-                                                <MFXButton fx:id="newReservationBtn"
-                                                           onAction="#newReservationBtnClickHandler"
-                                                           styleClass="button-primary-filled" text="New Reservation"/>
-                                            </HBox>
+                                 <HBox spacing="8.0">
+                                    <children>
+                                                  <MFXComboBox fx:id="allParkingLotsCombo" disable="true" floatingText="Filter By Parking Lot" text="All" visible="false" />
+                                                  <MFXButton fx:id="newReservationBtn" onAction="#newReservationBtnClickHandler" styleClass="button-primary-filled" text="New Reservation" />
+                                    </children>
+                                 </HBox>
                                         </AnchorPane>
                                     </HBox>
                                     <VBox>
@@ -298,7 +296,7 @@
                     </HBox>
                 </HBox>
                 <HBox alignment="CENTER_RIGHT" minWidth="112.0">
-                    <MFXButton fx:id="calcPriceBtn" onAction="#calcPriceBtnClickHandler" text="Calculate" />
+                    <MFXButton fx:id="calcPriceBtn" text="Calculate" />
                 </HBox>
             </HBox>
             <padding>
