@@ -241,7 +241,7 @@ public class Main {
             Database.createMultipleEntities(sessionFactory, complaints);
             
             // Test Database
-            //testDatabase(sessionFactory, parkingLots, customers, vehicles, subscriptions, reservations, complaints);
+            testDatabase(sessionFactory, parkingLots, customers, vehicles, subscriptions, reservations, complaints);
         }
         catch (HibernateException e) {
             Logger.print("Error: database dummy data creation failed.", "ended with error: " + e.getMessage());

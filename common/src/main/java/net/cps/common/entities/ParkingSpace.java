@@ -15,7 +15,7 @@ public class ParkingSpace implements Serializable {
     @Column(name = "id", updatable = false, nullable = false)
     private Integer id;
     @NotNull
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "parking_lot_id", referencedColumnName = "id")
     private ParkingLot parkingLot;
     @NotNull
