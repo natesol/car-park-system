@@ -4,28 +4,7 @@
 @import "../config/CustomProperties.less";
 
 
-/* ----- General Colors --------------------------------------------- */
-
-//@primary-0: @light-blue-0;
-//@primary-1: @light-blue-1;
-//@primary-2: @light-blue-2;
-//@primary-3: @light-blue-3;
-//@primary-4: @light-blue-4;
-//@primary-5: @light-blue-5;
-//@primary-6: @light-blue-6;
-//@primary-7: @light-blue-7;
-//@primary-8: @light-blue-8;
-//@primary-9: @light-blue-9;
-//@primary-0: @teal-0;
-//@primary-1: @teal-1;
-//@primary-2: @teal-2;
-//@primary-3: @teal-3;
-//@primary-4: @teal-4;
-//@primary-5: @teal-5;
-//@primary-6: @teal-6;
-//@primary-7: @teal-7;
-//@primary-8: @teal-8;
-//@primary-9: @teal-9;
+/* ----- Color Schemes ---------------------------------------------- */
 
 @primary-0: @blue-0;
 @primary-1: @blue-1;
@@ -38,7 +17,6 @@
 @primary-8: @blue-8;
 @primary-9: @blue-9;
 
-
 @complementary-0: @teal-0;
 @complementary-1: @teal-1;
 @complementary-2: @teal-2;
@@ -50,33 +28,75 @@
 @complementary-8: @teal-8;
 @complementary-9: @teal-9;
 
-@accent-0: @red-0;
-@accent-1: @red-1;
-@accent-2: @red-2;
-@accent-3: @red-3;
-@accent-4: @red-4;
-@accent-5: @red-5;
-@accent-6: @red-6;
-@accent-7: @red-7;
-@accent-8: @red-8;
-@accent-9: @red-9;
+@accent-0: @yellow-0;
+@accent-1: @yellow-1;
+@accent-2: @yellow-2;
+@accent-3: @yellow-3;
+@accent-4: @yellow-4;
+@accent-5: @yellow-5;
+@accent-6: @yellow-6;
+@accent-7: @yellow-7;
+@accent-8: @yellow-8;
+@accent-9: @yellow-9;
 
-@secondary-0: @red-0;
-@secondary-1: @red-1;
-@secondary-2: @red-2;
-@secondary-3: @red-3;
-@secondary-4: @red-4;
-@secondary-5: @red-5;
-@secondary-6: @red-6;
-@secondary-7: @red-7;
-@secondary-8: @red-8;
-@secondary-9: @red-9;
+@neutral-light-0: @gray-0;
+@neutral-light-1: @gray-1;
+@neutral-light-2: @gray-2;
+@neutral-light-3: @gray-3;
+@neutral-light-4: @gray-4;
+@neutral-light-5: @gray-5;
+@neutral-light-6: @gray-6;
+@neutral-light-7: @gray-7;
+@neutral-light-8: @gray-8;
+@neutral-light-9: @gray-9;
+
+@neutral-dark-0: @dark-base-0;
+@neutral-dark-1: @dark-base-1;
+@neutral-dark-2: @dark-base-2;
+@neutral-dark-3: @dark-base-3;
+@neutral-dark-4: @dark-base-4;
+@neutral-dark-5: @dark-base-5;
+@neutral-dark-6: @dark-base-6;
+@neutral-dark-7: @dark-base-7;
+@neutral-dark-8: @dark-base-8;
+@neutral-dark-9: @dark-base-9;
+
+@success-0: @green-0;
+@success-1: @green-1;
+@success-2: @green-2;
+@success-3: @green-3;
+@success-4: @green-4;
+@success-5: @green-5;
+@success-6: @green-6;
+@success-7: @green-7;
+@success-8: @green-8;
+@success-9: @green-9;
+
+@warning-0: @orange-0;
+@warning-1: @orange-1;
+@warning-2: @orange-2;
+@warning-3: @orange-3;
+@warning-4: @orange-4;
+@warning-5: @orange-5;
+@warning-6: @orange-6;
+@warning-7: @orange-7;
+@warning-8: @orange-8;
+@warning-9: @orange-9;
+
+@danger-0: @red-0;
+@danger-1: @red-1;
+@danger-2: @red-2;
+@danger-3: @red-3;
+@danger-4: @red-4;
+@danger-5: @red-5;
+@danger-6: @red-6;
+@danger-7: @red-7;
+@danger-8: @red-8;
+@danger-9: @red-9;
 
 
-/* ----- Light Color Scheme ----------------------------------------- */
 
-/* - App Colors - */
-
+/* ----- App Base Colors ------------------- */
 @primary-light: @primary-3;
 @primary: @primary-5;
 @primary-dark: @primary-8;
@@ -92,50 +112,245 @@
 @accent: @accent-5;
 @accent-dark: @accent-8;
 
-@secondary-light: @secondary-3;
-@secondary: @secondary-5;
-@secondary-dark: @secondary-8;
 
-/* - Components Colors - */
+/* ----- Components Colors - Light --------- */
 
-@root-scroll-track-color: @gray-3;
-@root-scroll-thumb-color: @gray-5;
-@root-scroll-thumb-hover-color: @gray-7;
+/* Root */
+@light-root-scroll-track-color: @neutral-light-3;
+@light-root-scroll-thumb-color: @neutral-light-5;
+@light-root-scroll-thumb-hover-color: @neutral-light-7;
 
-@body-bg-color: @gray-0;
-@body-text-color: @gray-8;
-@body-text-color-dim: @gray-7;
-@body-text-color-emp: @gray-9;
-@body-overlay-color: rgba(18, 28, 42, 0.5);
+/* Body */
+@light-body-bg-color: @neutral-light-0;
+@light-body-text-color: @neutral-light-7;
+@light-body-text-color-dim: @neutral-light-6;
+@light-body-text-color-emp: @neutral-light-9;
+@light-body-text-color-disabled: @neutral-light-4;
+@light-body-overlay-color: fade(@light-sheet-bg-color, 70%);
 
-@sheet-bg-color: @white;
-@sheet-bg-color-emp: @gray-2;
-@sheet-border-color: @gray-1;
-@sheet-text-color: @gray-7;
-@sheet-text-color-dim: @gray-6;
-@sheet-text-color-emp: @gray-8;
-@sheet-text-color-disabled: @gray-3;
+/* Tooltips */
+@light-tooltip-bg-color: @neutral-light-8;
+@light-tooltip-text-color: @neutral-light-0;
 
-@logo-top-color: @primary-gradient;
-@logo-bottom-color: @gray-8;
-@logo-bottom-color: linear-gradient(to bottom right, @gray-5, @gray-9);
+/* Logo */
+@light-logo-top-color: @primary-gradient;
+@light-logo-bottom-color: linear-gradient(to bottom left, @light-body-text-color-emp, @light-body-text-color-disabled);
+
+/* Sheet */
+@light-sheet-bg-color: @white;
+@light-sheet-bg-color-emp: @neutral-light-2;
+@light-sheet-border-color: @neutral-light-1;
+@light-sheet-text-color: @neutral-light-7;
+@light-sheet-text-color-dim: @neutral-light-5;
+@light-sheet-text-color-emp: @neutral-light-8;
+@light-sheet-text-color-disabled: @neutral-light-3;
+@light-sheet-text-color-success: @success-5;
+@light-sheet-text-color-warning: @warning-5;
+@light-sheet-text-color-danger: @danger-5;
+@light-sheet-overlay-color: fade(@light-sheet-text-color-emp, 60%);
 
 /* Buttons */
-@button-ripple-color: rgba(0, 0, 0, 0.2);
+@light-button-ripple-color: fade(@light-body-text-color, 20%);
+// default buttons
+@light-button-default-bg-color: transparent;
+@light-button-default-border-color: @light-body-text-color;
+@light-button-default-text-color: @light-body-text-color;
+@light-button-default-hover-bg-color: fade(@light-button-default-border-color, 30%);
+@light-button-default-hover-border-color: @light-button-default-border-color;
+@light-button-default-hover-text-color: @light-button-default-border-color;
+// base buttons
+@light-button-base-outlined-bg-color: transparent;
+@light-button-base-outlined-border-color: @light-sheet-text-color-dim;
+@light-button-base-outlined-text-color: @light-sheet-text-color-dim;
+@light-button-base-outlined-hover-bg-color: @light-sheet-text-color-dim;
+@light-button-base-outlined-hover-border-color: @light-sheet-text-color-dim;
+@light-button-base-outlined-hover-text-color: @light-sheet-bg-color;
+@light-button-base-filled-bg-color: @light-sheet-text-color-dim;
+@light-button-base-filled-border-color: @light-sheet-text-color-dim;
+@light-button-base-filled-text-color: @light-sheet-bg-color;
+@light-button-base-filled-hover-bg-color: @light-sheet-text-color;
+@light-button-base-filled-hover-border-color: @light-sheet-text-color;
+@light-button-base-filled-hover-text-color: @light-sheet-bg-color;
+// success buttons
+@light-button-success-outlined-bg-color: transparent;
+@light-button-success-outlined-border-color: @success-6;
+@light-button-success-outlined-text-color: @success-6;
+@light-button-success-outlined-hover-bg-color: @success-6;
+@light-button-success-outlined-hover-border-color: @success-6;
+@light-button-success-outlined-hover-text-color: @light-sheet-bg-color;
+@light-button-success-filled-bg-color: @success-6;
+@light-button-success-filled-border-color: @success-6;
+@light-button-success-filled-text-color: @light-sheet-bg-color;
+@light-button-success-filled-hover-bg-color: @success-8;
+@light-button-success-filled-hover-border-color: @success-8;
+@light-button-success-filled-hover-text-color: @light-sheet-bg-color;
+// warning buttons
+@light-button-warning-outlined-bg-color: transparent;
+@light-button-warning-outlined-border-color: @warning-5;
+@light-button-warning-outlined-text-color: @warning-5;
+@light-button-warning-outlined-hover-bg-color: @warning-5;
+@light-button-warning-outlined-hover-border-color: @warning-5;
+@light-button-warning-outlined-hover-text-color: @light-sheet-bg-color;
+@light-button-warning-filled-bg-color: @warning-5;
+@light-button-warning-filled-border-color: @warning-5;
+@light-button-warning-filled-text-color: @light-sheet-bg-color;
+@light-button-warning-filled-hover-bg-color: @warning-7;
+@light-button-warning-filled-hover-border-color: @warning-7;
+@light-button-warning-filled-hover-text-color: @light-sheet-bg-color;
+// danger buttons
+@light-button-danger-outlined-bg-color: transparent;
+@light-button-danger-outlined-border-color: @danger-6;
+@light-button-danger-outlined-text-color: @danger-6;
+@light-button-danger-outlined-hover-bg-color: @danger-6;
+@light-button-danger-outlined-hover-border-color: @danger-6;
+@light-button-danger-outlined-hover-text-color: @light-sheet-bg-color;
+@light-button-danger-filled-bg-color: @danger-6;
+@light-button-danger-filled-border-color: @danger-6;
+@light-button-danger-filled-text-color: @light-sheet-bg-color;
+@light-button-danger-filled-hover-bg-color: @danger-8;
+@light-button-danger-filled-hover-border-color: @danger-8;
+@light-button-danger-filled-hover-text-color: @light-sheet-bg-color;
+// primary buttons
+@light-button-primary-outlined-bg-color: transparent;
+@light-button-primary-outlined-border-color: @primary-gradient;
+@light-button-primary-outlined-text-color: @primary-gradient;
+@light-button-primary-outlined-hover-bg-color: linear-gradient(to bottom right, darken(fade(@primary-3, 15%), 20%), darken(fade(@primary-5, 15%), 20%), darken(fade(@primary-9, 15%), 20%));
+@light-button-primary-outlined-hover-border-color: @primary-gradient;
+@light-button-primary-outlined-hover-text-color: @primary-gradient;
+@light-button-primary-filled-bg-color: @primary-gradient;
+@light-button-primary-filled-border-color:  @primary-gradient;
+@light-button-primary-filled-text-color: @white;
+@light-button-primary-filled-hover-bg-color: @primary-dark-gradient;
+@light-button-primary-filled-hover-border-color: @primary-dark-gradient;
+@light-button-primary-filled-hover-text-color: @white;
 
-@button-default-bg-color: rgba(0, 0, 0, 0);
-@button-default-border-color: @sheet-text-color-dim;
-@button-default-text-color: @sheet-text-color;
-@button-default-hover-bg-color: rgba(0, 0, 0, 0.1);
-@button-default-hover-border-color: @sheet-text-color-dim;
-@button-basic-hover-text-color: @sheet-text-color;
+/* Inputs Fields */
+@light-input-field-bg-color: @light-sheet-bg-color;
+@light-input-field-border-color: fade(@light-sheet-text-color-disabled, 80%);
+@light-input-field-text-color: @light-sheet-text-color;
+@light-input-field-focus-bg-color: @light-sheet-bg-color;
+@light-input-field-focus-border-color: @primary-5;
+@light-input-field-focus-text-color: @light-sheet-text-color;
 
-@button-primary-bg-color: @primary-gradient;
-@button-primary-border-color: @primary-gradient;
-@button-primary-text-color: @white;
-@button-primary-hover-bg-color: @primary-dark-gradient;
-@button-primary-hover-border-color: rgba(0, 0, 0, 0);
-@button-primary-hover-text-color: @white;
+
+/* ----- Components Colors - Dark ---------- */
+
+/* Root */
+@dark-root-scroll-track-color: @neutral-dark-9;
+@dark-root-scroll-thumb-color: @neutral-dark-4;
+@dark-root-scroll-thumb-hover-color: @neutral-dark-3;
+
+/* Body */
+@dark-body-bg-color: @neutral-dark-7;
+@dark-body-text-color: @neutral-dark-2;
+@dark-body-text-color-dim: @neutral-dark-3;
+@dark-body-text-color-emp: @neutral-dark-1;
+@dark-body-text-color-disabled: @neutral-dark-5;
+@dark-body-overlay-color: fade(@dark-sheet-bg-color, 90%);
+
+/* Tooltips */
+@dark-tooltip-bg-color: @neutral-dark-9;
+@dark-tooltip-text-color: @neutral-dark-2;
+
+/* Logo */
+@dark-logo-top-color: linear-gradient(to bottom right, @primary-4, @primary-8, @primary-9);
+@dark-logo-bottom-color: linear-gradient(to bottom right, @neutral-dark-0, @neutral-dark-3, @neutral-dark-4);
+
+/* Sheet */
+@dark-sheet-bg-color: @neutral-dark-8;
+@dark-sheet-bg-color-emp: @neutral-dark-9;
+@dark-sheet-border-color: @neutral-dark-5;
+@dark-sheet-text-color: @neutral-dark-1;
+@dark-sheet-text-color-dim: @neutral-dark-2;
+@dark-sheet-text-color-emp: @neutral-dark-0;
+@dark-sheet-text-color-disabled: @neutral-dark-3;
+@dark-sheet-text-color-success: @success-6;
+@dark-sheet-text-color-warning: @warning-6;
+@dark-sheet-text-color-danger: @danger-6;
+@dark-sheet-overlay-color: fade(@black, 76%);
+
+/* Buttons */
+@dark-button-ripple-color: fade(@black, 35%);
+// default buttons
+@dark-button-default-bg-color: transparent;
+@dark-button-default-border-color: @dark-body-text-color;
+@dark-button-default-text-color: @dark-body-text-color;
+@dark-button-default-hover-bg-color: fade(@dark-button-default-border-color, 15%);
+@dark-button-default-hover-border-color: @dark-button-default-border-color;
+@dark-button-default-hover-text-color: @dark-button-default-border-color;
+// base buttons
+@dark-button-base-outlined-bg-color: transparent;
+@dark-button-base-outlined-border-color: @dark-sheet-text-color-dim;
+@dark-button-base-outlined-text-color: @dark-sheet-text-color-dim;
+@dark-button-base-outlined-hover-bg-color: @dark-sheet-text-color-dim;
+@dark-button-base-outlined-hover-border-color: @dark-sheet-text-color-dim;
+@dark-button-base-outlined-hover-text-color: @neutral-dark-9;
+@dark-button-base-filled-bg-color: @dark-sheet-text-color-dim;
+@dark-button-base-filled-border-color: @dark-sheet-text-color-dim;
+@dark-button-base-filled-text-color: @neutral-dark-9;
+@dark-button-base-filled-hover-bg-color: @dark-sheet-text-color;
+@dark-button-base-filled-hover-border-color: @dark-sheet-text-color;
+@dark-button-base-filled-hover-text-color: @neutral-dark-9;
+// success buttons
+@dark-button-success-outlined-bg-color: transparent;
+@dark-button-success-outlined-border-color: @success-8;
+@dark-button-success-outlined-text-color: @success-8;
+@dark-button-success-outlined-hover-bg-color: @success-8;
+@dark-button-success-outlined-hover-border-color: @success-8;
+@dark-button-success-outlined-hover-text-color: @neutral-dark-9;
+@dark-button-success-filled-bg-color: @success-8;
+@dark-button-success-filled-border-color: @success-8;
+@dark-button-success-filled-text-color: @neutral-dark-9;
+@dark-button-success-filled-hover-bg-color: @success-6;
+@dark-button-success-filled-hover-border-color: @success-6;
+@dark-button-success-filled-hover-text-color: @neutral-dark-9;
+// warning buttons
+@dark-button-warning-outlined-bg-color: transparent;
+@dark-button-warning-outlined-border-color: @warning-8;
+@dark-button-warning-outlined-text-color: @warning-8;
+@dark-button-warning-outlined-hover-bg-color: @warning-8;
+@dark-button-warning-outlined-hover-border-color: @warning-8;
+@dark-button-warning-outlined-hover-text-color: @neutral-dark-9;
+@dark-button-warning-filled-bg-color: @warning-8;
+@dark-button-warning-filled-border-color: @warning-8;
+@dark-button-warning-filled-text-color: @neutral-dark-9;
+@dark-button-warning-filled-hover-bg-color: @warning-6;
+@dark-button-warning-filled-hover-border-color: @warning-6;
+@dark-button-warning-filled-hover-text-color: @neutral-dark-9;
+// danger buttons
+@dark-button-danger-outlined-bg-color: transparent;
+@dark-button-danger-outlined-border-color: @danger-8;
+@dark-button-danger-outlined-text-color: @danger-8;
+@dark-button-danger-outlined-hover-bg-color: @danger-8;
+@dark-button-danger-outlined-hover-border-color: @danger-8;
+@dark-button-danger-outlined-hover-text-color: @neutral-dark-9;
+@dark-button-danger-filled-bg-color: @danger-8;
+@dark-button-danger-filled-border-color: @danger-8;
+@dark-button-danger-filled-text-color: @neutral-dark-9;
+@dark-button-danger-filled-hover-bg-color: @danger-6;
+@dark-button-danger-filled-hover-border-color: @danger-6;
+@dark-button-danger-filled-hover-text-color: @neutral-dark-9;
+// primary buttons
+@dark-button-primary-outlined-bg-color: transparent;
+@dark-button-primary-outlined-border-color: @primary-dark-gradient;
+@dark-button-primary-outlined-text-color: @primary-dark-gradient;
+@dark-button-primary-outlined-hover-bg-color: linear-gradient(to bottom right, darken(fade(@primary-3, 15%), 15%), darken(fade(@primary-5, 15%), 15%), darken(fade(@primary-9, 15%), 15%));
+@dark-button-primary-outlined-hover-border-color: @primary-dark-gradient;
+@dark-button-primary-outlined-hover-text-color: @primary-dark-gradient;
+@dark-button-primary-filled-bg-color: @primary-dark-gradient;
+@dark-button-primary-filled-border-color: @primary-dark-gradient;
+@dark-button-primary-filled-text-color: @neutral-dark-9;
+@dark-button-primary-filled-hover-bg-color: @primary-gradient;
+@dark-button-primary-filled-hover-border-color: @primary-gradient;
+@dark-button-primary-filled-hover-text-color: @neutral-dark-9;
+
+/* Inputs Fields */
+@dark-input-field-bg-color: @dark-sheet-bg-color;
+@dark-input-field-border-color: fade(@dark-sheet-text-color-disabled, 80%);
+@dark-input-field-text-color: @dark-sheet-text-color;
+@dark-input-field-focus-bg-color: @dark-sheet-bg-color;
+@dark-input-field-focus-border-color: @primary-7;
+@dark-input-field-focus-text-color: @dark-sheet-text-color;
 
 
 /* ------------------------------------------------------------------------------------------------ */

@@ -1,21 +1,117 @@
-.p-2xs {
-   -fx-padding: 4px;
+/* ------------------------------------------------------------------------------------------------ */
+/* ---- Global Utility Classes -------------------------------------------------------------------- */
+
+@import "../config/CustomProperties.less";
+@import "../config/ColorSchemes.less";
+
+
+/* ---- Text ------------------------------- */
+
+/* Text Colors */
+.theme-light .text-primary {
+    -fx-text-fill: @primary-5 !important;
+    -fx-fill: @primary-5 !important;
 }
+
+.theme-dark .text-primary {
+    -fx-text-fill: @primary-7 !important;
+    -fx-fill: @primary-7 !important;
+}
+
+.theme-light .text-success {
+    -fx-text-fill: @success-5 !important;
+    -fx-fill: @success-5 !important;
+}
+
+.theme-dark .text-success {
+    -fx-text-fill: @success-7 !important;
+    -fx-fill: @success-7 !important;
+}
+
+.theme-light .text-warning {
+    -fx-text-fill: @warning-5 !important;
+    -fx-fill: @warning-5 !important;
+}
+
+.theme-dark .text-warning {
+    -fx-text-fill: @warning-7 !important;
+    -fx-fill: @warning-7 !important;
+}
+
+.theme-light .text-danger {
+    -fx-text-fill: @danger-5 !important;
+    -fx-fill: @danger-5 !important;
+}
+
+.theme-dark .text-danger {
+    -fx-text-fill: @danger-7 !important;
+    -fx-fill: @danger-7 !important;
+}
+
+/* Text Sizes */
+.fs-xs {
+    -fx-font-size: @font-size-xs !important;
+}
+
+.fs-sm {
+    -fx-font-size: @font-size-sm !important;
+}
+
+.fs-md {
+    -fx-font-size: @font-size-md !important;
+}
+
+.fs-lg {
+    -fx-font-size: @font-size-lg !important;
+}
+
+.fs-xl {
+    -fx-font-size: @font-size-xl !important;
+}
+
+.fs-2xl {
+    -fx-font-size: @font-size-2xl !important;
+}
+
+.fs-3xl {
+    -fx-font-size: @font-size-3xl !important;
+}
+
+.fs-4xl {
+    -fx-font-size: @font-size-4xl !important;
+}
+
+.fs-5xl {
+    -fx-font-size: @font-size-5xl !important;
+}
+
+
+/* ---- Padding & Margin ------------------- */
+
+.p-2xs {
+    -fx-padding: 4px;
+}
+
 .p-xs {
     -fx-padding: 8px;
 }
+
 .p-sm {
     -fx-padding: 14px;
 }
+
 .p-md {
     -fx-padding: 16px;
 }
+
 .p-lg {
     -fx-padding: 20px;
 }
+
 .p-xl {
     -fx-padding: 24px;
 }
+
 .p-2xl {
     -fx-padding: 32px;
 }
@@ -30,5 +126,9 @@
     -fx-border-insets: 5px;
     -fx-background-insets: 5px;
 }
+
 // !!!! margin hack !!!! //
 
+
+/* ------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------ */

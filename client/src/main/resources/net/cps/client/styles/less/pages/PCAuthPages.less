@@ -1,0 +1,69 @@
+/* ------------------------------------------------------------------------------------------------ */
+/* ---- Page Styles - PC Application Authentication Pages ----------------------------------------- */
+
+@import "../utils/GlobalStyles.less";
+@import "../components/Sheet.less";
+@import "../components/Logo.less";
+@import "../components/Button.less";
+
+
+@content-width: 500px;
+@form-width: 280px;
+
+.root .body {
+
+    .header-buttons-bar {
+        -fx-padding: 0 0 0 0;
+        -fx-spacing: 0;
+
+        .button {
+            -fx-hgrow: ALWAYS;
+            -fx-font-size: @font-size-md;
+        }
+    }
+
+    .logo {
+        -fx-font-size: @font-size-4xl;
+    }
+
+    .wrapper-slogan-text {
+        -fx-pref-width: @content-width !important;
+        -fx-max-width: @content-width !important;
+        -fx-text-alignment: center;
+        -fx-padding: 0 @spacing-md;
+
+        .slogan-text {
+            -fx-font-size: @font-size-sm;
+        }
+    }
+
+    .sheet {
+        -fx-pref-width: @content-width !important;
+        -fx-max-width: @content-width !important;
+        -fx-alignment: center;
+        -fx-text-alignment: center;
+
+        .sheet-text {
+            -fx-font-size: @font-size-sm;
+        }
+
+        .sheet-title {
+            -fx-font-family: @font-family-titles-bold;
+            -fx-font-size: @font-size-xl;
+        }
+
+        .button {
+            -fx-font-size: @font-size-md;
+        }
+
+        .form > * {
+            -fx-pref-width: @form-width;
+            -fx-max-width: @form-width;
+        }
+
+    }
+}
+
+
+/* ------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------ */

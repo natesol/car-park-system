@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -36,8 +37,8 @@ public class Vehicle implements Serializable {
     public Vehicle (@NotNull String number, @NotNull Customer customer) {
         this.number = number;
         this.customer = customer;
-        this.subscriptions = null;
-        this.reservations = null;
+        this.subscriptions = new ArrayList<>();
+        this.reservations = new ArrayList<>();
         this.parkingSpace = null;
     }
     
@@ -45,7 +46,7 @@ public class Vehicle implements Serializable {
         this.number = number;
         this.customer = customer;
         this.subscriptions = subscriptions;
-        this.reservations = null;
+        this.reservations = new ArrayList<>();
         this.parkingSpace = null;
     }
     

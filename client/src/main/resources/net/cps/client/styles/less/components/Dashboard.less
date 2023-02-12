@@ -3,20 +3,23 @@
 
 @import "../config/CustomProperties.less";
 @import "../config/ColorSchemes.less";
-
+@import "../components/Sheet.less";
 @import "../components/Logo.less";
 @import "../components/Button.less";
 
-@button-radius: @radius-base;
-@button-padding-x: 1.3em;
-@button-padding-y: 0.5em;
+// Main Dashboard
 @border-width: 1px;
-@border-color: @gray-1;
+@light-border-color: @neutral-light-1;
+@dark-border-color: @neutral-dark-6;
+// Dashboard Menu (Left)
 @menu-width: 200px;
+@light-menu-active-btn-bg-color: @neutral-light-3;
+@light-menu-active-btn-text-color: @white;
+@light-menu-active-btn-hover-bg-color: @neutral-light-1;
+@dark-menu-active-btn-bg-color: @neutral-dark-4;
+@dark-menu-active-btn-text-color: @neutral-dark-0;
+@dark-menu-active-btn-hover-bg-color: @neutral-dark-6;
 
-.body .body-container {
-    -fx-padding: @spacing-2xl @spacing-xs;
-}
 
 .dashboard {
     -fx-min-height: 600px;
@@ -25,17 +28,9 @@
         -fx-padding: 0 !important;
     }
 
-    .sheet-text {
-        -fx-font-family: @font-family-body-normal !important;
-        -fx-font-weight: @font-weight-normal !important;
-        -fx-text-fill: @sheet-text-color !important;
-        -fx-fill: @sheet-text-color !important;
-    }
-
     .dashboard-top {
         -fx-padding: @spacing-xs @spacing-md;
         -fx-border-width: 0 0 @border-width 0;
-        -fx-border-color: @border-color;
         -fx-border-style: solid;
 
         .dashboard-logo-wrapper {
@@ -53,16 +48,16 @@
 
         .dashboard-user-menu {
             -fx-font-size: @font-size-md !important;
-            -fx-fill: @sheet-text-color-dim !important;
-            -fx-text-fill: @sheet-text-color-dim !important;
+            -fx-fill: @light-sheet-text-color-dim !important;
+            -fx-text-fill: @light-sheet-text-color-dim !important;
             -fx-min-width: @menu-width - @spacing-md;
             -fx-alignment: top-right;
 
             .button-icon {
                 .glyph-icon {
                     -fx-font-size: @font-size-lg !important;
-                    -fx-fill: @sheet-text-color-dim !important;
-                    -fx-text-fill: @sheet-text-color-dim !important;
+                    -fx-fill: @light-sheet-text-color-dim !important;
+                    -fx-text-fill: @light-sheet-text-color-dim !important;
                     -fx-padding: 0 !important;
                 }
             }
@@ -82,7 +77,6 @@
         -fx-min-width: @menu-width;
         -fx-max-width: @menu-width;
         -fx-border-width: 0 @border-width 0 0;
-        -fx-border-color: @border-color;
         -fx-border-style: solid;
 
         .dashboard-menu-title {
@@ -92,8 +86,8 @@
             -fx-padding: 0 0 @spacing-sm 0;
 
             Text {
-                -fx-text-fill: @sheet-text-color-disabled !important;
-                -fx-fill: @sheet-text-color-disabled !important;
+                -fx-text-fill: @light-sheet-text-color-disabled !important;
+                -fx-fill: @light-sheet-text-color-disabled !important;
             }
         }
 
@@ -111,15 +105,89 @@
             -fx-font-size: @font-size-sm;
             -fx-font-family: @font-family-extra-normal !important;
             -fx-font-weight: @font-weight-normal !important;
+        }
+    }
 
+    .dashboard-center {
+        .sub-page {
+            -fx-padding: @spacing-md;
+            -fx-background-radius: 0 0 @sheet-radius 0;
+
+            .sheet {
+                .sheet-text {
+                    -fx-font-size: @font-size-sm;
+                }
+            }
+
+            .sub-page-header {
+                -fx-padding: 0 0 @spacing-md 0;
+            }
+
+            .sub-page-title {
+                -fx-font-family: @font-family-titles-bold;
+                -fx-font-weight: @font-weight-bold;
+
+                -fx-font-size: @font-size-xl;
+                -fx-text-fill: @light-body-text-color-dim;
+                -fx-padding: @spacing-md 0 @spacing-md 0;
+            }
+        }
+    }
+}
+
+.theme-light .dashboard {
+    .dashboard-top {
+        -fx-border-color: @light-border-color;
+    }
+
+    .dashboard-left {
+        -fx-border-color: @light-border-color;
+
+        .dashboard-menu-button {
             &.active {
-                -fx-background-color: @gray-4 !important;
-                -fx-text-fill: @white !important;
-                -fx-fill: @white !important;
+                -fx-background-color: @light-menu-active-btn-bg-color !important;
+                -fx-text-fill: @light-menu-active-btn-text-color !important;
+                -fx-fill: @light-menu-active-btn-text-color !important;
+
+            }
+            &:hover {
+                -fx-background-color: @light-menu-active-btn-hover-bg-color !important;
             }
         }
     }
 
+    .dashboard-center {
+        .sub-page {
+            -fx-background-color: @light-body-bg-color;
+        }
+    }
+}
+
+.theme-dark .dashboard {
+    .dashboard-top {
+        -fx-border-color: @dark-border-color;
+    }
+
+    .dashboard-left {
+        -fx-border-color: @dark-border-color;
+
+        .dashboard-menu-button {
+            &.active {
+                -fx-background-color: @dark-menu-active-btn-bg-color !important;
+                -fx-text-fill: @dark-menu-active-btn-text-color !important;
+                -fx-fill: @dark-menu-active-btn-text-color !important;
+            }
+            &:hover {
+                -fx-background-color: @dark-menu-active-btn-hover-bg-color !important;
+            }
+        }
+    }
+
+    .dashboard-center {
+        .sub-page {
+            -fx-background-color: @dark-body-bg-color;
+        }
+    }
 }
 
 

@@ -6,16 +6,17 @@ import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Hyperlink;
-import javafx.scene.input.MouseEvent;
 import net.cps.client.App;
 import net.cps.client.CPSClient;
-import net.cps.client.utils.AbstractPageController;
 import net.cps.client.events.CustomerLoginEvent;
 import net.cps.client.events.EmployeeLoginEvent;
 import net.cps.client.events.UserAuthEvent;
+import net.cps.client.utils.AbstractPageController;
 import net.cps.common.entities.Customer;
 import net.cps.common.entities.Employee;
+import net.cps.common.utils.EmployeeRole;
 import net.cps.common.utils.Entities;
 import net.cps.common.utils.RequestType;
 import net.cps.common.utils.ResponseStatus;
@@ -27,7 +28,11 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 
-public class PCLoginController extends AbstractPageController {
+public class PCLoginController extends AbstractPageController implements Initializable {
+    @FXML
+    public MFXButton goBackBtn;
+    @FXML
+    public MFXButton toggleThemeBtn;
     @FXML
     public MFXButton guestBtn;
     @FXML
@@ -55,6 +60,7 @@ public class PCLoginController extends AbstractPageController {
     @FXML
     void guestBtnClickHandler (ActionEvent actionEvent) throws IOException {
         App.setPage("pc/guest/PCGuestHome.fxml");
+        App.setEntity(null);
     }
     
     @FXML
@@ -62,24 +68,37 @@ public class PCLoginController extends AbstractPageController {
         String email = emailField.getText();
         String password = passwordField.getText();
         
-        if (email.isEmpty() || password.isEmpty()) {
-            dialog.setTitleText("Error");
-            dialog.setBodyText("Please fill all the fields");
+        if (email.isEmpty() && password.isEmpty()) {
+            dialog.setTitleText("Login Error");
+            dialog.setBodyText("Please fill your email and password to login.");
+            dialog.open();
+            return;
+        }
+        if (email.isEmpty()) {
+            dialog.setTitleText("Login Error");
+            dialog.setBodyText("Please insert your email to login.");
+            dialog.open();
+            return;
+        }
+        if (password.isEmpty()) {
+            dialog.setTitleText("Login Error");
+            dialog.setBodyText("Please insert your password to login.");
             dialog.open();
             return;
         }
         if (!(email.contains("@") && email.contains("."))) {
-            dialog.setTitleText("Error");
-            dialog.setBodyText("Please enter a valid email");
+            dialog.setTitleText("Login Error");
+            dialog.setBodyText("Please enter a valid email address.");
             dialog.open();
             return;
         }
         
+        loader.show();
         CPSClient.sendRequestToServer(RequestType.AUTH, "login/email=" + email + "&password=" + password, "user login authentication", null);
     }
     
     @FXML
-    public void forgotPasswordLinkClickHandler (MouseEvent mouseEvent) throws IOException {
+    public void forgotPasswordLinkClickHandler (ActionEvent event) throws IOException {
         App.setPage("pc/auth/PCForgotPassword.fxml");
     }
     
@@ -97,21 +116,26 @@ public class PCLoginController extends AbstractPageController {
         String message = event.getMessage();
         
         Platform.runLater(() -> {
+            loader.hide();
+            
             if (status == ResponseStatus.SUCCESS) {
                 try {
                     if (message.equals(Entities.CUSTOMER.getClassName())) {
+                        Customer customer = (Customer) event.getResponse().getData();
                         App.setPage("pc/customer/PCCustomerHome.fxml");
-                        App.setEntity((Customer) event.getResponse().getData());
-                        EventBus.getDefault().post(new CustomerLoginEvent((Customer) event.getResponse().getData()));
+                        App.setEntity(customer);
+                        EventBus.getDefault().post(new CustomerLoginEvent(customer));
                     }
                     else if (message.equals(Entities.EMPLOYEE.getClassName())) {
-                        App.setPage("pc/employee/PCEmployeeHome.fxml");
-                        App.setEntity((Employee) event.getResponse().getData());
-                        EventBus.getDefault().post(new EmployeeLoginEvent((Employee) event.getResponse().getData()));
+                        Employee employee = (Employee) event.getResponse().getData();
+                        EmployeeRole role = employee.getRole();
+                        App.setPage("pc/employee/" + role.toPath() + "/PCEmployee" + role.toInitials() + "Home.fxml");
+                        App.setEntity(employee);
+                        EventBus.getDefault().post(new EmployeeLoginEvent(employee));
                     }
                     else {
-                        dialog.setTitleText("Error");
-                        dialog.setBodyText("Something went wrong");
+                        dialog.setTitleText("Login Error");
+                        dialog.setBodyText("Something went wrong, please try again later.", "If the problem persists, please contact our support.");
                         dialog.open();
                     }
                 }
@@ -120,7 +144,7 @@ public class PCLoginController extends AbstractPageController {
                 }
             }
             else {
-                dialog.setTitleText("Error");
+                dialog.setTitleText("Login Error");
                 dialog.setBodyText(message);
                 dialog.open();
             }

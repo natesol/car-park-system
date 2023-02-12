@@ -5,6 +5,7 @@
 <?import io.github.palexdev.materialfx.dialogs.MFXGenericDialog?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
@@ -13,16 +14,14 @@
             xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="net.cps.client.controllers.pc.guest.PCGuestHomeController">
     <stylesheets>
-        <URL value="@../../../styles/css/utils/GlobalStyles.css"/>
-        <URL value="@../../../styles/css/pages/PCGuestMain.css"/>
-        <URL value="@../../../styles/css/pages/PCGuestMainSubPage.css"/>
+        <URL value="@../../../styles/css/pages/PCGuestPages.css"/>
     </stylesheets>
     <styleClass>
         <String fx:value="root"/>
-        <String fx:value="color-scheme-light"/>
+        <String fx:value="theme-light"/>
     </styleClass>
 
-    <Hyperlink maxHeight="0.0" maxWidth="0.0" styleClass="focus-fix" text="focus-fix" textFill="TRANSPARENT"/>
+    <Hyperlink maxHeight="0.0" maxWidth="0.0" text="focus-fix" textFill="TRANSPARENT"/>
 
     <MFXScrollPane fx:id="rootScroll" fitToHeight="true" fitToWidth="true" AnchorPane.bottomAnchor="0.0"
                    AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -47,9 +46,6 @@
                             </VBox>
                             <VBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
                                 <TextFlow styleClass="dashboard-user-message">
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="Hello "/>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text"
-                                          text="Guest !"/>
                                     <VBox.margin>
                                         <Insets/>
                                     </VBox.margin>
@@ -61,24 +57,26 @@
                             <VBox alignment="CENTER">
                                 <HBox alignment="CENTER_RIGHT" prefHeight="27.0" prefWidth="202.0" spacing="2.0"
                                       styleClass="dashboard-user-menu">
-                                    <MFXButton contentDisplay="GRAPHIC_ONLY" prefHeight="20.0" prefWidth="32.0"
-                                               styleClass="button-icon" text=" ">
+                                    <MFXButton fx:id="toggleThemeBtn" contentDisplay="GRAPHIC_ONLY"
+                                               mnemonicParsing="false" onAction="#toggleThemeBtnClickHandler" text=" ">
                                         <graphic>
-                                            <FontAwesomeIconView glyphName="ADJUST"/>
+                                            <FontAwesomeIconView glyphName="MOON_ALT" textAlignment="CENTER"
+                                                                 wrappingWidth="20.0"/>
                                         </graphic>
-                                    </MFXButton>
-                                    <MFXButton contentDisplay="GRAPHIC_ONLY" prefHeight="20.0" prefWidth="32.0"
-                                               styleClass="button-icon" text=" ">
-                                        <graphic>
-                                            <FontAwesomeIconView glyphName="COG"/>
-                                        </graphic>
+                                        <styleClass>
+                                            <String fx:value="button"/>
+                                            <String fx:value="button-icon"/>
+                                        </styleClass>
+                                        <tooltip>
+                                            <Tooltip anchorLocation="CONTENT_TOP_RIGHT" text="Switch To Dark Theme"/>
+                                        </tooltip>
                                     </MFXButton>
                                 </HBox>
                             </VBox>
                         </HBox>
                     </top>
                     <left>
-                        <VBox fx:id="dashboardLeft" styleClass="dashboard-left" BorderPane.alignment="CENTER">
+                        <VBox styleClass="dashboard-left" BorderPane.alignment="CENTER">
                             <VBox>
                                 <TextFlow styleClass="dashboard-menu-title">
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="MENU"/>
@@ -136,15 +134,12 @@
                         </VBox>
                     </left>
                     <center>
-                        <VBox fx:id="subPageWrapper" BorderPane.alignment="CENTER">
-                            <HBox fx:id="subPageBody" maxWidth="1024.0" minHeight="400.0" minWidth="600.0"
-                                  prefWidth="1024.0" styleClass="sub-page-body">
-                                <styleClass>
-                                    <String fx:value=""/>
-                                </styleClass>
+                        <VBox styleClass="dashboard-center" BorderPane.alignment="CENTER">
+                            <HBox maxWidth="1024.0" minHeight="400.0" minWidth="600.0" prefWidth="1024.0"
+                                  styleClass="sub-page">
                                 <VBox alignment="TOP_CENTER" maxWidth="1024.0" minHeight="400.0" minWidth="600.0"
                                       prefHeight="600" prefWidth="1024.0" styleClass="sheet">
-                                    <HBox>
+                                    <HBox styleClass="sub-page-header">
                                         <TextFlow>
                                             <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sub-page-title"
                                                   text="Home">
@@ -153,39 +148,28 @@
                                     </HBox>
                                     <VBox>
                                         <VBox.margin>
-                                            <Insets top="20.0"/>
+                                            <Insets/>
                                         </VBox.margin>
                                         <TextFlow>
                                             <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text"
                                                   text="Welcome to the 'CityPark' Guest Portal!">
-                                                <font>
-                                                    <Font size="14.0"/>
-                                                </font>
                                             </Text>
+                                            <VBox.margin>
+                                                <Insets bottom="16.0"/>
+                                            </VBox.margin>
                                         </TextFlow>
                                         <TextFlow>
                                             <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text"
                                                   text="You can choose an action from the menu on the left - and continue from there.">
-                                                <font>
-                                                    <Font size="14.0"/>
-                                                </font>
                                             </Text>
                                         </TextFlow>
                                         <TextFlow>
-                                            <children>
-                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text"
-                                                      text="Please note - as a guest who's not connected to the system, the range of actions available for you is very limited.">
-                                                    <font>
-                                                        <Font size="14.0"/>
-                                                    </font>
-                                                </Text>
-                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text"
-                                                      text=" We recommened you to sgin-in for a better user experience.">
-                                                    <font>
-                                                        <Font size="14.0"/>
-                                                    </font>
-                                                </Text>
-                                            </children>
+                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text"
+                                                  text="Please note - as a guest who's not connected to the system, the range of actions available for you is very limited.">
+                                            </Text>
+                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text"
+                                                  text=" We strongly recommend you to sign-in for a better user experience.">
+                                            </Text>
                                         </TextFlow>
                                     </VBox>
                                 </VBox>
@@ -202,24 +186,38 @@
         </VBox> <!-- /body -->
     </MFXScrollPane> <!-- /root-scroll -->
 
-    <VBox fx:id="dialogRoot" alignment="CENTER" disable="true" styleClass="dialog-root" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <MFXGenericDialog fx:id="dialogControl" actionsOrientation="VERTICAL" contentText="..." headerText="Dialog Title" onClose="#closeDialog" showAlwaysOnTop="false" showMinimize="false">
+    <VBox fx:id="dialogRoot" alignment="CENTER" disable="true" styleClass="dialog-root" visible="false"
+          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+          AnchorPane.topAnchor="0.0">
+        <MFXGenericDialog fx:id="dialogControl" actionsOrientation="VERTICAL" contentText="..."
+                          headerText="Dialog Title" onClose="#closeDialog" showAlwaysOnTop="false" showMinimize="false">
             <styleClass>
-                <String fx:value="dialog" />
-                <String fx:value="dialog-w-xs" />
+                <String fx:value="dialog"/>
+                <String fx:value="dialog-w-xs"/>
             </styleClass>
             <center>
-                <MFXScrollPane fitToHeight="true" fitToWidth="true" styleClass="dialog-content-scroll" BorderPane.alignment="CENTER">
+                <MFXScrollPane fitToHeight="true" fitToWidth="true" styleClass="dialog-content-scroll"
+                               BorderPane.alignment="CENTER">
                     <VBox>
-                        <VBox fx:id="dialogContent" styleClass="dialog-content" />
-                        <VBox fx:id="dialogCustomContent" />
+                        <VBox fx:id="dialogContent" styleClass="dialog-content"/>
+                        <VBox fx:id="dialogCustomContent"/>
                     </VBox>
                 </MFXScrollPane>
             </center>
             <bottom>
-                <HBox fx:id="dialogAction" alignment="CENTER_RIGHT" styleClass="dialog-action" BorderPane.alignment="CENTER" />
+                <HBox fx:id="dialogAction" alignment="CENTER_RIGHT" styleClass="dialog-action"
+                      BorderPane.alignment="CENTER"/>
             </bottom>
         </MFXGenericDialog>
+    </VBox>
+
+    <VBox fx:id="loaderRoot" alignment="CENTER" disable="true" styleClass="loader-root" visible="false"
+          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+          AnchorPane.topAnchor="0.0">
+        <StackPane>
+            <MFXProgressSpinner disable="true" prefHeight="92.0" prefWidth="92.0" styleClass="loader-spinner"/>
+            <MFXProgressSpinner fx:id="loaderSpinner" prefHeight="92.0" prefWidth="92.0" styleClass="loader-spinner"/>
+        </StackPane>
     </VBox>
 
 </AnchorPane>

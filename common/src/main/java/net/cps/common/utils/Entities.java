@@ -140,30 +140,6 @@ public enum Entities {
                         FOREIGN KEY (parking_lot_id) REFERENCES parking_lots(id)
                     )"""
     ),
-    RESERVATION(Reservation.class,
-            "reservations",
-            "id",
-            Integer.class,
-            (Integer::parseInt),
-            """
-                    (
-                        id                      INT NOT NULL AUTO_INCREMENT,
-                        parking_lot_id          INT NOT NULL,
-                        customer_email          VARCHAR(100) NOT NULL,
-                        vehicle_number          CHAR(8) UNIQUE NOT NULL,
-                        arrival_time            DATETIME NOT NULL,
-                        departure_time          DATETIME NOT NULL,
-                        entry_time              DATETIME,
-                        status                  ENUM('PENDING', 'CANCELLED', 'CHECKED_IN', 'CHECKED_OUT') NOT NULL,
-                        payed                   DOUBLE NOT NULL,
-                        parking_space_id        INT UNIQUE,
-                        PRIMARY KEY (id),
-                        FOREIGN KEY (parking_lot_id) REFERENCES parking_lots(id),
-                        FOREIGN KEY (customer_email) REFERENCES customers(email),
-                        FOREIGN KEY (vehicle_number) REFERENCES vehicles(number),
-                        FOREIGN KEY (parking_space_id) REFERENCES parking_spaces(id)
-                    )"""
-    ),
     VEHICLE(Vehicle.class,
             "vehicles",
             "id",
@@ -195,6 +171,30 @@ public enum Entities {
                         PRIMARY KEY (id),
                         FOREIGN KEY (parking_lot_id) REFERENCES parking_lots(id),
                         FOREIGN KEY (vehicle_number) REFERENCES vehicles(number)
+                    )"""
+    ),
+    RESERVATION(Reservation.class,
+            "reservations",
+            "id",
+            Integer.class,
+            (Integer::parseInt),
+            """
+                    (
+                        id                      INT NOT NULL AUTO_INCREMENT,
+                        parking_lot_id          INT NOT NULL,
+                        customer_email          VARCHAR(100) NOT NULL,
+                        vehicle_number          CHAR(8) UNIQUE NOT NULL,
+                        arrival_time            DATETIME NOT NULL,
+                        departure_time          DATETIME NOT NULL,
+                        entry_time              DATETIME,
+                        status                  ENUM('PENDING', 'CANCELLED', 'CHECKED_IN', 'CHECKED_OUT') NOT NULL,
+                        payed                   DOUBLE NOT NULL,
+                        parking_space_id        INT UNIQUE,
+                        PRIMARY KEY (id),
+                        FOREIGN KEY (parking_lot_id) REFERENCES parking_lots(id),
+                        FOREIGN KEY (customer_email) REFERENCES customers(email),
+                        FOREIGN KEY (vehicle_number) REFERENCES vehicles(number),
+                        FOREIGN KEY (parking_space_id) REFERENCES parking_spaces(id)
                     )"""
     ),
     COMPLAINT(Complaint.class,

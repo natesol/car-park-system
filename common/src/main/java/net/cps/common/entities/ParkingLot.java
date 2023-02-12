@@ -208,27 +208,27 @@ public class ParkingLot extends Organization implements Serializable {
         this.rates = rates;
     }
     
-    public @NotNull ArrayList<ParkingSpace> getParkingSpaces () {
-        return (ArrayList<ParkingSpace>) parkingSpaces;
+    public @NotNull List<ParkingSpace> getParkingSpaces () {
+        return parkingSpaces;
     }
     
-    public void setParkingSpaces (@NotNull ArrayList<ParkingSpace> parkingSpaces) {
+    public void setParkingSpaces (@NotNull List<ParkingSpace> parkingSpaces) {
         this.parkingSpaces = parkingSpaces;
     }
     
-    public @NotNull ArrayList<Reservation> getReservations () {
-        return (ArrayList<Reservation>) reservations;
+    public @NotNull List<Reservation> getReservations () {
+        return reservations;
     }
     
-    public ArrayList<Subscription> getSubscriptions () {
-        return (ArrayList<Subscription>) subscriptions;
+    public @NotNull List<Subscription> getSubscriptions () {
+        return subscriptions;
     }
     
-    public void setSubscriptions (ArrayList<Subscription> subscriptions) {
+    public void setSubscriptions (@NotNull List<Subscription> subscriptions) {
         this.subscriptions = subscriptions;
     }
     
-    public void setReservations (@NotNull ArrayList<Reservation> reservations) {
+    public void setReservations (@NotNull List<Reservation> reservations) {
         this.reservations = reservations;
     }
     
@@ -265,6 +265,11 @@ public class ParkingLot extends Organization implements Serializable {
         return parkingSpaces;
     }
     
+    public Boolean checkAvailability (@NotNull Reservation reservation) {
+        this.robot = new Robot(this);
+        return this.robot.getAvailableCapacityByTime(reservation.getArrivalTime(), reservation.getDepartureTime()) > 0;
+    }
+    
     public Boolean addReservation (@NotNull Reservation reservation) {
         if (this.robot.getAvailableCapacityByTime(reservation.getArrivalTime(), reservation.getDepartureTime()) > 0) {
             return this.reservations.add(reservation);
@@ -295,7 +300,6 @@ public class ParkingLot extends Organization implements Serializable {
             return reservation.getPayed() * Reservation.CANCELLATION_FEE_MORE_THAN_3_HOURS;
         }
     }
-    
     
     @Override
     public String toString () {

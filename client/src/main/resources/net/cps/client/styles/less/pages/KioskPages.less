@@ -1,0 +1,128 @@
+/* ------------------------------------------------------------------------------------------------ */
+/* ---- Kiosk Application Pages - Page Styles ----------------------------------------------------- */
+
+@import "../utils/GlobalStyles.less";
+@import "../components/Sheet.less";
+@import "../components/Logo.less";
+@import "../components/Button.less";
+@import "../components/Dashboard.less";
+
+
+@form-width: 350px;
+
+.root .body {
+
+    .body-container {
+        -fx-padding: @spacing-2xl @spacing-xs;
+    }
+
+    .logo {
+        -fx-font-size: @font-size-2xl * 0.85;
+    }
+
+    .kiosk-title {
+        -fx-font-size: @font-size-xl;
+        -fx-font-weight: bold;
+    }
+
+    .kiosk-menu {
+        -fx-border-width: 1px;
+        -fx-border-style: solid;
+
+        -fx-background-radius: @sheet-radius;
+        -fx-border-radius: @sheet-radius;
+
+        -fx-padding: @spacing-xl 0;
+
+        -fx-pref-width: @spacing-4xl + 2;
+        -fx-min-width: @spacing-4xl + 2;
+        -fx-max-width: @spacing-4xl + 2;
+
+        .kiosk-menu-button {
+            -fx-padding: @spacing-xs !important;
+
+            -fx-pref-width: @spacing-4xl;
+            -fx-min-width: @spacing-4xl;
+            -fx-max-width: @spacing-4xl;
+            -fx-pref-height: @spacing-4xl * 0.9;
+            -fx-min-height: @spacing-4xl * 0.9;
+            -fx-max-height: @spacing-4xl * 0.9;
+
+            -fx-border-width: 0 !important;
+
+            -fx-border-radius: @radius-xs !important;
+            -fx-background-radius: @radius-xs !important;
+
+            -fx-font-size: @font-size-xs;
+
+            .glyph-icon {
+                -fx-font-size: @font-size-lg !important;
+            }
+        }
+    }
+
+    .sub-page-title {
+        -fx-font-family: @font-family-titles-bold;
+        -fx-font-weight: @font-weight-bold;
+        -fx-font-size: @font-size-2xl;
+    }
+
+    .sheet-text {
+        -fx-font-size: @font-size-md;
+    }
+
+    .form {
+        -fx-min-width: @form-width;
+        -fx-max-width: @form-width;
+
+        .mfx-text-field {
+            //-fx-min-width: @form-width;
+            //-fx-max-width: @form-width;
+            -fx-font-size: @font-size-md;
+        }
+
+        .form-label {
+            -fx-font-size: @font-size-sm;
+        }
+
+        .button {
+            -fx-font-size: @font-size-md;
+        }
+    }
+}
+
+.theme-light.root .body {
+    .kiosk-menu {
+        .kiosk-menu-button {
+            &.active {
+                -fx-background-color: @light-menu-active-btn-bg-color !important;
+                -fx-text-fill: @light-menu-active-btn-text-color !important;
+                -fx-fill: @light-menu-active-btn-text-color !important;
+            }
+
+            &:hover {
+                -fx-background-color: @light-menu-active-btn-hover-bg-color !important;
+            }
+        }
+    }
+}
+
+.theme-dark.root .body {
+    .kiosk-menu {
+        .kiosk-menu-button {
+            &.active {
+                -fx-background-color: @dark-menu-active-btn-bg-color !important;
+                -fx-text-fill: @dark-menu-active-btn-text-color !important;
+                -fx-fill: @dark-menu-active-btn-text-color !important;
+            }
+
+            &:hover {
+                -fx-background-color: @dark-menu-active-btn-hover-bg-color !important;
+            }
+        }
+    }
+}
+
+
+/* ------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------ */

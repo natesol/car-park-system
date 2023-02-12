@@ -1,7 +1,13 @@
 package net.cps.client.utils;
 
+import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import io.github.palexdev.materialfx.dialogs.MFXGenericDialog;
+import io.github.palexdev.materialfx.controls.MFXProgressSpinner;
+import javafx.animation.FadeTransition;
+import javafx.animation.Interpolator;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -11,6 +17,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.util.Duration;
+import net.cps.client.App;
 import org.jetbrains.annotations.NotNull;
 
 import java.net.URL;
@@ -20,12 +28,23 @@ import java.util.ResourceBundle;
 
 
 public abstract class AbstractPageController implements Initializable {
+    /* Page Main Controllers */
     @FXML
     public AnchorPane root;
     @FXML
     public MFXScrollPane rootScroll;
     @FXML
     public VBox body;
+    
+    /* Theme Toggle Button */
+    @FXML
+    public MFXButton toggleThemeBtn;
+    @FXML
+    public void toggleThemeBtnClickHandler (ActionEvent actionEvent) {
+        Platform.runLater(App::toggleTheme);
+    }
+    
+    /* Dialogs */
     @FXML
     public VBox dialogRoot;
     @FXML
@@ -36,9 +55,20 @@ public abstract class AbstractPageController implements Initializable {
     public VBox dialogCustomContent;
     @FXML
     public HBox dialogAction;
-    public Dialog dialog = new Dialog();
     @FXML
     void closeDialog() { dialog.close(); }
+    public Dialog dialog = new Dialog();
+    
+    /* Loader */
+    @FXML
+    public VBox loaderRoot;
+    @FXML
+    public MFXProgressSpinner loaderSpinner;
+    public Loader loader = new Loader();
+    
+    /* Utility Constants */
+    public static final Integer DEFAULT_BLUR_RADIUS = 8;
+    public static final Integer DEFAULT_TRANSITION_DURATION = 120;
     
     
     /* ----- Scene Controller Initialization ------------------------ */
@@ -47,7 +77,7 @@ public abstract class AbstractPageController implements Initializable {
     public void initialize (URL url, ResourceBundle resourceBundle) {}
     
     
-    /* ----- Utility Methods ---------------------------------------- */
+    /* ----- Utility Classes ---------------------------------------- */
     
     /**
      * Inner utility class for dialog management.
@@ -62,27 +92,44 @@ public abstract class AbstractPageController implements Initializable {
      * {@code @method} removeStyleClass() remove a CSS style class from the dialog control root.
      * {@code @method} setWidth() set the dialog width (from a predefined list of values).
      * </p>
-     */
+     **/
     public class Dialog {
         public static enum Width {
             EXTRA_SMALL, SMALL, MEDIUM, LARGE, EXTRA_LARGE
         }
         public void open () {
-            dialogRoot.setVisible(true);
             dialogRoot.setDisable(false);
-            body.setEffect(new GaussianBlur(8));
+            dialogRoot.setVisible(true);
+            body.setEffect(new GaussianBlur(DEFAULT_BLUR_RADIUS));
+    
+            FadeTransition dialogFadeIn = new FadeTransition();
+            dialogFadeIn.setDuration(Duration.millis(DEFAULT_TRANSITION_DURATION));
+            dialogFadeIn.setInterpolator(Interpolator.EASE_BOTH);
+            dialogFadeIn.setFromValue(0);
+            dialogFadeIn.setToValue(1);
+            dialogFadeIn.setNode(dialogRoot);
+            dialogFadeIn.play();
         }
         public void close () {
-            dialogRoot.setVisible(false);
-            dialogRoot.setDisable(true);
-            body.setEffect(null);
-            
-            dialogContent.getChildren().clear();
-            dialogCustomContent.getChildren().clear();
-            dialogAction.getChildren().clear();
-            dialogControl.getStyleClass().clear();
-            dialogControl.getStyleClass().add("dialog");
-            dialogControl.getStyleClass().add("dialog-w-xs");
+            FadeTransition dialogFadeOut = new FadeTransition();
+            dialogFadeOut.setDuration(Duration.millis(DEFAULT_TRANSITION_DURATION));
+            dialogFadeOut.setInterpolator(Interpolator.EASE_BOTH);
+            dialogFadeOut.setFromValue(1);
+            dialogFadeOut.setToValue(0);
+            dialogFadeOut.setNode(dialogRoot);
+            dialogFadeOut.setOnFinished(e -> {
+                dialogRoot.setVisible(false);
+                dialogRoot.setDisable(true);
+                body.setEffect(null);
+                
+                dialogContent.getChildren().clear();
+                dialogCustomContent.getChildren().clear();
+                dialogAction.getChildren().clear();
+                dialogControl.getStyleClass().clear();
+                dialogControl.getStyleClass().add("dialog");
+                dialogControl.getStyleClass().add("dialog-w-xs");
+            });
+            dialogFadeOut.play();
         }
         public void setTitleText (String title) {
             dialogControl.setHeaderText(title);
@@ -140,6 +187,45 @@ public abstract class AbstractPageController implements Initializable {
                 case LARGE -> setWidth("lg");
                 case EXTRA_LARGE -> setWidth("xl");
             }
+        }
+    }
+    
+    
+    /**
+     * Inner utility class for loader management.
+     * <p>
+     * {@code @method} show() shows the loader.
+     * {@code @method} hide() hides the loader.
+     * </p>
+     **/
+    public class Loader {
+        public void show () {
+            loaderRoot.setVisible(true);
+            loaderRoot.setDisable(false);
+            body.setEffect(new GaussianBlur(DEFAULT_BLUR_RADIUS));
+    
+            FadeTransition loaderFadeIn = new FadeTransition();
+            loaderFadeIn.setDuration(Duration.millis(DEFAULT_TRANSITION_DURATION));
+            loaderFadeIn.setInterpolator(Interpolator.EASE_BOTH);
+            loaderFadeIn.setFromValue(0);
+            loaderFadeIn.setToValue(1);
+            loaderFadeIn.setNode(loaderRoot);
+            loaderFadeIn.play();
+        }
+    
+        public void hide () {
+            FadeTransition loaderFadeOut = new FadeTransition();
+            loaderFadeOut.setDuration(Duration.millis(DEFAULT_TRANSITION_DURATION));
+            loaderFadeOut.setInterpolator(Interpolator.EASE_BOTH);
+            loaderFadeOut.setFromValue(1);
+            loaderFadeOut.setToValue(0);
+            loaderFadeOut.setNode(loaderRoot);
+            loaderFadeOut.setOnFinished(e -> {
+                loaderRoot.setVisible(false);
+                loaderRoot.setDisable(true);
+                body.setEffect(null);
+            });
+            loaderFadeOut.play();
         }
     }
 }

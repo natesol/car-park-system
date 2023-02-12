@@ -11,25 +11,21 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.util.StringConverter;
-import net.cps.client.App;
 import net.cps.client.CPSClient;
-import net.cps.client.utils.AbstractPageController;
-import net.cps.common.entities.Customer;
+import net.cps.client.utils.AbstractPCCustomerPageController;
 import net.cps.common.entities.ParkingLot;
 import net.cps.common.entities.Reservation;
 import net.cps.common.entities.Vehicle;
 import net.cps.common.messages.RequestMessage;
 import net.cps.common.messages.ResponseMessage;
 import net.cps.common.utils.*;
-import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
 import java.net.URL;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -38,27 +34,11 @@ import java.util.Date;
 import java.util.ResourceBundle;
 
 
-public class PCCustomerReservationsController extends AbstractPageController {
-    private Customer customer;
+public class PCCustomerReservationsController extends AbstractPCCustomerPageController implements Initializable {
     private ArrayList<ParkingLot> allParkingLots = new ArrayList<>();
     private ArrayList<Reservation> allCustomerReservations = new ArrayList<>();
     private Reservation selectedReservation = null;
     private ArrayList<Vehicle> allCustomerVehicles = new ArrayList<>();
-    
-    @FXML
-    public Text customerName;
-    @FXML
-    public MFXButton menuBtnHome;
-    @FXML
-    public MFXButton menuBtnSubscriptions;
-    @FXML
-    public MFXButton menuBtnReservations;
-    @FXML
-    public MFXButton menuBtnComplaints;
-    @FXML
-    public MFXButton menuBtnProfile;
-    @FXML
-    public MFXButton menuBtnSignOut;
     
     @FXML
     public MFXButton newReservationBtn;
@@ -95,10 +75,9 @@ public class PCCustomerReservationsController extends AbstractPageController {
     
     @Override
     public void initialize (URL url, ResourceBundle resourceBundle) {
-        customer = (Customer) App.getEntity();
+        super.initialize(url, resourceBundle);
         
         Platform.runLater(() -> {
-            customerName.setText(customer.getFirstName() + " " + customer.getLastName());
             newReservationForm.setManaged(false);
             newReservationForm.setVisible(false);
             newReservationForm.setDisable(true);
@@ -111,104 +90,6 @@ public class PCCustomerReservationsController extends AbstractPageController {
     
     
     /* ----- GUI Events Handlers ------------------------------------ */
-    
-    @FXML
-    public void menuBtnHomeClickHandler (MouseEvent mouseEvent) throws IOException {
-        if (menuBtnHome.getStyleClass().contains("active")) return;
-        
-        Platform.runLater(() -> {
-            try {
-                App.setPage("pc/customer/PCEmployeeHome.fxml");
-            }
-            catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
-    }
-    
-    @FXML
-    public void menuBtnSubscriptionsClickHandler (MouseEvent mouseEvent) throws IOException {
-        if (menuBtnSubscriptions.getStyleClass().contains("active")) return;
-        
-        Platform.runLater(() -> {
-            try {
-                App.setPage("pc/customer/PCCustomerSubscriptions.fxml");
-            }
-            catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
-    }
-    
-    @FXML
-    public void menuBtnReservationsClickHandler (MouseEvent mouseEvent) throws IOException {
-        if (menuBtnReservations.getStyleClass().contains("active")) return;
-        
-        Platform.runLater(() -> {
-            try {
-                App.setPage("pc/customer/PCCustomerReservations.fxml");
-            }
-            catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
-    }
-    
-    @FXML
-    public void menuBtnComplaintsClickHandler (MouseEvent mouseEvent) throws IOException {
-        if (menuBtnComplaints.getStyleClass().contains("active")) return;
-        
-        Platform.runLater(() -> {
-            try {
-                App.setPage("pc/customer/PCCustomerComplaints.fxml");
-            }
-            catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
-    }
-    
-    @FXML
-    public void menuBtnProfileClickHandler (MouseEvent mouseEvent) throws IOException {
-        if (menuBtnProfile.getStyleClass().contains("active")) return;
-        
-        Platform.runLater(() -> {
-            try {
-                App.setPage("pc/customer/PCCustomerProfile.fxml");
-            }
-            catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
-    }
-    
-    @FXML
-    public void menuBtnLogoutClickHandler (MouseEvent mouseEvent) throws IOException {
-        Platform.runLater(() -> {
-            MFXButton confirmBtn = new MFXButton("Log Out");
-            confirmBtn.setOnAction(event -> {
-                dialog.close();
-                try {
-                    CPSClient.sendRequestToServer(RequestType.AUTH, "logout/email=" + customer.getEmail(), "customer initialized logout.", customer, null);
-                    App.setEntity(null);
-                    App.setPage("pc/auth/PCLogin.fxml");
-                }
-                catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-            confirmBtn.getStyleClass().add("button-primary");
-            MFXButton cancelBtn = new MFXButton("Cancel");
-            cancelBtn.setOnAction(event -> dialog.close());
-            cancelBtn.getStyleClass().add("button-secondary");
-            
-            dialog.setWidth(Dialog.Width.EXTRA_SMALL);
-            dialog.setTitleText("Log Out");
-            dialog.setBodyText("Are you sure you want to log out?");
-            dialog.setActionButtons(cancelBtn, confirmBtn);
-            dialog.open();
-        });
-    }
     
     @FXML
     public void newReservationBtnClickHandler (ActionEvent actionEvent) {

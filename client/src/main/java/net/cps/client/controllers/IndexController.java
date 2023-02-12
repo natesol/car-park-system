@@ -2,24 +2,21 @@ package net.cps.client.controllers;
 
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
-import io.github.palexdev.materialfx.controls.MFXFilterComboBox;
-import io.github.palexdev.materialfx.enums.FloatMode;
-import io.github.palexdev.materialfx.utils.StringUtils;
 import io.github.palexdev.materialfx.utils.others.FunctionalStringConverter;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.layout.HBox;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Tooltip;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
 import net.cps.client.App;
 import net.cps.client.CPSClient;
-import net.cps.client.events.CustomerLoginEvent;
 import net.cps.client.events.KioskEnterEvent;
-import net.cps.client.utils.AbstractPageController;
-import net.cps.common.entities.Customer;
 import net.cps.common.entities.ParkingLot;
-import javafx.collections.ObservableList;
 import net.cps.common.messages.RequestMessage;
 import net.cps.common.messages.ResponseMessage;
 import net.cps.common.utils.Entities;
@@ -32,33 +29,51 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 
-public class IndexController extends AbstractPageController {
+public class IndexController implements Initializable {
+    @FXML
+    public AnchorPane root;
+    @FXML
+    public VBox body;
     @FXML
     public MFXButton kioskBtn;
     @FXML
     public MFXButton pcAppBtn;
+    @FXML
+    public MFXComboBox<ParkingLot> parkingLotsCombo;
+    @FXML
+    public MFXButton toggleThemeBtn;
+    @FXML
+    public Tooltip toggleThemeBtnTip;
     
     
     /* ----- Scene Controller Initialization ------------------------ */
     
     @Override
-    public void initialize (URL url, ResourceBundle resourceBundle) {}
+    public void initialize (URL url, ResourceBundle resourceBundle) {
+        Platform.runLater(App::updateAppTheme);
+        CPSClient.sendRequestToServer(RequestType.GET, Entities.PARKING_LOT.getTableName(), this::onGetAllParkingLot);
+    }
     
     
     /* ----- GUI Events Handlers ------------------------------------ */
     
     @FXML
     void kioskBtnClickHandler (ActionEvent event) throws IOException {
-        CPSClient.sendRequestToServer(RequestType.GET, Entities.PARKING_LOT.getTableName(), this::onGetAllParkingLot);
+        App.setEntity(parkingLotsCombo.getValue());
+        App.setPage("kiosk/KioskHome.fxml");
+        EventBus.getDefault().post(new KioskEnterEvent((ParkingLot) App.getEntity()));
     }
     
     @FXML
     public void pcAppBtnClickHandler (ActionEvent event) throws IOException {
         App.setPage("pc/auth/PCLogin.fxml");
+    }
+    
+    @FXML
+    public void toggleThemeBtnClickHandler (ActionEvent actionEvent) {
+        Platform.runLater(App::toggleTheme);
     }
     
     
@@ -75,47 +90,19 @@ public class IndexController extends AbstractPageController {
         
         Platform.runLater(() -> {
             if (response.getStatus() == ResponseStatus.SUCCESS) {
-                // Create the filter combo-box and set its items.
-                MFXComboBox<ParkingLot> filterCombo = new MFXComboBox<>();
-                filterCombo.setFloatMode(FloatMode.DISABLED);
-                filterCombo.setPrefWidth(400);
-                StringConverter<ParkingLot> converter = FunctionalStringConverter.to(parkingLot -> (parkingLot == null) ? "" : parkingLot.getName());
-                filterCombo.setItems(parkingLots);
-                filterCombo.setConverter(converter);
-                filterCombo.setValue(parkingLots.get(0));
-                
-                // Create a HBox as wrapper to hold the filter combo-box.
-                HBox wrapper = new HBox();
-                wrapper.getChildren().add(filterCombo);
-                
-                // Create the dialog buttons.
-                MFXButton confirmBtn = new MFXButton("Confirm");
-                confirmBtn.getStyleClass().add("button-primary");
-                confirmBtn.setOnAction(actionEvent -> {
-                    try {
-                        App.setEntity(filterCombo.getValue());
-                        App.setPage("kiosk/KioskHome.fxml");
-                        EventBus.getDefault().post(new KioskEnterEvent(filterCombo.getValue()));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                });
-                MFXButton cancelBtn = new MFXButton("Cancel");
-                cancelBtn.getStyleClass().add("button-secondary");
-                cancelBtn.setOnAction(actionEvent -> dialog.close());
-    
-                // Set the dialog content and open it.
-                dialog.setTitleText("Open Kiosk App");
-                dialog.setBodyText("Choose which parking lot you want to open the app for.");
-                dialog.setCustomContent(wrapper);
-                dialog.setActionButtons(cancelBtn, confirmBtn);
-                dialog.open();
+                StringConverter<ParkingLot> converter = FunctionalStringConverter.to(parkingLot -> (parkingLot == null) ? "null" : parkingLot.getName());
+                parkingLotsCombo.setConverter(converter);
+                parkingLotsCombo.setItems(parkingLots);
+                parkingLotsCombo.setItems(parkingLots);
+                parkingLotsCombo.setValue(parkingLots.get(0));
+                parkingLotsCombo.setValue(parkingLots.get(0));
             }
             else {
                 System.out.println("failed to get all parking lots from the server.");
             }
         });
     }
+    
     
     
     /* ----- Utility Methods ---------------------------------------- */

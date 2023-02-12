@@ -39,7 +39,7 @@ public class Database {
     /**
      * Get the connected database type (dialect).
      **/
-    public static String getDatabaseType () {
+    public static @NotNull String getDatabaseType () {
         return configuration.getProperty("hibernate.dialect").split("\\.")[3].replace("Dialect", "");
     }
     
@@ -53,7 +53,7 @@ public class Database {
     /**
      * Get the connected database port number.
      **/
-    public static Integer getDatabasePort () {
+    public static @NotNull Integer getDatabasePort () {
         return Integer.parseInt(configuration.getProperty("hibernate.connection.url").split(":")[3].split("/")[0].split("\\?")[0]);
     }
     

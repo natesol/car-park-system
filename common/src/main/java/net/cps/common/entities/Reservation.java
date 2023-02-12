@@ -61,6 +61,7 @@ public class Reservation implements Serializable {
         this.vehicle = vehicle;
         this.arrivalTime = arrivalTime;
         this.departureTime = departureTime;
+        this.entryTime = arrivalTime;
         this.status = ReservationStatus.PENDING;
         this.payed = calculatePrice();
     }
@@ -71,6 +72,7 @@ public class Reservation implements Serializable {
         this.vehicle = vehicle;
         this.arrivalTime = arrivalTime;
         this.departureTime = departureTime;
+        this.entryTime = arrivalTime;
         this.status = status;
         this.payed = calculatePrice();
     }
@@ -81,6 +83,7 @@ public class Reservation implements Serializable {
         this.vehicle = vehicle;
         this.arrivalTime = arrivalTime;
         this.departureTime = departureTime;
+        this.entryTime = arrivalTime;
         this.status = status;
         this.payed = payed;
     }
@@ -137,7 +140,7 @@ public class Reservation implements Serializable {
     }
     
     public @NotNull String getArrivalTimeFormatted () {
-        return String.format("%02d/%02d/%02d %02d:%02d", arrivalTime.get(Calendar.DAY_OF_MONTH), arrivalTime.get(Calendar.MONTH), arrivalTime.get(Calendar.YEAR), arrivalTime.get(Calendar.HOUR_OF_DAY), arrivalTime.get(Calendar.MINUTE));
+        return String.format("%02d/%02d/%02d %02d:%02d", arrivalTime.get(Calendar.DAY_OF_MONTH), arrivalTime.get(Calendar.MONTH) + 1, arrivalTime.get(Calendar.YEAR), arrivalTime.get(Calendar.HOUR_OF_DAY), arrivalTime.get(Calendar.MINUTE));
     }
     
     public @NotNull Calendar getDepartureTime () {
@@ -149,7 +152,7 @@ public class Reservation implements Serializable {
     }
     
     public @NotNull String getDepartureTimeFormatted () {
-        return String.format("%02d/%02d/%02d %02d:%02d", departureTime.get(Calendar.DAY_OF_MONTH), departureTime.get(Calendar.MONTH), departureTime.get(Calendar.YEAR), departureTime.get(Calendar.HOUR_OF_DAY), departureTime.get(Calendar.MINUTE));
+        return String.format("%02d/%02d/%02d %02d:%02d", departureTime.get(Calendar.DAY_OF_MONTH), departureTime.get(Calendar.MONTH) + 1, departureTime.get(Calendar.YEAR), departureTime.get(Calendar.HOUR_OF_DAY), departureTime.get(Calendar.MINUTE));
     }
     
     public Calendar getEntryTime () {

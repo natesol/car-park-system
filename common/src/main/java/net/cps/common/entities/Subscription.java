@@ -65,6 +65,23 @@ public class Subscription implements Serializable {
         this.departureTime = departureTime;
         this.state = SubscriptionState.ACTIVE;
         this.price = 0.0;
+        
+        //Calendar checkDateStart = Calendar.getInstance();
+        //checkDateStart.clear(Calendar.HOUR_OF_DAY);
+        //checkDateStart.clear(Calendar.MINUTE);
+        //checkDateStart.clear(Calendar.SECOND);
+        //checkDateStart.clear(Calendar.MILLISECOND);
+        //checkDateStart.add(Calendar.DATE, 7);
+        //Calendar checkDateEnd = Calendar.getInstance();
+        //checkDateEnd.clear(Calendar.HOUR_OF_DAY);
+        //checkDateEnd.clear(Calendar.MINUTE);
+        //checkDateEnd.clear(Calendar.SECOND);
+        //checkDateEnd.clear(Calendar.MILLISECOND);
+        //checkDateEnd.add(Calendar.DAY_OF_MONTH, 8);
+        //
+        //if (expiresAt.after(checkDateStart) && expiresAt.before(checkDateEnd)) {
+        //    // expiresAt is in 7 days from today
+        //}
     }
     
     public Subscription (@NotNull Customer customer, ParkingLot parkingLot, @NotNull Calendar startAt, @NotNull SubscriptionType type, @NotNull List<Vehicle> vehicles, @NotNull LocalTime departureTime) {
@@ -124,7 +141,7 @@ public class Subscription implements Serializable {
     }
     
     public @NotNull String getCreatedAtFormatted () {
-        return String.format("%02d/%02d/%02d %02d:%02d", createdAt.get(Calendar.DAY_OF_MONTH), createdAt.get(Calendar.MONTH), createdAt.get(Calendar.YEAR), createdAt.get(Calendar.HOUR_OF_DAY), createdAt.get(Calendar.MINUTE));
+        return String.format("%02d/%02d/%02d %02d:%02d", createdAt.get(Calendar.DAY_OF_MONTH), createdAt.get(Calendar.MONTH) + 1, createdAt.get(Calendar.YEAR), createdAt.get(Calendar.HOUR_OF_DAY), createdAt.get(Calendar.MINUTE));
     }
     
     public @NotNull Calendar getExpiresAt () {
@@ -136,7 +153,7 @@ public class Subscription implements Serializable {
     }
     
     public @NotNull String getExpiresAtFormatted () {
-        return String.format("%02d/%02d/%02d %02d:%02d", expiresAt.get(Calendar.DAY_OF_MONTH), expiresAt.get(Calendar.MONTH), expiresAt.get(Calendar.YEAR), expiresAt.get(Calendar.HOUR_OF_DAY), expiresAt.get(Calendar.MINUTE));
+        return String.format("%02d/%02d/%02d %02d:%02d", expiresAt.get(Calendar.DAY_OF_MONTH), expiresAt.get(Calendar.MONTH) + 1, expiresAt.get(Calendar.YEAR), expiresAt.get(Calendar.HOUR_OF_DAY), expiresAt.get(Calendar.MINUTE));
     }
     
     public @NotNull SubscriptionType getType () {

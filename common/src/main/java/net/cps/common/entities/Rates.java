@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class Rates implements Serializable {
     @Id
     @OneToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "id", referencedColumnName = "id")
     private ParkingLot parkingLot;
     @Column(name = "hourly_occasional_parking", nullable = false)
     private Double hourlyOccasionalParking; // ILS per Hour.

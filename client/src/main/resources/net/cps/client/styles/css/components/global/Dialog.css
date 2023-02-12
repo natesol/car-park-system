@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------------------------------ */
-/* ---- Component Style - Sheet ------------------------------------------------------------------- */
+/* ---- Component Style - Dialog ------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------------ */
 /* ---- Global LESS Custom Properties ------------------------------------------------------------- */
 /* ----- Spacings --------------------------------------------------- */
@@ -7,27 +7,35 @@
 /* ----- Typography ------------------------------------------------- */
 /* ----- Border Radius ---------------------------------------------- */
 /* ----- Color Pallet ----------------------------------------------- */
-/* ----- Shadows ---------------------------------------------------- */
 /* ------------------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------------ */
 /* ---- Application Color Schemes ----------------------------------------------------------------- */
-/* ----- General Colors --------------------------------------------- */
-/* ----- Light Color Scheme ----------------------------------------- */
-/* - App Colors - */
-/* - Components Colors - */
+/* ----- Color Schemes ---------------------------------------------- */
+/* ----- App Base Colors ------------------- */
+/* ----- Components Colors - Light --------- */
+/* Root */
+/* Body */
+/* Tooltips */
+/* Logo */
+/* Sheet */
 /* Buttons */
+/* Inputs Fields */
+/* ----- Components Colors - Dark ---------- */
+/* Root */
+/* Body */
+/* Tooltips */
+/* Logo */
+/* Sheet */
+/* Buttons */
+/* Inputs Fields */
 /* ------------------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------------ */
 /* ---- Component Style - Sheet ------------------------------------------------------------------- */
 .sheet {
-  -fx-background-color: #ffffff !important;
-  -fx-border-color: #eaeef2 !important;
   -fx-border-width: 1px !important;
   -fx-border-style: solid !important;
-  -fx-text-fill: #424a53 !important;
-  -fx-fill: #424a53 !important;
   -fx-background-radius: 16px !important;
   -fx-border-radius: 16px !important;
   -fx-padding: 20px !important;
@@ -36,97 +44,239 @@
   -fx-font-family: "Poppins", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Ubuntu", "Bitstream Vera Sans", "Liberation Sans", "Arial", "sans-serif";
 }
 .sheet .table {
-  -fx-background-color: #ffffff !important;
-  -fx-border-color: #eaeef2 !important;
   -fx-border-width: 1px !important;
   -fx-border-style: solid !important;
   -fx-background-radius: 8px !important;
   -fx-border-radius: 8px !important;
   -mfx-auto-clip: true !important;
 }
+.theme-light .sheet {
+  -fx-background-color: #ffffff !important;
+  -fx-border-color: #eaeef2 !important;
+  -fx-text-fill: #424a53 !important;
+  -fx-fill: #424a53 !important;
+}
+.theme-light .sheet .sheet-text {
+  -fx-text-fill: #424a53;
+  -fx-fill: #424a53;
+}
+.theme-light .sheet .sheet-text.dim {
+  -fx-text-fill: #6e7781;
+  -fx-fill: #6e7781;
+}
+.theme-light .sheet .sheet-text.emp {
+  -fx-text-fill: #32383f;
+  -fx-fill: #32383f;
+}
+.theme-light .sheet .sheet-text.disabled {
+  -fx-text-fill: #afb8c1;
+  -fx-fill: #afb8c1;
+}
+.theme-light .sheet .sheet-shape {
+  -fx-stroke: #424a53;
+  -fx-fill: #424a53;
+}
+.theme-light .sheet .sheet-shape.dim {
+  -fx-stroke: #6e7781;
+  -fx-fill: #6e7781;
+}
+.theme-light .sheet .sheet-shape.emp {
+  -fx-stroke: #32383f;
+  -fx-fill: #32383f;
+}
+.theme-light .sheet .sheet-shape.disabled {
+  -fx-stroke: #afb8c1;
+  -fx-fill: #afb8c1;
+}
+.theme-light .sheet .table {
+  -fx-background-color: #ffffff !important;
+  -fx-border-color: #eaeef2 !important;
+}
+.theme-dark .sheet {
+  -fx-background-color: #141517 !important;
+  -fx-border-color: #2c2e33 !important;
+  -fx-text-fill: #a6a7ab !important;
+  -fx-fill: #a6a7ab !important;
+}
+.theme-dark .sheet .sheet-text {
+  -fx-text-fill: #a6a7ab;
+  -fx-fill: #a6a7ab;
+}
+.theme-dark .sheet .sheet-text.dim {
+  -fx-text-fill: #909296;
+  -fx-fill: #909296;
+}
+.theme-dark .sheet .sheet-text.emp {
+  -fx-text-fill: #c1c2c5;
+  -fx-fill: #c1c2c5;
+}
+.theme-dark .sheet .sheet-text.disabled {
+  -fx-text-fill: #5c5f66;
+  -fx-fill: #5c5f66;
+}
+.theme-dark .sheet .sheet-shape {
+  -fx-stroke: #a6a7ab;
+  -fx-fill: #a6a7ab;
+}
+.theme-dark .sheet .sheet-shape.dim {
+  -fx-stroke: #909296;
+  -fx-fill: #909296;
+}
+.theme-dark .sheet .sheet-shape.emp {
+  -fx-stroke: #c1c2c5;
+  -fx-fill: #c1c2c5;
+}
+.theme-dark .sheet .sheet-shape.disabled {
+  -fx-stroke: #5c5f66;
+  -fx-fill: #5c5f66;
+}
+.theme-dark .sheet .table {
+  -fx-background-color: #141517 !important;
+  -fx-border-color: #2c2e33 !important;
+}
 /* ------------------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------------ */
 .dialog-root {
-  -fx-background-color: rgba(18, 28, 42, 0.5) !important;
   -fx-padding: 64px;
 }
-.dialog-root .dialog ScrollPane,
-.dialog-root .dialog MFXScrollPane,
-.dialog-root .dialog .dialog-content-scroll.mfx-scroll-pane,
-.dialog-root .dialog .dialog-content-scroll:fitToWidth:fitToHeight {
-  -fx-background-color: #ffffff !important;
-}
-.dialog-root .dialog .dialog-content-scroll:fitToWidth:fitToHeight .viewport {
-  -fx-background-color: #ffffff !important;
-}
-.dialog-root .dialog #dialogContent {
-  -fx-background-color: #ffffff !important;
-}
-.dialog {
+.dialog-root .dialog {
   -fx-max-width: 768px !important;
   -fx-pref-width: 576px !important;
   -fx-padding: 16px !important;
-  -fx-background-color: #ffffff !important;
   -fx-background-radius: 16px !important;
   -fx-border-radius: 16px !important;
-  -fx-border-color: #eaeef2 !important;
   -fx-border-width: 1px !important;
   -fx-border-style: solid !important;
-  -fx-text-fill: #424a53 !important;
-  -fx-fill: #424a53 !important;
 }
-.dialog .mfx-icon-wrapper {
+.dialog-root .dialog .mfx-icon-wrapper {
   -fx-cursor: hand !important;
 }
-.dialog .mfx-font-icon {
+.dialog-root .dialog .mfx-font-icon {
   -fx-cursor: hand !important;
-  -fx-fill: #424a53 !important;
-  -fx-text-fill: #424a53 !important;
 }
-.dialog Text {
-  -fx-text-fill: #424a53 !important;
-  -fx-fill: #424a53 !important;
+.dialog-root .dialog Text {
   -fx-font-family: "Poppins", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Ubuntu", "Bitstream Vera Sans", "Liberation Sans", "Arial", "sans-serif" !important;
 }
-.dialog .header-label .text {
-  -fx-fill: #424a53 !important;
-  -fx-text-fill: #424a53 !important;
-  -fx-font-size: 20px !important;
+.dialog-root .dialog .header-label .text {
   -fx-font-family: "Poppins Bold", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Ubuntu", "Bitstream Vera Sans", "Liberation Sans", "Arial", "sans-serif" !important;
   -fx-font-weight: 700 !important;
+  -fx-font-size: 20px !important;
 }
-.dialog .dialog-content {
+.dialog-root .dialog .dialog-content {
   -fx-padding: 8px 0 0 0 !important;
 }
-.dialog .dialog-content Text {
+.dialog-root .dialog .dialog-content Text {
   -fx-font-size: 14px !important;
 }
-.dialog .dialog-action {
+.dialog-root .dialog .dialog-action {
   -fx-spacing: 16px !important;
   -fx-alignment: center-right !important;
 }
-.dialog.dialog-w-xs {
+.dialog-root .dialog.dialog-w-xs {
   -fx-max-width: 360px !important;
   -fx-pref-width: 360px !important;
 }
-.dialog.dialog-w-sm {
+.dialog-root .dialog.dialog-w-sm {
   -fx-max-width: 576px !important;
   -fx-pref-width: 576px !important;
 }
-.dialog.dialog-w-md {
+.dialog-root .dialog.dialog-w-md {
   -fx-max-width: 768px !important;
   -fx-pref-width: 768px !important;
 }
-.dialog.dialog-w-lg {
+.dialog-root .dialog.dialog-w-lg {
   -fx-max-width: 1024px !important;
   -fx-pref-width: 1024px !important;
 }
-.dialog.dialog-w-xl {
+.dialog-root .dialog.dialog-w-xl {
   -fx-max-width: 1440px !important;
   -fx-pref-width: 1440px !important;
 }
-.dialog-form {
+.theme-light .dialog-root {
+  -fx-background-color: rgba(50, 56, 63, 0.6) !important;
+}
+.theme-light .dialog-root .dialog {
   -fx-background-color: #ffffff !important;
+  -fx-border-color: #eaeef2 !important;
+  -fx-text-fill: #424a53 !important;
+  -fx-fill: #424a53 !important;
+}
+.theme-light .dialog-root .dialog .mfx-icon-wrapper .mfx-font-icon {
+  -fx-text-fill: #424a53 !important;
+  -fx-fill: #424a53 !important;
+}
+.theme-light .dialog-root .dialog .mfx-icon-wrapper:hover {
+  -fx-background-color: rgba(229, 57, 53, 0.1) !important;
+}
+.theme-light .dialog-root .dialog .mfx-icon-wrapper:hover .mfx-font-icon {
+  -fx-text-fill: #e53935 !important;
+  -fx-fill: #e53935 !important;
+}
+.theme-light .dialog-root .dialog Text {
+  -fx-text-fill: #424a53 !important;
+  -fx-fill: #424a53 !important;
+}
+.theme-light .dialog-root .dialog .header-label .text {
+  -fx-text-fill: #424a53 !important;
+  -fx-fill: #424a53 !important;
+}
+.theme-light .dialog-root .dialog ScrollPane,
+.theme-light .dialog-root .dialog MFXScrollPane,
+.theme-light .dialog-root .dialog .dialog-content-scroll.mfx-scroll-pane,
+.theme-light .dialog-root .dialog .dialog-content-scroll:fitToWidth:fitToHeight {
+  -fx-background-color: #ffffff !important;
+}
+.theme-light .dialog-root .dialog .dialog-content-scroll:fitToWidth:fitToHeight .viewport {
+  -fx-background-color: #ffffff !important;
+}
+.theme-light .dialog-root .dialog #dialogContent {
+  -fx-background-color: #ffffff !important;
+}
+.theme-light .dialog-root .dialog-form {
+  -fx-background-color: #ffffff !important;
+}
+.theme-dark .dialog-root {
+  -fx-background-color: rgba(5, 5, 5, 0.76) !important;
+}
+.theme-dark .dialog-root .dialog {
+  -fx-background-color: #141517 !important;
+  -fx-border-color: #2c2e33 !important;
+  -fx-text-fill: #a6a7ab !important;
+  -fx-fill: #a6a7ab !important;
+}
+.theme-dark .dialog-root .dialog .mfx-icon-wrapper .mfx-font-icon {
+  -fx-text-fill: #a6a7ab !important;
+  -fx-fill: #a6a7ab !important;
+}
+.theme-dark .dialog-root .dialog .mfx-icon-wrapper:hover {
+  -fx-background-color: rgba(211, 47, 47, 0.15) !important;
+}
+.theme-dark .dialog-root .dialog .mfx-icon-wrapper:hover .mfx-font-icon {
+  -fx-text-fill: #b71c1c !important;
+  -fx-fill: #b71c1c !important;
+}
+.theme-dark .dialog-root .dialog Text {
+  -fx-text-fill: #a6a7ab !important;
+  -fx-fill: #a6a7ab !important;
+}
+.theme-dark .dialog-root .dialog .header-label .text {
+  -fx-text-fill: #a6a7ab !important;
+  -fx-fill: #a6a7ab !important;
+}
+.theme-dark .dialog-root .dialog ScrollPane,
+.theme-dark .dialog-root .dialog MFXScrollPane,
+.theme-dark .dialog-root .dialog .dialog-content-scroll.mfx-scroll-pane,
+.theme-dark .dialog-root .dialog .dialog-content-scroll:fitToWidth:fitToHeight {
+  -fx-background-color: #141517 !important;
+}
+.theme-dark .dialog-root .dialog .dialog-content-scroll:fitToWidth:fitToHeight .viewport {
+  -fx-background-color: #141517 !important;
+}
+.theme-dark .dialog-root .dialog #dialogContent {
+  -fx-background-color: #141517 !important;
+}
+.theme-dark .dialog-root .dialog-form {
+  -fx-background-color: #141517 !important;
 }
 /* ------------------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------------ */

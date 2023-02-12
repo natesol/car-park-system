@@ -5,6 +5,7 @@
 <?import io.github.palexdev.materialfx.dialogs.MFXGenericDialog?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.*?>
@@ -14,15 +15,14 @@
             prefWidth="960.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="net.cps.client.controllers.pc.auth.PCLoginController">
     <stylesheets>
-        <URL value="@../../../styles/css/utils/GlobalStyles.css"/>
-        <URL value="@../../../styles/css/pages/PCLogin.css"/>
+        <URL value="@../../../styles/css/pages/PCAuthPages.css"/>
     </stylesheets>
     <styleClass>
         <String fx:value="root"/>
-        <String fx:value="color-scheme-light"/>
+        <String fx:value="theme-light"/>
     </styleClass>
 
-    <Hyperlink maxHeight="0.0" maxWidth="0.0" styleClass="focus-fix" text="focus-fix" textFill="TRANSPARENT"/>
+    <Hyperlink maxHeight="0.0" maxWidth="0.0" text="focus-fix" textFill="TRANSPARENT"/>
 
     <MFXScrollPane fx:id="rootScroll" fitToHeight="true" fitToWidth="true" AnchorPane.bottomAnchor="0.0"
                    AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -32,17 +32,33 @@
 
         <VBox fx:id="body" alignment="TOP_CENTER" styleClass="body">
             <VBox alignment="TOP_CENTER" styleClass="body-container">
-
-                <HBox fx:id="goBackButton" disable="true" styleClass="go-back-button" visible="false">
-                    <MFXButton contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" text=" ">
-                        <styleClass>
-                            <String fx:value="button"/>
-                            <String fx:value="button-icon"/>
-                        </styleClass>
-                        <graphic>
-                            <FontAwesomeIconView glyphName="CHEVRON_LEFT" wrappingWidth="27.0"/>
-                        </graphic>
-                    </MFXButton>
+                <HBox alignment="CENTER" styleClass="header-buttons-bar">
+                    <AnchorPane disable="true" visible="false" HBox.hgrow="ALWAYS">
+                        <MFXButton fx:id="goBackBtn" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" text=" ">
+                            <styleClass>
+                                <String fx:value="button"/>
+                                <String fx:value="button-icon"/>
+                            </styleClass>
+                            <graphic>
+                                <FontAwesomeIconView glyphName="CHEVRON_LEFT" translateX="-2.5" wrappingWidth="20.0"/>
+                            </graphic>
+                        </MFXButton>
+                    </AnchorPane>
+                    <AnchorPane HBox.hgrow="NEVER">
+                        <MFXButton fx:id="toggleThemeBtn" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false"
+                                   onAction="#toggleThemeBtnClickHandler" text=" ">
+                            <graphic>
+                                <FontAwesomeIconView glyphName="MOON_ALT" textAlignment="CENTER" wrappingWidth="20.0"/>
+                            </graphic>
+                            <styleClass>
+                                <String fx:value="button"/>
+                                <String fx:value="button-icon"/>
+                            </styleClass>
+                            <tooltip>
+                                <Tooltip anchorLocation="CONTENT_TOP_RIGHT" text="Switch To Dark Theme"/>
+                            </tooltip>
+                        </MFXButton>
+                    </AnchorPane>
                 </HBox>
 
                 <VBox alignment="CENTER">
@@ -65,6 +81,7 @@
                         <Text text="Park at the best locations and stop wasting time with CityPark, network of smart parking-lots with automated parking robots.">
                             <styleClass>
                                 <String fx:value="slogan-text"/>
+                                <String fx:value="body-text"/>
                             </styleClass>
                         </Text>
                     </TextFlow>
@@ -73,7 +90,12 @@
                 <VBox styleClass="sheet">
 
                     <VBox alignment="TOP_CENTER">
-                        <Text styleClass="login-title" text="Login" textAlignment="CENTER"/>
+                        <Text text="Login" textAlignment="CENTER">
+                            <styleClass>
+                                <String fx:value="sheet-text"/>
+                                <String fx:value="sheet-title"/>
+                            </styleClass>
+                        </Text>
                         <Text styleClass="sheet-text" text="Welcome! please enter your details."
                               textAlignment="CENTER"/>
                         <VBox.margin>
@@ -81,7 +103,7 @@
                         </VBox.margin>
                     </VBox>
 
-                    <VBox alignment="CENTER" styleClass="login-form">
+                    <VBox alignment="CENTER" styleClass="form">
                         <VBox.margin>
                             <Insets bottom="20.0"/>
                         </VBox.margin>
@@ -95,16 +117,31 @@
                         </MFXButton>
                     </VBox>
 
-                    <HBox alignment="CENTER" styleClass="login-div">
+                    <HBox alignment="CENTER">
                         <VBox.margin>
                             <Insets bottom="20.0"/>
                         </VBox.margin>
-                        <Line endX="60.0"/>
-                        <Text styleClass="sheet-text" text="  or use your account  " textAlignment="CENTER"/>
-                        <Line endX="60.0"/>
+                        <Line endX="60.0">
+                            <styleClass>
+                                <String fx:value="sheet-shape"/>
+                                <String fx:value="disabled"/>
+                            </styleClass>
+                        </Line>
+                        <Text text="  or use your account  " textAlignment="CENTER">
+                            <styleClass>
+                                <String fx:value="sheet-text"/>
+                                <String fx:value="disabled"/>
+                            </styleClass>
+                        </Text>
+                        <Line endX="60.0">
+                            <styleClass>
+                                <String fx:value="sheet-shape"/>
+                                <String fx:value="disabled"/>
+                            </styleClass>
+                        </Line>
                     </HBox>
 
-                    <VBox alignment="CENTER" spacing="16.0" styleClass="login-form">
+                    <VBox alignment="CENTER" spacing="16.0" styleClass="form">
                         <VBox.margin>
                             <Insets bottom="30.0"/>
                         </VBox.margin>
@@ -115,30 +152,35 @@
                             <VBox.margin>
                                 <Insets bottom="-5.0" top="-5.0"/>
                             </VBox.margin>
-                            <Hyperlink fx:id="forgotPasswordLink" onMouseClicked="#forgotPasswordLinkClickHandler"
-                                       alignment="CENTER_RIGHT" styleClass="forgot-password-link"
+                            <Hyperlink fx:id="forgotPasswordLink" alignment="CENTER_RIGHT"
+                                       onAction="#forgotPasswordLinkClickHandler" styleClass="fs-xs"
                                        text="Forgot password?"/>
                         </TextFlow>
                         <MFXButton fx:id="loginBtn" contentDisplay="RIGHT" onAction="#loginBtnClickHandler"
-                                   text="Login">
-                            <styleClass>
-                                <String fx:value="button"/>
-                                <String fx:value="button-primary"/>
-                            </styleClass>
+                                   styleClass="button-primary-filled" text="Login">
                             <graphic>
                                 <FontAwesomeIconView glyphName="CHEVRON_RIGHT"/>
                             </graphic>
                         </MFXButton>
                     </VBox>
-                    <HBox alignment="CENTER" styleClass="sign-up-wrapper">
-                        <Text styleClass="sheet-text" text="Don't have an account? " textAlignment="CENTER"/>
-                        <Hyperlink fx:id="signUpLink" alignment="CENTER_RIGHT" onAction="#signUpLinkClickHandler"
-                                   text="Sign up now">
+                    <Line endX="275.0" opacity="0.8">
+                        <styleClass>
+                            <String fx:value="sheet-shape"/>
+                            <String fx:value="disabled"/>
+                        </styleClass>
+                        <VBox.margin>
+                            <Insets bottom="16.0"/>
+                        </VBox.margin>
+                    </Line>
+                    <HBox alignment="CENTER">
+                        <Text text="Don't have an account? " textAlignment="CENTER">
                             <styleClass>
-                                <String fx:value="sign-up-link"/>
                                 <String fx:value="sheet-text"/>
+                                <String fx:value="fs-sm"/>
                             </styleClass>
-                        </Hyperlink>
+                        </Text>
+                        <Hyperlink fx:id="signUpLink" alignment="CENTER_RIGHT" onAction="#signUpLinkClickHandler"
+                                   styleClass="fs-sm" text="Sign up now"/>
                         <VBox.margin>
                             <Insets bottom="20.0"/>
                         </VBox.margin>
@@ -175,4 +217,12 @@
         </MFXGenericDialog>
     </VBox>
 
+    <VBox fx:id="loaderRoot" alignment="CENTER" disable="true" styleClass="loader-root" visible="false"
+          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+          AnchorPane.topAnchor="0.0">
+        <StackPane>
+            <MFXProgressSpinner disable="true" prefHeight="92.0" prefWidth="92.0" styleClass="loader-spinner"/>
+            <MFXProgressSpinner fx:id="loaderSpinner" prefHeight="92.0" prefWidth="92.0" styleClass="loader-spinner"/>
+        </StackPane>
+    </VBox>
 </AnchorPane>

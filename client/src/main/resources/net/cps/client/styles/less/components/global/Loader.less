@@ -1,0 +1,35 @@
+/* ------------------------------------------------------------------------------------------------ */
+/* ---- Component Style - Loader ------------------------------------------------------------------ */
+
+@import "../../config/CustomProperties.less";
+@import "../../config/ColorSchemes.less";
+
+
+.loader-root {
+    -fx-padding: @spacing-3xl;
+
+    .loader-spinner .track,
+    .loader-spinner .arc {
+        -fx-stroke-width: 8px !important;
+        -fx-stroke-line-cap: round !important;
+    }
+
+    #loaderSpinner {
+        -mfx-color1: @primary-4 !important;
+        -mfx-color2: @primary-5 !important;
+        -mfx-color3: @primary-6 !important;
+        -mfx-color4: @primary-5 !important;
+    }
+}
+
+.theme-light .loader-root {
+    -fx-background-color: @light-body-overlay-color !important;
+}
+
+.theme-dark .loader-root {
+    -fx-background-color: @dark-body-overlay-color !important;
+}
+
+
+/* ------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------ */

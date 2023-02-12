@@ -38,7 +38,7 @@ public class Robot {
     
     /* ----- Getters & Setters -------------------------------------- */
     
-    ParkingSpace getParkingSpace (Integer row, Integer col, Integer floor) {
+    public ParkingSpace getParkingSpace (Integer row, Integer col, Integer floor) {
         return array[row][col][floor];
     }
     
@@ -57,6 +57,8 @@ public class Robot {
     public Integer getCols () {
         return columns;
     }
+    
+    public ParkingLot getParkingLot() { return parkingLot;}
     
     public Integer getTotalCapacity () {
         return totalCapacity;
@@ -89,7 +91,7 @@ public class Robot {
                 }
             }
         }
-        ArrayList<Reservation> reservations = parkingLot.getReservations();
+        ArrayList<Reservation> reservations = new ArrayList<Reservation>(parkingLot.getReservations());
         
         for (Reservation reservation : reservations) {
             // if someone is late to take his vehicle, then the departure time is wrong.
@@ -107,20 +109,22 @@ public class Robot {
     /* ----- Utility Methods ---------------------------------------- */
     
     public void initParkingSpaces () {
-        ArrayList<ParkingSpace> parkingSpaces = parkingLot.getParkingSpaces();
+        ArrayList<ParkingSpace> parkingSpaces = new ArrayList <ParkingSpace>(parkingLot.getParkingSpaces());
         
         for (ParkingSpace parkingSpace : parkingSpaces) {
             array[parkingSpace.getRow()][parkingSpace.getCol()][parkingSpace.getFloor()] = parkingSpace;
         }
     }
-    public void initParkingSpaces1 () {
+    public ArrayList<ParkingSpace> FromArrayToList () {
+        ArrayList<ParkingSpace> ps = new ArrayList<ParkingSpace>();
         for (int i = 0 ; i < rows ; i++) {
             for (int j = 0 ; j < columns ; j++) {
                 for (int k = 0 ; k < floors ; k++) {
-                    array[i][j][k] = new ParkingSpace(parkingLot, k, i, j); //AVAILABLE automatically
+                    ps.add(array[i][j][k]);
                 }
             }
         }
+        return ps;
     }
     
     public void printAvailableParkingSpaces () {
@@ -321,6 +325,7 @@ public class Robot {
         }
         //CHECK IN
         reservation.setStatus(ReservationStatus.CHECKED_IN);
+        reservation.setEntryTime(Calendar.getInstance());
         //loop: run on the array. condition: (available||out over range||find place between cars (exit time))
         //priority to minimum rows because we don't need many moves in ths parkingLot (enter in zero row in zero floor)
         for (int i = 0 ; (i < rows) ; i++) {

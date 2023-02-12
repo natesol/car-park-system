@@ -7,16 +7,28 @@
 /* ----- Typography ------------------------------------------------- */
 /* ----- Border Radius ---------------------------------------------- */
 /* ----- Color Pallet ----------------------------------------------- */
-/* ----- Shadows ---------------------------------------------------- */
 /* ------------------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------------ */
 /* ---- Application Color Schemes ----------------------------------------------------------------- */
-/* ----- General Colors --------------------------------------------- */
-/* ----- Light Color Scheme ----------------------------------------- */
-/* - App Colors - */
-/* - Components Colors - */
+/* ----- Color Schemes ---------------------------------------------- */
+/* ----- App Base Colors ------------------- */
+/* ----- Components Colors - Light --------- */
+/* Root */
+/* Body */
+/* Tooltips */
+/* Logo */
+/* Sheet */
 /* Buttons */
+/* Inputs Fields */
+/* ----- Components Colors - Dark ---------- */
+/* Root */
+/* Body */
+/* Tooltips */
+/* Logo */
+/* Sheet */
+/* Buttons */
+/* Inputs Fields */
 /* ------------------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------------ */
 .logo {
@@ -45,12 +57,22 @@
   -fx-translate-y: -0.45em;
 }
 .logo .logo-top {
-  -fx-fill: linear-gradient(to bottom right, #64b5f6, #2196f3, #0d47a1) !important;
   -fx-translate-y: 0.33em;
 }
 .logo .logo-bottom {
-  -fx-fill: linear-gradient(to bottom right, #6e7781, #24292f) !important;
   -fx-translate-y: -0.33em;
+}
+.theme-light .logo .logo-top {
+  -fx-fill: linear-gradient(to bottom right, #64b5f6, #2196f3, #0d47a1) !important;
+}
+.theme-light .logo .logo-bottom {
+  -fx-fill: linear-gradient(to bottom left, #24292f, #8c959f) !important;
+}
+.theme-dark .logo .logo-top {
+  -fx-fill: linear-gradient(to bottom right, #42a5f5, #1565c0, #0d47a1) !important;
+}
+.theme-dark .logo .logo-bottom {
+  -fx-fill: linear-gradient(to bottom right, #c1c2c5, #5c5f66, #373a40) !important;
 }
 /* ------------------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------------ */

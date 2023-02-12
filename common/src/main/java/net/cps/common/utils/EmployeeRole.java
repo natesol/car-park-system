@@ -1,6 +1,8 @@
 package net.cps.common.utils;
 
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Employees roles enum.
  * This enum is used to determine the role of an employee in the system.
@@ -17,7 +19,7 @@ public enum EmployeeRole {
     
     /* ----- Utility Methods ------------------------------------------ */
     
-    public static String toString (EmployeeRole role) {
+    public static String toString (@NotNull EmployeeRole role) {
         return switch (role) {
             case ADMIN -> "System Administrator";
             case NETWORK_MANAGER -> "Network Manager";
@@ -29,7 +31,39 @@ public enum EmployeeRole {
         };
     }
     
-    public static EmployeeRole fromString (String role) {
+    public String toPath () {
+        return EmployeeRole.toPath(this);
+    }
+    
+    public static String toPath (@NotNull EmployeeRole role) {
+        return switch (role) {
+            case ADMIN -> "admin";
+            case NETWORK_MANAGER -> "networkManager";
+            case CUSTOMER_SERVICE_EMPLOYEE -> "customerService";
+            case PARKING_LOT_MANAGER -> "parkingLotManager";
+            case PARKING_LOT_EMPLOYEE -> "parkingLotEmployee";
+            case EMPLOYEE -> "employee";
+            default -> throw new IllegalArgumentException("Unexpected value: " + role);
+        };
+    }
+    
+    public String toInitials () {
+        return EmployeeRole.toInitials(this);
+    }
+    
+    public static String toInitials (@NotNull EmployeeRole role) {
+        return switch (role) {
+            case ADMIN -> "AD";
+            case NETWORK_MANAGER -> "NM";
+            case CUSTOMER_SERVICE_EMPLOYEE -> "CS";
+            case PARKING_LOT_MANAGER -> "PM";
+            case PARKING_LOT_EMPLOYEE -> "PE";
+            case EMPLOYEE -> "EM";
+            default -> throw new IllegalArgumentException("Unexpected value: " + role);
+        };
+    }
+    
+    public static EmployeeRole fromString (@NotNull String role) {
         String roleFormated = role.trim().toUpperCase().replace(" ", "_").replace("-", "_");
         
         return switch (roleFormated) {

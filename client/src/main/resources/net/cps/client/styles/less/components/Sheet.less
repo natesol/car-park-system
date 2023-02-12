@@ -8,13 +8,8 @@
 @sheet-padding: @spacing-lg;
 
 .sheet {
-    -fx-background-color: @sheet-bg-color !important;
-    -fx-border-color: @sheet-border-color !important;
     -fx-border-width: 1px !important;
     -fx-border-style: solid !important;
-
-    -fx-text-fill: @sheet-text-color !important;
-    -fx-fill: @sheet-text-color !important;
 
     -fx-background-radius: @sheet-radius !important;
     -fx-border-radius: @sheet-radius !important;
@@ -26,8 +21,6 @@
     }
 
     .table {
-        -fx-background-color: @sheet-bg-color !important;
-        -fx-border-color: @sheet-border-color !important;
         -fx-border-width: 1px !important;
         -fx-border-style: solid !important;
         -fx-background-radius: @radius-md !important;
@@ -35,6 +28,113 @@
         -mfx-auto-clip: true !important;
     }
 }
+
+.theme-light .sheet {
+    -fx-background-color: @light-sheet-bg-color !important;
+    -fx-border-color: @light-sheet-border-color !important;
+
+    -fx-text-fill: @light-sheet-text-color !important;
+    -fx-fill: @light-sheet-text-color !important;
+
+    .sheet-text {
+        -fx-text-fill: @light-sheet-text-color;
+        -fx-fill: @light-sheet-text-color;
+
+        &.dim {
+            -fx-text-fill: @light-sheet-text-color-dim;
+            -fx-fill: @light-sheet-text-color-dim;
+        }
+
+        &.emp {
+            -fx-text-fill: @light-sheet-text-color-emp;
+            -fx-fill: @light-sheet-text-color-emp;
+        }
+
+        &.disabled {
+            -fx-text-fill: @light-sheet-text-color-disabled;
+            -fx-fill: @light-sheet-text-color-disabled;
+        }
+    }
+
+    .sheet-shape {
+        -fx-stroke: @light-sheet-text-color;
+        -fx-fill: @light-sheet-text-color;
+
+        &.dim {
+            -fx-stroke: @light-sheet-text-color-dim;
+            -fx-fill: @light-sheet-text-color-dim;
+        }
+
+        &.emp {
+            -fx-stroke: @light-sheet-text-color-emp;
+            -fx-fill: @light-sheet-text-color-emp;
+        }
+
+        &.disabled {
+            -fx-stroke: @light-sheet-text-color-disabled;
+            -fx-fill: @light-sheet-text-color-disabled;
+        }
+    }
+
+    .table {
+        -fx-background-color: @light-sheet-bg-color !important;
+        -fx-border-color: @light-sheet-border-color !important;
+    }
+}
+
+.theme-dark .sheet {
+    -fx-background-color: @dark-sheet-bg-color !important;
+    -fx-border-color: @dark-sheet-border-color !important;
+
+    -fx-text-fill: @dark-sheet-text-color !important;
+    -fx-fill: @dark-sheet-text-color !important;
+
+    .sheet-text {
+        -fx-text-fill: @dark-sheet-text-color;
+        -fx-fill: @dark-sheet-text-color;
+
+        &.dim {
+            -fx-text-fill: @dark-sheet-text-color-dim;
+            -fx-fill: @dark-sheet-text-color-dim;
+        }
+
+        &.emp {
+            -fx-text-fill: @dark-sheet-text-color-emp;
+            -fx-fill: @dark-sheet-text-color-emp;
+        }
+
+        &.disabled {
+            -fx-text-fill: @dark-sheet-text-color-disabled;
+            -fx-fill: @dark-sheet-text-color-disabled;
+        }
+    }
+
+    .sheet-shape {
+        -fx-stroke: @dark-sheet-text-color;
+        -fx-fill: @dark-sheet-text-color;
+
+        &.dim {
+            -fx-stroke: @dark-sheet-text-color-dim;
+            -fx-fill: @dark-sheet-text-color-dim;
+        }
+
+        &.emp {
+            -fx-stroke: @dark-sheet-text-color-emp;
+            -fx-fill: @dark-sheet-text-color-emp;
+        }
+
+        &.disabled {
+            -fx-stroke: @dark-sheet-text-color-disabled;
+            -fx-fill: @dark-sheet-text-color-disabled;
+        }
+    }
+
+    .table {
+        -fx-background-color: @dark-sheet-bg-color !important;
+        -fx-border-color: @dark-sheet-border-color !important;
+    }
+}
+
 
 /* ------------------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------------ */

@@ -14,13 +14,11 @@
             xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="net.cps.client.controllers.pc.customer.PCCustomerSubscriptionsController">
     <stylesheets>
-        <URL value="@../../../styles/css/utils/GlobalStyles.css"/>
-        <URL value="@../../../styles/css/pages/PCCustomerMain.css"/>
-        <URL value="@../../../styles/css/pages/PCCustomerMainSubPage.css"/>
+        <URL value="@../../../styles/css/pages/PCCustomerPages.css"/>
     </stylesheets>
     <styleClass>
         <String fx:value="root"/>
-        <String fx:value="color-scheme-light"/>
+        <String fx:value="theme-light"/>
     </styleClass>
 
     <Hyperlink maxHeight="0.0" maxWidth="0.0" text="focus-fix" textFill="TRANSPARENT"/>
@@ -50,7 +48,7 @@
                                 <TextFlow styleClass="dashboard-user-message">
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="Hello "/>
                                     <Text fx:id="customerName" strokeType="OUTSIDE" strokeWidth="0.0"
-                                          styleClass="sheet-text" text="Customer Name"/>
+                                          styleClass="sheet-text" text="FirstName LastName"/>
                                     <VBox.margin>
                                         <Insets/>
                                     </VBox.margin>
@@ -62,17 +60,19 @@
                             <VBox alignment="CENTER">
                                 <HBox alignment="CENTER_RIGHT" prefHeight="27.0" prefWidth="202.0" spacing="2.0"
                                       styleClass="dashboard-user-menu">
-                                    <MFXButton contentDisplay="GRAPHIC_ONLY" prefHeight="20.0" prefWidth="32.0"
-                                               styleClass="button-icon" text=" ">
+                                    <MFXButton fx:id="toggleThemeBtn" contentDisplay="GRAPHIC_ONLY"
+                                               mnemonicParsing="false" onAction="#toggleThemeBtnClickHandler" text=" ">
                                         <graphic>
-                                            <FontAwesomeIconView glyphName="ADJUST"/>
+                                            <FontAwesomeIconView glyphName="MOON_ALT" textAlignment="CENTER"
+                                                                 wrappingWidth="20.0"/>
                                         </graphic>
-                                    </MFXButton>
-                                    <MFXButton contentDisplay="GRAPHIC_ONLY" prefHeight="20.0" prefWidth="32.0"
-                                               styleClass="button-icon" text=" ">
-                                        <graphic>
-                                            <FontAwesomeIconView glyphName="COG"/>
-                                        </graphic>
+                                        <styleClass>
+                                            <String fx:value="button"/>
+                                            <String fx:value="button-icon"/>
+                                        </styleClass>
+                                        <tooltip>
+                                            <Tooltip anchorLocation="CONTENT_TOP_RIGHT" text="Switch To Dark Theme"/>
+                                        </tooltip>
                                     </MFXButton>
                                 </HBox>
                             </VBox>
@@ -138,7 +138,7 @@
                                                 <FontAwesomeIconView glyphName="USER"/>
                                             </graphic>
                                         </MFXButton>
-                                        <MFXButton fx:id="menuBtnSignOut" graphicTextGap="8.0"
+                                        <MFXButton fx:id="menuBtnLogout" graphicTextGap="8.0"
                                                    onMouseClicked="#menuBtnLogoutClickHandler"
                                                    styleClass="dashboard-menu-button" text="Logout">
                                             <graphic>
@@ -151,16 +151,13 @@
                         </VBox>
                     </left>
                     <center>
-                        <VBox BorderPane.alignment="CENTER">
+                        <VBox styleClass="dashboard-center" BorderPane.alignment="CENTER">
                             <HBox maxWidth="1024.0" minHeight="400.0" minWidth="600.0" prefWidth="1024.0"
-                                  styleClass="sub-page-body">
-                                <styleClass>
-                                    <String fx:value=""/>
-                                </styleClass>
+                                  styleClass="sub-page">
                                 <VBox alignment="TOP_CENTER" maxWidth="1024.0" minHeight="400.0" minWidth="600.0"
                                       prefHeight="600" prefWidth="1024.0" styleClass="sheet">
-                                    <HBox>
-                                        <TextFlow minWidth="250.0">
+                                    <HBox styleClass="sub-page-header">
+                                        <TextFlow minWidth="250.0" HBox.hgrow="ALWAYS">
                                             <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sub-page-title"
                                                   text="Subscriptions">
                                             </Text>
@@ -168,20 +165,20 @@
                                                 <Insets/>
                                             </HBox.margin>
                                         </TextFlow>
-                                        <VBox alignment="CENTER_RIGHT" prefWidth="10000.0">
+                                        <AnchorPane>
                                             <HBox alignment="CENTER_RIGHT" spacing="8.0">
                                                 <MFXComboBox fx:id="allParkingLotsCombo" disable="true"
                                                              floatingText="Filter By Parking Lot" text="All"
                                                              visible="false"/>
                                                 <MFXButton fx:id="addSubscriptionBtn"
                                                            onAction="#addSubscriptionBtnClickHandler"
-                                                           styleClass="button-primary" text="Add Subscription"/>
+                                                           styleClass="button-primary-filled" text="Add Subscription"/>
                                             </HBox>
-                                        </VBox>
+                                        </AnchorPane>
                                     </HBox>
                                     <VBox>
                                         <VBox.margin>
-                                            <Insets bottom="50.0" top="20.0"/>
+                                            <Insets bottom="50.0"/>
                                         </VBox.margin>
                                         <TextFlow>
                                             <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text"
@@ -225,29 +222,6 @@
         </VBox> <!-- /body -->
     </MFXScrollPane> <!-- /root-scroll -->
 
-    <VBox fx:id="dialogRoot" alignment="CENTER" styleClass="dialog-root" visible="false" AnchorPane.bottomAnchor="0.0"
-          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <MFXGenericDialog fx:id="dialogControl" actionsOrientation="VERTICAL" contentText="..."
-                          headerText="Dialog Title" onClose="#closeDialog" showAlwaysOnTop="false" showMinimize="false">
-            <styleClass>
-                <String fx:value="dialog"/>
-                <String fx:value="dialog-w-xs"/>
-            </styleClass>
-            <center>
-                <MFXScrollPane fitToHeight="true" fitToWidth="true" styleClass="dialog-content-scroll"
-                               BorderPane.alignment="CENTER">
-                    <VBox>
-                        <VBox fx:id="dialogContent"/>
-                        <VBox fx:id="dialogCustomContent"/>
-                    </VBox>
-                </MFXScrollPane>
-            </center>
-            <bottom>
-                <HBox fx:id="dialogAction" alignment="CENTER_RIGHT" styleClass="dialog-action"
-                      BorderPane.alignment="CENTER"/>
-            </bottom>
-        </MFXGenericDialog>
-    </VBox>
     <HBox fx:id="addSubscriptionForm" alignment="CENTER" disable="true" layoutX="-6.0" prefWidth="450.0"
           visible="false">
         <VBox maxHeight="-Infinity" minHeight="-Infinity" prefWidth="300.0" spacing="16.0">
@@ -341,5 +315,39 @@
             </padding>
         </VBox>
     </HBox>
+
+    <VBox fx:id="dialogRoot" alignment="CENTER" disable="true" styleClass="dialog-root" visible="false"
+          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+          AnchorPane.topAnchor="0.0">
+        <MFXGenericDialog fx:id="dialogControl" actionsOrientation="VERTICAL" contentText="..."
+                          headerText="Dialog Title" onClose="#closeDialog" showAlwaysOnTop="false" showMinimize="false">
+            <styleClass>
+                <String fx:value="dialog"/>
+                <String fx:value="dialog-w-xs"/>
+            </styleClass>
+            <center>
+                <MFXScrollPane fitToHeight="true" fitToWidth="true" styleClass="dialog-content-scroll"
+                               BorderPane.alignment="CENTER">
+                    <VBox>
+                        <VBox fx:id="dialogContent" styleClass="dialog-content"/>
+                        <VBox fx:id="dialogCustomContent"/>
+                    </VBox>
+                </MFXScrollPane>
+            </center>
+            <bottom>
+                <HBox fx:id="dialogAction" alignment="CENTER_RIGHT" styleClass="dialog-action"
+                      BorderPane.alignment="CENTER"/>
+            </bottom>
+        </MFXGenericDialog>
+    </VBox>
+
+    <VBox fx:id="loaderRoot" alignment="CENTER" disable="true" styleClass="loader-root" visible="false"
+          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+          AnchorPane.topAnchor="0.0">
+        <StackPane>
+            <MFXProgressSpinner disable="true" prefHeight="92.0" prefWidth="92.0" styleClass="loader-spinner"/>
+            <MFXProgressSpinner fx:id="loaderSpinner" prefHeight="92.0" prefWidth="92.0" styleClass="loader-spinner"/>
+        </StackPane>
+    </VBox>
 
 </AnchorPane>
