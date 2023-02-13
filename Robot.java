@@ -57,9 +57,9 @@ public class Robot {
     public Integer getCols () {
         return columns;
     }
-
+    
     public ParkingLot getParkingLot() { return parkingLot;}
-
+    
     public Integer getTotalCapacity () {
         return totalCapacity;
     }
@@ -77,6 +77,19 @@ public class Robot {
         }
         return availableCapacity;
     }
+    public Integer getDisabledCapacity () {
+        Integer DisabledCapacity = 0;
+        for (int i = 0 ; i < rows ; i++) {
+            for (int j = 0 ; j < columns ; j++) {
+                for (int k = 0 ; k < floors ; k++) {
+                    if (array[i][j][k].getState() == ParkingSpaceState.DISABLED) {
+                        DisabledCapacity++;
+                    }
+                }
+            }
+        }
+        return DisabledCapacity;
+    }
     
     //reservation created after checking with this function. also : must delete reservation after vehicle leaves the parking lot
     public Integer getAvailableCapacityByTime (Calendar entranceTime, Calendar departureTime) {
@@ -92,7 +105,7 @@ public class Robot {
             }
         }
         ArrayList<Reservation> reservations = new ArrayList<Reservation>(parkingLot.getReservations());
-
+        
         for (Reservation reservation : reservations) {
             // if someone is late to take his vehicle, then the departure time is wrong.
             Calendar vehicleDepartureTime = reservation.getDepartureTime();
@@ -110,7 +123,7 @@ public class Robot {
     
     public void initParkingSpaces () {
         ArrayList<ParkingSpace> parkingSpaces = new ArrayList <ParkingSpace>(parkingLot.getParkingSpaces());
-
+        
         for (ParkingSpace parkingSpace : parkingSpaces) {
             array[parkingSpace.getRow()][parkingSpace.getCol()][parkingSpace.getFloor()] = parkingSpace;
         }
