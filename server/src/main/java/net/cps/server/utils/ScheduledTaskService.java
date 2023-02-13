@@ -26,13 +26,22 @@ public class ScheduledTaskService {
     
     private static final int DAILY_TASK_DEFAULT_TIME_HOUR = 23;
     private static final int DAILY_TASK_DEFAULT_TIME_MINUTE = 59;
+    private static final int HOURLY_TASK_DEFAULT_TIME_MINUTE = 59;
+    private static final int MINUTELY_TASK_DEFAULT_TIME_SECOND = 59;
+    
     
     
     /* ----- Constructors ------------------------------------------- */
     
     public ScheduledTaskService () {
-        this.dailyTasksRunner();
-        this.scheduleOneTimeTask("31/12/2025 23:59");
+        try {
+            this.dailyTasksRunner();
+            this.scheduleOneTimeTask("31/12/2025 23:59");
+        }
+        catch (Throwable e) {
+            Logger.print("Error: ScheduledTaskService: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
     
     
@@ -42,16 +51,15 @@ public class ScheduledTaskService {
      * Runs the daily tasks at the default time (23:59), every day.
      **/
     private void dailyTasksRunner () {
-        Calendar with = Calendar.getInstance();
-        with.set(Calendar.HOUR_OF_DAY, ScheduledTaskService.DAILY_TASK_DEFAULT_TIME_HOUR);
-        with.set(Calendar.MINUTE, ScheduledTaskService.DAILY_TASK_DEFAULT_TIME_MINUTE);
-        with.set(Calendar.SECOND, 0);
-        with.set(Calendar.MILLISECOND, 0);
-        with.setTimeZone(TimeZone.getTimeZone("Israel"));
-        long delay = with.getTimeInMillis() - System.currentTimeMillis();
+        Calendar start = Calendar.getInstance();
+        start.set(Calendar.HOUR_OF_DAY, ScheduledTaskService.DAILY_TASK_DEFAULT_TIME_HOUR);
+        start.set(Calendar.MINUTE, ScheduledTaskService.DAILY_TASK_DEFAULT_TIME_MINUTE);
+        start.set(Calendar.SECOND, 0);
+        start.set(Calendar.MILLISECOND, 0);
+        start.setTimeZone(TimeZone.getTimeZone("Israel"));
+        long delay = start.getTimeInMillis() - System.currentTimeMillis();
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         
-        scheduler.scheduleAtFixedRate(new DailyStatisticsTask(), delay, MILLIS_IN_DAY, TimeUnit.MILLISECONDS);
         scheduler.scheduleAtFixedRate(new DailyStatisticsTask(), delay, MILLIS_IN_DAY, TimeUnit.MILLISECONDS);
     }
     
@@ -59,47 +67,46 @@ public class ScheduledTaskService {
      * Runs the hourly tasks at the default time (59 minutes), every hour.
      **/
     private void hourlyTasksRunner () {
-        Calendar with = Calendar.getInstance();
-        with.set(Calendar.MINUTE, 0);
-        with.set(Calendar.SECOND, 0);
-        with.set(Calendar.MILLISECOND, 0);
-        with.setTimeZone(TimeZone.getTimeZone("Israel"));
-        long delay = with.getTimeInMillis() - System.currentTimeMillis();
+        Calendar start = Calendar.getInstance();
+        start.set(Calendar.MINUTE, ScheduledTaskService.HOURLY_TASK_DEFAULT_TIME_MINUTE);
+        start.set(Calendar.SECOND, 0);
+        start.set(Calendar.MILLISECOND, 0);
+        start.setTimeZone(TimeZone.getTimeZone("Israel"));
+        long delay = start.getTimeInMillis() - System.currentTimeMillis();
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-    
+        
+        scheduler.scheduleAtFixedRate(new exampleTask(), delay, MILLIS_IN_HOUR, TimeUnit.MILLISECONDS);
     }
     
+    /**
+     * Runs the minutely tasks at the default time (59 seconds), every minute.
+     **/
     private void minutelyTasksRunner () {
-        Calendar with = Calendar.getInstance();
-        with.set(Calendar.HOUR_OF_DAY, ScheduledTaskService.DAILY_TASK_DEFAULT_TIME_HOUR);
-        with.set(Calendar.MINUTE, ScheduledTaskService.DAILY_TASK_DEFAULT_TIME_MINUTE);
-        with.set(Calendar.SECOND, 0);
-        with.set(Calendar.MILLISECOND, 0);
-        with.setTimeZone(TimeZone.getTimeZone("Israel"));
-        long delay = with.getTimeInMillis() - System.currentTimeMillis();
+        Calendar start = Calendar.getInstance();
+        start.set(Calendar.SECOND, ScheduledTaskService.MINUTELY_TASK_DEFAULT_TIME_SECOND);
+        start.set(Calendar.MILLISECOND, 0);
+        start.setTimeZone(TimeZone.getTimeZone("Israel"));
+        long delay = start.getTimeInMillis() - System.currentTimeMillis();
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+        
+        scheduler.scheduleAtFixedRate(new exampleTask(), delay, MILLIS_IN_MINUTE, TimeUnit.MILLISECONDS);
     }
     
     /**
      * Schedules a one-time task to run at the specified time.
      *
-     * @param time The time to run the task at, in the format "dd/MM/yyyy HH:mm".
+     * @param dateString The time to run the task at, in the format "dd/MM/yyyy HH:mm".
      **/
-    private void scheduleOneTimeTask (String dateString) {
+    private void scheduleOneTimeTask (String dateString) throws ParseException {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        Calendar with = Calendar.getInstance();
-        try {
-            with.setTime(format.parse(dateString));
-        }
-        catch (ParseException e) {
-            System.out.println("Error");
-        }
-        with.setTimeZone(TimeZone.getTimeZone("Israel"));
-        Date result = new Date(with.getTimeInMillis());
-        long delay = with.getTimeInMillis() - System.currentTimeMillis();
+        Calendar runTime = Calendar.getInstance();
+        runTime.setTime(format.parse(dateString));
+        runTime.setTimeZone(TimeZone.getTimeZone("Israel"));
+        Date result = new Date(runTime.getTimeInMillis());
+        long delay = runTime.getTimeInMillis() - System.currentTimeMillis();
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-        TimeUnit unit = TimeUnit.MILLISECONDS;
-        scheduler.schedule(new exampleTask(), delay, unit);
+        
+        scheduler.schedule(new exampleTask(), delay, TimeUnit.MILLISECONDS);
     }
     
     
@@ -127,5 +134,4 @@ public class ScheduledTaskService {
             }
         }
     }
-    
 }

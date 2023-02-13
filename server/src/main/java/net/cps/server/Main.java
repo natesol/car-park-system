@@ -19,6 +19,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 
 /**
@@ -33,6 +34,7 @@ public class Main {
      * Server entry point.
      **/
     public static void main (String[] args) throws IOException {
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Jerusalem"));
         
         int port = args.length > 0 ? Integer.parseInt(args[0]) : DEFAULT_PORT;
         

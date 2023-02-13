@@ -212,11 +212,11 @@
   -fx-text-fill: #e53935 !important;
   -fx-fill: #e53935 !important;
 }
-.theme-light .dialog-root .dialog Text {
+.theme-light .dialog-root .dialog Text:not(.text-primary, .text-success, .text-warning, .text-danger) {
   -fx-text-fill: #424a53 !important;
   -fx-fill: #424a53 !important;
 }
-.theme-light .dialog-root .dialog .header-label .text {
+.theme-light .dialog-root .dialog .header-label .text:not(.text-primary, .text-success, .text-warning, .text-danger) {
   -fx-text-fill: #424a53 !important;
   -fx-fill: #424a53 !important;
 }
@@ -255,11 +255,11 @@
   -fx-text-fill: #b71c1c !important;
   -fx-fill: #b71c1c !important;
 }
-.theme-dark .dialog-root .dialog Text {
+.theme-dark .dialog-root .dialog Text:not(.text-primary, .text-success, .text-warning, .text-danger) {
   -fx-text-fill: #a6a7ab !important;
   -fx-fill: #a6a7ab !important;
 }
-.theme-dark .dialog-root .dialog .header-label .text {
+.theme-dark .dialog-root .dialog .header-label .text:not(.text-primary, .text-success, .text-warning, .text-danger) {
   -fx-text-fill: #a6a7ab !important;
   -fx-fill: #a6a7ab !important;
 }

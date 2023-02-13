@@ -6,6 +6,9 @@
 
 
 .theme-light * {
+    -fx-highlight-text-fill: @light-sheet-text-color-emp !important;
+    -fx-highlight-fill: @primary-5 !important;
+
     -mfx-main: @primary-5 !important;
     -mfx-text-he: @light-sheet-text-color-emp !important; /* High Emphasis */
     -mfx-text-me: @light-sheet-text-color-dim !important; /* Medium Emphasis */
@@ -22,6 +25,9 @@
 }
 
 .theme-dark * {
+    -fx-highlight-text-fill: @dark-sheet-text-color-emp !important;
+    -fx-highlight-fill: @primary-5 !important;
+
     -mfx-main: @primary-5 !important;
     -mfx-text-he: @dark-sheet-text-color-emp !important; /* High Emphasis */
     -mfx-text-me: @dark-sheet-text-color-dim !important; /* Medium Emphasis */
@@ -265,6 +271,75 @@
         .floating-text {
             -fx-background-color: @dark-input-field-bg-color;
         }
+    }
+}
+
+
+/* ----- Text Areas ------------------------ */
+
+.text-area {
+    -fx-background-radius: @radius-base !important;
+    -fx-border-radius: @radius-base !important;
+    -fx-padding: 0.4em 0.8em !important;
+
+    &:focus,
+    &:focus-within {
+        -fx-background-insets: 2;
+        -fx-border-width: 1.5;
+        -fx-border-insets: -0.5;
+    }
+
+    .scroll-pane {
+        -fx-background-color: transparent !important;
+
+        .viewport {
+            -fx-background-color: transparent !important;
+
+            .content {
+                -fx-text-box-border: transparent !important;
+                -fx-background-color: transparent !important;
+                -fx-backrgound-insets: 0;
+                -fx-padding: 0;
+
+                &:focus,
+                &:focus-within,
+                &:focused {
+                    -fx-focus-color: transparent !important;
+                    -fx-faint-focus-color: transparent !important;
+                }
+            }
+        }
+    }
+
+}
+
+.theme-light .text-area {
+    -fx-background-color: @light-input-field-bg-color;
+    -fx-border-color: @light-input-field-border-color;
+    -fx-text-fill: @light-input-field-text-color;
+    -fx-fill: @light-input-field-text-color;
+
+    &:focus,
+    &:focus-within {
+        -fx-background-color: @light-input-field-focus-bg-color;
+        -fx-border-color: @light-input-field-focus-border-color;
+        -fx-text-fill: @light-input-field-focus-text-color;
+        -fx-fill: @light-input-field-focus-text-color;
+    }
+}
+
+.theme-dark .text-area {
+    -fx-background-color: @dark-input-field-bg-color;
+    -fx-border-color: @dark-input-field-border-color;
+    -fx-text-fill: @dark-input-field-text-color;
+    -fx-fill: @dark-input-field-text-color;
+
+    &:focus,
+    &:focus-within {
+        -fx-background-color: @dark-input-field-focus-bg-color;
+        -fx-border-color: @dark-input-field-focus-border-color;
+        -fx-text-fill: @dark-input-field-focus-text-color;
+        -fx-fill: @dark-input-field-focus-text-color;
     }
 }
 
@@ -583,6 +658,8 @@
         -fx-background-color: transparent;
         -fx-border-color: transparent;
     }
+
+
 }
 
 .theme-light .mfx-legacy-table-view {
@@ -594,19 +671,19 @@
 
     .column-header {
         -fx-border-color: @light-sheet-border-color @light-sheet-border-color @light-sheet-border-color transparent;
-    }
 
-    .column-header .label {
-        -fx-text-fill: @light-sheet-text-color-emp;
-    }
+        .label {
+            -fx-text-fill: @light-sheet-text-color-emp;
+        }
 
-    .column-header .arrow,
-    .column-header .sort-order-dot {
-        -fx-background-color: @light-sheet-text-color;
-    }
+        .arrow,
+        .sort-order-dot {
+            -fx-background-color: @light-sheet-text-color;
+        }
 
-    .column-header-background {
-        -fx-border-color: @light-sheet-border-color;
+        &-background {
+            -fx-border-color: @light-sheet-border-color;
+        }
     }
 
     .column-overlay {
@@ -617,57 +694,15 @@
     .column-drag-header {
         -fx-background-color: @light-sheet-bg-color-emp;
     }
-}
 
-.theme-dark .mfx-legacy-table-view {
-    -mfx-track-color: @dark-root-scroll-track-color;
-    -mfx-thumb-color: @dark-root-scroll-thumb-color;
-    -mfx-thumb-hover-color: @dark-root-scroll-thumb-hover-color;
-
-    -fx-border-color: @dark-sheet-border-color;
-
-    .column-header {
-        -fx-border-color: @dark-sheet-border-color @dark-sheet-border-color @dark-sheet-border-color transparent;
-    }
-
-    .column-header .label {
-        -fx-text-fill: @dark-sheet-text-color-emp;
-    }
-
-    .column-header .arrow,
-    .column-header .sort-order-dot {
-        -fx-background-color: @dark-sheet-text-color;
-    }
-
-    .column-header-background {
-        -fx-border-color: @dark-sheet-border-color;
-    }
-
-    .column-overlay {
-        -fx-background-color: @dark-sheet-bg-color-emp;
-    }
-
-    .column-resize-line,
-    .column-drag-header {
-        -fx-background-color: @dark-sheet-bg-color-emp;
-    }
-}
-
-
-/* Table Rows */
-.mfx-legacy-table-row {
-    // ...
-}
-
-.mfx-table-row {
-    // ...
-}
-
-.theme-light {
     .mfx-legacy-table-row {
         -fx-text-fill: @light-sheet-text-color;
         -mfx-hover-color: @light-sheet-border-color;
         -mfx-ripple-color: @light-button-ripple-color;
+
+        .mfx-ripple-generator {
+            -mfx-ripple-color: @light-button-ripple-color !important;
+        }
 
         &:odd,
         &:even {
@@ -693,13 +728,63 @@
             -fx-background-color: @neutral-light-2 !important;
         }
     }
+
+    .table-row-cell {
+        .text {
+            -fx-fill: @light-sheet-text-color !important;
+        }
+
+        &:selected {
+            -fx-background-color: @primary-4 !important;
+
+            .text {
+                -fx-fill: @light-sheet-bg-color !important;
+            }
+        }
+    }
 }
 
-.theme-dark {
+.theme-dark .mfx-legacy-table-view {
+    -mfx-track-color: @dark-root-scroll-track-color;
+    -mfx-thumb-color: @dark-root-scroll-thumb-color;
+    -mfx-thumb-hover-color: @dark-root-scroll-thumb-hover-color;
+
+    -fx-border-color: @dark-sheet-border-color;
+
+    .column-header {
+        -fx-border-color: @dark-sheet-border-color @dark-sheet-border-color @dark-sheet-border-color transparent;
+
+        .label {
+            -fx-text-fill: @dark-sheet-text-color-emp;
+        }
+
+        .arrow,
+        .sort-order-dot {
+            -fx-background-color: @dark-sheet-text-color;
+        }
+
+        &-background {
+            -fx-border-color: @dark-sheet-border-color;
+        }
+    }
+
+    .column-overlay {
+        -fx-background-color: @dark-sheet-bg-color-emp;
+    }
+
+    .column-resize-line,
+    .column-drag-header {
+        -fx-background-color: @dark-sheet-bg-color-emp;
+    }
+
     .mfx-legacy-table-row {
         -fx-text-fill: @dark-sheet-text-color;
         -mfx-hover-color: @dark-sheet-border-color;
         -mfx-ripple-color: @dark-button-ripple-color;
+
+        .mfx-ripple-generator {
+            -mfx-ripple-color: @dark-button-ripple-color !important;
+        }
 
         &:odd,
         &:even {
@@ -712,7 +797,7 @@
         }
 
         &:selected {
-            -fx-background-color: @neutral-dark-9 !important;
+            -fx-background-color: @neutral-dark-2 !important;
         }
     }
 
@@ -722,37 +807,120 @@
         }
 
         &:selected .mfx-table-row-cell {
-            -fx-background-color: @neutral-dark-9 !important;
+            -fx-background-color: @neutral-dark-2 !important;
+        }
+    }
+
+    .table-row-cell {
+        .text {
+            -fx-fill: @dark-sheet-text-color !important;
+        }
+
+        &:selected {
+            -fx-background-color: @primary-6 !important;
+
+            .text {
+                -fx-fill: @dark-sheet-bg-color !important;
+            }
         }
     }
 }
 
 
-/* Table Rows Cell */
-.table-row-cell {
-    // ...
-}
+/* ----- Context Menus ---------------------------- */
 
-.theme-light {
-    .table-row-cell {
-        .table-row-cell .text {
-            -fx-fill: @light-sheet-text-color;
+.mfx-context-menu {
+    .line-separator {
+        -fx-stroke-width: 0.5;
+    }
+
+    .mfx-scroll-pane {
+        -fx-background-radius: @radius-md;
+        -fx-border-radius: @radius-md;
+        -fx-padding: @spacing-xs;
+
+        .viewport {
+            -fx-background-color: transparent;
+        }
+    }
+
+    .mfx-menu-item {
+        -fx-background-color: transparent;
+        -fx-background-radius: @radius-sm;
+        -fx-min-height: 24;
+        -fx-padding: 0 2 0 2;
+
+        -fx-font-family: @font-family-body;
+
+        & .label {
+            -fx-padding: 8 0 8 -8;
+            -fx-font-family: @font-family-body;
         }
 
-        .table-row-cell:selected .text {
-            -fx-fill: @light-sheet-text-color-emp;
+        & .label .text {
+            -fx-font-smoothing-type: lcd;
+        }
+
+        & .accelerator {
+            -fx-padding: 0 8 0 16;
         }
     }
 }
 
-.theme-dark {
-    .table-row-cell {
-        .table-row-cell .text {
-            -fx-fill: @dark-sheet-text-color;
+.theme-light .mfx-context-menu {
+    .line-separator {
+        -fx-stroke: @neutral-light-2;
+    }
+
+    .mfx-scroll-pane {
+        -fx-background-color: @light-sheet-bg-color;
+        -fx-border-color: @light-sheet-border-color;
+    }
+
+    .mfx-menu-item {
+        -fx-background-color: transparent;
+        -fx-text-fill: @light-sheet-text-color-emp;
+
+        &:hover {
+            -fx-background-color: @neutral-light-2;
         }
 
-        .table-row-cell:selected .text {
-            -fx-fill: @dark-sheet-text-color-emp;
+        & .label {
+            -fx-font-family: @font-family-body;
+            -fx-text-fill: @light-sheet-text-color-emp;
+        }
+
+        &:disabled .mfx-font-icon {
+            -mfx-color: @neutral-light-6;
+        }
+    }
+}
+
+.theme-dark .mfx-context-menu {
+    .line-separator {
+        -fx-stroke: @neutral-dark-6;
+    }
+
+    .mfx-scroll-pane {
+        -fx-background-color: @dark-sheet-bg-color;
+        -fx-border-color: @dark-sheet-border-color;
+    }
+
+    .mfx-menu-item {
+        -fx-background-color: transparent;
+        -fx-text-fill: @dark-sheet-text-color-emp;
+
+        &:hover {
+            -fx-background-color: @neutral-dark-6;
+        }
+
+        & .label {
+            -fx-font-family: @font-family-body;
+            -fx-text-fill: @dark-sheet-text-color-emp;
+        }
+
+        &:disabled .mfx-font-icon {
+            -mfx-color: @neutral-dark-5;
         }
     }
 }

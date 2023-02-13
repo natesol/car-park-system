@@ -110,6 +110,14 @@ public abstract class AbstractPageController implements Initializable {
             dialogFadeIn.setNode(dialogRoot);
             dialogFadeIn.play();
         }
+        public void clear () {
+            dialogContent.getChildren().clear();
+            dialogCustomContent.getChildren().clear();
+            dialogAction.getChildren().clear();
+            dialogControl.getStyleClass().clear();
+            dialogControl.getStyleClass().add("dialog");
+            dialogControl.getStyleClass().add("dialog-w-xs");
+        }
         public void close () {
             FadeTransition dialogFadeOut = new FadeTransition();
             dialogFadeOut.setDuration(Duration.millis(DEFAULT_TRANSITION_DURATION));
@@ -122,12 +130,7 @@ public abstract class AbstractPageController implements Initializable {
                 dialogRoot.setDisable(true);
                 body.setEffect(null);
                 
-                dialogContent.getChildren().clear();
-                dialogCustomContent.getChildren().clear();
-                dialogAction.getChildren().clear();
-                dialogControl.getStyleClass().clear();
-                dialogControl.getStyleClass().add("dialog");
-                dialogControl.getStyleClass().add("dialog-w-xs");
+                clear();
             });
             dialogFadeOut.play();
         }

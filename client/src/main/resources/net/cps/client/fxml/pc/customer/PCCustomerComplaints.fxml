@@ -4,6 +4,7 @@
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import io.github.palexdev.materialfx.controls.MFXProgressSpinner?>
 <?import io.github.palexdev.materialfx.controls.MFXScrollPane?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
 <?import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView?>
 <?import io.github.palexdev.materialfx.dialogs.MFXGenericDialog?>
 <?import java.lang.String?>
@@ -11,6 +12,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -200,6 +202,37 @@
             </VBox> <!-- /body-container -->
         </VBox> <!-- /body -->
     </MFXScrollPane> <!-- /root-scroll -->
+
+
+    <HBox fx:id="newComplaintForm" alignment="CENTER" layoutX="4.0" layoutY="10.0" prefWidth="450.0" visible="false">
+        <VBox maxHeight="-Infinity" minHeight="-Infinity" prefWidth="300.0" spacing="8.0" styleClass="dialog-form">
+            <padding>
+                <Insets bottom="24.0" left="1.0" right="1.0" top="24.0" />
+            </padding>
+            <VBox>
+                <MFXTextField fx:id="subjectField" floatingText="Subject" prefWidth="300.0" textLimit="50" />
+                <TextFlow disable="true">
+                    <Text fx:id="subjectErrorText" strokeType="OUTSIDE" strokeWidth="0.0" text=" ">
+                        <styleClass>
+                            <String fx:value="sheet-text" />
+                            <String fx:value="text-danger" />
+                        </styleClass>
+                    </Text>
+                </TextFlow>
+            </VBox>
+            <VBox>
+                <TextArea fx:id="complaintField" prefHeight="200.0" prefWidth="200.0" promptText="Your Complaint..." wrapText="true" />
+                <TextFlow disable="true">
+                    <Text fx:id="complaintErrorText" strokeType="OUTSIDE" strokeWidth="0.0" text=" ">
+                        <styleClass>
+                            <String fx:value="sheet-text" />
+                            <String fx:value="text-danger" />
+                        </styleClass>
+                    </Text>
+                </TextFlow>
+            </VBox>
+        </VBox>
+    </HBox>
 
     <VBox fx:id="dialogRoot" alignment="CENTER" disable="true" styleClass="dialog-root" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <MFXGenericDialog fx:id="dialogControl" actionsOrientation="VERTICAL" contentText="..." headerText="Dialog Title" onClose="#closeDialog" showAlwaysOnTop="false" showMinimize="false">
