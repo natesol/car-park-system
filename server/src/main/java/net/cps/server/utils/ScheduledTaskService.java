@@ -83,7 +83,7 @@ public class ScheduledTaskService {
     /**
      * Schedules a one-time task to run at the specified time.
      *
-     * @param time The time to run the task at, in the format "dd/MM/yyyy HH:mm".
+     * @param dateString The time to run the task at, in the format "dd/MM/yyyy HH:mm".
      **/
     private void scheduleOneTimeTask (String dateString) {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");

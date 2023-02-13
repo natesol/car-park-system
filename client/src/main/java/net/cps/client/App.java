@@ -3,6 +3,7 @@ package net.cps.client;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.Tooltip;
@@ -78,25 +79,26 @@ public class App extends Application {
         
         if (scene != null) {
             AnchorPane root = (AnchorPane) scene.getRoot().lookup("#root");
-            MFXButton btn = (MFXButton) scene.getRoot().lookup("#toggleThemeBtn");
             
             if (theme == Theme.DARK) {
                 root.getStyleClass().remove("theme-light");
                 root.getStyleClass().add("theme-dark");
-                
-                if (btn != null) {
+        
+                Platform.runLater(() -> {
+                    MFXButton btn = (MFXButton) scene.getRoot().lookup("#toggleThemeBtn");
                     ((FontAwesomeIconView) btn.getGraphic()).setGlyphName("SUN_ALT");
                     btn.getTooltip().setText("Switch To Light Theme");
-                }
+                });
             }
             else {
                 root.getStyleClass().remove("theme-dark");
                 root.getStyleClass().add("theme-light");
-                
-                if (btn != null) {
+    
+                Platform.runLater(() -> {
+                    MFXButton btn = (MFXButton) scene.getRoot().lookup("#toggleThemeBtn");
                     ((FontAwesomeIconView) btn.getGraphic()).setGlyphName("MOON_ALT");
                     btn.getTooltip().setText("Switch To Dark Theme");
-                }
+                });
             }
     
             ObservableList<String> stylesheets = scene.getStylesheets();

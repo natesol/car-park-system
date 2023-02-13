@@ -75,10 +75,6 @@
             -fx-pref-width: @screen-xl !important;
         }
     }
-
-    .dialog-form {
-        //-fx-background-color: @sheet-bg-color !important;
-    }
 }
 
 .theme-light .dialog-root {
@@ -108,12 +104,12 @@
             }
         }
 
-        Text {
+        Text:not(.text-primary, .text-success, .text-warning, .text-danger) {
             -fx-text-fill: @light-sheet-text-color !important;
             -fx-fill: @light-sheet-text-color !important;
         }
 
-        .header-label .text {
+        .header-label .text:not(.text-primary, .text-success, .text-warning, .text-danger) {
             -fx-text-fill: @light-sheet-text-color !important;
             -fx-fill: @light-sheet-text-color !important;
         }
@@ -166,12 +162,12 @@
             }
         }
 
-        Text {
+        Text:not(.text-primary, .text-success, .text-warning, .text-danger) {
             -fx-text-fill: @dark-sheet-text-color !important;
             -fx-fill: @dark-sheet-text-color !important;
         }
 
-        .header-label .text {
+        .header-label .text:not(.text-primary, .text-success, .text-warning, .text-danger) {
             -fx-text-fill: @dark-sheet-text-color !important;
             -fx-fill: @dark-sheet-text-color !important;
         }

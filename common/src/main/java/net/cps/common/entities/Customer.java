@@ -1,6 +1,7 @@
 package net.cps.common.entities;
 
 import net.cps.common.utils.AbstractUser;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -41,6 +42,20 @@ public class Customer extends AbstractUser implements Serializable {
     
     public Customer () {
         super();
+    }
+    
+    public Customer (@NotNull Customer customer) {
+        super();
+        this.id = customer.getId();
+        this.email = customer.getEmail();
+        this.firstName = customer.getFirstName();
+        this.lastName = customer.getLastName();
+        this.passwordSalt = customer.getPasswordSalt();
+        this.passwordHash = customer.getPasswordHash();
+        this.isActive = customer.getIsActive();
+        this.vehicles = customer.getVehicles();
+        this.subscriptions = customer.getSubscriptions();
+        this.balance = customer.getBalance();
     }
     
     public Customer (String email, String firstName, String lastName, String password) {

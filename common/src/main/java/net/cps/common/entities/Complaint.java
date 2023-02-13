@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.TimeZone;
 
 @Entity
 @Table(name = "complaints")
@@ -42,6 +43,8 @@ public class Complaint implements Serializable {
     public Complaint () {}
     
     public Complaint (@NotNull Customer customer, @NotNull String content) {
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Jerusalem"));
+        
         this.customer = customer;
         this.status = ComplaintStatus.ACTIVE;
         this.submissionTime = Calendar.getInstance();
@@ -62,27 +65,31 @@ public class Complaint implements Serializable {
         this.id = id;
     }
     
-    public Customer getCustomer () {
+    public @NotNull Customer getCustomer () {
         return customer;
     }
     
-    public void setCustomer (Customer customer) {
+    public void setCustomer (@NotNull Customer customer) {
         this.customer = customer;
     }
     
-    public ComplaintStatus getStatus () {
+    public @NotNull ComplaintStatus getStatus () {
         return status;
     }
     
-    public void setStatus (ComplaintStatus status) {
+    public void setStatus (@NotNull ComplaintStatus status) {
         this.status = status;
     }
     
-    public Calendar getSubmissionTime () {
+    public @NotNull Calendar getSubmissionTime () {
         return submissionTime;
     }
     
-    public void setSubmissionTime (Calendar submissionTime) {
+    public @NotNull String getSubmissionTimeFormatted () {
+        return calendarToFormattedString(submissionTime);
+    }
+    
+    public void setSubmissionTime (@NotNull Calendar submissionTime) {
         this.submissionTime = submissionTime;
     }
     
@@ -90,15 +97,22 @@ public class Complaint implements Serializable {
         return resolutionTime;
     }
     
+    public @NotNull String getResolutionTimeFormatted () {
+        if (resolutionTime == null) {
+            return "Its been " + millisToHours(Calendar.getInstance().getTimeInMillis() - submissionTime.getTimeInMillis()) + " hours since the complaint was submitted.";
+        }
+        return calendarToFormattedString(resolutionTime);
+    }
+    
     public void setResolutionTime (Calendar resolutionTime) {
         this.resolutionTime = resolutionTime;
     }
     
-    public String getContent () {
+    public @NotNull String getContent () {
         return content;
     }
     
-    public void setContent (String content) {
+    public void setContent (@NotNull String content) {
         this.content = content;
     }
     
@@ -121,16 +135,33 @@ public class Complaint implements Serializable {
     
     /* ----- Utility Methods ---------------------------------------- */
     
+    public void cancel () {
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Jerusalem"));
+        
+        this.resolution = "Complaint cancelled by the customer.";
+        this.resolutionTime = Calendar.getInstance();
+        this.status = ComplaintStatus.CANCELLED;
+    }
+    
     public void resolve (String resolution) {
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Jerusalem"));
+        
         this.resolution = resolution;
         this.resolutionTime = Calendar.getInstance();
         this.status = ComplaintStatus.RESOLVED;
     }
     
+    private String millisToHours (long millis) {
+        return String.format("%02d:%02d", millis / 3600000, (millis % 3600000) / 60000);
+    }
+    
+    private String calendarToFormattedString (@NotNull Calendar calendar) {
+        return String.format("%02d/%02d/%02d %02d:%02d", calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
+    }
     
     @Override
     public String toString () {
-        return "Complaint{" +
+        return "Complaint {" +
                 "id: " + id +
                 ", customer: " + customer.getEmail() +
                 ", status: " + status +
