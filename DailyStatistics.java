@@ -64,14 +64,15 @@ public class DailyStatistics implements Serializable {
             this.createdAt.set(Calendar.MINUTE, 0);
             this.createdAt.set(Calendar.SECOND, 0);
             this.createdAt.set(Calendar.MILLISECOND, 0);
-
+            
             this.totalReservations = 0;
             this.totalFulfilled = 0;
             this.totalCancellations = 0;
             this.totalLatency = 0;
             this.dailyAverageLatency = 0.0;
             this.dailyMedianLatency = 0.0;
-        }else {
+        }
+        else {
             Calendar cal = Calendar.getInstance();
             //reservations.get(0).getArrivalTime();
             this.createdAt = cal;
@@ -79,7 +80,7 @@ public class DailyStatistics implements Serializable {
             this.createdAt.set(Calendar.MINUTE, 0);
             this.createdAt.set(Calendar.SECOND, 0);
             this.createdAt.set(Calendar.MILLISECOND, 0);
-
+            
             this.totalReservations = reservations.size();
             this.totalFulfilled = calculateTotalFulfilled(reservations);
             this.totalCancellations = calculateTotalCancellations(reservations);
@@ -169,13 +170,14 @@ public class DailyStatistics implements Serializable {
     
     private Integer calculateTotalFulfilled (ArrayList<Reservation> reservations) {
         int totalFulfilled = 0;
-        if (reservations == null || reservations.isEmpty()){
+        if (reservations == null || reservations.isEmpty()) {
             return 0;
         }
         for (Reservation reservation : reservations) {
-            if(reservation.getEntryTime()==null){
+            if (reservation.getEntryTime() == null) {
                 System.out.println("Please enter entry time !! It's null...");
-            }else if (reservation.getStatus() == ReservationStatus.CHECKED_OUT && reservation.getEntryTime().before(reservation.getArrivalTime())) {
+            }
+            else if (reservation.getEntryTime().before(reservation.getArrivalTime())) {
                 totalFulfilled++;
             }
         }
@@ -184,7 +186,7 @@ public class DailyStatistics implements Serializable {
     }
     
     private Integer calculateTotalCancellations (ArrayList<Reservation> reservations) {
-        if (reservations == null || reservations.isEmpty()){
+        if (reservations == null || reservations.isEmpty()) {
             return 0;
         }
         int totalCancellations = 0;
@@ -194,41 +196,45 @@ public class DailyStatistics implements Serializable {
                 totalCancellations++;
             }
         }
-    
+        
         return totalCancellations;
     }
-
+    
     //num of lating people
     private Integer calculateTotalLatency (ArrayList<Reservation> reservations) {
-        if (reservations == null || reservations.isEmpty()){
+        if (reservations == null || reservations.isEmpty()) {
             return 0;
         }
         int totalLateCustomers = 0;
         
         for (Reservation reservation : reservations) {
-            if(reservation.getEntryTime()==null){
+            if (reservation.getEntryTime() == null) {
                 System.out.println("Please enter entry time !! It's null...");
-            }else if (reservation.getStatus() == ReservationStatus.CHECKED_OUT && reservation.getEntryTime().after(reservation.getArrivalTime())) {
+            }
+            else if (reservation.getEntryTime().after(reservation.getArrivalTime())) {
                 totalLateCustomers++;
             }
         }
-    
+        
         return totalLateCustomers;
     }
     
     private Double calculateDailyAverageLatency (ArrayList<Reservation> reservations, int totalLatency) {
-        if (reservations == null || reservations.isEmpty()){
+        if (reservations == null || reservations.isEmpty()) {
             return 0.0;
         }
-        if (totalLatency==0){return 0.0;}
-
+        if (totalLatency == 0) {
+            return 0.0;
+        }
+        
         double dailyAverageLatency = 0.0;
         
         for (Reservation reservation : reservations) {
-            if(reservation.getEntryTime()==null){
+            if (reservation.getEntryTime() == null) {
                 System.out.println("Please enter entry time !! It's null...");
-            }else if (reservation.getStatus() == ReservationStatus.CHECKED_OUT && reservation.getEntryTime().after(reservation.getArrivalTime())) {
-                dailyAverageLatency+=((double)(ChronoUnit.MINUTES.between(reservation.getArrivalTime().toInstant(), reservation.getEntryTime().toInstant()))/60);
+            }
+            else if (reservation.getEntryTime().after(reservation.getArrivalTime())) {
+                dailyAverageLatency += ((double) (ChronoUnit.MINUTES.between(reservation.getArrivalTime().toInstant(), reservation.getEntryTime().toInstant())) / 60);
             }
         }
         dailyAverageLatency /= totalLatency; //avg of latency hours in ms
@@ -236,20 +242,23 @@ public class DailyStatistics implements Serializable {
     }
     
     private Double calculateDailyMedianLatency (ArrayList<Reservation> reservations, int totalLatency) {
-        if (reservations == null || reservations.isEmpty()){
+        if (reservations == null || reservations.isEmpty()) {
             return 0.0;
         }
-        if (totalLatency==0){return 0.0;}
+        if (totalLatency == 0) {
+            return 0.0;
+        }
         ArrayList<Double> latencies = new ArrayList<>();
         
         for (Reservation reservation : reservations) {
-            if(reservation.getEntryTime()==null){
+            if (reservation.getEntryTime() == null) {
                 System.out.println("Please enter entry time !! It's null...");
-            }else if (reservation.getStatus() == ReservationStatus.CHECKED_OUT && reservation.getEntryTime().after(reservation.getArrivalTime())) {
-                latencies.add((double)ChronoUnit.MINUTES.between(reservation.getArrivalTime().toInstant(), reservation.getEntryTime().toInstant())/60);
+            }
+            else if ( reservation.getEntryTime().after(reservation.getArrivalTime())) {
+                latencies.add((double) ChronoUnit.MINUTES.between(reservation.getArrivalTime().toInstant(), reservation.getEntryTime().toInstant()) / 60);
             }
         }
-        if (latencies == null || latencies.isEmpty()){
+        if (latencies == null || latencies.isEmpty()) {
             return 0.0;
         }
         Collections.sort(latencies);
@@ -257,13 +266,13 @@ public class DailyStatistics implements Serializable {
         double dailyMedianLatency = 0;
         
         if (totalLatency % 2 == 0) {
-            dailyMedianLatency = (latencies.get(Integer.valueOf(totalLatency / 2)) + latencies.get(Integer.valueOf(totalLatency / 2) - 1))/2;
-
+            dailyMedianLatency = (latencies.get(Integer.valueOf(totalLatency / 2)) + latencies.get(Integer.valueOf(totalLatency / 2) - 1)) / 2;
+            
         }
         else {
             dailyMedianLatency = latencies.get(Integer.valueOf(totalLatency / 2));
         }
-    
+        
         return dailyMedianLatency;
     }
     
@@ -272,7 +281,7 @@ public class DailyStatistics implements Serializable {
     public String toString () {
         return "DailyStatistics {" +
                 "id: " + id +
-                //", createdAt: " + createdAt.getTime() + //check null!
+                ", createdAt: " + (createdAt == null ? "null" : createdAt.getTime()) +
                 ", parkingLot: " + parkingLot +
                 ", totalReservations: " + totalReservations +
                 ", totalFulfilled: " + totalFulfilled +

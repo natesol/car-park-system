@@ -2,170 +2,237 @@ package net.cps.server.utils;
 
 import net.cps.common.entities.*;
 import net.cps.common.utils.ComplaintStatus;
+import net.cps.common.utils.EmployeeRole;
 import net.cps.common.utils.Entities;
 import net.cps.common.utils.ReservationStatus;
 import net.cps.server.Database;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.text.SimpleDateFormat;
-import java.text.ParseException;
 
 
 public class ScheduledTaskService {
-
-    public ScheduledTaskService(){
-        this.dailyschedulertaskTask(23, 59);
-        this.scheduleOneTimeTask("31/12/2025 23:59");
+    private static final int MILLIS_IN_DAY = 86400000; // 86400000ms = 24 hours
+    private static final int MILLIS_IN_MINUTE = 60000; // 60000ms = 1 minute
+    
+    private static final int DAILY_TASK_DEFAULT_TIME_HOUR = 23;
+    private static final int DAILY_TASK_DEFAULT_TIME_MINUTE = 59;
+    
+    
+    /* ----- Constructors ------------------------------------------- */
+    
+    public ScheduledTaskService () {
+        this.minutelyTasksRunner();
+        this.dailyTasksRunner();
     }
-
-    private void dailyschedulertaskTask(int hours, int minutes) {
+    
+    
+    /* ----- Utility Methods (Timed Tasks) -------------------------- */
+    
+    /**
+     * Runs the daily tasks at the default time (23:59), every day.
+     **/
+    private void dailyTasksRunner () {
         Calendar with = Calendar.getInstance();
-        with.set(Calendar.HOUR_OF_DAY, hours);
-        with.set(Calendar.MINUTE, minutes);
+        with.set(Calendar.HOUR_OF_DAY, ScheduledTaskService.DAILY_TASK_DEFAULT_TIME_HOUR);
+        with.set(Calendar.MINUTE, ScheduledTaskService.DAILY_TASK_DEFAULT_TIME_MINUTE);
         with.set(Calendar.SECOND, 0);
         with.set(Calendar.MILLISECOND, 0);
         with.setTimeZone(TimeZone.getTimeZone("Israel"));
         long delay = with.getTimeInMillis() - System.currentTimeMillis();
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-        scheduler.scheduleAtFixedRate(new Daily(), delay,
-                86400000, TimeUnit.MILLISECONDS); // 86400000ms = 24 hours
-
+        
+        scheduler.scheduleAtFixedRate(new Daily(), delay, MILLIS_IN_DAY, TimeUnit.MILLISECONDS);
     }
 
-    private void scheduleOneTimeTask(String dateString) {
-        //SimpleDateFormat simple = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        //System.out.println(simple.format(result));
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        Calendar with = Calendar.getInstance();
-        try {
-            with.setTime(format.parse(dateString));
-        } catch (ParseException e) {
-            System.out.println("Error");
-        }
-        with.setTimeZone(TimeZone.getTimeZone("Israel"));
-        Date result = new Date(with.getTimeInMillis());
-        long delay = with.getTimeInMillis() - System.currentTimeMillis();
+        private void minutelyTasksRunner () {
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-        TimeUnit unit = TimeUnit.MILLISECONDS;
-        scheduler.schedule(new exampleTask(), delay, unit);
+        scheduler.scheduleAtFixedRate(new Minute(), 0, MILLIS_IN_MINUTE, TimeUnit.MILLISECONDS);
+    }
+
+    /* ----- Tasks (Runnable Classes) ------------------------------- */
+
+    public class Daily implements Runnable {
+        @Override
+        public void run() {
+
+            ArrayList<ParkingLot> parkingLots = Database.getAllEntities(Database.getSessionFactory(), ParkingLot.class);
+            ArrayList<Reservation> reservations = Database.getAllEntities(Database.getSessionFactory(), Reservation.class);
+
+            for (ParkingLot parkingLot:parkingLots) {
+                ArrayList<Reservation> parkingLotReservations = new ArrayList<>();
+                for (Reservation reservation:reservations){
+                    if (reservation.getParkingLot().getName().equals(parkingLot.getName())){
+                        parkingLotReservations.add(reservation);
+                    }
+                }
+
+                ArrayList<Reservation> relevantReservations = new ArrayList<>();
+
+                Calendar yesterday = Calendar.getInstance();
+                yesterday.add(Calendar.HOUR_OF_DAY,-24);
+                Calendar tomorrow = Calendar.getInstance();
+                tomorrow.add(Calendar.MINUTE,1);
+                for (Reservation reservation:parkingLotReservations){
+                    if (reservation.getArrivalTime().before(tomorrow) && reservation.getArrivalTime().after(yesterday)){
+                        relevantReservations.add(reservation);
+                    }
+                }
+                if (relevantReservations == null || relevantReservations.size()==0) {}else {
+                    DailyStatistics dailyStatistics = new DailyStatistics(parkingLot, relevantReservations);
+                    //update DB
+                    SessionFactory sessionFactory = Database.getSessionFactory();
+                    Session session = sessionFactory.openSession();
+                    Transaction transaction = session.beginTransaction();
+                    session.save(dailyStatistics);
+                    session.flush();
+
+                    transaction.commit();
+                    session.clear();
+                    session.close();
+                }
+
+            }
+
+            //Maximum parking duration is 14 days
+
+            Calendar calendar14 = Calendar.getInstance();
+            calendar14.add(Calendar.DAY_OF_MONTH, -14);
+
+            for (Reservation reservation:reservations) {
+                if (reservation.getStatus()==ReservationStatus.CHECKED_IN && reservation.getEntryTime()!=null &&
+                        reservation.getEntryTime().before(calendar14)) {
+
+                    //MAIL
+                    Date date = new Date();
+                    try {
+                        MailSender.sendMail("", reservation.getCustomer().getEmail(), reservation.getCustomer().getFullName(), "Long Parking", reservation.getParkingLotName(), 0, date, "");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+
+
+            //A reminder to renew a subscription a week before the date
+            ArrayList<Subscription> subscriptionList = Database.getAllEntities(Database.getSessionFactory(), Subscription.class);
+            Calendar calendar = Calendar.getInstance();
+            Calendar calendarExpires;
+            calendar.add(Calendar.WEEK_OF_MONTH,1);
+
+            for (Subscription subscription: subscriptionList){
+                calendarExpires = subscription.getExpiresAt();
+                if(calendarExpires.before(calendar)){
+                    //MAIL
+                    Date date = new Date();
+                    try {
+                        String name = subscription.getParkingLotName();
+                        MailSender.sendMail("",subscription.getCustomer().getEmail(),subscription.getCustomer().getFullName(),"subscriptionRenewal",subscription.getParkingLotName(),0,date,"");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+        }
     }
 
     public class Minute implements Runnable {
 
         @Override
         public void run() {
-            //boolean is send reminder?
-           // ArrayList<Reservation> reservationsNew = new ArrayList<>();
-            ArrayList<ParkingLot> parkingLots = Database.getAllEntities(Database.getSessionFactory(), ParkingLot.class);
-            //אם משתמשת )שאינה לקוחה( הזמינה חניה ולא הגיעה בזמן המוזמן , המערכת שולחת לה
-            //הודעת תזכורת באימייל. במידה והמזמינה לא החזירה תשובה תוך חצי שעה שהיא עדיין
-            //מעוניינת בחניה, ההזמנה שלה מבוטלת אוטומטית.
-            //   System.out.println("RunningMinute: " + new java.util.Date());
-            for (ParkingLot parkingLot: parkingLots){
-                List<Reservation> reservations = parkingLot.getReservations();
-                for (Reservation reservation: reservations){
-                    if (reservation.getStatus() == ReservationStatus.PENDING
-                            && reservation.getArrivalTime().before(Calendar.getInstance())){
-                        //late occasional customer
-                        System.out.println("please send mail about late to reservation\n");
-                        //check answer and cancel or save reservation
-                        Random rand = new Random();
-                        boolean answer = rand.nextBoolean();
-                        Calendar halfHour = reservation.getArrivalTime();
-                        halfHour.add(Calendar.MINUTE,30);
-                        if (!answer && halfHour.before(reservation.getArrivalTime())){
-                            reservation.setStatus(ReservationStatus.CANCELLED);
-                        }
+
+            ArrayList<Reservation> reservations = Database.getAllEntities(Database.getSessionFactory(), Reservation.class);
+
+            //Being late for parking, sending an email to the client and checking for an answer after 30 minutes.
+            //The answer is random because we were asked to implement a one-sided interface.
+
+            for (Reservation reservation : reservations) {
+                if (reservation.getStatus() == ReservationStatus.PENDING
+                        && reservation.getArrivalTime().before(Calendar.getInstance())) {
+                    //late occasional customer
+                    //MAIL
+                    Date date = new Date();
+
+                    try {
+                        MailSender.sendMail("", reservation.getCustomer().getEmail(), reservation.getCustomer().getFullName(), "parkingLateReminder", reservation.getParkingLot().getName(), 0, date, "");
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
+
+                    //check answer and cancel or save reservation
+                    Random rand = new Random();
+                    boolean answer = rand.nextBoolean();
+                    Calendar halfHour = reservation.getArrivalTime();
+                    halfHour.add(Calendar.MINUTE, 30);
+                    if (!answer && halfHour.before(Calendar.getInstance())) {
+                        reservation.setStatus(ReservationStatus.CANCELLED);
+
+                        //MAIL
+                        date = new Date();
+                        try {
+                            MailSender.sendMail("", reservation.getCustomer().getEmail(), reservation.getCustomer().getFullName(), "parkingCancellation", reservation.getParkingLot().getName(), 0, date, "");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        //update DB
+                        SessionFactory sessionFactory = Database.getSessionFactory();
+                        Session session = sessionFactory.openSession();
+                        Transaction transaction = session.beginTransaction();
+                        session.update(reservation);
+                        session.flush();
+
+                        transaction.commit();
+                        session.clear();
+                        session.close();
+
+
+                    }
+
                 }
             }
 
-            ////ה לקוחה צריכה לקבל תשובה על פנייתה
-            ////תוך 24 שעות.
+
+            //Check response to complaints after 24 hours.
 
             ArrayList<Complaint> complaints = Database.getAllEntities(Database.getSessionFactory(), Complaint.class);
+            ArrayList<Employee> employees = Database.getAllEntities(Database.getSessionFactory(), Employee.class);
+            Employee serviceEmployee = new Employee();
+            for (Employee employee : employees) {
+                if (employee.getRole() == EmployeeRole.CUSTOMER_SERVICE_EMPLOYEE) {
+                    serviceEmployee = employee;
+                    break;
+                }
+
+            }
             Calendar hour = Calendar.getInstance();
-            hour.add(Calendar.DAY_OF_MONTH,-1); //-24 hours
-            for (Complaint complaint:complaints) {
-                if (complaint.getStatus()== ComplaintStatus.ACTIVE &&
-                        complaint.getSubmissionTime().before(hour)){
+            hour.add(Calendar.HOUR_OF_DAY, -24); //-24 hours
+            for (Complaint complaint : complaints) {
+                if (complaint.getStatus() == ComplaintStatus.ACTIVE &&
+                        complaint.getSubmissionTime().before(hour)) {
                     //mail to customer and service employees
-                }
-            }
-
-            //UPDATE DB
-
-        }
-
-    }
-
-    public class Daily implements Runnable {
-
-        @Override
-        public void run() {
-
-            ArrayList<ParkingLot> parkingLots = Database.getAllEntities(Database.getSessionFactory(), ParkingLot.class);
-
-            //statistics
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            String cal = LocalDate.now().format(formatter);
-            for (ParkingLot parkingLot:parkingLots) {
-                ArrayList<Reservation> reservations = Database.getCustomQuery(Database.getSessionFactory(),Reservation.class, "SELECT * FROM "+ Entities.RESERVATION.getTableName() +" WHERE DATE(arrival_time) = '"+cal+"' AND parking_lot_id='"+parkingLot.getId()+"'");
-                if (reservations == null || reservations.size()==0) return;
-                DailyStatistics dailyStatistics = new DailyStatistics(parkingLot, reservations);
-            }
-
-            ////משך החניה
-            ////המרבי ברציפות באמצעות מנוי מלא הוא 14 יממות
-
-            Calendar calendar14 = Calendar.getInstance();
-            calendar14.add(Calendar.DAY_OF_MONTH, -14);
-            for (ParkingLot parkingLot : parkingLots){
-                Robot robot = new Robot(parkingLot);
-                ParkingSpace[][][] parkingSpaces = robot.getMatrix3D();
-                for (int i=0; i<robot.getRows();i++){
-                    for (int j=0; j<robot.getCols();j++){
-                        for (int k=0; k<robot.getFloors();k++){
-                            if (parkingSpaces[i][j][k].getReservation().getEntryTime()!=null &&
-                                    parkingSpaces[i][j][k].getReservation().getEntryTime().before(calendar14)){
-                                System.out.println("Get out of my parking lot!\n");
-                                //remove
-                                robot.remove(parkingSpaces[i][j][k].getVehicle());
-                                //mail
-                            }
-
-                        }
+                    //MAIL
+                    Date date = new Date();
+                    try {
+                        MailSender.sendMail("", serviceEmployee.getEmail(), serviceEmployee.getFirstName(), "Complaint handling", new ParkingLot().getName(), 0, date, "");
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
+
                 }
             }
-
-            // תזכורת לחידוש
-            ////למנוייה שבוע לפני מועד הפקיעה.  יומי
-            //
-            List<Subscription> subscriptionList;
-            Calendar calendar = Calendar.getInstance();
-            Calendar calendarExpires;
-            calendar.add(Calendar.WEEK_OF_MONTH,1);
-            for (ParkingLot parkingLot: parkingLots){
-                subscriptionList = parkingLot.getSubscriptions();
-                for (Subscription subscription: subscriptionList){
-                    calendarExpires = subscription.getExpiresAt();
-                    if(calendarExpires.before(calendar)){
-                        System.out.println("please send mail to subscription\n");
-                    }
-                }
-            }
-
-
-            //UPDATE DB
-
         }
     }
+    
 }
