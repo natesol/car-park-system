@@ -147,36 +147,63 @@
                                 </TextFlow>
                             </VBox>
                             <HBox>
-                                <VBox styleClass="form">
+                                <VBox spacing="4.0" styleClass="form">
                                     <VBox>
                                         <VBox.margin>
-                                            <Insets bottom="10.0" />
+                                            <Insets/>
                                         </VBox.margin>
                                         <TextFlow>
                                             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Email">
                                                 <styleClass>
-                                                    <String fx:value="sheet-text" />
-                                                    <String fx:value="form-label" />
+                                                    <String fx:value="sheet-text"/>
+                                                    <String fx:value="form-label"/>
                                                 </styleClass>
                                             </Text>
                                         </TextFlow>
-                                        <MFXTextField fx:id="email" floatMode="DISABLED" minHeight="45.0" prefHeight="45.0" prefWidth="400.0" />
+                                        <MFXTextField fx:id="email" floatMode="DISABLED" floatingText="Email"
+                                                      minHeight="45.0" prefHeight="45.0" prefWidth="400.0"
+                                                      textLimit="55"/>
+                                        <TextFlow>
+                                            <Text fx:id="emailErrorText" strokeType="OUTSIDE"
+                                                  strokeWidth="0.0" text=" ">
+                                                <styleClass>
+                                                    <String fx:value="sheet-text"/>
+                                                    <String fx:value="text-danger"/>
+                                                    <String fx:value="fs-xs"/>
+                                                </styleClass>
+                                            </Text>
+                                        </TextFlow>
                                     </VBox>
                                     <VBox>
                                         <VBox.margin>
-                                            <Insets bottom="10.0" />
+                                            <Insets/>
                                         </VBox.margin>
                                         <TextFlow>
-                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Vehicle Number">
+                                            <Text strokeType="OUTSIDE" strokeWidth="0.0"
+                                                  text="Vehicle Number">
                                                 <styleClass>
-                                                    <String fx:value="sheet-text" />
-                                                    <String fx:value="form-label" />
+                                                    <String fx:value="sheet-text"/>
+                                                    <String fx:value="form-label"/>
                                                 </styleClass>
                                             </Text>
                                         </TextFlow>
-                                        <MFXTextField fx:id="vehicleNumber" floatMode="DISABLED" floatingText="Vehicle Number" minHeight="45.0" prefHeight="45.0" prefWidth="467.0" textLimit="8" />
+                                        <MFXTextField fx:id="vehicleNumber" floatMode="DISABLED"
+                                                      floatingText="Vehicle Number" minHeight="45.0"
+                                                      prefHeight="45.0" prefWidth="467.0" textLimit="8"/>
+                                        <TextFlow>
+                                            <Text fx:id="vehicleErrorText" strokeType="OUTSIDE"
+                                                  strokeWidth="0.0" text=" ">
+                                                <styleClass>
+                                                    <String fx:value="sheet-text"/>
+                                                    <String fx:value="text-danger"/>
+                                                    <String fx:value="fs-xs"/>
+                                                </styleClass>
+                                            </Text>
+                                        </TextFlow>
                                     </VBox>
-                                    <MFXButton fx:id="enterReservationBtn" onAction="#enterReservationBtnClickHandler" minHeight="45.0" styleClass="button-primary-filled" text="Enter Parking Lot" />
+                                    <MFXButton fx:id="enterParkingLotBtn" minHeight="45.0"
+                                               onAction="#enterParkingLotBtnClickHandler"
+                                               styleClass="button-primary-filled" text="Enter Parking Lot"/>
                                 </VBox>
                             </HBox>
                         </VBox>

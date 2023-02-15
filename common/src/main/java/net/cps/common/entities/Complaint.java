@@ -69,6 +69,10 @@ public class Complaint implements Serializable {
         return customer;
     }
     
+    public @NotNull String getCustomerEmail () {
+        return this.customer.getEmail();
+    }
+    
     public void setCustomer (@NotNull Customer customer) {
         this.customer = customer;
     }
@@ -143,12 +147,13 @@ public class Complaint implements Serializable {
         this.status = ComplaintStatus.CANCELLED;
     }
     
-    public void resolve (String resolution) {
+    public void resolve (String resolution, Employee employee) {
         TimeZone.setDefault(TimeZone.getTimeZone("Asia/Jerusalem"));
         
         this.resolution = resolution;
         this.resolutionTime = Calendar.getInstance();
         this.status = ComplaintStatus.RESOLVED;
+        this.employee = employee;
     }
     
     private String millisToHours (long millis) {

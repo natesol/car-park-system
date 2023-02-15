@@ -157,7 +157,7 @@ public class CPSServer extends AbstractServer {
             if (!requestHeader.contains("?") && !requestHeader.contains("=")) {
                 T data;
                 
-                String id = requestHeader.split("/")[1];
+                String id = requestHeader;
                 data = Database.getEntity(sessionFactory, T, entity.getPrimaryKeyConverter().apply(id));
                 return new ResponseMessage(requestId, request, data != null ? ResponseStatus.SUCCESS : ResponseStatus.NOT_FOUND, data);
             }

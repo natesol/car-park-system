@@ -164,8 +164,6 @@
                         </VBox>
                     </VBox>
                 </HBox>
-
-
             </VBox> <!-- /body-container -->
         </VBox> <!-- /body -->
     </MFXScrollPane> <!-- /(root)scrollPane -->

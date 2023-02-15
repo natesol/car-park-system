@@ -29,7 +29,7 @@ import java.util.ResourceBundle;
 
 
 public abstract class AbstractKioskPageController extends AbstractPageController {
-    private ParkingLot parkingLot;
+    protected ParkingLot parkingLot;
     
     @FXML
     public Text parkingLotNameTitle;
@@ -47,9 +47,6 @@ public abstract class AbstractKioskPageController extends AbstractPageController
     @FXML
     public MFXButton exitMenuBtn;
     
-    @FXML
-    public Text parkingLotName;
-    
     
     /* ----- Scene Controller Initialization ------------------------ */
     
@@ -63,7 +60,6 @@ public abstract class AbstractKioskPageController extends AbstractPageController
         if (parkingLot != null) {
             Platform.runLater(() -> {
                 parkingLotNameTitle.setText(parkingLot.getName());
-                parkingLotName.setText(parkingLot.getName());
             });
         }
     }
@@ -152,7 +148,6 @@ public abstract class AbstractKioskPageController extends AbstractPageController
         
         Platform.runLater(() -> {
             parkingLotNameTitle.setText(parkingLot.getName());
-            parkingLotName.setText(parkingLot.getName());
         });
     }
     
