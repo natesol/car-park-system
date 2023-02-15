@@ -103,6 +103,7 @@ public class PCCustomerProfileController extends AbstractPCCustomerPageControlle
     
     @FXML
     public void editProfileBtnClickHandler (ActionEvent event) {
+        dialog.clear();
         dialog.setTitleText("Edit Profile");
         dialog.setBodyText("Choose the fields you want to edit and enter the new values below.");
         
@@ -290,15 +291,15 @@ public class PCCustomerProfileController extends AbstractPCCustomerPageControlle
     
     @RequestCallback.Method
     private void onProfileUpdate (RequestMessage request, ResponseMessage response) {
-        if (response.getStatus() == ResponseStatus.SUCCESS) {
+        if (response.getStatus() == ResponseStatus.FINISHED) {
             Platform.runLater(() -> {
-                dialog.close();
                 loader.hide();
+                dialog.clear();
                 
                 dialog.setTitleText("Edit Profile Success");
                 dialog.setBodyText("Your profile has been updated successfully.");
                 dialog.open();
-                
+    
                 customer = editedCustomer;
                 App.setEntity(customer);
                 firstName.setText(customer.getFirstName());
@@ -308,8 +309,8 @@ public class PCCustomerProfileController extends AbstractPCCustomerPageControlle
         }
         else {
             Platform.runLater(() -> {
-                dialog.close();
                 loader.hide();
+                dialog.clear();
                 dialog.setTitleText("Something went wrong");
                 dialog.setBodyText("An error occurred while updating your profile.", response.getMessage());
                 dialog.open();
