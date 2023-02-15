@@ -96,10 +96,7 @@ public class PCCustomerProfileController extends AbstractPCCustomerPageControlle
             
             clearEditProfileForm();
         });
-        
-        //CPSClient.sendRequestToServer(RequestType.GET, Entities.VEHICLE.getTableName() + "/customer_email=" + customer.getEmail(), this::onGetVehicles);
     }
-    
     
     
     /* ----- GUI Events Handlers ------------------------------------ */

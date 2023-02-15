@@ -25,6 +25,7 @@ import net.cps.common.entities.Vehicle;
 import net.cps.common.messages.RequestMessage;
 import net.cps.common.messages.ResponseMessage;
 import net.cps.common.utils.*;
+import org.jetbrains.annotations.Nullable;
 
 import java.net.URL;
 import java.time.ZoneId;
@@ -68,6 +69,7 @@ public class PCCustomerReservationsController extends AbstractPCCustomerPageCont
     public MFXTextField departureTimeHourField;
     public MFXTextField departureTimeMinutesField;
     public Text priceField;
+    public MFXButton calcPriceBtn;
     
     
     
@@ -100,14 +102,15 @@ public class PCCustomerReservationsController extends AbstractPCCustomerPageCont
             
             MFXButton confirmBtn = new MFXButton("Book");
             confirmBtn.setOnAction(event -> {
+                loader.show();
+                
                 selectedReservation = createReservationObject();
                 CPSClient.sendRequestToServer(RequestType.CREATE, Entities.RESERVATION.getTableName(), "create a new reservation for customer: " + customer.getEmail(), selectedReservation, this::onCreateReservation);
-                dialog.close();
             });
-            confirmBtn.getStyleClass().add("button-primary");
+            confirmBtn.getStyleClass().add("button-primary-filled");
             MFXButton cancelBtn = new MFXButton("Cancel");
             cancelBtn.setOnAction(event -> dialog.close());
-            cancelBtn.getStyleClass().add("button-secondary");
+            cancelBtn.getStyleClass().add("button-base-outlined");
             
             dialog.setWidth(Dialog.Width.EXTRA_SMALL);
             dialog.setTitleText("Book New Reservation");
@@ -127,6 +130,18 @@ public class PCCustomerReservationsController extends AbstractPCCustomerPageCont
     @FXML
     public void cancelSelectedBtnClickHandler (ActionEvent actionEvent) {
         Platform.runLater(() -> {
+            if (reservationsTable.getSelectionModel().getSelectedItems().size() == 0) {
+                dialog.clear();
+                MFXButton okBtn = new MFXButton("OK");
+                okBtn.setOnAction(event -> dialog.close());
+                okBtn.getStyleClass().add("button-base-filled");
+                dialog.setTitleText("No Reservation Selected");
+                dialog.setBodyText("Please select a reservation to cancel.");
+                dialog.setActionButtons(okBtn);
+                dialog.open();
+                return;
+            }
+            
             Reservation selected = reservationsTable.getSelectionModel().getSelectedItems().get(0);
             Double refund = selected.calculateCancellationFee();
             
@@ -139,10 +154,10 @@ public class PCCustomerReservationsController extends AbstractPCCustomerPageCont
                         CPSClient.sendRequestToServer(RequestType.UPDATE, Entities.CUSTOMER.getTableName(), "update customer: " + customer.getEmail(), customer, (req1, res1) -> {
                             if (res1.getStatus() == ResponseStatus.FINISHED) {
                                 Platform.runLater(() -> {
-                                    dialog.close();
+                                    dialog.clear();
                                     MFXButton okBtn = new MFXButton("OK");
                                     okBtn.setOnAction(event1 -> dialog.close());
-                                    okBtn.getStyleClass().add("button-primary");
+                                    okBtn.getStyleClass().add("button-primary-filled");
                                     dialog.setTitleText("Success");
                                     dialog.setBodyText("Reservation cancelled successfully.", "Your credit balance has been updated by " + refund + "₪.");
                                     dialog.setActionButtons(okBtn);
@@ -155,16 +170,27 @@ public class PCCustomerReservationsController extends AbstractPCCustomerPageCont
                 });
                 dialog.close();
             });
-            confirmBtn.getStyleClass().add("button-primary");
+            confirmBtn.getStyleClass().add("button-danger-filled");
             MFXButton cancelBtn = new MFXButton("Cancel");
             cancelBtn.setOnAction(event -> dialog.close());
-            cancelBtn.getStyleClass().add("button-secondary");
+            cancelBtn.getStyleClass().add("button-base-outlined");
             
             dialog.setWidth(Dialog.Width.EXTRA_SMALL);
             dialog.setTitleText("Cancel Reservation");
             dialog.setBodyText("You will be refunded for " + refund + "₪.", "Are you sure you want to cancel the selected reservation?");
             dialog.setActionButtons(cancelBtn, confirmBtn);
             dialog.open();
+        });
+    }
+    
+    @FXML
+    public void calcPriceBtnClickHandler (ActionEvent event) {
+        Platform.runLater(() -> {
+            Reservation reservation = createReservationObject();
+            if (reservation == null) return;
+            Double price = reservation.calculatePrice();
+            if (price == null) return;
+            priceField.setText(String.format("%.2f", price));
         });
     }
     
@@ -196,9 +222,7 @@ public class PCCustomerReservationsController extends AbstractPCCustomerPageCont
     @RequestCallback.Method
     private void onGetVehicles (RequestMessage request, ResponseMessage response) {
         if (response.getStatus() == ResponseStatus.SUCCESS) {
-            Platform.runLater(() -> {
-                allCustomerVehicles = (ArrayList<Vehicle>) response.getData();
-            });
+            allCustomerVehicles = (ArrayList<Vehicle>) response.getData();
         }
     }
     
@@ -222,7 +246,8 @@ public class PCCustomerReservationsController extends AbstractPCCustomerPageCont
             CPSClient.sendRequestToServer(RequestType.UPDATE, Entities.CUSTOMER.getTableName(), "update customer: " + customer.getEmail(), customer, (req, res) -> {
                 if (res.getStatus() == ResponseStatus.FINISHED) {
                     Platform.runLater(() -> {
-                        dialog.close();
+                        loader.hide();
+                        dialog.clear();
                         
                         MFXButton okBtn = new MFXButton("OK");
                         okBtn.setOnAction(event -> {
@@ -230,9 +255,8 @@ public class PCCustomerReservationsController extends AbstractPCCustomerPageCont
                             reservationsTable.setItems(FXCollections.observableArrayList(allCustomerReservations));
                             reservationsTable.refresh();
                         });
-                        okBtn.getStyleClass().add("button-primary");
+                        okBtn.getStyleClass().add("button-primary-filled");
                         
-                        dialog.setWidth(Dialog.Width.EXTRA_SMALL);
                         dialog.setTitleText("Success");
                         dialog.setBodyText("Your reservation created successfully.", "Your credit balance has been charged by " + price + "₪.");
                         dialog.setActionButtons(okBtn);
@@ -244,15 +268,17 @@ public class PCCustomerReservationsController extends AbstractPCCustomerPageCont
         }
         else {
             Platform.runLater(() -> {
-                dialog.close();
-                
+                loader.hide();
+                dialog.clear();
                 MFXButton okBtn = new MFXButton("OK");
-                okBtn.setOnAction(event -> dialog.close());
-                okBtn.getStyleClass().add("button-secondary");
+                okBtn.setOnAction(event -> {
+                    dialog.close();
+                });
+                okBtn.getStyleClass().add("button-base-filled");
                 
                 dialog.setWidth(Dialog.Width.EXTRA_SMALL);
                 dialog.setTitleText("Error");
-                dialog.setBodyText("An error occurred while creating the subscription.", response.getMessage());
+                dialog.setBodyText("An error occurred while creating the reservation.", response.getMessage());
                 dialog.setActionButtons(okBtn);
                 
                 dialog.open();
@@ -264,7 +290,7 @@ public class PCCustomerReservationsController extends AbstractPCCustomerPageCont
     
     /* ----- Utility Methods ---------------------------------------- */
     
-    private Reservation createReservationObject () {
+    private @Nullable Reservation createReservationObject () {
         try {
             ParkingLot parkingLot = parkingLotsListCombo.getSelectionModel().getSelectedItem();
             String vehicleNumber = vehicleNumberField.getText();
@@ -274,7 +300,8 @@ public class PCCustomerReservationsController extends AbstractPCCustomerPageCont
                 vehicle = new Vehicle(vehicleNumber, customer);
                 Vehicle finalVehicle = vehicle;
                 CPSClient.sendRequestToServer(RequestType.CREATE, Entities.VEHICLE.getTableName(), null, vehicle, (req, res) -> {
-                    if (res.getStatus() == ResponseStatus.SUCCESS) {
+                    if (res.getStatus() == ResponseStatus.FINISHED) {
+                        finalVehicle.setId((Integer) res.getData());
                         allCustomerVehicles.add(finalVehicle);
                     }
                 });

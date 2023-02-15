@@ -28,7 +28,7 @@ public class Customer extends AbstractUser implements Serializable {
     private String passwordHash;
     @Column(name = "is_active")
     private Boolean isActive;
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     @Column(name = "vehicles")
     private List<Vehicle> vehicles;
     @OneToMany(mappedBy = "customer")

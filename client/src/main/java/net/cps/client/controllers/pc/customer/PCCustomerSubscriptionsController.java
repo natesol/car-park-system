@@ -116,14 +116,15 @@ public class PCCustomerSubscriptionsController extends AbstractPCCustomerPageCon
             
             MFXButton confirmBtn = new MFXButton("Add");
             confirmBtn.setOnAction(event -> {
+                loader.show();
+                
                 selectedSubscription = createSubscriptionObject();
                 CPSClient.sendRequestToServer(RequestType.CREATE, Entities.SUBSCRIPTION.getTableName(), "create a new subscription for customer: " + customer.getEmail(), selectedSubscription, this::onCreateSubscription);
-                dialog.close();
             });
-            confirmBtn.getStyleClass().add("button-primary");
+            confirmBtn.getStyleClass().add("button-primary-filled");
             MFXButton cancelBtn = new MFXButton("Cancel");
             cancelBtn.setOnAction(event -> dialog.close());
-            cancelBtn.getStyleClass().add("button-secondary");
+            cancelBtn.getStyleClass().add("button-base-outlined");
             
             dialog.setWidth(Dialog.Width.EXTRA_SMALL);
             dialog.setTitleText("Add Subscription");
@@ -293,15 +294,17 @@ public class PCCustomerSubscriptionsController extends AbstractPCCustomerPageCon
             Double price = selectedSubscription.calculatePrice();
             
             Platform.runLater(() -> {
-                dialog.close();
+                loader.hide();
                 
+                dialog.clear();
                 MFXButton okBtn = new MFXButton("OK");
                 okBtn.setOnAction(event -> {
                     dialog.close();
                     subscriptionsTable.setItems(FXCollections.observableArrayList(allCustomerSubscriptions));
                     subscriptionsTable.refresh();
+                    subscriptionsTable.setItems(FXCollections.observableArrayList(allCustomerSubscriptions));
                 });
-                okBtn.getStyleClass().add("button-primary");
+                okBtn.getStyleClass().add("button-primary-filled");
                 
                 dialog.setWidth(Dialog.Width.EXTRA_SMALL);
                 dialog.setTitleText("Subscription Created");
@@ -316,19 +319,19 @@ public class PCCustomerSubscriptionsController extends AbstractPCCustomerPageCon
                 
                 customer.chargeBalance(price);
                 CPSClient.sendRequestToServer(RequestType.UPDATE, Entities.CUSTOMER.getTableName(), null, customer, (req, res) -> {
-                    if (res.getStatus() == ResponseStatus.SUCCESS) {
-                        System.out.println("Customer balance updated successfully.");
-                    }
+                    if (res.getStatus() == ResponseStatus.FINISHED) System.out.println("Customer balance updated successfully.");
+                    else System.out.println("Customer balance update failed.");
                 });
             });
         }
         else {
             Platform.runLater(() -> {
-                dialog.close();
+                loader.hide();
                 
+                dialog.clear();
                 MFXButton okBtn = new MFXButton("OK");
                 okBtn.setOnAction(event -> dialog.close());
-                okBtn.getStyleClass().add("button-secondary");
+                okBtn.getStyleClass().add("button-base-filled");
                 
                 dialog.setWidth(Dialog.Width.EXTRA_SMALL);
                 dialog.setTitleText("Error");

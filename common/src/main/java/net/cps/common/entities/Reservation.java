@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.TimeZone;
 
 
 @Entity
@@ -56,6 +57,8 @@ public class Reservation implements Serializable {
     public Reservation () {}
     
     public Reservation (@NotNull ParkingLot parkingLot, @NotNull Customer customer, @NotNull Vehicle vehicle, @NotNull Calendar arrivalTime, @NotNull Calendar departureTime) {
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Jerusalem"));
+        
         this.parkingLot = parkingLot;
         this.customer = customer;
         this.vehicle = vehicle;
@@ -67,6 +70,8 @@ public class Reservation implements Serializable {
     }
     
     public Reservation (@NotNull ParkingLot parkingLot, @NotNull Customer customer, @NotNull Vehicle vehicle, @NotNull Calendar arrivalTime, @NotNull Calendar departureTime, @NotNull ReservationStatus status) {
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Jerusalem"));
+        
         this.parkingLot = parkingLot;
         this.customer = customer;
         this.vehicle = vehicle;
@@ -78,6 +83,8 @@ public class Reservation implements Serializable {
     }
     
     public Reservation (@NotNull ParkingLot parkingLot, @NotNull Customer customer, @NotNull Vehicle vehicle, @NotNull Calendar arrivalTime, @NotNull Calendar departureTime, @NotNull ReservationStatus status, @NotNull Double payed) {
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Jerusalem"));
+        
         this.parkingLot = parkingLot;
         this.customer = customer;
         this.vehicle = vehicle;
