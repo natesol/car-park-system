@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
 
 
 public class KioskReservationsController extends AbstractKioskPageController implements Initializable {
-    ArrayList<Reservation> parkingLotReservations = new ArrayList<>(parkingLot.getReservations());
+    ArrayList<Reservation> parkingLotReservations = null;
     Reservation currentReservation = null;
     
     @FXML
@@ -74,8 +74,8 @@ public class KioskReservationsController extends AbstractKioskPageController imp
             return;
         }
         
-        // get the customer closest reservation with PENDING status
         currentReservation = null;
+        parkingLotReservations = new ArrayList<Reservation>(parkingLot.getReservations());
         for (Reservation reservation : parkingLotReservations) {
             if (reservation.getCustomer().getEmail().equals(emailText) && reservation.getVehicleNumber().equals(vehicleNumberText) && reservation.getStatus() == ReservationStatus.PENDING) {
                 if (currentReservation == null) {

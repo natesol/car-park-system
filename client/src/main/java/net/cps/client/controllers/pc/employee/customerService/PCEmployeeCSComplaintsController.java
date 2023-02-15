@@ -229,7 +229,7 @@ public class PCEmployeeCSComplaintsController extends AbstractPCEmployeePageCont
             }
             
             loader.show();
-            selectedComplaint.resolve(response, employee);
+            selectedComplaint.resolve(employee, response);
             refundAmount = refundIls;
             CPSClient.sendRequestToServer(RequestType.UPDATE, Entities.COMPLAINT.getTableName(), null, selectedComplaint, this::onResolveComplaints);
         });

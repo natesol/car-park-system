@@ -142,7 +142,7 @@ public abstract class AbstractKioskPageController extends AbstractPageController
     /* ----- Event Bus Listeners ------------------------------------ */
     
     @Subscribe
-    public void onKioskEnterEvent (KioskEnterEvent event) {
+    public void onKioskEnterEvent (@NotNull KioskEnterEvent event) {
         this.parkingLot = event.getParkingLot();
         App.setEntity(parkingLot);
         

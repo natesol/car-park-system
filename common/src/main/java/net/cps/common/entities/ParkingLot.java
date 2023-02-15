@@ -46,7 +46,7 @@ public class ParkingLot extends Organization implements Serializable {
     @OneToMany(mappedBy = "parkingLot", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<ParkingSpace> parkingSpaces;
     @NotNull
-    @OneToMany(mappedBy = "parkingLot", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "parkingLot", cascade = CascadeType.ALL)
     private List<Reservation> reservations;
     @NotNull
     @OneToMany(mappedBy = "parkingLot", cascade = CascadeType.ALL)

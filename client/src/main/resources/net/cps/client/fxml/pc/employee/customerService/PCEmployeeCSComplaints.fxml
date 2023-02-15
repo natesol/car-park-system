@@ -1,32 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import de.jensd.fx.glyphs.fontawesome.*?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXProgressSpinner?>
+<?import io.github.palexdev.materialfx.controls.MFXScrollPane?>
 <?import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView?>
-<?import io.github.palexdev.materialfx.controls.*?>
 <?import io.github.palexdev.materialfx.dialogs.MFXGenericDialog?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
+<?import java.lang.String?>
 <?import java.net.URL?>
-<AnchorPane fx:id="root" maxHeight="800.0" maxWidth="1024.0" minHeight="400.0" minWidth="800.0" prefWidth="1024.0"
-            xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="net.cps.client.controllers.pc.employee.customerService.PCEmployeeCSComplaintsController">
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+
+<AnchorPane fx:id="root" maxHeight="800.0" maxWidth="1024.0" minHeight="400.0" minWidth="800.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.cps.client.controllers.pc.employee.customerService.PCEmployeeCSHomeController">
     <stylesheets>
-        <URL value="@../../../../styles/css/pages/PCEmployeePages.css"/>
+        <URL value="@../../../../styles/css/pages/PCEmployeePages.css" />
     </stylesheets>
     <styleClass>
-        <String fx:value="root"/>
-        <String fx:value="theme-light"/>
+        <String fx:value="root" />
+        <String fx:value="theme-light" />
     </styleClass>
 
-    <Hyperlink maxHeight="0.0" maxWidth="0.0" text="focus-fix" textFill="TRANSPARENT"/>
+    <Hyperlink maxHeight="0.0" maxWidth="0.0" text="focus-fix" textFill="TRANSPARENT" />
 
-    <MFXScrollPane fx:id="rootScroll" fitToHeight="true" fitToWidth="true" AnchorPane.bottomAnchor="0.0"
-                   AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <MFXScrollPane fx:id="rootScroll" fitToHeight="true" fitToWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <styleClass>
-            <String fx:value="root-scroll"/>
+            <String fx:value="root-scroll" />
         </styleClass>
 
         <VBox fx:id="body" alignment="TOP_CENTER" styleClass="body">
@@ -46,32 +53,28 @@
                             </VBox>
                             <VBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
                                 <TextFlow styleClass="dashboard-user-message">
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="Hello "/>
-                                    <Text fx:id="employeeName" strokeType="OUTSIDE" strokeWidth="0.0"
-                                          styleClass="sheet-text" text="Employee Name (Customer Services)"/>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="Hello " />
+                                    <Text fx:id="employeeName" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="Employee Name (Customer Services)" />
                                     <VBox.margin>
-                                        <Insets/>
+                                        <Insets />
                                     </VBox.margin>
                                     <padding>
-                                        <Insets top="10.0"/>
+                                        <Insets top="10.0" />
                                     </padding>
                                 </TextFlow>
                             </VBox>
                             <VBox alignment="CENTER">
-                                <HBox alignment="CENTER_RIGHT" prefHeight="27.0" prefWidth="202.0" spacing="2.0"
-                                      styleClass="dashboard-user-menu">
-                                    <MFXButton fx:id="toggleThemeBtn" contentDisplay="GRAPHIC_ONLY"
-                                               mnemonicParsing="false" onAction="#toggleThemeBtnClickHandler" text=" ">
+                                <HBox alignment="CENTER_RIGHT" prefHeight="27.0" prefWidth="202.0" spacing="2.0" styleClass="dashboard-user-menu">
+                                    <MFXButton fx:id="toggleThemeBtn" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#toggleThemeBtnClickHandler" text=" ">
                                         <graphic>
-                                            <FontAwesomeIconView glyphName="MOON_ALT" textAlignment="CENTER"
-                                                                 wrappingWidth="20.0"/>
+                                            <FontAwesomeIconView glyphName="MOON_ALT" textAlignment="CENTER" wrappingWidth="20.0" />
                                         </graphic>
                                         <styleClass>
-                                            <String fx:value="button"/>
-                                            <String fx:value="button-icon"/>
+                                            <String fx:value="button" />
+                                            <String fx:value="button-icon" />
                                         </styleClass>
                                         <tooltip>
-                                            <Tooltip anchorLocation="CONTENT_TOP_RIGHT" text="Switch To Dark Theme"/>
+                                            <Tooltip anchorLocation="CONTENT_TOP_RIGHT" text="Switch To Dark Theme" />
                                         </tooltip>
                                     </MFXButton>
                                 </HBox>
@@ -82,60 +85,51 @@
                         <VBox styleClass="dashboard-left" BorderPane.alignment="CENTER">
                             <VBox>
                                 <TextFlow styleClass="dashboard-menu-title">
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="MENU"/>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="MENU" />
                                 </TextFlow>
 
                                 <VBox alignment="TOP_CENTER" spacing="2.0">
-                                    <MFXButton fx:id="menuBtnHome" graphicTextGap="8.0"
-                                               onMouseClicked="#menuBtnHomeClickHandler"
-                                               styleClass="dashboard-menu-button" text="Home">
+                                    <MFXButton fx:id="menuBtnHome" graphicTextGap="8.0" onMouseClicked="#menuBtnHomeClickHandler" styleClass="dashboard-menu-button" text="Home">
                                         <graphic>
-                                            <FontAwesomeIconView glyphName="HOME"/>
+                                            <FontAwesomeIconView glyphName="HOME" />
                                         </graphic>
                                     </MFXButton>
-                                    <MFXButton fx:id="menuBtnParkingSpaces" graphicTextGap="8.0"
-                                               onMouseClicked="#menuBtnParkingSpacesClickHandler"
-                                               styleClass="dashboard-menu-button" text=" Parking Spaces">
+                                    <MFXButton fx:id="menuBtnParkingSpaces" graphicTextGap="8.0" onMouseClicked="#menuBtnParkingSpacesClickHandler" styleClass="dashboard-menu-button" text=" Parking Spaces">
                                         <graphic>
-                                            <FontAwesomeIconView glyphName="MAP_MARKER"/>
+                                            <FontAwesomeIconView glyphName="MAP_MARKER" />
                                         </graphic>
                                     </MFXButton>
-                                    <MFXButton fx:id="menuBtnComplaints" graphicTextGap="8.0"
-                                               onMouseClicked="#menuBtnComplaintsClickHandler" text="Complaints">
+                                    <MFXButton fx:id="menuBtnComplaints" graphicTextGap="8.0" onMouseClicked="#menuBtnComplaintsClickHandler" text="Complaints">
                                         <graphic>
-                                            <FontAwesomeIconView glyphName="LIST_ALT"/>
+                                            <FontAwesomeIconView glyphName="LIST_ALT" />
                                         </graphic>
-                                        <styleClass>
-                                            <String fx:value="dashboard-menu-button"/>
-                                            <String fx:value="active"/>
-                                        </styleClass>
+                              <styleClass>
+                                 <String fx:value="dashboard-menu-button" />
+                                 <String fx:value="active" />
+                              </styleClass>
                                     </MFXButton>
                                 </VBox>
                             </VBox>
                             <AnchorPane prefHeight="10000.0">
                                 <VBox.margin>
-                                    <Insets/>
+                                    <Insets />
                                 </VBox.margin>
                                 <VBox AnchorPane.bottomAnchor="0.0">
                                     <padding>
-                                        <Insets top="20.0"/>
+                                        <Insets top="20.0" />
                                     </padding>
                                     <TextFlow styleClass="dashboard-menu-title">
-                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="USER"/>
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="USER" />
                                     </TextFlow>
                                     <VBox alignment="TOP_CENTER" spacing="2.0">
-                                        <MFXButton fx:id="menuBtnProfile" graphicTextGap="8.0"
-                                                   onMouseClicked="#menuBtnProfileClickHandler"
-                                                   styleClass="dashboard-menu-button" text="Profile">
+                                        <MFXButton fx:id="menuBtnProfile" graphicTextGap="8.0" onMouseClicked="#menuBtnProfileClickHandler" styleClass="dashboard-menu-button" text="Profile">
                                             <graphic>
-                                                <FontAwesomeIconView glyphName="USER"/>
+                                                <FontAwesomeIconView glyphName="USER" />
                                             </graphic>
                                         </MFXButton>
-                                        <MFXButton fx:id="menuBtnLogout" graphicTextGap="8.0"
-                                                   onMouseClicked="#menuBtnLogoutClickHandler"
-                                                   styleClass="dashboard-menu-button" text="Logout">
+                                        <MFXButton fx:id="menuBtnLogout" graphicTextGap="8.0" onMouseClicked="#menuBtnLogoutClickHandler" styleClass="dashboard-menu-button" text="Logout">
                                             <graphic>
-                                                <FontAwesomeIconView glyphName="SIGN_OUT"/>
+                                                <FontAwesomeIconView glyphName="SIGN_OUT" />
                                             </graphic>
                                         </MFXButton>
                                     </VBox>
@@ -145,67 +139,62 @@
                     </left>
                     <center>
                         <VBox styleClass="dashboard-center" BorderPane.alignment="CENTER">
-                            <HBox maxWidth="1024.0" minHeight="400.0" minWidth="600.0" prefWidth="1024.0"
-                                  styleClass="sub-page">
-                                <VBox alignment="TOP_CENTER" maxWidth="1024.0" minHeight="400.0" minWidth="600.0"
-                                      prefHeight="600" prefWidth="1024.0" styleClass="sheet">
+                            <HBox maxWidth="1024.0" minHeight="400.0" minWidth="600.0" prefWidth="1024.0" styleClass="sub-page">
+                                <VBox alignment="TOP_CENTER" maxWidth="1024.0" minHeight="400.0" minWidth="600.0" prefHeight="600" prefWidth="1024.0" styleClass="sheet">
                                     <HBox styleClass="sub-page-header">
                                         <TextFlow HBox.hgrow="ALWAYS">
-                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sub-page-title"
-                                                  text="Complaints">
+                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sub-page-title" text="Complaints">
                                             </Text>
                                         </TextFlow>
-                                        <AnchorPane>
-                                            <HBox spacing="8.0">
-                                                <MFXComboBox fx:id="statusCombo" floatingText="Filter By Status"
-                                                             text="All"/>
-                                                <MFXButton fx:id="showDataBtn" onAction="#showDataBtnClickHandler" styleClass="button-primary-filled"
-                                                           text="Show Data"/>
-                                            </HBox>
-                                        </AnchorPane>
+                              <AnchorPane>
+                                 <children>
+                                    <HBox>
+                                       <children>
+                                          <MFXButton fx:id="mainActionBtn" styleClass="button-primary-filled" text="Main Action" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </AnchorPane>
                                     </HBox>
                                     <VBox>
                                         <VBox.margin>
-                                            <Insets bottom="50.0"/>
+                                            <Insets bottom="50.0" />
                                         </VBox.margin>
                                         <TextFlow>
-                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text"
-                                                  text="View customers complaints information."/>
+                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="View customers complaints information." />
                                         </TextFlow>
                                     </VBox>
-                                    <VBox>
-                                        <TextFlow>
-                                            <VBox.margin>
-                                                <Insets bottom="10.0"/>
-                                            </VBox.margin>
-                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text"
-                                                  text="Complaints List:"/>
-                                        </TextFlow>
-                                        <MFXLegacyTableView fx:id="complaintTable" prefHeight="275.0" prefWidth="730.0"
-                                                            styleClass="table">
-                                            <columns>
-                                                <TableColumn fx:id="customerCol" prefWidth="114.0" text="Customer"/>
-                                                <TableColumn fx:id="statusCol" prefWidth="119.0" text="Status"/>
-                                                <TableColumn fx:id="submitCol" prefWidth="86.0" text="Submit Time"/>
-                                                <TableColumn fx:id="resolveCol" minWidth="0.0" prefWidth="111.0"
-                                                             text="Resolved Time"/>
-                                                <TableColumn fx:id="contentCol" prefWidth="189.0" text="Content"/>
-                                                <TableColumn fx:id="resolutionCol" prefWidth="189.0" text="Resolution"/>
-                                            </columns>
-                                            <VBox.margin>
-                                                <Insets bottom="8.0"/>
-                                            </VBox.margin>
-                                        </MFXLegacyTableView>
-                                        <MFXButton fx:id="handleBtn" onAction="#handleBtnClickHandler"
-                                                   styleClass="button-base-filled" text="Handle Selected"/>
-                                    </VBox>
+                           <VBox>
+                              <children>
+                                 <TextFlow>
+                                    <VBox.margin>
+                                       <Insets bottom="10.0" />
+                                    </VBox.margin>
+                                    <children>
+                                       <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="Complaints List:" />
+                                    </children>
+                                 </TextFlow>
+                                 <MFXLegacyTableView prefHeight="275.0" prefWidth="730.0" styleClass="table">
+                                    <columns>
+                                       <TableColumn prefWidth="94.0" text="Status" />
+                                       <TableColumn prefWidth="118.0" text="Submit Time" />
+                                       <TableColumn prefWidth="139.0" text="Customer" />
+                                       <TableColumn prefWidth="378.0" text="Content" />
+                                    </columns>
+                                    <VBox.margin>
+                                       <Insets bottom="8.0" />
+                                    </VBox.margin>
+                                 </MFXLegacyTableView>
+                                 <MFXButton fx:id="secondaryActionBtn" text="Secondary Action" />
+                              </children>
+                           </VBox>
                                 </VBox>
                             </HBox>
                         </VBox>
                     </center>
                     <styleClass>
-                        <String fx:value="sheet"/>
-                        <String fx:value="dashboard"/>
+                        <String fx:value="sheet" />
+                        <String fx:value="dashboard" />
                     </styleClass>
                 </BorderPane>
 
@@ -213,92 +202,30 @@
         </VBox> <!-- /body -->
     </MFXScrollPane> <!-- /root-scroll -->
 
-    <HBox fx:id="handleComplaintForm" alignment="CENTER" layoutX="4.0" layoutY="10.0" prefWidth="450.0" visible="false">
-        <VBox maxHeight="-Infinity" minHeight="-Infinity" prefWidth="300.0" spacing="8.0" styleClass="dialog-form">
-            <padding>
-                <Insets bottom="24.0" left="1.0" right="1.0" top="24.0"/>
-            </padding>
-            <VBox>
-                <TextFlow disable="true">
-                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="Customer Complaint:"/>
-                </TextFlow>
-                <TextArea fx:id="complaintText" editable="false" prefHeight="120.0" prefWidth="298.0" wrapText="true"/>
-            </VBox>
-            <VBox>
-                <TextFlow disable="true">
-                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="Your Response:"/>
-                </TextFlow>
-                <TextArea fx:id="responseField" prefHeight="200.0" prefWidth="200.0" promptText="Your Response..."
-                          wrapText="true"/>
-                <TextFlow disable="true">
-                    <Text fx:id="responseErrorText" strokeType="OUTSIDE" strokeWidth="0.0" text=" ">
-                        <styleClass>
-                            <String fx:value="sheet-text"/>
-                            <String fx:value="text-danger"/>
-                        </styleClass>
-                    </Text>
-                </TextFlow>
-                <VBox.margin>
-                    <Insets top="16.0"/>
-                </VBox.margin>
-            </VBox>
-            <VBox>
-                <HBox>
-                    <MFXToggleButton fx:id="refundToggle" contentDisposition="TOP" gap="4.0"
-                                     onAction="#refundToggleHandler" prefHeight="62.0" prefWidth="206.0"
-                                     text="Refund customer?">
-                        <HBox.margin>
-                            <Insets bottom="-8.0" left="-7.0" right="6.0" top="-8.0"/>
-                        </HBox.margin>
-                    </MFXToggleButton>
-                    <VBox>
-                        <MFXTextField fx:id="refundIlsField" disable="true" floatingText="Refund" measureUnit="₪"
-                                      prefColumnCount="4" prefHeight="49.0" prefWidth="97.0" text="0" textLimit="6"/>
-                    </VBox>
-                </HBox>
-                <TextFlow disable="true">
-                    <Text fx:id="refundErrorText" strokeType="OUTSIDE" strokeWidth="0.0" text=" ">
-                        <styleClass>
-                            <String fx:value="sheet-text"/>
-                            <String fx:value="text-danger"/>
-                        </styleClass>
-                    </Text>
-                </TextFlow>
-            </VBox>
-        </VBox>
-    </HBox>
-
-    <VBox fx:id="dialogRoot" alignment="CENTER" disable="true" styleClass="dialog-root" visible="false"
-          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-          AnchorPane.topAnchor="0.0">
-        <MFXGenericDialog fx:id="dialogControl" actionsOrientation="VERTICAL" contentText="..."
-                          headerText="Dialog Title" onClose="#closeDialog" showAlwaysOnTop="false" showMinimize="false">
+    <VBox fx:id="dialogRoot" alignment="CENTER" disable="true" styleClass="dialog-root" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <MFXGenericDialog fx:id="dialogControl" actionsOrientation="VERTICAL" contentText="..." headerText="Dialog Title" onClose="#closeDialog" showAlwaysOnTop="false" showMinimize="false">
             <styleClass>
-                <String fx:value="dialog"/>
-                <String fx:value="dialog-w-xs"/>
+                <String fx:value="dialog" />
+                <String fx:value="dialog-w-xs" />
             </styleClass>
             <center>
-                <MFXScrollPane fitToHeight="true" fitToWidth="true" styleClass="dialog-content-scroll"
-                               BorderPane.alignment="CENTER">
+                <MFXScrollPane fitToHeight="true" fitToWidth="true" styleClass="dialog-content-scroll" BorderPane.alignment="CENTER">
                     <VBox>
-                        <VBox fx:id="dialogContent" styleClass="dialog-content"/>
-                        <VBox fx:id="dialogCustomContent"/>
+                        <VBox fx:id="dialogContent" styleClass="dialog-content" />
+                        <VBox fx:id="dialogCustomContent" />
                     </VBox>
                 </MFXScrollPane>
             </center>
             <bottom>
-                <HBox fx:id="dialogAction" alignment="CENTER_RIGHT" styleClass="dialog-action"
-                      BorderPane.alignment="CENTER"/>
+                <HBox fx:id="dialogAction" alignment="CENTER_RIGHT" styleClass="dialog-action" BorderPane.alignment="CENTER" />
             </bottom>
         </MFXGenericDialog>
     </VBox>
 
-    <VBox fx:id="loaderRoot" alignment="CENTER" disable="true" styleClass="loader-root" visible="false"
-          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-          AnchorPane.topAnchor="0.0">
+    <VBox fx:id="loaderRoot" alignment="CENTER" disable="true" styleClass="loader-root" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <StackPane>
-            <MFXProgressSpinner disable="true" prefHeight="92.0" prefWidth="92.0" styleClass="loader-spinner"/>
-            <MFXProgressSpinner fx:id="loaderSpinner" prefHeight="92.0" prefWidth="92.0" styleClass="loader-spinner"/>
+            <MFXProgressSpinner disable="true" prefHeight="92.0" prefWidth="92.0" styleClass="loader-spinner" />
+            <MFXProgressSpinner fx:id="loaderSpinner" prefHeight="92.0" prefWidth="92.0" styleClass="loader-spinner" />
         </StackPane>
     </VBox>
 
