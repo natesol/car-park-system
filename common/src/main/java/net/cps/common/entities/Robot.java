@@ -77,6 +77,19 @@ public class Robot {
         }
         return availableCapacity;
     }
+    public Integer getDisabledCapacity () {
+        Integer DisabledCapacity = 0;
+        for (int i = 0 ; i < rows ; i++) {
+            for (int j = 0 ; j < columns ; j++) {
+                for (int k = 0 ; k < floors ; k++) {
+                    if (array[i][j][k].getState() == ParkingSpaceState.DISABLED) {
+                        DisabledCapacity++;
+                    }
+                }
+            }
+        }
+        return DisabledCapacity;
+    }
     
     //reservation created after checking with this function. also : must delete reservation after vehicle leaves the parking lot
     public Integer getAvailableCapacityByTime (Calendar entranceTime, Calendar departureTime) {

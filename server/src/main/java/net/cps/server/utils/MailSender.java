@@ -83,7 +83,7 @@ public class MailSender {
                             + refundAmount
                             + " has been credited to your account.";
                 }
-                case "parkingPateReminder" -> {
+                case "parkingLateReminder" -> {
                     subject = "Late for parking reservation";
                     template = "We noticed that you are running late for your parking reservation at our parking lot located in "
                             + parkingLot
@@ -104,6 +104,14 @@ public class MailSender {
                 case "Complaint" -> {
                     subject = "response From CustomerService";
                     template = "We have received your complaint and we are sorry to hear that you have encountered a problem with our service. Our customer service team will be in touch with you shortly";
+                }
+                case "Complaint handling" -> {
+                    subject = "Please handle the complaint";
+                    template = "We received a new complaint and it has been waiting for more than 24 hours";
+                }
+                case "Long Parking" -> {
+                    subject = "Your parking duration exceeds 14 days";
+                    template = "Your parking duration exceeds 14 days. Please take the car out of the parking lot.";
                 }
                 default -> {
                 }
@@ -128,4 +136,3 @@ public class MailSender {
         return message;
     }
 }
-

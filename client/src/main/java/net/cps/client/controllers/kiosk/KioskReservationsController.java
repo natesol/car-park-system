@@ -2,22 +2,29 @@ package net.cps.client.controllers.kiosk;
 
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTextField;
+import io.github.palexdev.materialfx.utils.others.FunctionalStringConverter;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.text.Text;
+import javafx.util.StringConverter;
 import net.cps.client.CPSClient;
 import net.cps.client.utils.AbstractKioskPageController;
+import net.cps.common.entities.ParkingLot;
 import net.cps.common.entities.Reservation;
-import net.cps.common.utils.Entities;
-import net.cps.common.utils.RequestType;
-import net.cps.common.utils.ReservationStatus;
+import net.cps.common.entities.Robot;
+import net.cps.common.messages.RequestMessage;
+import net.cps.common.messages.ResponseMessage;
+import net.cps.common.utils.*;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.ResourceBundle;
 
 
@@ -42,6 +49,8 @@ public class KioskReservationsController extends AbstractKioskPageController imp
     @Override
     public void initialize (URL url, ResourceBundle resourceBundle) {
         super.initialize(url, resourceBundle);
+        
+        CPSClient.sendRequestToServer(RequestType.GET, Entities.RESERVATION.getTableName(), this::onGetReservations);
     }
     
     
@@ -75,7 +84,8 @@ public class KioskReservationsController extends AbstractKioskPageController imp
         }
         
         currentReservation = null;
-        parkingLotReservations = new ArrayList<Reservation>(parkingLot.getReservations());
+        System.out.println(parkingLotReservations);
+        
         for (Reservation reservation : parkingLotReservations) {
             if (reservation.getCustomer().getEmail().equals(emailText) && reservation.getVehicleNumber().equals(vehicleNumberText) && reservation.getStatus() == ReservationStatus.PENDING) {
                 if (currentReservation == null) {
@@ -86,6 +96,9 @@ public class KioskReservationsController extends AbstractKioskPageController imp
                 }
             }
         }
+        
+        System.out.println(currentReservation);
+        
         
         if (currentReservation == null) {
             Platform.runLater(() -> {
@@ -156,11 +169,12 @@ public class KioskReservationsController extends AbstractKioskPageController imp
                 dialog.open();
             });
         }
-        
-        
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-    }
     
+        parkingLot.insertVehicle(currentReservation);
+        CPSClient.sendRequestToServer(RequestType.UPDATE, Entities.PARKING_LOT.getTableName(), null, parkingLot, null);
+        
+        // parking lot - parking space - reservation - vehicle
+    }
     
     
     /* ----- Event Bus Listeners ------------------------------------ */
@@ -170,7 +184,15 @@ public class KioskReservationsController extends AbstractKioskPageController imp
     
     /* ----- Requests Callbacks (on server response) ---------------- */
     
-    // ...
+    @RequestCallback.Method
+    private void onGetReservations (RequestMessage request, ResponseMessage response) {
+        System.out.println("onGetReservations " + response.getData());
+        
+        if (response.getStatus() == ResponseStatus.SUCCESS) {
+            ArrayList<Reservation> reservations = (ArrayList<Reservation>) response.getData();
+            parkingLotReservations = new ArrayList<>(reservations.stream().filter(reservation -> reservation.getParkingLot().getId().equals(parkingLot.getId())).toList());
+        }
+    }
     
     
     /* ----- Utility Methods ---------------------------------------- */

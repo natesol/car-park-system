@@ -101,7 +101,7 @@ public class DailyStatistics implements Serializable {
         this.id = id;
     }
     
-    public Calendar getCreatedAt () {
+    public @NotNull Calendar getCreatedAt () {
         return createdAt;
     }
     
@@ -177,7 +177,7 @@ public class DailyStatistics implements Serializable {
             if (reservation.getEntryTime() == null) {
                 System.out.println("Please enter entry time !! It's null...");
             }
-            else if (reservation.getStatus() == ReservationStatus.CHECKED_OUT && reservation.getEntryTime().before(reservation.getArrivalTime())) {
+            else if (reservation.getEntryTime().before(reservation.getArrivalTime())) {
                 totalFulfilled++;
             }
         }
@@ -211,7 +211,7 @@ public class DailyStatistics implements Serializable {
             if (reservation.getEntryTime() == null) {
                 System.out.println("Please enter entry time !! It's null...");
             }
-            else if (reservation.getStatus() == ReservationStatus.CHECKED_OUT && reservation.getEntryTime().after(reservation.getArrivalTime())) {
+            else if (reservation.getEntryTime().after(reservation.getArrivalTime())) {
                 totalLateCustomers++;
             }
         }
@@ -233,7 +233,7 @@ public class DailyStatistics implements Serializable {
             if (reservation.getEntryTime() == null) {
                 System.out.println("Please enter entry time !! It's null...");
             }
-            else if (reservation.getStatus() == ReservationStatus.CHECKED_OUT && reservation.getEntryTime().after(reservation.getArrivalTime())) {
+            else if (reservation.getEntryTime().after(reservation.getArrivalTime())) {
                 dailyAverageLatency += ((double) (ChronoUnit.MINUTES.between(reservation.getArrivalTime().toInstant(), reservation.getEntryTime().toInstant())) / 60);
             }
         }
@@ -254,7 +254,7 @@ public class DailyStatistics implements Serializable {
             if (reservation.getEntryTime() == null) {
                 System.out.println("Please enter entry time !! It's null...");
             }
-            else if (reservation.getStatus() == ReservationStatus.CHECKED_OUT && reservation.getEntryTime().after(reservation.getArrivalTime())) {
+            else if ( reservation.getEntryTime().after(reservation.getArrivalTime())) {
                 latencies.add((double) ChronoUnit.MINUTES.between(reservation.getArrivalTime().toInstant(), reservation.getEntryTime().toInstant()) / 60);
             }
         }
