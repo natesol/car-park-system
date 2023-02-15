@@ -3,22 +3,36 @@ package net.cps.client.controllers.kiosk;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXDatePicker;
 import io.github.palexdev.materialfx.controls.MFXTextField;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.text.Text;
+import net.cps.client.App;
+import net.cps.client.CPSClient;
 import net.cps.client.utils.AbstractKioskPageController;
 import net.cps.common.entities.Customer;
 import net.cps.common.entities.Reservation;
+import net.cps.common.entities.Vehicle;
+import net.cps.common.messages.RequestMessage;
+import net.cps.common.messages.ResponseMessage;
+import net.cps.common.utils.Entities;
+import net.cps.common.utils.RequestCallback;
+import net.cps.common.utils.RequestType;
+import net.cps.common.utils.ResponseStatus;
+import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.ResourceBundle;
 
 
 public class KioskBookNowController extends AbstractKioskPageController implements Initializable {
-    Customer customer;
+    Reservation reservation = null;
+    Customer customer = null;
     
     @FXML
     public MFXTextField email;
@@ -121,11 +135,28 @@ public class KioskBookNowController extends AbstractKioskPageController implemen
         Calendar departureCalendar = Calendar.getInstance();
         departureCalendar.set(departureDateValue.getYear(), departureDateValue.getMonthValue() - 1, departureDateValue.getDayOfMonth(), departureHourInt, departureMinuteInt);
         
-        
-        dialog.setTitleText("Enter Parking Lot");
-        dialog.setBodyText("You have successfully entered the parking lot.", "Your email is: " + emailText, "Your vehicle number is: " + vehicleNumberText, "Your estimated departure time is: " + departureCalendar.getTime());
-        dialog.open();
+        CPSClient.sendRequestToServer(RequestType.GET, Entities.CUSTOMER.getTableName() + "/email=" + emailText, null, (req, res) -> {
+            loader.show();
+            try {
+                
+                if (res.getStatus() == ResponseStatus.SUCCESS) {
+                    customer = ((ArrayList<Customer>) res.getData()).get(0);
+                }
+                else {
+                    customer = new Customer(emailText, "", "", "");
+                }
+                
+                Vehicle vehicle = new Vehicle(vehicleNumberText, customer);
+                reservation = createReservationObject(customer, vehicle, departureCalendar);
+                
+                CPSClient.sendRequestToServer(RequestType.CREATE, Entities.RESERVATION.getTableName(), null, reservation, this::onCreateReservation);
+            }
+            catch (Throwable e) {
+                e.printStackTrace();
+            }
+        });
     }
+    
     
     /* ----- Event Bus Listeners ------------------------------------ */
     
@@ -134,16 +165,79 @@ public class KioskBookNowController extends AbstractKioskPageController implemen
     
     /* ----- Requests Callbacks (on server response) ---------------- */
     
-    // ...
+    
+    private void onCreateReservation (RequestMessage request, ResponseMessage response) {
+        System.out.println("onCreateReservation");
+        
+        if (response.getStatus() == ResponseStatus.FINISHED) {
+            parkingLot.insertVehicle(reservation);
+            
+            CPSClient.sendRequestToServer(RequestType.UPDATE, Entities.PARKING_SPACE.getTableName(), null, parkingLot.getParkingSpaces(), this::onUpdateParkingLot);
+        }
+    }
+    
+    @RequestCallback.Method
+    private void onUpdateParkingLot (RequestMessage request, ResponseMessage response) {
+        if (response.getStatus() == ResponseStatus.FINISHED) {
+            
+            System.out.println("onUpdateParkingLot");
+            
+            Platform.runLater(() -> {
+                loader.hide();
+                dialog.clear();
+                
+                dialog.setTitleText("Enter Parking Lot");
+                dialog.setBodyText("Your reservation has been created successfully.", "You can now leave your vehicle in the parking lot entrance, and our smart robot will take care of the rest.", "Thank you for choosing us!");
+                MFXButton okBtn = new MFXButton("OK");
+                okBtn.setOnAction(event -> {
+                    dialog.close();
+                    try {
+                        App.setPage("kiosk/KioskExit.fxml");
+                    }
+                    catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+                dialog.setActionButtons(okBtn);
+                dialog.open();
+            });
+        }
+    }
+    
     
     
     /* ----- Utility Methods ---------------------------------------- */
     
-    private Reservation createReservation (String email, String vehicleNumber, Calendar departureTime) {
-        Reservation reservation = new Reservation();
-        //reservation.setEmail(email);
-        //reservation.setVehicleNumber(vehicleNumber);
-        //reservation.setDepartureTime(departureTime);
+    //private @Nullable Reservation createReservationObject (Customer customer, Vehicle vehicle, Calendar departureTime) {
+    //    try {
+    //        ParkingLot parkingLot = parkingLotsListCombo.getSelectionModel().getSelectedItem();
+    //        String vehicleNumber = vehicleNumberField.getText();
+    //        Vehicle vehicle = allCustomerVehicles.stream().filter(v -> v.getNumber().equals(vehicleNumber)).findFirst().orElse(null);
+    //        boolean isNewVehicle = vehicle == null;
+    //        if (isNewVehicle) {
+    //            vehicle = new Vehicle(vehicleNumber, customer);
+    //            Vehicle finalVehicle = vehicle;
+    //            CPSClient.sendRequestToServer(RequestType.CREATE, Entities.VEHICLE.getTableName(), null, vehicle, (req, res) -> {
+    //                if (res.getStatus() == ResponseStatus.FINISHED) {
+    //                    finalVehicle.setId((Integer) res.getData());
+    //                    allCustomerVehicles.add(finalVehicle);
+    //                }
+    //            });
+    //        }
+    //        Calendar arrivalTime = Calendar.getInstance();
+    //        arrivalTime.setTime(Date.from(arrivalDate.getValue().atTime(Integer.parseInt(arrivalTimeHourField.getText()), Integer.parseInt(arrivalTimeMinutesField.getText())).atZone(ZoneId.systemDefault()).toInstant()));
+    //        Calendar departureTime = Calendar.getInstance();
+    //        departureTime.setTime(Date.from(departureDate.getValue().atTime(Integer.parseInt(departureTimeHourField.getText()), Integer.parseInt(departureTimeMinutesField.getText())).atZone(ZoneId.systemDefault()).toInstant()));
+    //
+    //        return new Reservation(parkingLot, customer, vehicle, arrivalTime, departureTime);
+    //    }
+    //    catch (Throwable e) {
+    //        return null;
+    //    }
+    //}
+    
+    private @NotNull Reservation createReservationObject (Customer customer, Vehicle vehicle, Calendar departureTime) {
+        Reservation reservation = new Reservation(parkingLot, customer, vehicle, Calendar.getInstance(), departureTime);
         return reservation;
     }
     

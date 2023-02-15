@@ -1,15 +1,11 @@
 Time                      ID                   Type                 Message
-2023-02-15 18:34:39       1                    INFO                 a new entity added to the database. entity: Office, id: 1
-2023-02-15 18:34:39       2                    INFO                 a list of entities added to the database. entities: ParkingLot, ids: [2, 3, 4, 5]
-2023-02-15 18:34:39       3                    INFO                 a list of entities added to the database. entities: Employee, ids: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-2023-02-15 18:34:39       4                    INFO                 a list of entities added to the database. entities: Customer, ids: [1, 2, 3, 4, 5, 6]
-2023-02-15 18:34:39       5                    INFO                 a list of entities added to the database. entities: Vehicle, ids: [1, 2, 3, 4, 5, 6, 7]
-2023-02-15 18:34:39       6                    INFO                 a list of entities added to the database. entities: Subscription, ids: [1, 2, 3]
-2023-02-15 18:34:39       7                    INFO                 a list of entities added to the database. entities: Reservation, ids: [1, 2, 3, 4, 5]
-2023-02-15 18:34:39       8                    INFO                 a list of entities added to the database. entities: Complaint, ids: [1, 2]
-2023-02-15 18:34:39       9                    INFO                 a list of entities added to the database. entities: DailyStatistics, ids: [1, 2, 3, 4]
-2023-02-15 18:34:51       10                   INFO                 an entity updated on the database. entity: Customer, id: 1
-2023-02-15 18:34:53       11                   ERROR                failed to get entities: vehicles from the database.
-2023-02-15 18:35:08       12                   INFO                 an entity updated on the database. entity: Customer, id: 1
-2023-02-15 18:35:14       13                   ERROR                failed to get entities: vehicles from the database.
-2023-02-15 18:35:52       14                   INFO                 an entity updated on the database. entity: Customer, id: 1
+2023-02-15 20:17:11       1                    INFO                 a new entity added to the database. entity: Office, id: 1
+2023-02-15 20:17:11       2                    INFO                 a list of entities added to the database. entities: ParkingLot, ids: [2, 3, 4, 5]
+2023-02-15 20:17:11       3                    INFO                 a list of entities added to the database. entities: Employee, ids: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+2023-02-15 20:17:11       4                    INFO                 a list of entities added to the database. entities: Customer, ids: [1, 2, 3, 4, 5, 6]
+2023-02-15 20:17:11       5                    INFO                 a list of entities added to the database. entities: Vehicle, ids: [1, 2, 3, 4, 5, 6, 7]
+2023-02-15 20:17:11       6                    INFO                 a list of entities added to the database. entities: Subscription, ids: [1, 2, 3]
+2023-02-15 20:17:11       7                    INFO                 a list of entities added to the database. entities: Reservation, ids: [1, 2, 3, 4, 5]
+2023-02-15 20:17:11       8                    INFO                 a list of entities added to the database. entities: Complaint, ids: [1, 2]
+2023-02-15 20:17:11       9                    INFO                 a list of entities added to the database. entities: DailyStatistics, ids: [1, 2, 3, 4]
+2023-02-15 20:17:28       10                   ERROR                failed to add entity: Reservation to the database.

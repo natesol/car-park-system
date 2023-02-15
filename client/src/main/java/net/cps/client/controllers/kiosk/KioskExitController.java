@@ -23,9 +23,13 @@ public class KioskExitController extends AbstractKioskPageController implements 
     @FXML
     public MFXTextField email;
     @FXML
+    public Text emailErrorText;
+    @FXML
     public MFXTextField vehicleNumber;
     @FXML
-    public MFXButton exitParkingLotBtn;
+    public Text vehicleErrorText;
+    @FXML
+    public MFXButton enterParkingLotBtn;
     
     
     /* ----- Scene Controller Initialization ------------------------ */
@@ -39,7 +43,7 @@ public class KioskExitController extends AbstractKioskPageController implements 
     /* ----- GUI Events Handlers ------------------------------------ */
     
     @FXML
-    public void exitParkingLotBtnClickHandler (ActionEvent event) throws IOException {
+    public void enterParkingLotBtnClickHandler (ActionEvent event) throws IOException {
         dialog.setTitleText("Exit Parking Lot");
         dialog.setBodyText("You have successfully exited the parking lot.");
         dialog.open();
