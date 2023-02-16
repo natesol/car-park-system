@@ -292,8 +292,15 @@ public class CPSServer extends AbstractServer {
             
             // update multiple entities by the data list given on the request.
             if (obj instanceof List) {
+                //ArrayList<T> data = (ArrayList<T>) request.getData();
+                //ArrayList<Object> ids = Database.updateMultipleEntities(sessionFactory, data);
+                //return new ResponseMessage(requestId, request, ids.size() == data.size() ? ResponseStatus.FINISHED : ResponseStatus.SUCCESS, ids);
+                //
                 ArrayList<T> data = (ArrayList<T>) request.getData();
-                ArrayList<Object> ids = Database.updateMultipleEntities(sessionFactory, data);
+                ArrayList<U> ids = new ArrayList<U>();
+                for (T entityData : data) {
+                    ids.add((U) Database.updateEntity(sessionFactory, entityData));
+                }
                 return new ResponseMessage(requestId, request, ids.size() == data.size() ? ResponseStatus.FINISHED : ResponseStatus.SUCCESS, ids);
             }
             

@@ -406,7 +406,7 @@ public class Main {
                 if (parkingLotName.equals(reservationparkingLotName)) {
                     //insert! return boolean for success or fail
                     robot.insert(reservation2.getVehicle(), reservation2);
-                    ArrayList<ParkingSpace> parkingSpacesRobot = robot.FromArrayToList();
+                    ArrayList<ParkingSpace> parkingSpacesRobot = robot.fromArrayToList();
                     for (ParkingSpace parkingSpace : parkingSpacesRobot) { //db
                         session.update(parkingSpace);
                         session.flush();
@@ -425,7 +425,7 @@ public class Main {
                 if (parkingLotName.equals(reservationparkingLotName)) {
                     //remove! return boolean for success or fail
                     robot.remove(reservation2.getVehicle());
-                    ArrayList<ParkingSpace> parkingSpacesRobot = robot.FromArrayToList();
+                    ArrayList<ParkingSpace> parkingSpacesRobot = robot.fromArrayToList();
                     for (ParkingSpace parkingSpace : parkingSpacesRobot) { //db
                         session.update(parkingSpace);
                         session.flush();
@@ -439,7 +439,7 @@ public class Main {
             }
             //test: change status parking space
             robot.setConditionToPlace(0, 0, 0, ParkingSpaceState.DISABLED);
-            ArrayList<ParkingSpace> parkingSpacesRobot = robot.FromArrayToList();
+            ArrayList<ParkingSpace> parkingSpacesRobot = robot.fromArrayToList();
             for (ParkingSpace parkingSpace : parkingSpacesRobot) { //db
                 session.update(parkingSpace);
                 session.flush();
@@ -450,7 +450,7 @@ public class Main {
             session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             robot.setConditionToPlace(1, 0, 0, ParkingSpaceState.RESERVED);
-            parkingSpacesRobot = robot.FromArrayToList();
+            parkingSpacesRobot = robot.fromArrayToList();
             for (ParkingSpace parkingSpace : parkingSpacesRobot) { //db
                 session.update(parkingSpace);
                 session.flush();

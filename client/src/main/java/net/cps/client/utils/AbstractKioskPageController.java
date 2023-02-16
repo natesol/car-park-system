@@ -15,14 +15,20 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import net.cps.client.App;
+import net.cps.client.CPSClient;
 import net.cps.client.events.KioskEnterEvent;
 import net.cps.common.entities.ParkingLot;
+import net.cps.common.entities.ParkingSpace;
+import net.cps.common.utils.Entities;
+import net.cps.common.utils.RequestType;
+import net.cps.common.utils.ResponseStatus;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -30,6 +36,7 @@ import java.util.ResourceBundle;
 
 public abstract class AbstractKioskPageController extends AbstractPageController {
     protected ParkingLot parkingLot;
+    protected ArrayList<ParkingSpace> allParkingSpaces = new ArrayList<>();
     
     @FXML
     public Text parkingLotNameTitle;
@@ -62,6 +69,15 @@ public abstract class AbstractKioskPageController extends AbstractPageController
                 parkingLotNameTitle.setText(parkingLot.getName());
             });
         }
+    
+        CPSClient.sendRequestToServer(RequestType.GET, Entities.PARKING_SPACE.getTableName(), null, (req, res) -> {
+            if (res.getStatus() == ResponseStatus.SUCCESS) {
+                allParkingSpaces = (ArrayList<ParkingSpace>) res.getData();
+                allParkingSpaces.removeIf(Objects::isNull);
+                allParkingSpaces.removeIf(parkingSpace -> !parkingSpace.getParkingLot().getName().equals(parkingLot.getName()));
+                parkingLot.setParkingSpaces(allParkingSpaces);
+            }
+        });
     }
     
     

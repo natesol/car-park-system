@@ -61,7 +61,15 @@ public class IndexController implements Initializable {
     
     @FXML
     void kioskBtnClickHandler (ActionEvent event) throws IOException {
-        App.setEntity(parkingLotsCombo.getValue());
+        ParkingLot parkingLot = parkingLotsCombo.getValue();
+    
+        switch (parkingLot.getName()) {
+            case "Haifa Port Parking" -> parkingLot.setId(2);
+            case "Haifa Mt. Carmel Parking" -> parkingLot.setId(3);
+            case "Kiryat-Haim Beach Parking" -> parkingLot.setId(4);
+            case "Eilat Coral Beach Parking" -> parkingLot.setId(5);
+        }
+        App.setEntity(parkingLot);
         App.setPage("kiosk/KioskHome.fxml");
         EventBus.getDefault().post(new KioskEnterEvent((ParkingLot) App.getEntity()));
     }

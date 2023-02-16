@@ -128,7 +128,7 @@ public class Robot {
             array[parkingSpace.getRow()][parkingSpace.getCol()][parkingSpace.getFloor()] = parkingSpace;
         }
     }
-    public ArrayList<ParkingSpace> FromArrayToList () {
+    public ArrayList<ParkingSpace> fromArrayToList () {
         ArrayList<ParkingSpace> ps = new ArrayList<ParkingSpace>();
         for (int i = 0 ; i < rows ; i++) {
             for (int j = 0 ; j < columns ; j++) {

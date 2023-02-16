@@ -281,7 +281,11 @@ public class ParkingLot extends Organization implements Serializable {
     
     public Boolean insertVehicle (@NotNull Reservation reservation) {
         this.robot = new Robot(this);
-        return this.robot.insert(reservation.getVehicle(), reservation);
+        Boolean result = this.robot.insert(reservation.getVehicle(), reservation);
+        if (result) {
+            this.setParkingSpaces(this.robot.fromArrayToList());
+        }
+        return result;
     }
     
     public Boolean removeVehicle (@NotNull Vehicle vehicle) {
