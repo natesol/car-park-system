@@ -84,7 +84,7 @@ public class Vehicle implements Serializable {
     public void setCustomer (@NotNull Customer customer) {
         this.customer = customer;
     }
-
+    
     public List<Subscription> getSubscriptions () {
         return subscriptions;
     }
@@ -123,5 +123,5 @@ public class Vehicle implements Serializable {
                 ", parkingSpace: " + (parkingSpace != null ? parkingSpace : "null") +
                 '}';
     }
-   
+    
 }

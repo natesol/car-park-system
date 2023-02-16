@@ -1,58 +1,60 @@
 Time                      ID                   Type                 Message
-2023-02-16 06:58:45       1                    INFO                 a new entity added to the database. entity: Office, id: 1
-2023-02-16 06:58:45       2                    INFO                 a list of entities added to the database. entities: ParkingLot, ids: [2, 3, 4, 5]
-2023-02-16 06:58:45       3                    INFO                 a list of entities added to the database. entities: Employee, ids: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-2023-02-16 06:58:45       4                    INFO                 a list of entities added to the database. entities: Customer, ids: [1, 2, 3, 4, 5, 6]
-2023-02-16 06:58:45       5                    INFO                 a list of entities added to the database. entities: Vehicle, ids: [1, 2, 3, 4, 5, 6, 7]
-2023-02-16 06:58:45       6                    INFO                 a list of entities added to the database. entities: Subscription, ids: [1, 2, 3]
-2023-02-16 06:58:45       7                    INFO                 a list of entities added to the database. entities: Reservation, ids: [1, 2, 3, 4, 5]
-2023-02-16 06:58:45       8                    INFO                 a list of entities added to the database. entities: Complaint, ids: [1, 2]
-2023-02-16 06:58:45       9                    INFO                 a list of entities added to the database. entities: DailyStatistics, ids: [1, 2, 3, 4]
-2023-02-16 06:59:07       10                   INFO                 a new entity added to the database. entity: Vehicle, id: 8
-2023-02-16 06:59:07       11                   INFO                 a new entity added to the database. entity: Reservation, id: 6
-2023-02-16 06:59:07       12                   ERROR                failed to update entity: ParkingSpace on the database.
-2023-02-16 06:59:07       13                   ERROR                failed to update entity: ParkingSpace on the database.
-2023-02-16 06:59:07       14                   ERROR                failed to update entity: ParkingSpace on the database.
-2023-02-16 06:59:07       15                   ERROR                failed to update entity: ParkingSpace on the database.
-2023-02-16 06:59:07       16                   ERROR                failed to update entity: ParkingSpace on the database.
-2023-02-16 06:59:07       17                   ERROR                failed to update entity: ParkingSpace on the database.
-2023-02-16 06:59:07       18                   ERROR                failed to update entity: ParkingSpace on the database.
-2023-02-16 06:59:07       19                   ERROR                failed to update entity: ParkingSpace on the database.
-2023-02-16 06:59:07       20                   ERROR                failed to update entity: ParkingSpace on the database.
-2023-02-16 06:59:07       21                   ERROR                failed to update entity: ParkingSpace on the database.
-2023-02-16 06:59:07       22                   ERROR                failed to update entity: ParkingSpace on the database.
-2023-02-16 06:59:07       23                   ERROR                failed to update entity: ParkingSpace on the database.
-2023-02-16 06:59:07       24                   ERROR                failed to update entity: ParkingSpace on the database.
-2023-02-16 06:59:07       25                   ERROR                failed to update entity: ParkingSpace on the database.
-2023-02-16 06:59:07       26                   ERROR                failed to update entity: ParkingSpace on the database.
-2023-02-16 06:59:07       27                   ERROR                failed to update entity: ParkingSpace on the database.
-2023-02-16 06:59:07       28                   ERROR                failed to update entity: ParkingSpace on the database.
-2023-02-16 06:59:07       29                   ERROR                failed to update entity: ParkingSpace on the database.
-2023-02-16 06:59:07       30                   ERROR                failed to update entity: ParkingSpace on the database.
-2023-02-16 06:59:07       31                   ERROR                failed to update entity: ParkingSpace on the database.
-2023-02-16 06:59:07       32                   ERROR                failed to update entity: ParkingSpace on the database.
-2023-02-16 06:59:07       33                   ERROR                failed to update entity: ParkingSpace on the database.
-2023-02-16 06:59:07       34                   ERROR                failed to update entity: ParkingSpace on the database.
-2023-02-16 06:59:07       35                   ERROR                failed to update entity: ParkingSpace on the database.
-2023-02-16 06:59:07       36                   ERROR                failed to update entity: ParkingSpace on the database.
-2023-02-16 06:59:07       37                   ERROR                failed to update entity: ParkingSpace on the database.
-2023-02-16 06:59:07       38                   ERROR                failed to update entity: ParkingSpace on the database.
-2023-02-16 06:59:07       39                   ERROR                failed to update entity: ParkingSpace on the database.
-2023-02-16 06:59:07       40                   ERROR                failed to update entity: ParkingSpace on the database.
-2023-02-16 06:59:07       41                   ERROR                failed to update entity: ParkingSpace on the database.
-2023-02-16 06:59:07       42                   ERROR                failed to update entity: ParkingSpace on the database.
-2023-02-16 06:59:07       43                   ERROR                failed to update entity: ParkingSpace on the database.
-2023-02-16 06:59:07       44                   ERROR                failed to update entity: ParkingSpace on the database.
-2023-02-16 06:59:07       45                   ERROR                failed to update entity: ParkingSpace on the database.
-2023-02-16 06:59:07       46                   ERROR                failed to update entity: ParkingSpace on the database.
-2023-02-16 06:59:07       47                   ERROR                failed to update entity: ParkingSpace on the database.
-2023-02-16 06:59:07       48                   ERROR                failed to update entity: ParkingSpace on the database.
-2023-02-16 06:59:07       49                   ERROR                failed to update entity: ParkingSpace on the database.
-2023-02-16 06:59:07       50                   ERROR                failed to update entity: ParkingSpace on the database.
-2023-02-16 06:59:07       51                   ERROR                failed to update entity: ParkingSpace on the database.
-2023-02-16 06:59:07       52                   ERROR                failed to update entity: ParkingSpace on the database.
-2023-02-16 06:59:07       53                   ERROR                failed to update entity: ParkingSpace on the database.
-2023-02-16 06:59:07       54                   ERROR                failed to update entity: ParkingSpace on the database.
-2023-02-16 06:59:07       55                   ERROR                failed to update entity: ParkingSpace on the database.
-2023-02-16 06:59:07       56                   ERROR                failed to update entity: ParkingSpace on the database.
-2023-02-16 06:59:45       57                   ERROR                failed to get all entities: Reservation from the database.
+2023-02-16 12:35:25       1                    INFO                 a new entity added to the database. entity: Office, id: 1
+2023-02-16 12:35:25       2                    INFO                 a list of entities added to the database. entities: ParkingLot, ids: [2, 3, 4, 5]
+2023-02-16 12:35:25       3                    INFO                 a list of entities added to the database. entities: Employee, ids: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+2023-02-16 12:35:25       4                    INFO                 a list of entities added to the database. entities: Customer, ids: [1, 2, 3, 4, 5, 6]
+2023-02-16 12:35:25       5                    INFO                 a list of entities added to the database. entities: Vehicle, ids: [1, 2, 3, 4, 5, 6, 7]
+2023-02-16 12:35:25       6                    INFO                 a list of entities added to the database. entities: Subscription, ids: [1, 2, 3]
+2023-02-16 12:35:25       7                    INFO                 a list of entities added to the database. entities: Reservation, ids: [1, 2, 3, 4, 5]
+2023-02-16 12:35:25       8                    INFO                 a list of entities added to the database. entities: Complaint, ids: [1, 2]
+2023-02-16 12:35:25       9                    INFO                 a list of entities added to the database. entities: DailyStatistics, ids: [1, 2, 3, 4]
+2023-02-16 12:35:53       10                   INFO                 a new entity added to the database. entity: Vehicle, id: 8
+2023-02-16 12:35:53       11                   INFO                 a new entity added to the database. entity: Reservation, id: 6
+2023-02-16 12:35:53       12                   ERROR                failed to update entity: ParkingSpace on the database.
+2023-02-16 12:35:53       13                   ERROR                failed to update entity: ParkingSpace on the database.
+2023-02-16 12:35:53       14                   ERROR                failed to update entity: ParkingSpace on the database.
+2023-02-16 12:35:53       15                   ERROR                failed to update entity: ParkingSpace on the database.
+2023-02-16 12:35:53       16                   ERROR                failed to update entity: ParkingSpace on the database.
+2023-02-16 12:35:53       17                   ERROR                failed to update entity: ParkingSpace on the database.
+2023-02-16 12:35:53       18                   ERROR                failed to update entity: ParkingSpace on the database.
+2023-02-16 12:35:53       19                   ERROR                failed to update entity: ParkingSpace on the database.
+2023-02-16 12:35:53       20                   ERROR                failed to update entity: ParkingSpace on the database.
+2023-02-16 12:35:53       21                   ERROR                failed to update entity: ParkingSpace on the database.
+2023-02-16 12:35:53       22                   ERROR                failed to update entity: ParkingSpace on the database.
+2023-02-16 12:35:53       23                   ERROR                failed to update entity: ParkingSpace on the database.
+2023-02-16 12:35:53       24                   ERROR                failed to update entity: ParkingSpace on the database.
+2023-02-16 12:35:53       25                   ERROR                failed to update entity: ParkingSpace on the database.
+2023-02-16 12:35:53       26                   ERROR                failed to update entity: ParkingSpace on the database.
+2023-02-16 12:35:53       27                   ERROR                failed to update entity: ParkingSpace on the database.
+2023-02-16 12:35:53       28                   ERROR                failed to update entity: ParkingSpace on the database.
+2023-02-16 12:35:53       29                   ERROR                failed to update entity: ParkingSpace on the database.
+2023-02-16 12:35:53       30                   ERROR                failed to update entity: ParkingSpace on the database.
+2023-02-16 12:35:53       31                   ERROR                failed to update entity: ParkingSpace on the database.
+2023-02-16 12:35:53       32                   ERROR                failed to update entity: ParkingSpace on the database.
+2023-02-16 12:35:53       33                   ERROR                failed to update entity: ParkingSpace on the database.
+2023-02-16 12:35:53       34                   ERROR                failed to update entity: ParkingSpace on the database.
+2023-02-16 12:35:53       35                   ERROR                failed to update entity: ParkingSpace on the database.
+2023-02-16 12:35:53       36                   ERROR                failed to update entity: ParkingSpace on the database.
+2023-02-16 12:35:53       37                   ERROR                failed to update entity: ParkingSpace on the database.
+2023-02-16 12:35:53       38                   ERROR                failed to update entity: ParkingSpace on the database.
+2023-02-16 12:35:53       39                   ERROR                failed to update entity: ParkingSpace on the database.
+2023-02-16 12:35:53       40                   ERROR                failed to update entity: ParkingSpace on the database.
+2023-02-16 12:35:53       41                   ERROR                failed to update entity: ParkingSpace on the database.
+2023-02-16 12:35:53       42                   ERROR                failed to update entity: ParkingSpace on the database.
+2023-02-16 12:35:53       43                   ERROR                failed to update entity: ParkingSpace on the database.
+2023-02-16 12:35:53       44                   ERROR                failed to update entity: ParkingSpace on the database.
+2023-02-16 12:35:53       45                   ERROR                failed to update entity: ParkingSpace on the database.
+2023-02-16 12:35:53       46                   ERROR                failed to update entity: ParkingSpace on the database.
+2023-02-16 12:35:53       47                   ERROR                failed to update entity: ParkingSpace on the database.
+2023-02-16 12:35:53       48                   ERROR                failed to update entity: ParkingSpace on the database.
+2023-02-16 12:35:53       49                   ERROR                failed to update entity: ParkingSpace on the database.
+2023-02-16 12:35:53       50                   ERROR                failed to update entity: ParkingSpace on the database.
+2023-02-16 12:35:53       51                   ERROR                failed to update entity: ParkingSpace on the database.
+2023-02-16 12:35:53       52                   ERROR                failed to update entity: ParkingSpace on the database.
+2023-02-16 12:35:53       53                   ERROR                failed to update entity: ParkingSpace on the database.
+2023-02-16 12:35:53       54                   ERROR                failed to update entity: ParkingSpace on the database.
+2023-02-16 12:35:53       55                   ERROR                failed to update entity: ParkingSpace on the database.
+2023-02-16 12:35:53       56                   ERROR                failed to update entity: ParkingSpace on the database.
+2023-02-16 12:35:55       57                   ERROR                failed to get all entities: ParkingSpace from the database.
+2023-02-16 12:35:55       58                   ERROR                failed to get all entities: Reservation from the database.
+2023-02-16 12:36:25       59                   ERROR                failed to get all entities: Reservation from the database.

@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.text.Text;
 import javafx.util.StringConverter;
+import net.cps.client.App;
 import net.cps.client.CPSClient;
 import net.cps.client.utils.AbstractKioskPageController;
 import net.cps.common.entities.ParkingLot;
@@ -82,10 +83,9 @@ public class KioskReservationsController extends AbstractKioskPageController imp
             vehicleErrorText.setText("Vehicle number must be 8 digits long.");
             return;
         }
-        
+    
+        loader.show();
         currentReservation = null;
-        System.out.println(parkingLotReservations);
-        
         for (Reservation reservation : parkingLotReservations) {
             if (reservation.getCustomer().getEmail().equals(emailText) && reservation.getVehicleNumber().equals(vehicleNumberText) && reservation.getStatus() == ReservationStatus.PENDING) {
                 if (currentReservation == null) {
@@ -97,11 +97,9 @@ public class KioskReservationsController extends AbstractKioskPageController imp
             }
         }
         
-        System.out.println(currentReservation);
-        
-        
         if (currentReservation == null) {
             Platform.runLater(() -> {
+                loader.hide();
                 dialog.clear();
                 dialog.setTitleText("Enter Reservation");
                 dialog.setBodyText("It seems like that you don't have any pending reservation for this parking lot.", "Please check the details you entered and try again.");
@@ -118,6 +116,7 @@ public class KioskReservationsController extends AbstractKioskPageController imp
         }
         if (currentReservation.getArrivalTime().after(Calendar.getInstance().getTime())) {
             Platform.runLater(() -> {
+                loader.hide();
                 dialog.clear();
                 dialog.setTitleText("Enter Reservation");
                 dialog.setBodyText("Your next reservation is not yet due.", "Your next reservation is due at " + currentReservation.getDepartureTimeFormatted() + ".", "Please check your reservations and try again.");
@@ -134,6 +133,7 @@ public class KioskReservationsController extends AbstractKioskPageController imp
         }
         if (currentReservation.getDepartureTime().before(Calendar.getInstance().getTime())) {
             Platform.runLater(() -> {
+                loader.hide();
                 dialog.clear();
                 dialog.setTitleText("Enter Reservation");
                 dialog.setBodyText("Your reservation is already expired.", "Your reservation was due at " + currentReservation.getDepartureTimeFormatted() + ".", "Please check your reservations and try again.");
@@ -156,6 +156,7 @@ public class KioskReservationsController extends AbstractKioskPageController imp
         }
         if (!parkingLot.checkAvailability(currentReservation)) {
             Platform.runLater(() -> {
+                loader.hide();
                 dialog.clear();
                 dialog.setTitleText("Enter Reservation");
                 dialog.setBodyText("We are terribly sorry, but the parking lot is currently full.", "If we caused you any damage, please file a complaint, and we will do our best to compensate you.", "Thank you for your understanding.");
@@ -169,11 +170,9 @@ public class KioskReservationsController extends AbstractKioskPageController imp
                 dialog.open();
             });
         }
-    
-        parkingLot.insertVehicle(currentReservation);
-        CPSClient.sendRequestToServer(RequestType.UPDATE, Entities.PARKING_LOT.getTableName(), null, parkingLot, null);
         
-        // parking lot - parking space - reservation - vehicle
+        parkingLot.insertVehicle(currentReservation);
+        CPSClient.sendRequestToServer(RequestType.UPDATE, Entities.PARKING_SPACE.getTableName(), null, parkingLot.getParkingSpaces(), this::onUpdateParkingLot);
     }
     
     
@@ -186,11 +185,36 @@ public class KioskReservationsController extends AbstractKioskPageController imp
     
     @RequestCallback.Method
     private void onGetReservations (RequestMessage request, ResponseMessage response) {
-        System.out.println("onGetReservations " + response.getData());
-        
         if (response.getStatus() == ResponseStatus.SUCCESS) {
             ArrayList<Reservation> reservations = (ArrayList<Reservation>) response.getData();
-            parkingLotReservations = new ArrayList<>(reservations.stream().filter(reservation -> reservation.getParkingLot().getId().equals(parkingLot.getId())).toList());
+            parkingLotReservations = new ArrayList<>(reservations.stream().filter(reservation -> reservation.getParkingLot().getName().equals(parkingLot.getName())).toList());
+            parkingLot.setReservations(parkingLotReservations);
+        }
+    }
+    
+    @RequestCallback.Method
+    private void onUpdateParkingLot (RequestMessage request, ResponseMessage response) {
+        if (response.getStatus() == ResponseStatus.FINISHED) {
+            Platform.runLater(() -> {
+                loader.hide();
+                dialog.clear();
+                
+                dialog.setTitleText("Enter Parking Lot");
+                dialog.setBodyText("Your reservation has been created successfully.", " ", "You can now leave your vehicle in the parking lot entrance, and our smart robot will take care of the rest.", "Thank you for choosing us!");
+                MFXButton okBtn = new MFXButton("OK");
+                okBtn.getStyleClass().add("button-primary-filled");
+                okBtn.setOnAction(event -> {
+                    dialog.close();
+                    try {
+                        App.setPage("kiosk/KioskExit.fxml");
+                    }
+                    catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+                dialog.setActionButtons(okBtn);
+                dialog.open();
+            });
         }
     }
     

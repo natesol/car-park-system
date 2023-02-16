@@ -17,8 +17,10 @@ import javafx.scene.text.TextFlow;
 import net.cps.client.App;
 import net.cps.client.CPSClient;
 import net.cps.client.events.KioskEnterEvent;
+import net.cps.common.entities.Customer;
 import net.cps.common.entities.ParkingLot;
 import net.cps.common.entities.ParkingSpace;
+import net.cps.common.entities.Vehicle;
 import net.cps.common.utils.Entities;
 import net.cps.common.utils.RequestType;
 import net.cps.common.utils.ResponseStatus;
@@ -159,6 +161,7 @@ public abstract class AbstractKioskPageController extends AbstractPageController
     
     @Subscribe
     public void onKioskEnterEvent (@NotNull KioskEnterEvent event) {
+        this.initV();
         this.parkingLot = event.getParkingLot();
         App.setEntity(parkingLot);
         
@@ -175,5 +178,46 @@ public abstract class AbstractKioskPageController extends AbstractPageController
     
     /* ----- Utility Methods ---------------------------------------- */
     
-    // ...
+    public void initV () {
+        App.allCustomers.add(new Customer("netanelshlomo@gmail.com", "Netanel", "Shlomo", "123456"));
+        App.allCustomers.get(0).setId(1);
+        App.allCustomers.add(new Customer("john.doe@gmail.com", "John", "Doe", "123456"));
+        App.allCustomers.get(1).setId(2);
+        App.allCustomers.add(new Customer("jane.doe@gmail.com", "Jane", "Doe", "123456"));
+        App.allCustomers.get(2).setId(3);
+        App.allCustomers.add(new Customer("bob.smith@gmail.com", "Bob", "Smith", "123456"));
+        App.allCustomers.get(3).setId(4);
+        App.allCustomers.add(new Customer("alice.smith@gmail.com", "Alice", "Smith", "123456"));
+        App.allCustomers.get(4).setId(5);
+        App.allCustomers.add(new Customer("foo.bar@gmail.com", "Foo", "Bar", "123456"));
+    
+        Vehicle vehicle = new Vehicle("12345678", App.allCustomers.get(0));
+        vehicle.setId(1);
+        App.allVehicles.add(vehicle);
+        App.allCustomers.get(0).addVehicle(vehicle);
+        vehicle = new Vehicle("87654321", App.allCustomers.get(0));
+        vehicle.setId(2);
+        App.allVehicles.add(vehicle);
+        App.allCustomers.get(0).addVehicle(vehicle);
+        vehicle = new Vehicle("14725836", App.allCustomers.get(1));
+        vehicle.setId(3);
+        App.allVehicles.add(vehicle);
+        App.allCustomers.get(1).addVehicle(vehicle);
+        vehicle = new Vehicle("96385274", App.allCustomers.get(2));
+        vehicle.setId(4);
+        App.allVehicles.add(vehicle);
+        App.allCustomers.get(2).addVehicle(vehicle);
+        vehicle = new Vehicle("25836974", App.allCustomers.get(3));
+        vehicle.setId(5);
+        App.allVehicles.add(vehicle);
+        App.allCustomers.get(3).addVehicle(vehicle);
+        vehicle = new Vehicle("74185296", App.allCustomers.get(4));
+        vehicle.setId(6);
+        App.allVehicles.add(vehicle);
+        App.allCustomers.get(4).addVehicle(vehicle);
+        vehicle = new Vehicle("85274196", App.allCustomers.get(5));
+        vehicle.setId(7);
+        App.allVehicles.add(vehicle);
+        App.allCustomers.get(5).addVehicle(vehicle);
+    }
 }

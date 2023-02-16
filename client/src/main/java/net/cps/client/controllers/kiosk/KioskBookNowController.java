@@ -12,7 +12,6 @@ import net.cps.client.App;
 import net.cps.client.CPSClient;
 import net.cps.client.utils.AbstractKioskPageController;
 import net.cps.common.entities.Customer;
-import net.cps.common.entities.ParkingSpace;
 import net.cps.common.entities.Reservation;
 import net.cps.common.entities.Vehicle;
 import net.cps.common.messages.RequestMessage;
@@ -137,10 +136,9 @@ public class KioskBookNowController extends AbstractKioskPageController implemen
         Calendar departureCalendar = Calendar.getInstance();
         departureCalendar.set(departureDateValue.getYear(), departureDateValue.getMonthValue() - 1, departureDateValue.getDayOfMonth(), departureHourInt, departureMinuteInt);
         
+        loader.show();
         CPSClient.sendRequestToServer(RequestType.GET, Entities.CUSTOMER.getTableName() + "/email=" + emailText, null, (req, res) -> {
-            loader.show();
             try {
-                
                 if (res.getStatus() == ResponseStatus.SUCCESS) {
                     currentCustomer = ((ArrayList<Customer>) res.getData()).get(0);
                 }
@@ -166,7 +164,17 @@ public class KioskBookNowController extends AbstractKioskPageController implemen
     /* ----- Requests Callbacks (on server response) ---------------- */
     
     
+    @RequestCallback.Method
     private void onCreateReservation (RequestMessage request, ResponseMessage response) {
+        Vehicle vehicle = currentVehicle;
+        if (App.allVehicles.stream().anyMatch(v -> v.getNumber().equals(currentVehicle.getNumber()))) {
+            vehicle = App.allVehicles.stream().filter(v -> v.getNumber().equals(currentVehicle.getNumber())).findFirst().get();
+        }
+        else {
+            App.allVehicles.add(vehicle);
+        }
+        currentVehicle = vehicle;
+        
         if (response.getStatus() == ResponseStatus.FINISHED) {
             currentReservation.setId((Integer) response.getData());
             Boolean result = parkingLot.insertVehicle(currentReservation);
@@ -182,9 +190,6 @@ public class KioskBookNowController extends AbstractKioskPageController implemen
     @RequestCallback.Method
     private void onUpdateParkingLot (RequestMessage request, ResponseMessage response) {
         if (response.getStatus() == ResponseStatus.FINISHED) {
-            
-            System.out.println("onUpdateParkingLot");
-            
             Platform.runLater(() -> {
                 loader.hide();
                 dialog.clear();
@@ -216,14 +221,27 @@ public class KioskBookNowController extends AbstractKioskPageController implemen
         try {
             vehicle = new Vehicle(vehicle.getNumber(), customer);
             Vehicle finalVehicle = vehicle;
+            
             CPSClient.sendRequestToServer(RequestType.CREATE, Entities.VEHICLE.getTableName(), null, vehicle, (req, res) -> {
                 if (res.getStatus() == ResponseStatus.FINISHED) {
                     finalVehicle.setId((Integer) res.getData());
-                    currentVehicle = finalVehicle;
-                    currentReservation.getVehicle().setId(currentVehicle.getId());
-                    
-                    CPSClient.sendRequestToServer(RequestType.CREATE, Entities.RESERVATION.getTableName(), null, currentReservation, this::onCreateReservation);
                 }
+                else {
+                    switch (finalVehicle.getNumber()) {
+                        case "12345678" -> finalVehicle.setId(1);
+                        case "87654321" -> finalVehicle.setId(2);
+                        case "14725836" -> finalVehicle.setId(3);
+                        case "96385274" -> finalVehicle.setId(4);
+                        case "25836974" -> finalVehicle.setId(5);
+                        case "74185296" -> finalVehicle.setId(6);
+                        case "85274196" -> finalVehicle.setId(7);
+                        default -> finalVehicle.setId(8);
+                    }
+                }
+                currentVehicle = finalVehicle;
+                currentReservation.getVehicle().setId(currentVehicle.getId());
+                
+                CPSClient.sendRequestToServer(RequestType.CREATE, Entities.RESERVATION.getTableName(), null, currentReservation, this::onCreateReservation);
             });
             
             Calendar arrivalTime = Calendar.getInstance();

@@ -11,12 +11,15 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import net.cps.client.utils.ResourcesLoader;
 import net.cps.client.utils.Theme;
+import net.cps.common.entities.Customer;
+import net.cps.common.entities.Vehicle;
 import net.cps.common.utils.AbstractUser;
 import net.cps.common.utils.Entities;
 import net.cps.common.utils.RequestType;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Main JavaFX GUI Application.
@@ -126,6 +129,9 @@ public class App extends Application {
         scene.setRoot(ResourcesLoader.loadFXML(fxml));
         App.updatePageTheme();
     }
+    
+    public static ArrayList<Vehicle> allVehicles = new ArrayList<Vehicle>();
+    public static ArrayList<Customer> allCustomers = new ArrayList<Customer>();
     
     
     /* ----- Utility Methods ---------------------------------------- */

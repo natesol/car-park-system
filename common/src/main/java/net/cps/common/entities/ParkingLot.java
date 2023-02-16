@@ -290,7 +290,11 @@ public class ParkingLot extends Organization implements Serializable {
     
     public Boolean removeVehicle (@NotNull Vehicle vehicle) {
         this.robot = new Robot(this);
-        return this.robot.remove(vehicle);
+        Boolean result = this.robot.remove(vehicle);
+        if (result) {
+            this.setParkingSpaces(this.robot.fromArrayToList());
+        }
+        return result;
     }
     
     public Boolean removeReservation (Reservation reservation) {
