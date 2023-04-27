@@ -37,8 +37,29 @@
               <goal>compile</goal>
             </goals>
             <configuration>
-              <sourceDirectory>${project.basedir}/src/main/resources/net/cps/client/styles/less</sourceDirectory>
-              <outputDirectory>${project.basedir}/src/main/resources/net/cps/client/styles/css</outputDirectory>
+              <sourceDirectory>${project.basedir}/src/main/resources/net/cps/client/styles/less/pages</sourceDirectory>
+              <outputDirectory>${project.basedir}/src/main/resources/net/cps/client/styles/css/pages</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>com.samaxes.maven</groupId>
+        <artifactId>minify-maven-plugin</artifactId>
+        <version>1.7.6</version>
+        <executions>
+          <execution>
+            <id>default-minify</id>
+            <goals>
+              <goal>minify</goal>
+            </goals>
+            <configuration>
+              <webappSourceDir>${project.basedir}/src/main/resources/net/cps/client/</webappSourceDir>
+              <cssSourceDir>styles/css/pages/</cssSourceDir>
+              <cssSourceIncludes>
+                <cssSourceInclude>**.css</cssSourceInclude>
+              </cssSourceIncludes>
+              <cssOutputDir>styles/css/pages/</cssOutputDir>
             </configuration>
           </execution>
         </executions>

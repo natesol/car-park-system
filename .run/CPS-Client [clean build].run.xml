@@ -12,7 +12,7 @@
                         <list>
                             <option value="clean" />
                             <option value="lesscss:compile" />
-<!--                            <option value="lesscss:minify" />-->
+<!--                            <option value="minify:minify" />-->
                             <option value="install" />
                         </list>
                     </option>
