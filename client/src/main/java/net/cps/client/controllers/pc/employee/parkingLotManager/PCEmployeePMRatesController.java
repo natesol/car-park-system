@@ -1,7 +1,10 @@
 package net.cps.client.controllers.pc.employee.parkingLotManager;
 
 import javafx.fxml.Initializable;
+import net.cps.client.CPSClient;
 import net.cps.client.utils.AbstractPCEmployeePageController;
+import net.cps.common.utils.Entities;
+import net.cps.common.utils.RequestType;
 
 import java.net.URL;
 import java.util.ResourceBundle;

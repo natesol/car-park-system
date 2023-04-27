@@ -54,6 +54,12 @@ public class IndexController implements Initializable {
     public void initialize (URL url, ResourceBundle resourceBundle) {
         Platform.runLater(App::updateAppTheme);
         CPSClient.sendRequestToServer(RequestType.GET, Entities.PARKING_LOT.getTableName(), this::onGetAllParkingLot);
+    
+        CPSClient.sendRequestToServer(RequestType.UPDATE, Entities.PARKING_SPACE.getTableName(), (req, res) -> {
+            if (res.getStatus() == ResponseStatus.SUCCESS) {
+                System.out.println("Parking spaces updated successfully");
+            }
+        });
     }
     
     

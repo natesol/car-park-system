@@ -150,17 +150,3 @@ public class CPSClient extends AbstractClient {
     }
     
 }
-
-//public static String generateRandomString() {
-//    StringBuilder sb = new StringBuilder();
-//    for (int i = 0; i < 6; i++) {
-//        int randomNum = (int) (Math.random() * 36);
-//        if (randomNum < 10) {
-//            sb.append(randomNum);
-//        } else {
-//            sb.append((char) (randomNum + 87));
-//        }
-//    }
-//    return sb.toString();
-//}
-
