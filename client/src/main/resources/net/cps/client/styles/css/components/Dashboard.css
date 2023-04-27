@@ -7,16 +7,133 @@
 /* ----- Typography ------------------------------------------------- */
 /* ----- Border Radius ---------------------------------------------- */
 /* ----- Color Pallet ----------------------------------------------- */
-/* ----- Shadows ---------------------------------------------------- */
 /* ------------------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------------ */
 /* ---- Application Color Schemes ----------------------------------------------------------------- */
-/* ----- General Colors --------------------------------------------- */
-/* ----- Light Color Scheme ----------------------------------------- */
-/* - App Colors - */
-/* - Components Colors - */
+/* ----- Color Schemes ---------------------------------------------- */
+/* ----- App Base Colors ------------------- */
+/* ----- Components Colors - Light --------- */
+/* Root */
+/* Body */
+/* Tooltips */
+/* Logo */
+/* Sheet */
 /* Buttons */
+/* Inputs Fields */
+/* ----- Components Colors - Dark ---------- */
+/* Root */
+/* Body */
+/* Tooltips */
+/* Logo */
+/* Sheet */
+/* Buttons */
+/* Inputs Fields */
+/* ------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------ */
+/* ---- Component Style - Sheet ------------------------------------------------------------------- */
+.sheet {
+  -fx-border-width: 1px !important;
+  -fx-border-style: solid !important;
+  -fx-background-radius: 16px !important;
+  -fx-border-radius: 16px !important;
+  -fx-padding: 20px !important;
+}
+.sheet .sheet-text {
+  -fx-font-family: "Poppins", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Ubuntu", "Bitstream Vera Sans", "Liberation Sans", "Arial", "sans-serif";
+}
+.sheet .table {
+  -fx-border-width: 1px !important;
+  -fx-border-style: solid !important;
+  -fx-background-radius: 8px !important;
+  -fx-border-radius: 8px !important;
+  -mfx-auto-clip: true !important;
+}
+.theme-light .sheet {
+  -fx-background-color: #ffffff !important;
+  -fx-border-color: #eaeef2 !important;
+  -fx-text-fill: #424a53 !important;
+  -fx-fill: #424a53 !important;
+}
+.theme-light .sheet .sheet-text {
+  -fx-text-fill: #424a53;
+  -fx-fill: #424a53;
+}
+.theme-light .sheet .sheet-text.dim {
+  -fx-text-fill: #6e7781;
+  -fx-fill: #6e7781;
+}
+.theme-light .sheet .sheet-text.emp {
+  -fx-text-fill: #32383f;
+  -fx-fill: #32383f;
+}
+.theme-light .sheet .sheet-text.disabled {
+  -fx-text-fill: #afb8c1;
+  -fx-fill: #afb8c1;
+}
+.theme-light .sheet .sheet-shape {
+  -fx-stroke: #424a53;
+  -fx-fill: #424a53;
+}
+.theme-light .sheet .sheet-shape.dim {
+  -fx-stroke: #6e7781;
+  -fx-fill: #6e7781;
+}
+.theme-light .sheet .sheet-shape.emp {
+  -fx-stroke: #32383f;
+  -fx-fill: #32383f;
+}
+.theme-light .sheet .sheet-shape.disabled {
+  -fx-stroke: #afb8c1;
+  -fx-fill: #afb8c1;
+}
+.theme-light .sheet .table {
+  -fx-background-color: #ffffff !important;
+  -fx-border-color: #eaeef2 !important;
+}
+.theme-dark .sheet {
+  -fx-background-color: #141517 !important;
+  -fx-border-color: #2c2e33 !important;
+  -fx-text-fill: #a6a7ab !important;
+  -fx-fill: #a6a7ab !important;
+}
+.theme-dark .sheet .sheet-text {
+  -fx-text-fill: #a6a7ab;
+  -fx-fill: #a6a7ab;
+}
+.theme-dark .sheet .sheet-text.dim {
+  -fx-text-fill: #909296;
+  -fx-fill: #909296;
+}
+.theme-dark .sheet .sheet-text.emp {
+  -fx-text-fill: #c1c2c5;
+  -fx-fill: #c1c2c5;
+}
+.theme-dark .sheet .sheet-text.disabled {
+  -fx-text-fill: #5c5f66;
+  -fx-fill: #5c5f66;
+}
+.theme-dark .sheet .sheet-shape {
+  -fx-stroke: #a6a7ab;
+  -fx-fill: #a6a7ab;
+}
+.theme-dark .sheet .sheet-shape.dim {
+  -fx-stroke: #909296;
+  -fx-fill: #909296;
+}
+.theme-dark .sheet .sheet-shape.emp {
+  -fx-stroke: #c1c2c5;
+  -fx-fill: #c1c2c5;
+}
+.theme-dark .sheet .sheet-shape.disabled {
+  -fx-stroke: #5c5f66;
+  -fx-fill: #5c5f66;
+}
+.theme-dark .sheet .table {
+  -fx-background-color: #141517 !important;
+  -fx-border-color: #2c2e33 !important;
+}
 /* ------------------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------------ */
@@ -24,7 +141,7 @@
 .logo {
   -fx-alignment: center;
   -fx-max-width: 100%;
-  -fx-font-family: 'Poppins Black', system-ui, -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Ubuntu', 'Bitstream Vera Sans', 'Liberation Sans', Arial, sans-serif !important;
+  -fx-font-family: "Poppins Black", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Ubuntu", "Bitstream Vera Sans", "Liberation Sans", "Arial", "sans-serif" !important;
   -fx-font-weight: 900 !important;
   -fx-min-height: 1.8em !important;
   -fx-pef-height: 1.8em !important;
@@ -39,7 +156,7 @@
 .logo .logo-top,
 .logo .logo-bottom {
   -fx-alignment: center;
-  -fx-font-family: 'Poppins Black', system-ui, -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Ubuntu', 'Bitstream Vera Sans', 'Liberation Sans', Arial, sans-serif !important;
+  -fx-font-family: "Poppins Black", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Ubuntu", "Bitstream Vera Sans", "Liberation Sans", "Arial", "sans-serif" !important;
   -fx-font-weight: 900 !important;
   -fx-min-height: 0.9em !important;
   -fx-pef-height: 0.9em !important;
@@ -47,164 +164,641 @@
   -fx-translate-y: -0.45em;
 }
 .logo .logo-top {
-  -fx-fill: linear-gradient(to bottom right, #64b5f6, #2196f3, #0d47a1) !important;
   -fx-translate-y: 0.33em;
 }
 .logo .logo-bottom {
-  -fx-fill: linear-gradient(to bottom right, #6e7781, #24292f) !important;
   -fx-translate-y: -0.33em;
+}
+.theme-light .logo .logo-top {
+  -fx-fill: linear-gradient(to bottom right, #64b5f6, #2196f3, #0d47a1) !important;
+}
+.theme-light .logo .logo-bottom {
+  -fx-fill: linear-gradient(to bottom left, #24292f, #8c959f) !important;
+}
+.theme-dark .logo .logo-top {
+  -fx-fill: linear-gradient(to bottom right, #42a5f5, #1565c0, #0d47a1) !important;
+}
+.theme-dark .logo .logo-bottom {
+  -fx-fill: linear-gradient(to bottom right, #c1c2c5, #5c5f66, #373a40) !important;
 }
 /* ------------------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------------ */
 /* ---- Component Style - Buttons ----------------------------------------------------------------- */
-/* - Button Base Styles - */
+/* - Button Control Base Styles - */
 .button {
-  -fx-font-family: 'Poppins Bold', system-ui, -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Ubuntu', 'Bitstream Vera Sans', 'Liberation Sans', Arial, sans-serif !important;
+  -fx-font-family: "Poppins Bold", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Ubuntu", "Bitstream Vera Sans", "Liberation Sans", "Arial", "sans-serif" !important;
   -fx-font-weight: 700 !important;
   -fx-font-size: 16px;
   -fx-padding: 0.5em 1.3em !important;
-  -fx-background-radius: 16px !important;
-  -fx-border-radius: 16px !important;
+  -fx-background-radius: 8px !important;
+  -fx-border-radius: 8px !important;
   -fx-cursor: hand;
 }
-.button:hover,
-.button:focused,
-.button:focus-within {
-  -fx-translate-y: -1px !important;
-}
 .button:pressed {
-  -fx-translate-y: 0 !important;
-  -fx-scale-shape: 0.985 !important;
+  -fx-translate-y: 1px !important;
   -fx-scale-x: 0.985 !important;
   -fx-scale-y: 0.985 !important;
 }
 .button:pressed .text,
 .button:pressed .glyph-icon {
   -fx-translate-y: 0 !important;
-  -fx-scale-shape: 1.01522842639594 !important;
   -fx-scale-x: 1.01522842639594 !important;
   -fx-scale-y: 1.01522842639594 !important;
 }
 .button Text,
 .button .text {
-  -fx-font-family: 'Poppins Bold', system-ui, -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Ubuntu', 'Bitstream Vera Sans', 'Liberation Sans', Arial, sans-serif !important;
+  -fx-font-family: "Poppins Bold", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Ubuntu", "Bitstream Vera Sans", "Liberation Sans", "Arial", "sans-serif" !important;
   -fx-font-weight: 700 !important;
   -fx-font-size: 1em !important;
   -fx-text-fill: inherit !important;
   -fx-fill: inherit !important;
-  -fx-font-smoothing-type: black !important;
+  -fx-font-smoothing-type: gray !important;
 }
 .button .mfx-font-icon,
 .button .glyph-icon {
-  -fx-font-size: 1em !important;
-  -fx-font-weight: inherit !important;
   -fx-text-fill: inherit !important;
   -fx-fill: inherit !important;
   -mfx-color: inherit !important;
-  -fx-font-smoothing-type: black !important;
   -mfx-size: 16px;
   -fx-stroke-width: 0 !important;
 }
 .button .mfx-ripple-generator,
 .button .mfx-ripple-generator {
-  -mfx-ripple-color: rgba(0, 0, 0, 0.2) !important;
-  -mfx-ripple-radius: 16px !important;
+  -mfx-ripple-radius: 8px !important;
   -mfx-ripple-radius-inset: 0 !important;
   -mfx-ripple-radius-outset: 0 !important;
   -mfx-auto-clip: true !important;
-  -fx-background-radius: 16px !important;
-  -fx-border-radius: 16px !important;
+  -fx-background-radius: 8px !important;
+  -fx-border-radius: 8px !important;
 }
-/* - Basic Button - */
-.button {
-  -fx-background-color: rgba(0, 0, 0, 0) !important;
+.theme-light .button {
+  -fx-background-color: transparent !important;
+  -fx-border-color: #424a53 !important;
+  -fx-border-width: 1px !important;
+  -fx-border-style: solid !important;
   -fx-text-fill: #424a53 !important;
   -fx-fill: #424a53 !important;
   -mfx-color: #424a53 !important;
-  -fx-border-color: #57606a !important;
+}
+.theme-light .button:hover,
+.theme-light .button:focused,
+.theme-light .button:focus-within {
+  -fx-background-color: rgba(66, 74, 83, 0.3) !important;
+  -fx-border-color: #424a53 !important;
+  -fx-text-fill: #424a53 !important;
+  -fx-fill: #424a53 !important;
+  -mfx-color: #424a53 !important;
+}
+.theme-light .button .mfx-font-icon,
+.theme-light .button .glyph-icon {
+  -mfx-color: #424a53 !important;
+}
+.theme-light .button .mfx-ripple-generator,
+.theme-light .button .mfx-ripple-generator {
+  -mfx-ripple-color: rgba(66, 74, 83, 0.2) !important;
+}
+.theme-dark .button {
+  -fx-background-color: transparent !important;
+  -fx-border-color: #909296 !important;
   -fx-border-width: 1px !important;
   -fx-border-style: solid !important;
+  -fx-text-fill: #909296 !important;
+  -fx-fill: #909296 !important;
+  -mfx-color: #909296 !important;
 }
-.button:hover,
-.button:focused,
-.button:focus-within {
-  -fx-background-color: rgba(0, 0, 0, 0.1) !important;
-  -fx-border-color: #57606a !important;
+.theme-dark .button:hover,
+.theme-dark .button:focused,
+.theme-dark .button:focus-within {
+  -fx-background-color: rgba(144, 146, 150, 0.15) !important;
+  -fx-border-color: #909296 !important;
+  -fx-text-fill: #909296 !important;
+  -fx-fill: #909296 !important;
+  -mfx-color: #909296 !important;
 }
-.button .mfx-font-icon,
-.button .glyph-icon {
-  -mfx-color: #424a53 !important;
+.theme-dark .button .mfx-font-icon,
+.theme-dark .button .glyph-icon {
+  -mfx-color: #909296 !important;
+}
+.theme-dark .button .mfx-ripple-generator,
+.theme-dark .button .mfx-ripple-generator {
+  -mfx-ripple-color: rgba(5, 5, 5, 0.35) !important;
 }
 /* - Icon Button - */
 .button-icon {
   -fx-content-display: graphic-only !important;
   -fx-background-color: transparent !important;
-  -fx-text-fill: #424a53 !important;
-  -fx-fill: #424a53 !important;
-  -mfx-color: #424a53 !important;
   -fx-border-color: transparent !important;
   -fx-border-width: 1px !important;
   -fx-border-style: solid !important;
   -fx-background-radius: 9999999px !important;
   -fx-border-radius: 9999999px !important;
   -fx-padding: 0.5em 0.6em !important;
-  -fx-alignment: center !important;
   -fx-text-alignment: center !important;
+  -fx-alignment: center !important;
 }
 .button-icon:hover,
 .button-icon:focused,
 .button-icon:focus-within {
-  -fx-background-color: rgba(0, 0, 0, 0.1) !important;
   -fx-border-color: transparent !important;
-}
-.button-icon .mfx-font-icon,
-.button-icon .glyph-icon {
-  -mfx-color: #424a53 !important;
-  -fx-fill: #424a53 !important;
 }
 .button-icon .glyph-icon {
   -fx-font-size: 1.3em !important;
   -fx-min-width: 1.5em !important;
   -fx-pref-width: 1.5em !important;
+  -fx-max-width: 1.5em !important;
   -fx-min-height: 1.5em !important;
   -fx-pref-height: 1.5em !important;
+  -fx-max-height: 1.5em !important;
+  -fx-wrapping-width: 1.5em !important;
+  -fx-text-alignment: center !important;
 }
-/* - Primary Button - */
-.button-primary {
-  -fx-background-color: linear-gradient(to bottom right, #64b5f6, #2196f3, #0d47a1) !important;
+.theme-light .button-icon {
+  -fx-text-fill: #6e7781 !important;
+  -fx-fill: #6e7781 !important;
+  -mfx-color: #6e7781 !important;
+}
+.theme-light .button-icon:hover,
+.theme-light .button-icon:focused,
+.theme-light .button-icon:focus-within {
+  -fx-background-color: rgba(110, 119, 129, 0.2) !important;
+}
+.theme-light .button-icon .mfx-font-icon,
+.theme-light .button-icon .glyph-icon {
+  -mfx-color: #6e7781 !important;
+  -fx-fill: #6e7781 !important;
+}
+.theme-dark .button-icon {
+  -fx-text-fill: #909296 !important;
+  -fx-fill: #909296 !important;
+  -mfx-color: #909296 !important;
+}
+.theme-dark .button-icon:hover,
+.theme-dark .button-icon:focused,
+.theme-dark .button-icon:focus-within {
+  -fx-background-color: rgba(144, 146, 150, 0.2) !important;
+}
+.theme-dark .button-icon .mfx-font-icon,
+.theme-dark .button-icon .glyph-icon {
+  -mfx-color: #909296 !important;
+  -fx-fill: #909296 !important;
+}
+/* - Basic Buttons - */
+.theme-light .button-base-outlined {
+  -fx-background-color: transparent !important;
+  -fx-border-color: #6e7781 !important;
+  -fx-border-width: 1px !important;
+  -fx-border-style: solid !important;
+  -fx-text-fill: #6e7781 !important;
+  -fx-fill: #6e7781 !important;
+  -mfx-color: #6e7781 !important;
+}
+.theme-light .button-base-outlined:hover,
+.theme-light .button-base-outlined:focused,
+.theme-light .button-base-outlined:focus-within {
+  -fx-background-color: #6e7781 !important;
+  -fx-border-color: #6e7781 !important;
   -fx-text-fill: #ffffff !important;
   -fx-fill: #ffffff !important;
   -mfx-color: #ffffff !important;
-  -fx-border-color: linear-gradient(to bottom right, #64b5f6, #2196f3, #0d47a1) !important;
-  -fx-border-width: 0 !important;
+}
+.theme-light .button-base-outlined .mfx-font-icon,
+.theme-light .button-base-outlined .glyph-icon {
+  -mfx-color: #6e7781 !important;
+}
+.theme-light .button-base-filled {
+  -fx-background-color: #6e7781 !important;
+  -fx-border-color: #6e7781 !important;
+  -fx-border-width: 1px !important;
   -fx-border-style: solid !important;
+  -fx-text-fill: #ffffff !important;
+  -fx-fill: #ffffff !important;
+  -mfx-color: #ffffff !important;
 }
-.button-primary:hover,
-.button-primary:focused,
-.button-primary:focus-within {
+.theme-light .button-base-filled:hover,
+.theme-light .button-base-filled:focused,
+.theme-light .button-base-filled:focus-within {
+  -fx-background-color: #424a53 !important;
+  -fx-border-color: #424a53 !important;
+  -fx-text-fill: #ffffff !important;
+  -fx-fill: #ffffff !important;
+  -mfx-color: #ffffff !important;
+}
+.theme-light .button-base-filled .mfx-font-icon,
+.theme-light .button-base-filled .glyph-icon {
+  -mfx-color: #ffffff !important;
+}
+.theme-dark .button-base-outlined {
+  -fx-background-color: transparent !important;
+  -fx-border-color: #909296 !important;
+  -fx-border-width: 1px !important;
+  -fx-border-style: solid !important;
+  -fx-text-fill: #909296 !important;
+  -fx-fill: #909296 !important;
+  -mfx-color: #909296 !important;
+}
+.theme-dark .button-base-outlined:hover,
+.theme-dark .button-base-outlined:focused,
+.theme-dark .button-base-outlined:focus-within {
+  -fx-background-color: #909296 !important;
+  -fx-border-color: #909296 !important;
+  -fx-text-fill: #101113 !important;
+  -fx-fill: #101113 !important;
+  -mfx-color: #101113 !important;
+}
+.theme-dark .button-base-outlined .mfx-font-icon,
+.theme-dark .button-base-outlined .glyph-icon {
+  -mfx-color: #909296 !important;
+}
+.theme-dark .button-base-filled {
+  -fx-background-color: #909296 !important;
+  -fx-border-color: #909296 !important;
+  -fx-border-width: 1px !important;
+  -fx-border-style: solid !important;
+  -fx-text-fill: #101113 !important;
+  -fx-fill: #101113 !important;
+  -mfx-color: #101113 !important;
+}
+.theme-dark .button-base-filled:hover,
+.theme-dark .button-base-filled:focused,
+.theme-dark .button-base-filled:focus-within {
+  -fx-background-color: #a6a7ab !important;
+  -fx-border-color: #a6a7ab !important;
+  -fx-text-fill: #101113 !important;
+  -fx-fill: #101113 !important;
+  -mfx-color: #101113 !important;
+}
+.theme-dark .button-base-filled .mfx-font-icon,
+.theme-dark .button-base-filled .glyph-icon {
+  -mfx-color: #101113 !important;
+}
+/* - Success Buttons - */
+.theme-light .button-success-outlined {
+  -fx-background-color: transparent !important;
+  -fx-border-color: #43a047 !important;
+  -fx-border-width: 1px !important;
+  -fx-border-style: solid !important;
+  -fx-text-fill: #43a047 !important;
+  -fx-fill: #43a047 !important;
+  -mfx-color: #43a047 !important;
+}
+.theme-light .button-success-outlined:hover,
+.theme-light .button-success-outlined:focused,
+.theme-light .button-success-outlined:focus-within {
+  -fx-background-color: #43a047 !important;
+  -fx-border-color: #43a047 !important;
+  -fx-text-fill: #ffffff !important;
+  -fx-fill: #ffffff !important;
+  -mfx-color: #ffffff !important;
+}
+.theme-light .button-success-outlined .mfx-font-icon,
+.theme-light .button-success-outlined .glyph-icon {
+  -mfx-color: #43a047 !important;
+}
+.theme-light .button-success-filled {
+  -fx-background-color: #43a047 !important;
+  -fx-border-color: #43a047 !important;
+  -fx-border-width: 1px !important;
+  -fx-border-style: solid !important;
+  -fx-text-fill: #ffffff !important;
+  -fx-fill: #ffffff !important;
+  -mfx-color: #ffffff !important;
+}
+.theme-light .button-success-filled:hover,
+.theme-light .button-success-filled:focused,
+.theme-light .button-success-filled:focus-within {
+  -fx-background-color: #2e7d32 !important;
+  -fx-border-color: #2e7d32 !important;
+  -fx-text-fill: #ffffff !important;
+  -fx-fill: #ffffff !important;
+  -mfx-color: #ffffff !important;
+}
+.theme-light .button-success-filled .mfx-font-icon,
+.theme-light .button-success-filled .glyph-icon {
+  -mfx-color: #ffffff !important;
+}
+.theme-dark .button-success-outlined {
+  -fx-background-color: transparent !important;
+  -fx-border-color: #2e7d32 !important;
+  -fx-border-width: 1px !important;
+  -fx-border-style: solid !important;
+  -fx-text-fill: #2e7d32 !important;
+  -fx-fill: #2e7d32 !important;
+  -mfx-color: #2e7d32 !important;
+}
+.theme-dark .button-success-outlined:hover,
+.theme-dark .button-success-outlined:focused,
+.theme-dark .button-success-outlined:focus-within {
+  -fx-background-color: #2e7d32 !important;
+  -fx-border-color: #2e7d32 !important;
+  -fx-text-fill: #101113 !important;
+  -fx-fill: #101113 !important;
+  -mfx-color: #101113 !important;
+}
+.theme-dark .button-success-outlined .mfx-font-icon,
+.theme-dark .button-success-outlined .glyph-icon {
+  -mfx-color: #2e7d32 !important;
+}
+.theme-dark .button-success-filled {
+  -fx-background-color: #2e7d32 !important;
+  -fx-border-color: #2e7d32 !important;
+  -fx-border-width: 1px !important;
+  -fx-border-style: solid !important;
+  -fx-text-fill: #101113 !important;
+  -fx-fill: #101113 !important;
+  -mfx-color: #101113 !important;
+}
+.theme-dark .button-success-filled:hover,
+.theme-dark .button-success-filled:focused,
+.theme-dark .button-success-filled:focus-within {
+  -fx-background-color: #43a047 !important;
+  -fx-border-color: #43a047 !important;
+  -fx-text-fill: #101113 !important;
+  -fx-fill: #101113 !important;
+  -mfx-color: #101113 !important;
+}
+.theme-dark .button-success-filled .mfx-font-icon,
+.theme-dark .button-success-filled .glyph-icon {
+  -mfx-color: #101113 !important;
+}
+/* - Warning Buttons - */
+.theme-light .button-warning-outlined {
+  -fx-background-color: transparent !important;
+  -fx-border-color: #ff9800 !important;
+  -fx-border-width: 1px !important;
+  -fx-border-style: solid !important;
+  -fx-text-fill: #ff9800 !important;
+  -fx-fill: #ff9800 !important;
+  -mfx-color: #ff9800 !important;
+}
+.theme-light .button-warning-outlined:hover,
+.theme-light .button-warning-outlined:focused,
+.theme-light .button-warning-outlined:focus-within {
+  -fx-background-color: #ff9800 !important;
+  -fx-border-color: #ff9800 !important;
+  -fx-text-fill: #ffffff !important;
+  -fx-fill: #ffffff !important;
+  -mfx-color: #ffffff !important;
+}
+.theme-light .button-warning-outlined .mfx-font-icon,
+.theme-light .button-warning-outlined .glyph-icon {
+  -mfx-color: #ff9800 !important;
+}
+.theme-light .button-warning-filled {
+  -fx-background-color: #ff9800 !important;
+  -fx-border-color: #ff9800 !important;
+  -fx-border-width: 1px !important;
+  -fx-border-style: solid !important;
+  -fx-text-fill: #ffffff !important;
+  -fx-fill: #ffffff !important;
+  -mfx-color: #ffffff !important;
+}
+.theme-light .button-warning-filled:hover,
+.theme-light .button-warning-filled:focused,
+.theme-light .button-warning-filled:focus-within {
+  -fx-background-color: #f57c00 !important;
+  -fx-border-color: #f57c00 !important;
+  -fx-text-fill: #ffffff !important;
+  -fx-fill: #ffffff !important;
+  -mfx-color: #ffffff !important;
+}
+.theme-light .button-warning-filled .mfx-font-icon,
+.theme-light .button-warning-filled .glyph-icon {
+  -mfx-color: #ffffff !important;
+}
+.theme-dark .button-warning-outlined {
+  -fx-background-color: transparent !important;
+  -fx-border-color: #ef6c00 !important;
+  -fx-border-width: 1px !important;
+  -fx-border-style: solid !important;
+  -fx-text-fill: #ef6c00 !important;
+  -fx-fill: #ef6c00 !important;
+  -mfx-color: #ef6c00 !important;
+}
+.theme-dark .button-warning-outlined:hover,
+.theme-dark .button-warning-outlined:focused,
+.theme-dark .button-warning-outlined:focus-within {
+  -fx-background-color: #ef6c00 !important;
+  -fx-border-color: #ef6c00 !important;
+  -fx-text-fill: #101113 !important;
+  -fx-fill: #101113 !important;
+  -mfx-color: #101113 !important;
+}
+.theme-dark .button-warning-outlined .mfx-font-icon,
+.theme-dark .button-warning-outlined .glyph-icon {
+  -mfx-color: #ef6c00 !important;
+}
+.theme-dark .button-warning-filled {
+  -fx-background-color: #ef6c00 !important;
+  -fx-border-color: #ef6c00 !important;
+  -fx-border-width: 1px !important;
+  -fx-border-style: solid !important;
+  -fx-text-fill: #101113 !important;
+  -fx-fill: #101113 !important;
+  -mfx-color: #101113 !important;
+}
+.theme-dark .button-warning-filled:hover,
+.theme-dark .button-warning-filled:focused,
+.theme-dark .button-warning-filled:focus-within {
+  -fx-background-color: #fb8c00 !important;
+  -fx-border-color: #fb8c00 !important;
+  -fx-text-fill: #101113 !important;
+  -fx-fill: #101113 !important;
+  -mfx-color: #101113 !important;
+}
+.theme-dark .button-warning-filled .mfx-font-icon,
+.theme-dark .button-warning-filled .glyph-icon {
+  -mfx-color: #101113 !important;
+}
+/* - Danger Buttons - */
+.theme-light .button-danger-outlined {
+  -fx-background-color: transparent !important;
+  -fx-border-color: #e53935 !important;
+  -fx-border-width: 1px !important;
+  -fx-border-style: solid !important;
+  -fx-text-fill: #e53935 !important;
+  -fx-fill: #e53935 !important;
+  -mfx-color: #e53935 !important;
+}
+.theme-light .button-danger-outlined:hover,
+.theme-light .button-danger-outlined:focused,
+.theme-light .button-danger-outlined:focus-within {
+  -fx-background-color: #e53935 !important;
+  -fx-border-color: #e53935 !important;
+  -fx-text-fill: #ffffff !important;
+  -fx-fill: #ffffff !important;
+  -mfx-color: #ffffff !important;
+}
+.theme-light .button-danger-outlined .mfx-font-icon,
+.theme-light .button-danger-outlined .glyph-icon {
+  -mfx-color: #e53935 !important;
+}
+.theme-light .button-danger-filled {
+  -fx-background-color: #e53935 !important;
+  -fx-border-color: #e53935 !important;
+  -fx-border-width: 1px !important;
+  -fx-border-style: solid !important;
+  -fx-text-fill: #ffffff !important;
+  -fx-fill: #ffffff !important;
+  -mfx-color: #ffffff !important;
+}
+.theme-light .button-danger-filled:hover,
+.theme-light .button-danger-filled:focused,
+.theme-light .button-danger-filled:focus-within {
+  -fx-background-color: #c62828 !important;
+  -fx-border-color: #c62828 !important;
+  -fx-text-fill: #ffffff !important;
+  -fx-fill: #ffffff !important;
+  -mfx-color: #ffffff !important;
+}
+.theme-light .button-danger-filled .mfx-font-icon,
+.theme-light .button-danger-filled .glyph-icon {
+  -mfx-color: #ffffff !important;
+}
+.theme-dark .button-danger-outlined {
+  -fx-background-color: transparent !important;
+  -fx-border-color: #c62828 !important;
+  -fx-border-width: 1px !important;
+  -fx-border-style: solid !important;
+  -fx-text-fill: #c62828 !important;
+  -fx-fill: #c62828 !important;
+  -mfx-color: #c62828 !important;
+}
+.theme-dark .button-danger-outlined:hover,
+.theme-dark .button-danger-outlined:focused,
+.theme-dark .button-danger-outlined:focus-within {
+  -fx-background-color: #c62828 !important;
+  -fx-border-color: #c62828 !important;
+  -fx-text-fill: #101113 !important;
+  -fx-fill: #101113 !important;
+  -mfx-color: #101113 !important;
+}
+.theme-dark .button-danger-outlined .mfx-font-icon,
+.theme-dark .button-danger-outlined .glyph-icon {
+  -mfx-color: #c62828 !important;
+}
+.theme-dark .button-danger-filled {
+  -fx-background-color: #c62828 !important;
+  -fx-border-color: #c62828 !important;
+  -fx-border-width: 1px !important;
+  -fx-border-style: solid !important;
+  -fx-text-fill: #101113 !important;
+  -fx-fill: #101113 !important;
+  -mfx-color: #101113 !important;
+}
+.theme-dark .button-danger-filled:hover,
+.theme-dark .button-danger-filled:focused,
+.theme-dark .button-danger-filled:focus-within {
+  -fx-background-color: #e53935 !important;
+  -fx-border-color: #e53935 !important;
+  -fx-text-fill: #101113 !important;
+  -fx-fill: #101113 !important;
+  -mfx-color: #101113 !important;
+}
+.theme-dark .button-danger-filled .mfx-font-icon,
+.theme-dark .button-danger-filled .glyph-icon {
+  -mfx-color: #101113 !important;
+}
+/* - Primary Buttons - */
+.theme-light .button-primary-outlined {
+  -fx-background-color: transparent !important;
+  -fx-border-color: linear-gradient(to bottom right, #64b5f6, #2196f3, #0d47a1) !important;
+  -fx-border-width: 1px !important;
+  -fx-border-style: solid !important;
+  -fx-text-fill: linear-gradient(to bottom right, #64b5f6, #2196f3, #0d47a1) !important;
+  -fx-fill: linear-gradient(to bottom right, #64b5f6, #2196f3, #0d47a1) !important;
+  -mfx-color: linear-gradient(to bottom right, #64b5f6, #2196f3, #0d47a1) !important;
+}
+.theme-light .button-primary-outlined:hover,
+.theme-light .button-primary-outlined:focused,
+.theme-light .button-primary-outlined:focus-within {
+  -fx-background-color: linear-gradient(to bottom right, rgba(13, 134, 231, 0.15), rgba(9, 96, 165, 0.15), rgba(5, 29, 67, 0.15)) !important;
+  -fx-border-color: linear-gradient(to bottom right, #64b5f6, #2196f3, #0d47a1) !important;
+  -fx-text-fill: linear-gradient(to bottom right, #64b5f6, #2196f3, #0d47a1) !important;
+  -fx-fill: linear-gradient(to bottom right, #64b5f6, #2196f3, #0d47a1) !important;
+  -mfx-color: linear-gradient(to bottom right, #64b5f6, #2196f3, #0d47a1) !important;
+}
+.theme-light .button-primary-outlined .mfx-font-icon,
+.theme-light .button-primary-outlined .glyph-icon {
+  -mfx-color: linear-gradient(to bottom right, #64b5f6, #2196f3, #0d47a1) !important;
+}
+.theme-light .button-primary-filled {
+  -fx-background-color: linear-gradient(to bottom right, #64b5f6, #2196f3, #0d47a1) !important;
+  -fx-border-color: linear-gradient(to bottom right, #64b5f6, #2196f3, #0d47a1) !important;
+  -fx-border-width: 1px !important;
+  -fx-border-style: solid !important;
+  -fx-text-fill: #ffffff !important;
+  -fx-fill: #ffffff !important;
+  -mfx-color: #ffffff !important;
+}
+.theme-light .button-primary-filled:hover,
+.theme-light .button-primary-filled:focused,
+.theme-light .button-primary-filled:focus-within {
   -fx-background-color: linear-gradient(to bottom right, #2196f3, #1976d2, #0d47a1) !important;
-  -fx-border-color: rgba(0, 0, 0, 0) !important;
+  -fx-border-color: linear-gradient(to bottom right, #2196f3, #1976d2, #0d47a1) !important;
+  -fx-text-fill: #ffffff !important;
+  -fx-fill: #ffffff !important;
+  -mfx-color: #ffffff !important;
 }
-/* - Secondary Button - */
+.theme-light .button-primary-filled .mfx-font-icon,
+.theme-light .button-primary-filled .glyph-icon {
+  -mfx-color: #ffffff !important;
+}
+.theme-dark .button-primary-outlined {
+  -fx-background-color: transparent !important;
+  -fx-border-color: linear-gradient(to bottom right, #2196f3, #1976d2, #0d47a1) !important;
+  -fx-border-width: 1px !important;
+  -fx-border-style: solid !important;
+  -fx-text-fill: linear-gradient(to bottom right, #2196f3, #1976d2, #0d47a1) !important;
+  -fx-fill: linear-gradient(to bottom right, #2196f3, #1976d2, #0d47a1) !important;
+  -mfx-color: linear-gradient(to bottom right, #2196f3, #1976d2, #0d47a1) !important;
+}
+.theme-dark .button-primary-outlined:hover,
+.theme-dark .button-primary-outlined:focused,
+.theme-dark .button-primary-outlined:focus-within {
+  -fx-background-color: linear-gradient(to bottom right, rgba(28, 146, 242, 0.15), rgba(10, 110, 189, 0.15), rgba(7, 40, 90, 0.15)) !important;
+  -fx-border-color: linear-gradient(to bottom right, #2196f3, #1976d2, #0d47a1) !important;
+  -fx-text-fill: linear-gradient(to bottom right, #2196f3, #1976d2, #0d47a1) !important;
+  -fx-fill: linear-gradient(to bottom right, #2196f3, #1976d2, #0d47a1) !important;
+  -mfx-color: linear-gradient(to bottom right, #2196f3, #1976d2, #0d47a1) !important;
+}
+.theme-dark .button-primary-outlined .mfx-font-icon,
+.theme-dark .button-primary-outlined .glyph-icon {
+  -mfx-color: linear-gradient(to bottom right, #2196f3, #1976d2, #0d47a1) !important;
+}
+.theme-dark .button-primary-filled {
+  -fx-background-color: linear-gradient(to bottom right, #2196f3, #1976d2, #0d47a1) !important;
+  -fx-border-color: linear-gradient(to bottom right, #2196f3, #1976d2, #0d47a1) !important;
+  -fx-border-width: 1px !important;
+  -fx-border-style: solid !important;
+  -fx-text-fill: #101113 !important;
+  -fx-fill: #101113 !important;
+  -mfx-color: #101113 !important;
+}
+.theme-dark .button-primary-filled:hover,
+.theme-dark .button-primary-filled:focused,
+.theme-dark .button-primary-filled:focus-within {
+  -fx-background-color: linear-gradient(to bottom right, #64b5f6, #2196f3, #0d47a1) !important;
+  -fx-border-color: linear-gradient(to bottom right, #64b5f6, #2196f3, #0d47a1) !important;
+  -fx-text-fill: #101113 !important;
+  -fx-fill: #101113 !important;
+  -mfx-color: #101113 !important;
+}
+.theme-dark .button-primary-filled .mfx-font-icon,
+.theme-dark .button-primary-filled .glyph-icon {
+  -mfx-color: #101113 !important;
+}
 /* ------------------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------------ */
 .dashboard {
-  -fx-min-height: 550px;
+  -fx-min-height: 600px;
 }
 .dashboard.sheet {
   -fx-padding: 0 !important;
 }
-.dashboard .sheet-text {
-  -fx-font-family: 'Poppins', system-ui, -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Ubuntu', 'Bitstream Vera Sans', 'Liberation Sans', Arial, sans-serif !important;
-  -fx-font-weight: 400 !important;
-  -fx-text-fill: #424a53 !important;
-  -fx-fill: #424a53 !important;
-}
 .dashboard .dashboard-top {
   -fx-padding: 8px 16px;
   -fx-border-width: 0 0 1px 0;
-  -fx-border-color: #eaeef2;
   -fx-border-style: solid;
 }
 .dashboard .dashboard-top .dashboard-logo-wrapper {
@@ -215,31 +809,36 @@
 }
 .dashboard .dashboard-top .dashboard-user-message {
   -fx-font-size: 16px;
-  -fx-text-alignment: baseline;
 }
 .dashboard .dashboard-top .dashboard-user-menu {
   -fx-font-size: 16px !important;
-  -fx-fill: #57606a !important;
-  -fx-text-fill: #57606a !important;
+  -fx-fill: #6e7781 !important;
+  -fx-text-fill: #6e7781 !important;
   -fx-min-width: 184px;
   -fx-alignment: top-right;
 }
 .dashboard .dashboard-top .dashboard-user-menu .button-icon .glyph-icon {
   -fx-font-size: 20px !important;
-  -fx-fill: #57606a !important;
-  -fx-text-fill: #57606a !important;
+  -fx-fill: #6e7781 !important;
+  -fx-text-fill: #6e7781 !important;
   -fx-padding: 0 !important;
+}
+.dashboard .dashboard-top .dashboard-user-menu MenuButton.button-icon:openvertically .arrow-button {
+  -fx-visible: false;
+  -fx-disabled: true;
+  -fx-opacity: 0;
+  -fx-padding: 0 !important;
+  -fx-max-width: 0 !important;
 }
 .dashboard .dashboard-left {
   -fx-padding: 20px 16px;
   -fx-min-width: 200px;
   -fx-max-width: 200px;
   -fx-border-width: 0 1px 0 0;
-  -fx-border-color: #eaeef2;
   -fx-border-style: solid;
 }
 .dashboard .dashboard-left .dashboard-menu-title {
-  -fx-font-family: 'Poppins Bold', system-ui, -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Ubuntu', 'Bitstream Vera Sans', 'Liberation Sans', Arial, sans-serif !important;
+  -fx-font-family: "Poppins Bold", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Ubuntu", "Bitstream Vera Sans", "Liberation Sans", "Arial", "sans-serif" !important;
   -fx-font-weight: 700 !important;
   -fx-font-size: 14px;
   -fx-padding: 0 0 14px 0;
@@ -257,13 +856,59 @@
   -fx-alignment: center-left;
   -fx-text-alignment: left;
   -fx-font-size: 14px;
-  -fx-font-family: 'Poppins', system-ui, -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Ubuntu', 'Bitstream Vera Sans', 'Liberation Sans', Arial, sans-serif !important;
+  -fx-font-family: "Poppins", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Ubuntu", "Bitstream Vera Sans", "Liberation Sans", "Arial", "sans-serif" !important;
   -fx-font-weight: 400 !important;
 }
-.dashboard .dashboard-left .dashboard-menu-button.active {
-  -fx-background-color: #6e7781 !important;
+.dashboard .dashboard-center .sub-page {
+  -fx-padding: 16px;
+  -fx-background-radius: 0 0 16px 0;
+}
+.dashboard .dashboard-center .sub-page .sheet .sheet-text {
+  -fx-font-size: 14px;
+}
+.dashboard .dashboard-center .sub-page .sub-page-header {
+  -fx-padding: 0 0 16px 0;
+}
+.dashboard .dashboard-center .sub-page .sub-page-title {
+  -fx-font-family: "Poppins Bold", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Ubuntu", "Bitstream Vera Sans", "Liberation Sans", "Arial", "sans-serif";
+  -fx-font-weight: 700;
+  -fx-font-size: 28px;
+  -fx-text-fill: #57606a;
+  -fx-padding: 16px 0 16px 0;
+}
+.theme-light .dashboard .dashboard-top {
+  -fx-border-color: #eaeef2;
+}
+.theme-light .dashboard .dashboard-left {
+  -fx-border-color: #eaeef2;
+}
+.theme-light .dashboard .dashboard-left .dashboard-menu-button.active {
+  -fx-background-color: #afb8c1 !important;
   -fx-text-fill: #ffffff !important;
   -fx-fill: #ffffff !important;
+}
+.theme-light .dashboard .dashboard-left .dashboard-menu-button:hover {
+  -fx-background-color: #eaeef2 !important;
+}
+.theme-light .dashboard .dashboard-center .sub-page {
+  -fx-background-color: #f6f8fa;
+}
+.theme-dark .dashboard .dashboard-top {
+  -fx-border-color: #25262b;
+}
+.theme-dark .dashboard .dashboard-left {
+  -fx-border-color: #25262b;
+}
+.theme-dark .dashboard .dashboard-left .dashboard-menu-button.active {
+  -fx-background-color: #373a40 !important;
+  -fx-text-fill: #c1c2c5 !important;
+  -fx-fill: #c1c2c5 !important;
+}
+.theme-dark .dashboard .dashboard-left .dashboard-menu-button:hover {
+  -fx-background-color: #25262b !important;
+}
+.theme-dark .dashboard .dashboard-center .sub-page {
+  -fx-background-color: #1a1b1e;
 }
 /* ------------------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------------ */

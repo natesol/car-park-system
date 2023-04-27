@@ -1,0 +1,735 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXComboBox?>
+<?import io.github.palexdev.materialfx.controls.MFXProgressSpinner?>
+<?import io.github.palexdev.materialfx.controls.MFXScrollPane?>
+<?import io.github.palexdev.materialfx.dialogs.MFXGenericDialog?>
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+
+<AnchorPane fx:id="root" maxHeight="800.0" maxWidth="1024.0" minHeight="400.0" minWidth="800.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.cps.client.controllers.pc.employee.networkManager.PCEmployeeNMParkingLotsController">
+    <stylesheets>
+        <URL value="@../../../../styles/css/pages/PCEmployeePages.css" />
+    </stylesheets>
+    <styleClass>
+        <String fx:value="root" />
+        <String fx:value="theme-light" />
+    </styleClass>
+
+    <Hyperlink maxHeight="0.0" maxWidth="0.0" text="focus-fix" textFill="TRANSPARENT" />
+
+    <MFXScrollPane fx:id="rootScroll" fitToHeight="true" fitToWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <styleClass>
+            <String fx:value="root-scroll" />
+        </styleClass>
+
+        <VBox fx:id="body" alignment="TOP_CENTER" styleClass="body">
+            <VBox alignment="TOP_CENTER" styleClass="body-container">
+                <BorderPane prefHeight="200.0" prefWidth="200.0">
+                    <top>
+                        <HBox alignment="CENTER" styleClass="dashboard-top" BorderPane.alignment="CENTER">
+                            <VBox alignment="CENTER_LEFT" styleClass="dashboard-logo-wrapper">
+                                <AnchorPane styleClass="logo">
+                                    <VBox styleClass="logo-wrapper">
+                                        <Text styleClass="logo-top" text="CITY" textAlignment="CENTER">
+                                        </Text>
+                                        <Text styleClass="logo-bottom" text="PARK" textAlignment="CENTER">
+                                        </Text>
+                                    </VBox>
+                                </AnchorPane>
+                            </VBox>
+                            <VBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+                                <TextFlow styleClass="dashboard-user-message">
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="Hello " />
+                                    <Text fx:id="employeeName" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="Employee Name (Network Manager)" />
+                                    <VBox.margin>
+                                        <Insets />
+                                    </VBox.margin>
+                                    <padding>
+                                        <Insets top="10.0" />
+                                    </padding>
+                                </TextFlow>
+                            </VBox>
+                            <VBox alignment="CENTER">
+                                <HBox alignment="CENTER_RIGHT" prefHeight="27.0" prefWidth="202.0" spacing="2.0" styleClass="dashboard-user-menu">
+                                    <MFXButton fx:id="toggleThemeBtn" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#toggleThemeBtnClickHandler" text=" ">
+                                        <graphic>
+                                            <FontAwesomeIconView glyphName="MOON_ALT" textAlignment="CENTER" wrappingWidth="20.0" />
+                                        </graphic>
+                                        <styleClass>
+                                            <String fx:value="button" />
+                                            <String fx:value="button-icon" />
+                                        </styleClass>
+                                        <tooltip>
+                                            <Tooltip anchorLocation="CONTENT_TOP_RIGHT" text="Switch To Dark Theme" />
+                                        </tooltip>
+                                    </MFXButton>
+                                </HBox>
+                            </VBox>
+                        </HBox>
+                    </top>
+                    <left>
+                        <VBox styleClass="dashboard-left" BorderPane.alignment="CENTER">
+                            <VBox>
+                                <TextFlow styleClass="dashboard-menu-title">
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="MENU" />
+                                </TextFlow>
+
+                                <VBox alignment="TOP_CENTER" spacing="2.0">
+                                    <MFXButton fx:id="menuBtnHome" graphicTextGap="8.0" onMouseClicked="#menuBtnHomeClickHandler" styleClass="dashboard-menu-button" text="Home">
+                                        <graphic>
+                                            <FontAwesomeIconView glyphName="HOME" />
+                                        </graphic>
+                                    </MFXButton>
+                                    <MFXButton fx:id="menuBtnParkingLots" graphicTextGap="8.0" onMouseClicked="#menuBtnParkingLotsClickHandler" text="Parking Lots">
+                                        <graphic>
+                                            <FontAwesomeIconView glyphName="MAP" />
+                                        </graphic>
+                                        <styleClass>
+                                            <String fx:value="dashboard-menu-button" />
+                                            <String fx:value="active" />
+                                        </styleClass>
+                                    </MFXButton>
+                                    <MFXButton fx:id="menuBtnReports" graphicTextGap="8.0" onMouseClicked="#menuBtnReportsClickHandler" styleClass="dashboard-menu-button" text="Reports">
+                                        <graphic>
+                                            <FontAwesomeIconView glyphName="PENCIL_SQUARE_ALT" />
+                                        </graphic>
+                                    </MFXButton>
+                                    <MFXButton fx:id="menuBtnStatistics" graphicTextGap="8.0" onMouseClicked="#menuBtnStatisticsClickHandler" styleClass="dashboard-menu-button" text="Statistics">
+                                        <graphic>
+                                            <FontAwesomeIconView glyphName="BAR_CHART" />
+                                        </graphic>
+                                    </MFXButton>
+                                </VBox>
+                            </VBox>
+                            <AnchorPane prefHeight="10000.0">
+                                <VBox.margin>
+                                    <Insets />
+                                </VBox.margin>
+                                <VBox AnchorPane.bottomAnchor="0.0">
+                                    <padding>
+                                        <Insets top="20.0" />
+                                    </padding>
+                                    <TextFlow styleClass="dashboard-menu-title">
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="USER" />
+                                    </TextFlow>
+                                    <VBox alignment="TOP_CENTER" spacing="2.0">
+                                        <MFXButton fx:id="menuBtnProfile" graphicTextGap="8.0" onMouseClicked="#menuBtnProfileClickHandler" styleClass="dashboard-menu-button" text="Profile">
+                                            <graphic>
+                                                <FontAwesomeIconView glyphName="USER" />
+                                            </graphic>
+                                        </MFXButton>
+                                        <MFXButton fx:id="menuBtnLogout" graphicTextGap="8.0" onMouseClicked="#menuBtnLogoutClickHandler" styleClass="dashboard-menu-button" text="Logout">
+                                            <graphic>
+                                                <FontAwesomeIconView glyphName="SIGN_OUT" />
+                                            </graphic>
+                                        </MFXButton>
+                                    </VBox>
+                                </VBox>
+                            </AnchorPane>
+                        </VBox>
+                    </left>
+                    <center>
+                        <VBox styleClass="dashboard-center" BorderPane.alignment="CENTER">
+                            <HBox maxWidth="1024.0" minHeight="400.0" minWidth="600.0" prefWidth="1024.0" styleClass="sub-page">
+                                <VBox alignment="TOP_CENTER" maxWidth="1024.0" minHeight="400.0" minWidth="600.0" prefHeight="600" prefWidth="1024.0" styleClass="sheet">
+                                    <HBox styleClass="sub-page-header">
+                                        <TextFlow HBox.hgrow="ALWAYS">
+                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sub-page-title" text="Parking Lots">
+                                            </Text>
+                                        </TextFlow>
+                                        <AnchorPane>
+                                            <HBox spacing="8.0">
+                                                <MFXComboBox fx:id="parkingLotsCombo" floatingText="Filter By Parking Lot" text="All" />
+                                                <MFXComboBox fx:id="floorCombo" floatingText="Choose Floor" text="1" />
+                                                <MFXButton fx:id="showDataBtn" onAction="#showDataBtnClickHandler" styleClass="button-primary-filled" text="Show Data" />
+                                            </HBox>
+                                        </AnchorPane>
+                                    </HBox>
+                                    <VBox>
+                                        <VBox.margin>
+                                            <Insets bottom="30.0" />
+                                        </VBox.margin>
+                                        <TextFlow>
+                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="Parking-Lots parking spaces tracking. Track occupancy and availability of parking spaces, download reports as PDF." />
+                                        </TextFlow>
+                                    </VBox>
+                                    <VBox>
+                                        <padding>
+                                            <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+                                        </padding>
+                                        <VBox>
+                                            <VBox.margin>
+                                                <Insets bottom="16.0" />
+                                            </VBox.margin>
+                                            <TextFlow>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="Parking Lot: " />
+                                                <Text fx:id="parkingLotNameField" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="Parking Lot Name" />
+                                            </TextFlow>
+                                            <TextFlow>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="Total Capacity: " />
+                                                <Text fx:id="totalCapacityField" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text" text="000" />
+                                            </TextFlow>
+                                        </VBox>
+                                        <GridPane fx:id="spacesGrid" alignment="CENTER" hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" vgap="10.0">
+                                            <columnConstraints>
+                                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="50.0" prefWidth="50.0" />
+                                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="50.0" prefWidth="50.0" />
+                                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="50.0" prefWidth="50.0" />
+                                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="50.0" prefWidth="50.0" />
+                                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="50.0" prefWidth="50.0" />
+                                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="50.0" prefWidth="50.0" />
+                                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="50.0" prefWidth="50.0" />
+                                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="50.0" prefWidth="50.0" />
+                                    <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="50.0" prefWidth="50.0" />
+                                    <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="50.0" prefWidth="50.0" />
+                                    <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="50.0" prefWidth="50.0" />
+                                    <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="50.0" prefWidth="50.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                                <RowConstraints maxHeight="-Infinity" minHeight="60.0" prefHeight="60.0" valignment="CENTER" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="-Infinity" minHeight="60.0" prefHeight="60.0" valignment="CENTER" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="-Infinity" minHeight="60.0" prefHeight="60.0" valignment="CENTER" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                            <VBox.margin>
+                                                <Insets bottom="16.0" />
+                                            </VBox.margin>
+                                            <VBox fx:id="C00" alignment="CENTER" style="-fx-border-radius: 16px; -fx-background-radius: 10px; -fx-border-color: #424a53; -fx-border-width: 0.8;">
+                                                <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-radius: 16px; -fx-background-radius: 10px;">
+                                                    <Text fill="#424a53" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                                                </HBox>
+                                                <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="50.0">
+                                                    <SVGPath content="1" disable="true" fill="#424a53" fillRule="EVEN_ODD" />
+                                                </HBox>
+                                            </VBox>
+                                            <VBox fx:id="C10" alignment="CENTER" layoutX="10.0" layoutY="10.0" style="-fx-border-radius: 16px; -fx-background-radius: 10px; -fx-border-color: #424a53; -fx-border-width: 0.8;" GridPane.rowIndex="1">
+                                                <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-radius: 16px; -fx-background-radius: 10px;">
+                                                    <Text fill="#424a53" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                                                </HBox>
+                                                <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="50.0">
+                                                    <SVGPath content="1" disable="true" fill="#424a53" fillRule="EVEN_ODD" />
+                                                </HBox>
+                                            </VBox>
+                                            <VBox fx:id="C20" alignment="CENTER" style="-fx-border-radius: 16px; -fx-background-radius: 10px; -fx-border-color: #424a53; -fx-border-width: 0.8;" GridPane.rowIndex="2">
+                                                <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-radius: 16px; -fx-background-radius: 10px;">
+                                                    <Text fill="#424a53" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                                                </HBox>
+                                                <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="50.0">
+                                                    <SVGPath content="1" disable="true" fill="#424a53" fillRule="EVEN_ODD" />
+                                                </HBox>
+                                            </VBox>
+                                            <VBox fx:id="C01" alignment="CENTER" layoutX="10.0" layoutY="150.0" style="-fx-border-radius: 16px; -fx-background-radius: 10px; -fx-border-color: #424a53; -fx-border-width: 0.8;" GridPane.columnIndex="1">
+                                                <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-radius: 16px; -fx-background-radius: 10px;">
+                                                    <Text fill="#424a53" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                                                </HBox>
+                                                <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="50.0">
+                                                    <SVGPath content="1" disable="true" fill="#424a53" fillRule="EVEN_ODD" />
+                                                </HBox>
+                                            </VBox>
+                                            <VBox fx:id="C11" alignment="CENTER" layoutX="70.0" layoutY="10.0" style="-fx-border-radius: 16px; -fx-background-radius: 10px; -fx-border-color: #424a53; -fx-border-width: 0.8;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-radius: 16px; -fx-background-radius: 10px;">
+                                                    <Text fill="#424a53" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                                                </HBox>
+                                                <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="50.0">
+                                                    <children>
+                                                        <SVGPath content="1" disable="true" fill="#424a53" fillRule="EVEN_ODD" />
+                                                    </children>
+                                                </HBox>
+                                            </VBox>
+                                            <VBox fx:id="C21" alignment="CENTER" layoutX="70.0" layoutY="80.0" style="-fx-border-radius: 16px; -fx-background-radius: 10px; -fx-border-color: #424a53; -fx-border-width: 0.8;" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                <children>
+                                                    <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-radius: 16px; -fx-background-radius: 10px;">
+                                                        <children>
+                                                            <Text fill="#424a53" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                                                        </children>
+                                                    </HBox>
+                                                    <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="50.0">
+                                                        <children>
+                                                            <SVGPath content="1" disable="true" fill="#424a53" fillRule="EVEN_ODD" />
+                                                        </children>
+                                                    </HBox>
+                                                </children>
+                                            </VBox>
+                                            <VBox fx:id="C02" alignment="CENTER" layoutX="70.0" layoutY="150.0" style="-fx-border-radius: 16px; -fx-background-radius: 10px; -fx-border-color: #424a53; -fx-border-width: 0.8;" GridPane.columnIndex="2">
+                                                <children>
+                                                    <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-radius: 16px; -fx-background-radius: 10px;">
+                                                        <children>
+                                                            <Text fill="#424a53" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                                                        </children>
+                                                    </HBox>
+                                                    <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="50.0">
+                                                        <children>
+                                                            <SVGPath content="1" disable="true" fill="#424a53" fillRule="EVEN_ODD" />
+                                                        </children>
+                                                    </HBox>
+                                                </children>
+                                            </VBox>
+                                            <VBox fx:id="C12" alignment="CENTER" layoutX="130.0" layoutY="10.0" style="-fx-border-radius: 16px; -fx-background-radius: 10px; -fx-border-color: #424a53; -fx-border-width: 0.8;" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                                <children>
+                                                    <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-radius: 16px; -fx-background-radius: 10px;">
+                                                        <children>
+                                                            <Text fill="#424a53" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                                                        </children>
+                                                    </HBox>
+                                                    <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="50.0">
+                                                        <children>
+                                                            <SVGPath content="1" disable="true" fill="#424a53" fillRule="EVEN_ODD" />
+                                                        </children>
+                                                    </HBox>
+                                                </children>
+                                            </VBox>
+                                            <VBox fx:id="C22" alignment="CENTER" layoutX="130.0" layoutY="80.0" style="-fx-border-radius: 16px; -fx-background-radius: 10px; -fx-border-color: #424a53; -fx-border-width: 0.8;" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                                <children>
+                                                    <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-radius: 16px; -fx-background-radius: 10px;">
+                                                        <children>
+                                                            <Text fill="#424a53" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                                                        </children>
+                                                    </HBox>
+                                                    <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="50.0">
+                                                        <children>
+                                                            <SVGPath content="1" disable="true" fill="#424a53" fillRule="EVEN_ODD" />
+                                                        </children>
+                                                    </HBox>
+                                                </children>
+                                            </VBox>
+                                            <VBox fx:id="C03" alignment="CENTER" layoutX="130.0" layoutY="150.0" style="-fx-border-radius: 16px; -fx-background-radius: 10px; -fx-border-color: #424a53; -fx-border-width: 0.8;" GridPane.columnIndex="3">
+                                                <children>
+                                                    <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-radius: 16px; -fx-background-radius: 10px;">
+                                                        <children>
+                                                            <Text fill="#424a53" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                                                        </children>
+                                                    </HBox>
+                                                    <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="50.0">
+                                                        <children>
+                                                            <SVGPath content="1" disable="true" fill="#424a53" fillRule="EVEN_ODD" />
+                                                        </children>
+                                                    </HBox>
+                                                </children>
+                                            </VBox>
+                                            <VBox fx:id="C13" alignment="CENTER" layoutX="190.0" layoutY="10.0" style="-fx-border-radius: 16px; -fx-background-radius: 10px; -fx-border-color: #424a53; -fx-border-width: 0.8;" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                                <children>
+                                                    <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-radius: 16px; -fx-background-radius: 10px;">
+                                                        <children>
+                                                            <Text fill="#424a53" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                                                        </children>
+                                                    </HBox>
+                                                    <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="50.0">
+                                                        <children>
+                                                            <SVGPath content="1" disable="true" fill="#424a53" fillRule="EVEN_ODD" />
+                                                        </children>
+                                                    </HBox>
+                                                </children>
+                                            </VBox>
+                                            <VBox fx:id="C23" alignment="CENTER" layoutX="190.0" layoutY="80.0" style="-fx-border-radius: 16px; -fx-background-radius: 10px; -fx-border-color: #424a53; -fx-border-width: 0.8;" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                                                <children>
+                                                    <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-radius: 16px; -fx-background-radius: 10px;">
+                                                        <children>
+                                                            <Text fill="#424a53" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                                                        </children>
+                                                    </HBox>
+                                                    <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="50.0">
+                                                        <children>
+                                                            <SVGPath content="1" disable="true" fill="#424a53" fillRule="EVEN_ODD" />
+                                                        </children>
+                                                    </HBox>
+                                                </children>
+                                            </VBox>
+                                            <VBox fx:id="C04" alignment="CENTER" layoutX="190.0" layoutY="150.0" style="-fx-border-radius: 16px; -fx-background-radius: 10px; -fx-border-color: #424a53; -fx-border-width: 0.8;" GridPane.columnIndex="4">
+                                                <children>
+                                                    <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-radius: 16px; -fx-background-radius: 10px;">
+                                                        <children>
+                                                            <Text fill="#424a53" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                                                        </children>
+                                                    </HBox>
+                                                    <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="50.0">
+                                                        <children>
+                                                            <SVGPath content="1" disable="true" fill="#424a53" fillRule="EVEN_ODD" />
+                                                        </children>
+                                                    </HBox>
+                                                </children>
+                                            </VBox>
+                                            <VBox fx:id="C14" alignment="CENTER" layoutX="250.0" layoutY="10.0" style="-fx-border-radius: 16px; -fx-background-radius: 10px; -fx-border-color: #424a53; -fx-border-width: 0.8;" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                                                <children>
+                                                    <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-radius: 16px; -fx-background-radius: 10px;">
+                                                        <children>
+                                                            <Text fill="#424a53" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                                                        </children>
+                                                    </HBox>
+                                                    <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="50.0">
+                                                        <children>
+                                                            <SVGPath content="1" disable="true" fill="#424a53" fillRule="EVEN_ODD" />
+                                                        </children>
+                                                    </HBox>
+                                                </children>
+                                            </VBox>
+                                            <VBox fx:id="C24" alignment="CENTER" layoutX="250.0" layoutY="80.0" style="-fx-border-radius: 16px; -fx-background-radius: 10px; -fx-border-color: #424a53; -fx-border-width: 0.8;" GridPane.columnIndex="4" GridPane.rowIndex="2">
+                                                <children>
+                                                    <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-radius: 16px; -fx-background-radius: 10px;">
+                                                        <children>
+                                                            <Text fill="#424a53" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                                                        </children>
+                                                    </HBox>
+                                                    <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="50.0">
+                                                        <children>
+                                                            <SVGPath content="1" disable="true" fill="#424a53" fillRule="EVEN_ODD" />
+                                                        </children>
+                                                    </HBox>
+                                                </children>
+                                            </VBox>
+                                            <VBox fx:id="C05" alignment="CENTER" layoutX="250.0" layoutY="150.0" style="-fx-border-radius: 16px; -fx-background-radius: 10px; -fx-border-color: #424a53; -fx-border-width: 0.8;" GridPane.columnIndex="5">
+                                                <children>
+                                                    <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-radius: 16px; -fx-background-radius: 10px;">
+                                                        <children>
+                                                            <Text fill="#424a53" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                                                        </children>
+                                                    </HBox>
+                                                    <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="50.0">
+                                                        <children>
+                                                            <SVGPath content="1" disable="true" fill="#424a53" fillRule="EVEN_ODD" />
+                                                        </children>
+                                                    </HBox>
+                                                </children>
+                                            </VBox>
+                                            <VBox fx:id="C15" alignment="CENTER" layoutX="310.0" layoutY="10.0" style="-fx-border-radius: 16px; -fx-background-radius: 10px; -fx-border-color: #424a53; -fx-border-width: 0.8;" GridPane.columnIndex="5" GridPane.rowIndex="1">
+                                                <children>
+                                                    <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-radius: 16px; -fx-background-radius: 10px;">
+                                                        <children>
+                                                            <Text fill="#424a53" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                                                        </children>
+                                                    </HBox>
+                                                    <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="50.0">
+                                                        <children>
+                                                            <SVGPath content="1" disable="true" fill="#424a53" fillRule="EVEN_ODD" />
+                                                        </children>
+                                                    </HBox>
+                                                </children>
+                                            </VBox>
+                                            <VBox fx:id="C25" alignment="CENTER" layoutX="310.0" layoutY="80.0" style="-fx-border-radius: 16px; -fx-background-radius: 10px; -fx-border-color: #424a53; -fx-border-width: 0.8;" GridPane.columnIndex="5" GridPane.rowIndex="2">
+                                                <children>
+                                                    <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-radius: 16px; -fx-background-radius: 10px;">
+                                                        <children>
+                                                            <Text fill="#424a53" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                                                        </children>
+                                                    </HBox>
+                                                    <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="50.0">
+                                                        <children>
+                                                            <SVGPath content="1" disable="true" fill="#424a53" fillRule="EVEN_ODD" />
+                                                        </children>
+                                                    </HBox>
+                                                </children>
+                                            </VBox>
+                                            <VBox fx:id="C06" alignment="CENTER" layoutX="310.0" layoutY="150.0" style="-fx-border-radius: 16px; -fx-background-radius: 10px; -fx-border-color: #424a53; -fx-border-width: 0.8;" GridPane.columnIndex="6">
+                                                <children>
+                                                    <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-radius: 16px; -fx-background-radius: 10px;">
+                                                        <children>
+                                                            <Text fill="#424a53" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                                                        </children>
+                                                    </HBox>
+                                                    <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="50.0">
+                                                        <children>
+                                                            <SVGPath content="1" disable="true" fill="#424a53" fillRule="EVEN_ODD" />
+                                                        </children>
+                                                    </HBox>
+                                                </children>
+                                            </VBox>
+                                            <VBox fx:id="C16" alignment="CENTER" layoutX="370.0" layoutY="10.0" style="-fx-border-radius: 16px; -fx-background-radius: 10px; -fx-border-color: #424a53; -fx-border-width: 0.8;" GridPane.columnIndex="6" GridPane.rowIndex="1">
+                                                <children>
+                                                    <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-radius: 16px; -fx-background-radius: 10px;">
+                                                        <children>
+                                                            <Text fill="#424a53" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                                                        </children>
+                                                    </HBox>
+                                                    <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="50.0">
+                                                        <children>
+                                                            <SVGPath content="1" disable="true" fill="#424a53" fillRule="EVEN_ODD" />
+                                                        </children>
+                                                    </HBox>
+                                                </children>
+                                            </VBox>
+                                            <VBox fx:id="C26" alignment="CENTER" layoutX="370.0" layoutY="80.0" style="-fx-border-radius: 16px; -fx-background-radius: 10px; -fx-border-color: #424a53; -fx-border-width: 0.8;" GridPane.columnIndex="6" GridPane.rowIndex="2">
+                                                <children>
+                                                    <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-radius: 16px; -fx-background-radius: 10px;">
+                                                        <children>
+                                                            <Text fill="#424a53" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                                                        </children>
+                                                    </HBox>
+                                                    <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="50.0">
+                                                        <children>
+                                                            <SVGPath content="1" disable="true" fill="#424a53" fillRule="EVEN_ODD" />
+                                                        </children>
+                                                    </HBox>
+                                                </children>
+                                            </VBox>
+                                            <VBox fx:id="C07" alignment="CENTER" layoutX="370.0" layoutY="150.0" style="-fx-border-radius: 16px; -fx-background-radius: 10px; -fx-border-color: #424a53; -fx-border-width: 0.8;" GridPane.columnIndex="7">
+                                                <children>
+                                                    <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-radius: 16px; -fx-background-radius: 10px;">
+                                                        <children>
+                                                            <Text fill="#424a53" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                                                        </children>
+                                                    </HBox>
+                                                    <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="50.0">
+                                                        <children>
+                                                            <SVGPath content="1" disable="true" fill="#424a53" fillRule="EVEN_ODD" />
+                                                        </children>
+                                                    </HBox>
+                                                </children>
+                                            </VBox>
+                                            <VBox fx:id="C17" alignment="CENTER" layoutX="430.0" layoutY="10.0" style="-fx-border-radius: 16px; -fx-background-radius: 10px; -fx-border-color: #424a53; -fx-border-width: 0.8;" GridPane.columnIndex="7" GridPane.rowIndex="1">
+                                                <children>
+                                                    <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-radius: 16px; -fx-background-radius: 10px;">
+                                                        <children>
+                                                            <Text fill="#424a53" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                                                        </children>
+                                                    </HBox>
+                                                    <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="50.0">
+                                                        <children>
+                                                            <SVGPath content="1" disable="true" fill="#424a53" fillRule="EVEN_ODD" />
+                                                        </children>
+                                                    </HBox>
+                                                </children>
+                                            </VBox>
+                                            <VBox fx:id="C27" alignment="CENTER" layoutX="430.0" layoutY="80.0" style="-fx-border-radius: 16px; -fx-background-radius: 10px; -fx-border-color: #424a53; -fx-border-width: 0.8;" GridPane.columnIndex="7" GridPane.rowIndex="2">
+                                                <children>
+                                                    <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-radius: 16px; -fx-background-radius: 10px;">
+                                                        <children>
+                                                            <Text fill="#424a53" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                                                        </children>
+                                                    </HBox>
+                                                    <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="50.0">
+                                                        <children>
+                                                            <SVGPath content="1" disable="true" fill="#424a53" fillRule="EVEN_ODD" />
+                                                        </children>
+                                                    </HBox>
+                                                </children>
+                                            </VBox>
+                                 <VBox fx:id="C08" alignment="CENTER" style="-fx-border-radius: 16px; -fx-background-radius: 10px; -fx-border-color: #424a53; -fx-border-width: 0.8;" GridPane.columnIndex="8">
+                                    <children>
+                                       <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-radius: 16px; -fx-background-radius: 10px;">
+                                          <children>
+                                             <Text fill="#424a53" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                                          </children>
+                                       </HBox>
+                                       <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="50.0">
+                                          <children>
+                                             <SVGPath content="1" disable="true" fill="#424a53" fillRule="EVEN_ODD" />
+                                          </children>
+                                       </HBox>
+                                    </children>
+                                 </VBox>
+                                 <VBox fx:id="C18" alignment="CENTER" style="-fx-border-radius: 16px; -fx-background-radius: 10px; -fx-border-color: #424a53; -fx-border-width: 0.8;" GridPane.columnIndex="8" GridPane.rowIndex="1">
+                                    <children>
+                                       <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-radius: 16px; -fx-background-radius: 10px;">
+                                          <children>
+                                             <Text fill="#424a53" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                                          </children>
+                                       </HBox>
+                                       <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="50.0">
+                                          <children>
+                                             <SVGPath content="1" disable="true" fill="#424a53" fillRule="EVEN_ODD" />
+                                          </children>
+                                       </HBox>
+                                    </children>
+                                 </VBox>
+                                 <VBox fx:id="C28" alignment="CENTER" style="-fx-border-radius: 16px; -fx-background-radius: 10px; -fx-border-color: #424a53; -fx-border-width: 0.8;" GridPane.columnIndex="8" GridPane.rowIndex="2">
+                                    <children>
+                                       <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-radius: 16px; -fx-background-radius: 10px;">
+                                          <children>
+                                             <Text fill="#424a53" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                                          </children>
+                                       </HBox>
+                                       <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="50.0">
+                                          <children>
+                                             <SVGPath content="1" disable="true" fill="#424a53" fillRule="EVEN_ODD" />
+                                          </children>
+                                       </HBox>
+                                    </children>
+                                 </VBox>
+                                 <VBox fx:id="C09" alignment="CENTER" style="-fx-border-radius: 16px; -fx-background-radius: 10px; -fx-border-color: #424a53; -fx-border-width: 0.8;" GridPane.columnIndex="9">
+                                    <children>
+                                       <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-radius: 16px; -fx-background-radius: 10px;">
+                                          <children>
+                                             <Text fill="#424a53" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                                          </children>
+                                       </HBox>
+                                       <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="50.0">
+                                          <children>
+                                             <SVGPath content="1" disable="true" fill="#424a53" fillRule="EVEN_ODD" />
+                                          </children>
+                                       </HBox>
+                                    </children>
+                                 </VBox>
+                                 <VBox fx:id="C19" alignment="CENTER" style="-fx-border-radius: 16px; -fx-background-radius: 10px; -fx-border-color: #424a53; -fx-border-width: 0.8;" GridPane.columnIndex="9" GridPane.rowIndex="1">
+                                    <children>
+                                       <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-radius: 16px; -fx-background-radius: 10px;">
+                                          <children>
+                                             <Text fill="#424a53" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                                          </children>
+                                       </HBox>
+                                       <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="50.0">
+                                          <children>
+                                             <SVGPath content="1" disable="true" fill="#424a53" fillRule="EVEN_ODD" />
+                                          </children>
+                                       </HBox>
+                                    </children>
+                                 </VBox>
+                                 <VBox fx:id="C29" alignment="CENTER" style="-fx-border-radius: 16px; -fx-background-radius: 10px; -fx-border-color: #424a53; -fx-border-width: 0.8;" GridPane.columnIndex="9" GridPane.rowIndex="2">
+                                    <children>
+                                       <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-radius: 16px; -fx-background-radius: 10px;">
+                                          <children>
+                                             <Text fill="#424a53" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                                          </children>
+                                       </HBox>
+                                       <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="50.0">
+                                          <children>
+                                             <SVGPath content="1" disable="true" fill="#424a53" fillRule="EVEN_ODD" />
+                                          </children>
+                                       </HBox>
+                                    </children>
+                                 </VBox>
+                                 <VBox fx:id="C010" alignment="CENTER" style="-fx-border-radius: 16px; -fx-background-radius: 10px; -fx-border-color: #424a53; -fx-border-width: 0.8;" GridPane.columnIndex="10">
+                                    <children>
+                                       <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-radius: 16px; -fx-background-radius: 10px;">
+                                          <children>
+                                             <Text fill="#424a53" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                                          </children>
+                                       </HBox>
+                                       <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="50.0">
+                                          <children>
+                                             <SVGPath content="1" disable="true" fill="#424a53" fillRule="EVEN_ODD" />
+                                          </children>
+                                       </HBox>
+                                    </children>
+                                 </VBox>
+                                 <VBox fx:id="C110" alignment="CENTER" style="-fx-border-radius: 16px; -fx-background-radius: 10px; -fx-border-color: #424a53; -fx-border-width: 0.8;" GridPane.columnIndex="10" GridPane.rowIndex="1">
+                                    <children>
+                                       <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-radius: 16px; -fx-background-radius: 10px;">
+                                          <children>
+                                             <Text fill="#424a53" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                                          </children>
+                                       </HBox>
+                                       <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="50.0">
+                                          <children>
+                                             <SVGPath content="1" disable="true" fill="#424a53" fillRule="EVEN_ODD" />
+                                          </children>
+                                       </HBox>
+                                    </children>
+                                 </VBox>
+                                 <VBox fx:id="C210" alignment="CENTER" style="-fx-border-radius: 16px; -fx-background-radius: 10px; -fx-border-color: #424a53; -fx-border-width: 0.8;" GridPane.columnIndex="10" GridPane.rowIndex="2">
+                                    <children>
+                                       <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-radius: 16px; -fx-background-radius: 10px;">
+                                          <children>
+                                             <Text fill="#424a53" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                                          </children>
+                                       </HBox>
+                                       <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="50.0">
+                                          <children>
+                                             <SVGPath content="1" disable="true" fill="#424a53" fillRule="EVEN_ODD" />
+                                          </children>
+                                       </HBox>
+                                    </children>
+                                 </VBox>
+                                 <VBox fx:id="C011" alignment="CENTER" style="-fx-border-radius: 16px; -fx-background-radius: 10px; -fx-border-color: #424a53; -fx-border-width: 0.8;" GridPane.columnIndex="11">
+                                    <children>
+                                       <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-radius: 16px; -fx-background-radius: 10px;">
+                                          <children>
+                                             <Text fill="#424a53" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                                          </children>
+                                       </HBox>
+                                       <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="50.0">
+                                          <children>
+                                             <SVGPath content="1" disable="true" fill="#424a53" fillRule="EVEN_ODD" />
+                                          </children>
+                                       </HBox>
+                                    </children>
+                                 </VBox>
+                                 <VBox fx:id="C111" alignment="CENTER" style="-fx-border-radius: 16px; -fx-background-radius: 10px; -fx-border-color: #424a53; -fx-border-width: 0.8;" GridPane.columnIndex="11" GridPane.rowIndex="1">
+                                    <children>
+                                       <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-radius: 16px; -fx-background-radius: 10px;">
+                                          <children>
+                                             <Text fill="#424a53" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                                          </children>
+                                       </HBox>
+                                       <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="50.0">
+                                          <children>
+                                             <SVGPath content="1" disable="true" fill="#424a53" fillRule="EVEN_ODD" />
+                                          </children>
+                                       </HBox>
+                                    </children>
+                                 </VBox>
+                                 <VBox fx:id="C211" alignment="CENTER" style="-fx-border-radius: 16px; -fx-background-radius: 10px; -fx-border-color: #424a53; -fx-border-width: 0.8;" GridPane.columnIndex="11" GridPane.rowIndex="2">
+                                    <children>
+                                       <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-radius: 16px; -fx-background-radius: 10px;">
+                                          <children>
+                                             <Text fill="#424a53" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                                          </children>
+                                       </HBox>
+                                       <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="50.0">
+                                          <children>
+                                             <SVGPath content="1" disable="true" fill="#424a53" fillRule="EVEN_ODD" />
+                                          </children>
+                                       </HBox>
+                                    </children>
+                                 </VBox>
+                                        </GridPane>
+                                        <HBox spacing="8.0">
+                                            <MFXButton fx:id="downloadPDFBtn" onAction="#downloadPDFBtnClickHandler" styleClass="button-primary-filled" text="Download PDF" />
+                                        </HBox>
+                                    </VBox>
+                                </VBox>
+                            </HBox>
+                        </VBox>
+                    </center>
+                    <styleClass>
+                        <String fx:value="sheet" />
+                        <String fx:value="dashboard" />
+                    </styleClass>
+                </BorderPane>
+
+            </VBox> <!-- /body-container -->
+        </VBox> <!-- /body -->
+    </MFXScrollPane> <!-- /root-scroll -->
+
+    <VBox fx:id="dialogRoot" alignment="CENTER" disable="true" styleClass="dialog-root" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <MFXGenericDialog fx:id="dialogControl" actionsOrientation="VERTICAL" contentText="..." headerText="Dialog Title" onClose="#closeDialog" showAlwaysOnTop="false" showMinimize="false">
+            <styleClass>
+                <String fx:value="dialog" />
+                <String fx:value="dialog-w-xs" />
+            </styleClass>
+            <center>
+                <MFXScrollPane fitToHeight="true" fitToWidth="true" styleClass="dialog-content-scroll" BorderPane.alignment="CENTER">
+                    <VBox>
+                        <VBox fx:id="dialogContent" styleClass="dialog-content" />
+                        <VBox fx:id="dialogCustomContent" />
+                    </VBox>
+                </MFXScrollPane>
+            </center>
+            <bottom>
+                <HBox fx:id="dialogAction" alignment="CENTER_RIGHT" styleClass="dialog-action" BorderPane.alignment="CENTER" />
+            </bottom>
+        </MFXGenericDialog>
+    </VBox>
+
+    <VBox fx:id="loaderRoot" alignment="CENTER" disable="true" styleClass="loader-root" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <StackPane>
+            <MFXProgressSpinner disable="true" prefHeight="92.0" prefWidth="92.0" styleClass="loader-spinner" />
+            <MFXProgressSpinner fx:id="loaderSpinner" prefHeight="92.0" prefWidth="92.0" styleClass="loader-spinner" />
+        </StackPane>
+    </VBox>
+
+</AnchorPane>

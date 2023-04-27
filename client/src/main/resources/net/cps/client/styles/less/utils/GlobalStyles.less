@@ -1,0 +1,154 @@
+/* ------------------------------------------------------------------------------------------------ */
+/* ---- Global Styles Configurations -------------------------------------------------------------- */
+
+/* - Base Configurations - */
+@import "../config/Config.less";
+
+/* - Base Components Styles (All Pages Base Controls) - */
+@import "../components/global/Root.less";
+@import "../components/global/Body.less";
+@import "../components/global/Loader.less";
+@import "../components/global/Dialog.less";
+
+
+/* ----- Global Styles --------------------- */
+
+/* Global Text Styles */
+Text,
+Label,
+TextField,
+PasswordField,
+Hyperlink Text,
+TextArea,
+ListView,
+TreeView,
+TableView,
+TabPane,
+SplitPane,
+ScrollPane,
+MFXTextField,
+MFXPasswordField,
+MFXTextField .floating-text,
+MFXTextField .text-field {
+    -fx-font-family: @font-family-body;
+    -fx-smooth: true;
+    -fx-font-smoothing-type: gray;
+}
+
+.theme-light {
+    Text,
+    Label,
+    TextField,
+    PasswordField,
+    TextArea,
+    ListView,
+    TreeView,
+    TableView,
+    TabPane,
+    SplitPane,
+    ScrollPane,
+    MFXTextField,
+    MFXPasswordField,
+    MFXTextField .floating-text,
+    MFXTextField .text-field {
+        -fx-text-fill: @light-body-text-color;
+        -fx-fill: @light-body-text-color;
+    }
+}
+
+.theme-dark {
+    Text,
+    Label,
+    TextField,
+    PasswordField,
+    TextArea,
+    ListView,
+    TreeView,
+    TableView,
+    TabPane,
+    SplitPane,
+    ScrollPane,
+    MFXTextField,
+    MFXPasswordField,
+    MFXTextField .floating-text,
+    MFXTextField .text-field {
+        -fx-text-fill: @dark-body-text-color;
+        -fx-fill: @dark-body-text-color;
+    }
+}
+
+
+/* Tooltips */
+.tooltip {
+    -fx-font-size: @font-size-xs !important;
+    -fx-opacity: 0.8;
+}
+
+.theme-light .tooltip {
+    -fx-background-color: @light-tooltip-bg-color;
+    -fx-text-fill: @light-tooltip-text-color;
+    -fx-fill: @light-tooltip-text-color;
+}
+
+.theme-dark .tooltip {
+    -fx-background-color: @dark-tooltip-bg-color;
+    -fx-text-fill: @dark-tooltip-text-color;
+    -fx-fill: @dark-tooltip-text-color;
+}
+
+
+/* Hyperlinks */
+Hyperlink,
+Hyperlink:visited {
+    -fx-border-width: 0;
+    -fx-border-style: none;
+    -fx-underline: false;
+
+    &:hover,
+    &:focused,
+    &:focus-within {
+        -fx-underline: true;
+        -fx-border-width: 0;
+        -fx-border-style: none;
+
+        .text {
+            -fx-text-fill: inherit !important;
+            -fx-fill: inherit !important;
+        }
+    }
+
+    .text {
+        -fx-text-fill: inherit !important;
+        -fx-fill: inherit !important;
+    }
+}
+
+.theme-light Hyperlink,
+.theme-light Hyperlink:visited {
+    -fx-text-fill: @primary-5;
+    -fx-fill: @primary-5;
+
+    &:hover,
+    &:focused,
+    &:focus-within {
+        -fx-text-fill: @primary-8;
+        -fx-fill: @primary-8;
+    }
+}
+
+.theme-dark Hyperlink,
+.theme-dark Hyperlink:visited {
+    -fx-text-fill: @primary-7;
+    -fx-fill: @primary-7;
+
+    &:hover,
+    &:focused,
+    &:focus-within {
+        -fx-text-fill: @primary-5;
+        -fx-fill: @primary-5;
+    }
+}
+
+
+/* ------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------ */

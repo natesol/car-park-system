@@ -5,47 +5,88 @@
 @import "../../config/ColorSchemes.less";
 
 
-* {
-    -track-color: @root-scroll-track-color !important;
-    -thumb-color: @root-scroll-thumb-color !important;
-    -thumb-hover-color: @root-scroll-thumb-hover-color !important;
-}
-
 #root {
-    -fx-accent: @primary-3;
-    -fx-focus-color: @primary-3;
-    -fx-background-color: @body-bg-color !important;
 
-    ScrollPane,
-    MFXScrollPane,
-    .root-scroll.mfx-scroll-pane {
-        -fx-background-color: @body-bg-color !important;
+    &.theme-light {
+        -track-color: @light-root-scroll-track-color !important;
+        -thumb-color: @light-root-scroll-thumb-color !important;
+        -thumb-hover-color: @light-root-scroll-thumb-hover-color !important;
+
+        -fx-accent: @primary-5;
+        -fx-focus-color: @primary-5;
+        -fx-base: @neutral-light-2;
+        -fx-control-inner-background: derive(-fx-base, 55%);
+        -fx-control-inner-background-alt: -fx-control-inner-background ;
+        -fx-background-color: @light-body-bg-color;
+
+        .root-scroll {
+            -fx-background-color: @light-body-bg-color !important;
+
+            &:focused {
+                -fx-background-color: @light-body-bg-color !important;
+            }
+
+            & .vBar:vertical,
+            & .hBar:horizontal {
+                -fx-background-color: @light-body-bg-color !important;
+            }
+
+            & .vBar:vertical .track,
+            & .hBar:horizontal .track {
+                -fx-background-color: @light-root-scroll-track-color !important;
+            }
+
+            & .vBar:vertical .thumb,
+            & .hBar:horizontal .thumb {
+                -fx-background-color: @light-root-scroll-thumb-color !important;
+            }
+
+            & .vBar:vertical .thumb:hover,
+            & .hBar:horizontal .thumb:hover {
+                -fx-background-color: @light-root-scroll-thumb-hover-color !important;
+            }
+        }
     }
 
-    .root-scroll.mfx-scroll-pane:focused {
-        -fx-background-color: @body-bg-color !important;
-    }
+    &.theme-dark {
+        -track-color: @dark-root-scroll-track-color !important;
+        -thumb-color: @dark-root-scroll-thumb-color !important;
+        -thumb-hover-color: @dark-root-scroll-thumb-hover-color !important;
 
-    .root-scroll:fitToWidth:fitToHeight .vBar:vertical {
-        -fx-background-color: @root-scroll-track-color !important;
-    }
+        -fx-accent: @primary-5;
+        -fx-focus-color: @primary-5;
+        -fx-base: @neutral-dark-7;
+        -fx-control-inner-background: derive(-fx-base, 35%);
+        -fx-control-inner-background-alt: -fx-control-inner-background ;
+        -fx-background-color: @dark-body-bg-color;
 
-    .root-scroll.mfx-scroll-pane .scroll-bar:horizontal .track {
-        -fx-background-color: @root-scroll-track-color !important;
-    }
+        .root-scroll {
+            -fx-background-color: @dark-body-bg-color !important;
 
-    .root-scroll.mfx-scroll-pane .scroll-bar:vertical .track {
-        -fx-background-color: @root-scroll-track-color !important;
-    }
+            &:focused {
+                -fx-background-color: @dark-body-bg-color !important;
+            }
 
-    .root-scroll.mfx-scroll-pane .scroll-bar:horizontal .thumb,
-    .root-scroll.mfx-scroll-pane .scroll-bar:vertical .thumb {
-        -fx-background-color: @root-scroll-thumb-color !important;
-    }
+            & .vBar:vertical,
+            & .hBar:horizontal {
+                -fx-background-color: @dark-body-bg-color !important;
+            }
 
-    .root-scroll.mfx-scroll-pane .scroll-bar:horizontal .thumb:hover,
-    .root-scroll.mfx-scroll-pane .scroll-bar:vertical .thumb:hover {
-        -fx-background-color: @root-scroll-thumb-hover-color !important;
+            & .vBar:vertical .track,
+            & .hBar:horizontal .track {
+                -fx-background-color: @dark-root-scroll-track-color !important;
+            }
+
+            & .vBar:vertical .thumb,
+            & .hBar:horizontal .thumb {
+                -fx-background-color: @dark-root-scroll-thumb-color !important;
+            }
+
+            & .vBar:vertical .thumb:hover,
+            & .hBar:horizontal .thumb:hover {
+                -fx-background-color: @dark-root-scroll-thumb-hover-color !important;
+            }
+        }
     }
 }
 

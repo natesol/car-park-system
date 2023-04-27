@@ -1,61 +1,176 @@
 package net.cps.common.entities;
 
-import java.util.Date;
+import net.cps.common.utils.ComplaintStatus;
+import org.jetbrains.annotations.NotNull;
 
-public class Complaint {
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Calendar;
+import java.util.TimeZone;
 
-    private Long customerId;
-    private String status;
+@Entity
+@Table(name = "complaints")
+public class Complaint implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Integer id;
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "customer_email", referencedColumnName = "email")
+    private Customer customer;
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private ComplaintStatus status;
+    @NotNull
+    @Column(name = "submission_time", nullable = false)
+    private Calendar submissionTime;
+    @Column(name = "resolution_time")
+    private Calendar resolutionTime;
+    @NotNull
+    @Column(name = "content", nullable = false)
     private String content;
-    private Date submissionDate;
-    private String assignedEmployeeId;
-    private String notes;
-
-    public Complaint(Long customerId, String status, String content, String assignedEmployeeId, String notes) {
-        this.customerId = customerId;
-        this.status = status;
+    @Column(name = "resolution")
+    private String resolution;
+    @ManyToOne
+    @JoinColumn(name = "employee_id", referencedColumnName = "id")
+    private Employee employee;
+    
+    
+    /* ----- Constructors ------------------------------------------- */
+    
+    public Complaint () {}
+    
+    public Complaint (@NotNull Customer customer, @NotNull String content) {
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Jerusalem"));
+        
+        this.customer = customer;
+        this.status = ComplaintStatus.ACTIVE;
+        this.submissionTime = Calendar.getInstance();
         this.content = content;
-        this.assignedEmployeeId = assignedEmployeeId;
-        this.notes = notes;
+        this.employee = null;
+        this.resolution = null;
+        this.resolutionTime = null;
     }
-
-    public Long getCustomerId() {
-        return customerId;
+    
+    
+    /* ----- Getters and Setters ------------------------------------ */
+    
+    public Integer getId () {
+        return id;
     }
-
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
+    
+    public void setId (Integer id) {
+        this.id = id;
     }
-
-    public String getStatus() {
+    
+    public @NotNull Customer getCustomer () {
+        return customer;
+    }
+    
+    public void setCustomer (@NotNull Customer customer) {
+        this.customer = customer;
+    }
+    
+    public @NotNull ComplaintStatus getStatus () {
         return status;
     }
-
-    public void setStatus(String status) {
+    
+    public void setStatus (@NotNull ComplaintStatus status) {
         this.status = status;
     }
-
-    public String getContent() {
+    
+    public @NotNull Calendar getSubmissionTime () {
+        return submissionTime;
+    }
+    
+    public @NotNull String getSubmissionTimeFormatted () {
+        return calendarToFormattedString(submissionTime);
+    }
+    
+    public void setSubmissionTime (@NotNull Calendar submissionTime) {
+        this.submissionTime = submissionTime;
+    }
+    
+    public Calendar getResolutionTime () {
+        return resolutionTime;
+    }
+    
+    public @NotNull String getResolutionTimeFormatted () {
+        if (resolutionTime == null) {
+            return "Its been " + millisToHours(Calendar.getInstance().getTimeInMillis() - submissionTime.getTimeInMillis()) + " hours since the complaint was submitted.";
+        }
+        return calendarToFormattedString(resolutionTime);
+    }
+    
+    public void setResolutionTime (Calendar resolutionTime) {
+        this.resolutionTime = resolutionTime;
+    }
+    
+    public @NotNull String getContent () {
         return content;
     }
-
-    public void setContent(String content) {
+    
+    public void setContent (@NotNull String content) {
         this.content = content;
     }
-
-    public String getAssignedEmployeeId() {
-        return assignedEmployeeId;
+    
+    public String getResolution () {
+        return resolution;
     }
-
-    public void setAssignedEmployeeId(String assignedEmployeeId) {
-        this.assignedEmployeeId = assignedEmployeeId;
+    
+    public void setResolution (String resolution) {
+        this.resolution = resolution;
     }
-
-    public String getNotes() {
-        return notes;
+    
+    public Employee getEmployee () {
+        return employee;
     }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
+    
+    public void setEmployee (Employee employee) {
+        this.employee = employee;
+    }
+    
+    
+    /* ----- Utility Methods ---------------------------------------- */
+    
+    public void cancel () {
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Jerusalem"));
+        
+        this.resolution = "Complaint cancelled by the customer.";
+        this.resolutionTime = Calendar.getInstance();
+        this.status = ComplaintStatus.CANCELLED;
+    }
+    
+    public void resolve (Employee employee, String resolution) {
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Jerusalem"));
+        
+        this.resolution = resolution;
+        this.resolutionTime = Calendar.getInstance();
+        this.status = ComplaintStatus.RESOLVED;
+        this.employee = employee;
+    }
+    
+    private String millisToHours (long millis) {
+        return String.format("%02d:%02d", millis / 3600000, (millis % 3600000) / 60000);
+    }
+    
+    private String calendarToFormattedString (@NotNull Calendar calendar) {
+        return String.format("%02d/%02d/%02d %02d:%02d", calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
+    }
+    
+    @Override
+    public String toString () {
+        return "Complaint {" +
+                "id: " + id +
+                ", customer: " + customer.getEmail() +
+                ", status: " + status +
+                ", submissionTime: " + submissionTime.getTime() +
+                ", resolutionTime: " + (resolutionTime == null ? "null" : resolutionTime.getTime()) +
+                ", content: " + content +
+                ", resolution: " + resolution +
+                ", employee: " + employee +
+                '}';
     }
 }

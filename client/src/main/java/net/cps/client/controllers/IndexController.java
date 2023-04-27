@@ -1,30 +1,126 @@
 package net.cps.client.controllers;
 
 import io.github.palexdev.materialfx.controls.MFXButton;
+import io.github.palexdev.materialfx.controls.MFXComboBox;
+import io.github.palexdev.materialfx.utils.others.FunctionalStringConverter;
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Tooltip;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
+import javafx.util.StringConverter;
 import net.cps.client.App;
+import net.cps.client.CPSClient;
+import net.cps.client.events.KioskEnterEvent;
+import net.cps.common.entities.ParkingLot;
+import net.cps.common.messages.RequestMessage;
+import net.cps.common.messages.ResponseMessage;
+import net.cps.common.utils.Entities;
+import net.cps.common.utils.RequestCallback;
+import net.cps.common.utils.RequestType;
+import net.cps.common.utils.ResponseStatus;
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.List;
+import java.util.ResourceBundle;
 
 
-public class IndexController extends PageController {
+public class IndexController implements Initializable {
     @FXML
-    private MFXButton kioskBtn;
+    public AnchorPane root;
+    @FXML
+    public VBox body;
+    @FXML
+    public MFXButton kioskBtn;
     @FXML
     public MFXButton pcAppBtn;
+    @FXML
+    public MFXComboBox<ParkingLot> parkingLotsCombo;
+    @FXML
+    public MFXButton toggleThemeBtn;
+    @FXML
+    public Tooltip toggleThemeBtnTip;
     
-    /* ----- Event Handlers ----- */
+    
+    /* ----- Scene Controller Initialization ------------------------ */
+    
+    @Override
+    public void initialize (URL url, ResourceBundle resourceBundle) {
+        Platform.runLater(App::updateAppTheme);
+        CPSClient.sendRequestToServer(RequestType.GET, Entities.PARKING_LOT.getTableName(), this::onGetAllParkingLot);
+    
+        CPSClient.sendRequestToServer(RequestType.UPDATE, Entities.PARKING_SPACE.getTableName(), (req, res) -> {
+            if (res.getStatus() == ResponseStatus.SUCCESS) {
+                System.out.println("Parking spaces updated successfully");
+            }
+        });
+    }
+    
+    
+    /* ----- GUI Events Handlers ------------------------------------ */
     
     @FXML
     void kioskBtnClickHandler (ActionEvent event) throws IOException {
-        System.out.println("kiosk !");
-        App.setScene("KioskHome.fxml");
+        ParkingLot parkingLot = parkingLotsCombo.getValue();
+    
+        switch (parkingLot.getName()) {
+            case "Haifa Port Parking" -> parkingLot.setId(2);
+            case "Haifa Mt. Carmel Parking" -> parkingLot.setId(3);
+            case "Kiryat-Haim Beach Parking" -> parkingLot.setId(4);
+            case "Eilat Coral Beach Parking" -> parkingLot.setId(5);
+        }
+        App.setEntity(parkingLot);
+        App.setPage("kiosk/KioskHome.fxml");
+        EventBus.getDefault().post(new KioskEnterEvent((ParkingLot) App.getEntity()));
     }
     
     @FXML
     public void pcAppBtnClickHandler (ActionEvent event) throws IOException {
-        System.out.println("remote PC !");
-        App.setScene("PCLogin.fxml");
+        App.setPage("pc/auth/PCLogin.fxml");
     }
+    
+    @FXML
+    public void toggleThemeBtnClickHandler (ActionEvent actionEvent) {
+        Platform.runLater(App::toggleTheme);
+    }
+    
+    
+    /* ----- EventBus Listeners ------------------------------------- */
+    
+    // ...
+    
+    
+    /* ----- Requests Callbacks (on server response) ---------------- */
+    
+    @RequestCallback.Method
+    private void onGetAllParkingLot (RequestMessage request, ResponseMessage response) {
+        ObservableList<ParkingLot> parkingLots = FXCollections.observableArrayList((List<ParkingLot>) response.getData());
+        
+        Platform.runLater(() -> {
+            if (response.getStatus() == ResponseStatus.SUCCESS) {
+                StringConverter<ParkingLot> converter = FunctionalStringConverter.to(parkingLot -> (parkingLot == null) ? "null" : parkingLot.getName());
+                parkingLotsCombo.setConverter(converter);
+                parkingLotsCombo.setItems(parkingLots);
+                parkingLotsCombo.setItems(parkingLots);
+                parkingLotsCombo.setValue(parkingLots.get(0));
+                parkingLotsCombo.setValue(parkingLots.get(0));
+            }
+            else {
+                System.out.println("failed to get all parking lots from the server.");
+            }
+        });
+    }
+    
+    
+    
+    /* ----- Utility Methods ---------------------------------------- */
+    
+    // ...
+    
 }

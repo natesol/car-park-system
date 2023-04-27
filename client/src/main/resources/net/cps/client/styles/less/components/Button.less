@@ -9,7 +9,7 @@
 @button-padding-y: 0.5em;
 @border-width: 1px;
 
-/* - Button Base Styles - */
+/* - Button Control Base Styles - */
 .button {
     -fx-font-family: @font-family-extra-bold !important;
     -fx-font-weight: @font-weight-bold !important;
@@ -25,19 +25,19 @@
     &:hover,
     &:focused,
     &:focus-within {
-        -fx-translate-y: -1px !important;
+        //-fx-translate-y: -1px !important;
+        //-fx-background-insets: 0 0 -1px 0 !important;
+        //-fx-border-insets: 0 0 -1px 0 !important;
     }
 
     &:pressed {
-        -fx-translate-y: 0 !important;
-        -fx-scale-shape: 0.985 !important;
+        -fx-translate-y: 1px !important;
         -fx-scale-x: 0.985 !important;
         -fx-scale-y: 0.985 !important;
 
         .text,
         .glyph-icon {
             -fx-translate-y: 0 !important;
-            -fx-scale-shape: 1.01522842639594 !important;
             -fx-scale-x: 1.01522842639594 !important;
             -fx-scale-y: 1.01522842639594 !important;
         }
@@ -50,24 +50,20 @@
         -fx-font-size: 1em !important;
         -fx-text-fill: inherit !important;
         -fx-fill: inherit !important;
-        -fx-font-smoothing-type: black !important;
+        -fx-font-smoothing-type: gray !important;
     }
 
     .mfx-font-icon,
     .glyph-icon {
-        -fx-font-size: 1em !important;
-        -fx-font-weight: inherit !important;
         -fx-text-fill: inherit !important;
         -fx-fill: inherit !important;
         -mfx-color: inherit !important;
-        -fx-font-smoothing-type: black !important;
         -mfx-size: @font-size-base;
         -fx-stroke-width: 0 !important;
     }
 
     .mfx-ripple-generator,
     .mfx-ripple-generator {
-        -mfx-ripple-color: @button-ripple-color !important;
         -mfx-ripple-radius: @button-radius !important;
         -mfx-ripple-radius-inset: 0 !important;
         -mfx-ripple-radius-outset: 0 !important;
@@ -78,36 +74,67 @@
     }
 }
 
+.theme-light .button {
+    -fx-background-color: @light-button-default-bg-color !important;
 
-/* - Basic Button - */
-.button {
-    -fx-background-color: @button-default-bg-color !important;
-    -fx-text-fill: @button-default-text-color !important;
-    -fx-fill: @button-default-text-color !important;
-    -mfx-color: @button-default-text-color !important;
-
-    -fx-border-color: @button-default-border-color !important;
+    -fx-border-color: @light-button-default-border-color !important;
     -fx-border-width: @border-width !important;
     -fx-border-style: solid !important;
+
+    -fx-text-fill: @light-button-default-text-color !important;
+    -fx-fill: @light-button-default-text-color !important;
+    -mfx-color: @light-button-default-text-color !important;
 
     &:hover,
     &:focused,
     &:focus-within {
-        -fx-background-color: @button-default-hover-bg-color !important;
-        -fx-border-color: @button-default-hover-border-color !important;
-    }
-
-    &:pressed {
-        // ...
-    }
-
-    .mfx-ripple-generator {
-        // ...
+        -fx-background-color: @light-button-default-hover-bg-color !important;
+        -fx-border-color: @light-button-default-hover-border-color !important;
+        -fx-text-fill: @light-button-default-hover-text-color !important;
+        -fx-fill: @light-button-default-hover-text-color !important;
+        -mfx-color: @light-button-default-hover-text-color !important;
     }
 
     .mfx-font-icon,
     .glyph-icon {
-        -mfx-color: @button-default-text-color !important;
+        -mfx-color: @light-button-default-text-color !important;
+    }
+
+    .mfx-ripple-generator,
+    .mfx-ripple-generator {
+        -mfx-ripple-color: @light-button-ripple-color !important;
+    }
+}
+
+.theme-dark .button {
+    -fx-background-color: @dark-button-default-bg-color !important;
+
+    -fx-border-color: @dark-button-default-border-color !important;
+    -fx-border-width: @border-width !important;
+    -fx-border-style: solid !important;
+
+    -fx-text-fill: @dark-button-default-text-color !important;
+    -fx-fill: @dark-button-default-text-color !important;
+    -mfx-color: @dark-button-default-text-color !important;
+
+    &:hover,
+    &:focused,
+    &:focus-within {
+        -fx-background-color: @dark-button-default-hover-bg-color !important;
+        -fx-border-color: @dark-button-default-hover-border-color !important;
+        -fx-text-fill: @dark-button-default-hover-text-color !important;
+        -fx-fill: @dark-button-default-hover-text-color !important;
+        -mfx-color: @dark-button-default-hover-text-color !important;
+    }
+
+    .mfx-font-icon,
+    .glyph-icon {
+        -mfx-color: @dark-button-default-text-color !important;
+    }
+
+    .mfx-ripple-generator,
+    .mfx-ripple-generator {
+        -mfx-ripple-color: @dark-button-ripple-color !important;
     }
 }
 
@@ -117,9 +144,6 @@
     -fx-content-display: graphic-only !important;
 
     -fx-background-color: transparent !important;
-    -fx-text-fill: @button-default-text-color !important;
-    -fx-fill: @button-default-text-color !important;
-    -mfx-color: @button-default-text-color !important;
 
     -fx-border-color: transparent !important;
     -fx-border-width: @border-width !important;
@@ -130,33 +154,13 @@
 
     -fx-padding: @button-padding-y (@button-padding-y + 0.1em) !important;
 
-    -fx-alignment: center !important;
     -fx-text-alignment: center !important;
+    -fx-alignment: center !important;
 
     &:hover,
     &:focused,
     &:focus-within {
-        -fx-background-color: @button-default-hover-bg-color !important;
         -fx-border-color: transparent !important;
-    }
-
-    &:pressed {
-        // ...
-    }
-
-    .mfx-ripple-generator {
-        // ...
-    }
-
-    .text:not(.mfx-font-icon),
-    .text:not(.glyph-icon) {
-        //-fx-font-size: 1px !important;
-    }
-
-    .mfx-font-icon,
-    .glyph-icon {
-        -mfx-color: @button-default-text-color !important;
-        -fx-fill: @button-default-text-color !important;
     }
 
     .glyph-icon {
@@ -164,50 +168,622 @@
 
         -fx-min-width: 1.5em !important;
         -fx-pref-width: 1.5em !important;
+        -fx-max-width: 1.5em !important;
         -fx-min-height: 1.5em !important;
         -fx-pref-height: 1.5em !important;
+        -fx-max-height: 1.5em !important;
+
+        -fx-wrapping-width: 1.5em !important;
+        -fx-text-alignment: center !important;
     }
 }
 
-
-/* - Primary Button - */
-.button-primary {
-    -fx-background-color: @button-primary-bg-color !important;
-    -fx-text-fill: @button-primary-text-color !important;
-    -fx-fill: @button-primary-text-color !important;
-    -mfx-color: @button-primary-text-color !important;
-
-    -fx-border-color: @button-primary-border-color !important;
-    -fx-border-width: 0 !important;
-    -fx-border-style: solid !important;
+.theme-light .button-icon {
+    -fx-text-fill: @light-button-base-outlined-text-color !important;
+    -fx-fill: @light-button-base-outlined-text-color !important;
+    -mfx-color: @light-button-base-outlined-text-color !important;
 
     &:hover,
     &:focused,
     &:focus-within {
-        -fx-background-color: @button-primary-hover-bg-color !important;
-        -fx-border-color: @button-primary-hover-border-color !important;
+        -fx-background-color: fade(@light-button-base-outlined-hover-bg-color, 20%) !important;
     }
 
-    &:pressed {
-        // ...
+    .mfx-font-icon,
+    .glyph-icon {
+        -mfx-color: @light-button-base-outlined-text-color !important;
+        -fx-fill: @light-button-base-outlined-text-color !important;
+    }
+}
+
+.theme-dark .button-icon {
+    -fx-text-fill: @dark-button-base-outlined-text-color !important;
+    -fx-fill: @dark-button-base-outlined-text-color !important;
+    -mfx-color: @dark-button-base-outlined-text-color !important;
+
+    &:hover,
+    &:focused,
+    &:focus-within {
+        -fx-background-color: fade(@dark-button-base-outlined-hover-bg-color, 20%) !important;
     }
 
-    .mfx-ripple-generator {
-        // ...
+    .mfx-font-icon,
+    .glyph-icon {
+        -mfx-color: @dark-button-base-outlined-text-color !important;
+        -fx-fill: @dark-button-base-outlined-text-color !important;
     }
-
-    //.mfx-font-icon,
-    //.glyph-icon {
-    //    -mfx-color: @button-primary-text-color !important;
-    //    -fx-fill: @button-primary-text-color !important;
-    //}
 }
 
 
-/* - Secondary Button - */
-.button-secondary {
+/* - Basic Buttons - */
+.theme-light .button-base {
+    &-outlined {
+        -fx-background-color: @light-button-base-outlined-bg-color !important;
 
+        -fx-border-color: @light-button-base-outlined-border-color !important;
+        -fx-border-width: @border-width !important;
+        -fx-border-style: solid !important;
+
+        -fx-text-fill: @light-button-base-outlined-text-color !important;
+        -fx-fill: @light-button-base-outlined-text-color !important;
+        -mfx-color: @light-button-base-outlined-text-color !important;
+
+        &:hover,
+        &:focused,
+        &:focus-within {
+            -fx-background-color: @light-button-base-outlined-hover-bg-color !important;
+            -fx-border-color: @light-button-base-outlined-hover-border-color !important;
+            -fx-text-fill: @light-button-base-outlined-hover-text-color !important;
+            -fx-fill: @light-button-base-outlined-hover-text-color !important;
+            -mfx-color: @light-button-base-outlined-hover-text-color !important;
+        }
+
+        .mfx-font-icon,
+        .glyph-icon {
+            -mfx-color: @light-button-base-outlined-text-color !important;
+        }
+    }
+
+    &-filled {
+        -fx-background-color: @light-button-base-filled-bg-color !important;
+
+        -fx-border-color: @light-button-base-filled-border-color !important;
+        -fx-border-width: @border-width !important;
+        -fx-border-style: solid !important;
+
+        -fx-text-fill: @light-button-base-filled-text-color !important;
+        -fx-fill: @light-button-base-filled-text-color !important;
+        -mfx-color: @light-button-base-filled-text-color !important;
+
+        &:hover,
+        &:focused,
+        &:focus-within {
+            -fx-background-color: @light-button-base-filled-hover-bg-color !important;
+            -fx-border-color: @light-button-base-filled-hover-border-color !important;
+            -fx-text-fill: @light-button-base-filled-hover-text-color !important;
+            -fx-fill: @light-button-base-filled-hover-text-color !important;
+            -mfx-color: @light-button-base-filled-hover-text-color !important;
+        }
+
+        .mfx-font-icon,
+        .glyph-icon {
+            -mfx-color: @light-button-base-filled-text-color !important;
+        }
+    }
 }
+
+.theme-dark .button-base {
+    &-outlined {
+        -fx-background-color: @dark-button-base-outlined-bg-color !important;
+
+        -fx-border-color: @dark-button-base-outlined-border-color !important;
+        -fx-border-width: @border-width !important;
+        -fx-border-style: solid !important;
+
+        -fx-text-fill: @dark-button-base-outlined-text-color !important;
+        -fx-fill: @dark-button-base-outlined-text-color !important;
+        -mfx-color: @dark-button-base-outlined-text-color !important;
+
+        &:hover,
+        &:focused,
+        &:focus-within {
+            -fx-background-color: @dark-button-base-outlined-hover-bg-color !important;
+            -fx-border-color: @dark-button-base-outlined-hover-border-color !important;
+            -fx-text-fill: @dark-button-base-outlined-hover-text-color !important;
+            -fx-fill: @dark-button-base-outlined-hover-text-color !important;
+            -mfx-color: @dark-button-base-outlined-hover-text-color !important;
+        }
+
+        .mfx-font-icon,
+        .glyph-icon {
+            -mfx-color: @dark-button-base-outlined-text-color !important;
+        }
+    }
+
+    &-filled {
+        -fx-background-color: @dark-button-base-filled-bg-color !important;
+
+        -fx-border-color: @dark-button-base-filled-border-color !important;
+        -fx-border-width: @border-width !important;
+        -fx-border-style: solid !important;
+
+        -fx-text-fill: @dark-button-base-filled-text-color !important;
+        -fx-fill: @dark-button-base-filled-text-color !important;
+        -mfx-color: @dark-button-base-filled-text-color !important;
+
+        &:hover,
+        &:focused,
+        &:focus-within {
+            -fx-background-color: @dark-button-base-filled-hover-bg-color !important;
+            -fx-border-color: @dark-button-base-filled-hover-border-color !important;
+            -fx-text-fill: @dark-button-base-filled-hover-text-color !important;
+            -fx-fill: @dark-button-base-filled-hover-text-color !important;
+            -mfx-color: @dark-button-base-filled-hover-text-color !important;
+        }
+
+        .mfx-font-icon,
+        .glyph-icon {
+            -mfx-color: @dark-button-base-filled-text-color !important;
+        }
+    }
+}
+
+
+/* - Success Buttons - */
+.theme-light .button-success {
+    &-outlined {
+        -fx-background-color: @light-button-success-outlined-bg-color !important;
+
+        -fx-border-color: @light-button-success-outlined-border-color !important;
+        -fx-border-width: @border-width !important;
+        -fx-border-style: solid !important;
+
+        -fx-text-fill: @light-button-success-outlined-text-color !important;
+        -fx-fill: @light-button-success-outlined-text-color !important;
+        -mfx-color: @light-button-success-outlined-text-color !important;
+
+        &:hover,
+        &:focused,
+        &:focus-within {
+            -fx-background-color: @light-button-success-outlined-hover-bg-color !important;
+            -fx-border-color: @light-button-success-outlined-hover-border-color !important;
+            -fx-text-fill: @light-button-success-outlined-hover-text-color !important;
+            -fx-fill: @light-button-success-outlined-hover-text-color !important;
+            -mfx-color: @light-button-success-outlined-hover-text-color !important;
+        }
+
+        .mfx-font-icon,
+        .glyph-icon {
+            -mfx-color: @light-button-success-outlined-text-color !important;
+        }
+    }
+
+    &-filled {
+        -fx-background-color: @light-button-success-filled-bg-color !important;
+
+        -fx-border-color: @light-button-success-filled-border-color !important;
+        -fx-border-width: @border-width !important;
+        -fx-border-style: solid !important;
+
+        -fx-text-fill: @light-button-success-filled-text-color !important;
+        -fx-fill: @light-button-success-filled-text-color !important;
+        -mfx-color: @light-button-success-filled-text-color !important;
+
+        &:hover,
+        &:focused,
+        &:focus-within {
+            -fx-background-color: @light-button-success-filled-hover-bg-color !important;
+            -fx-border-color: @light-button-success-filled-hover-border-color !important;
+            -fx-text-fill: @light-button-success-filled-hover-text-color !important;
+            -fx-fill: @light-button-success-filled-hover-text-color !important;
+            -mfx-color: @light-button-success-filled-hover-text-color !important;
+        }
+
+        .mfx-font-icon,
+        .glyph-icon {
+            -mfx-color: @light-button-success-filled-text-color !important;
+        }
+    }
+}
+
+.theme-dark .button-success {
+    &-outlined {
+        -fx-background-color: @dark-button-success-outlined-bg-color !important;
+
+        -fx-border-color: @dark-button-success-outlined-border-color !important;
+        -fx-border-width: @border-width !important;
+        -fx-border-style: solid !important;
+
+        -fx-text-fill: @dark-button-success-outlined-text-color !important;
+        -fx-fill: @dark-button-success-outlined-text-color !important;
+        -mfx-color: @dark-button-success-outlined-text-color !important;
+
+        &:hover,
+        &:focused,
+        &:focus-within {
+            -fx-background-color: @dark-button-success-outlined-hover-bg-color !important;
+            -fx-border-color: @dark-button-success-outlined-hover-border-color !important;
+            -fx-text-fill: @dark-button-success-outlined-hover-text-color !important;
+            -fx-fill: @dark-button-success-outlined-hover-text-color !important;
+            -mfx-color: @dark-button-success-outlined-hover-text-color !important;
+        }
+
+        .mfx-font-icon,
+        .glyph-icon {
+            -mfx-color: @dark-button-success-outlined-text-color !important;
+        }
+    }
+
+    &-filled {
+        -fx-background-color: @dark-button-success-filled-bg-color !important;
+
+        -fx-border-color: @dark-button-success-filled-border-color !important;
+        -fx-border-width: @border-width !important;
+        -fx-border-style: solid !important;
+
+        -fx-text-fill: @dark-button-success-filled-text-color !important;
+        -fx-fill: @dark-button-success-filled-text-color !important;
+        -mfx-color: @dark-button-success-filled-text-color !important;
+
+        &:hover,
+        &:focused,
+        &:focus-within {
+            -fx-background-color: @dark-button-success-filled-hover-bg-color !important;
+            -fx-border-color: @dark-button-success-filled-hover-border-color !important;
+            -fx-text-fill: @dark-button-success-filled-hover-text-color !important;
+            -fx-fill: @dark-button-success-filled-hover-text-color !important;
+            -mfx-color: @dark-button-success-filled-hover-text-color !important;
+        }
+
+        .mfx-font-icon,
+        .glyph-icon {
+            -mfx-color: @dark-button-success-filled-text-color !important;
+        }
+    }
+}
+
+
+/* - Warning Buttons - */
+.theme-light .button-warning {
+    &-outlined {
+        -fx-background-color: @light-button-warning-outlined-bg-color !important;
+
+        -fx-border-color: @light-button-warning-outlined-border-color !important;
+        -fx-border-width: @border-width !important;
+        -fx-border-style: solid !important;
+
+        -fx-text-fill: @light-button-warning-outlined-text-color !important;
+        -fx-fill: @light-button-warning-outlined-text-color !important;
+        -mfx-color: @light-button-warning-outlined-text-color !important;
+
+        &:hover,
+        &:focused,
+        &:focus-within {
+            -fx-background-color: @light-button-warning-outlined-hover-bg-color !important;
+            -fx-border-color: @light-button-warning-outlined-hover-border-color !important;
+            -fx-text-fill: @light-button-warning-outlined-hover-text-color !important;
+            -fx-fill: @light-button-warning-outlined-hover-text-color !important;
+            -mfx-color: @light-button-warning-outlined-hover-text-color !important;
+        }
+
+        .mfx-font-icon,
+        .glyph-icon {
+            -mfx-color: @light-button-warning-outlined-text-color !important;
+        }
+    }
+
+    &-filled {
+        -fx-background-color: @light-button-warning-filled-bg-color !important;
+
+        -fx-border-color: @light-button-warning-filled-border-color !important;
+        -fx-border-width: @border-width !important;
+        -fx-border-style: solid !important;
+
+        -fx-text-fill: @light-button-warning-filled-text-color !important;
+        -fx-fill: @light-button-warning-filled-text-color !important;
+        -mfx-color: @light-button-warning-filled-text-color !important;
+
+        &:hover,
+        &:focused,
+        &:focus-within {
+            -fx-background-color: @light-button-warning-filled-hover-bg-color !important;
+            -fx-border-color: @light-button-warning-filled-hover-border-color !important;
+            -fx-text-fill: @light-button-warning-filled-hover-text-color !important;
+            -fx-fill: @light-button-warning-filled-hover-text-color !important;
+            -mfx-color: @light-button-warning-filled-hover-text-color !important;
+        }
+
+        .mfx-font-icon,
+        .glyph-icon {
+            -mfx-color: @light-button-warning-filled-text-color !important;
+        }
+    }
+}
+
+.theme-dark .button-warning {
+    &-outlined {
+        -fx-background-color: @dark-button-warning-outlined-bg-color !important;
+
+        -fx-border-color: @dark-button-warning-outlined-border-color !important;
+        -fx-border-width: @border-width !important;
+        -fx-border-style: solid !important;
+
+        -fx-text-fill: @dark-button-warning-outlined-text-color !important;
+        -fx-fill: @dark-button-warning-outlined-text-color !important;
+        -mfx-color: @dark-button-warning-outlined-text-color !important;
+
+        &:hover,
+        &:focused,
+        &:focus-within {
+            -fx-background-color: @dark-button-warning-outlined-hover-bg-color !important;
+            -fx-border-color: @dark-button-warning-outlined-hover-border-color !important;
+            -fx-text-fill: @dark-button-warning-outlined-hover-text-color !important;
+            -fx-fill: @dark-button-warning-outlined-hover-text-color !important;
+            -mfx-color: @dark-button-warning-outlined-hover-text-color !important;
+        }
+
+        .mfx-font-icon,
+        .glyph-icon {
+            -mfx-color: @dark-button-warning-outlined-text-color !important;
+        }
+    }
+
+    &-filled {
+        -fx-background-color: @dark-button-warning-filled-bg-color !important;
+
+        -fx-border-color: @dark-button-warning-filled-border-color !important;
+        -fx-border-width: @border-width !important;
+        -fx-border-style: solid !important;
+
+        -fx-text-fill: @dark-button-warning-filled-text-color !important;
+        -fx-fill: @dark-button-warning-filled-text-color !important;
+        -mfx-color: @dark-button-warning-filled-text-color !important;
+
+        &:hover,
+        &:focused,
+        &:focus-within {
+            -fx-background-color: @dark-button-warning-filled-hover-bg-color !important;
+            -fx-border-color: @dark-button-warning-filled-hover-border-color !important;
+            -fx-text-fill: @dark-button-warning-filled-hover-text-color !important;
+            -fx-fill: @dark-button-warning-filled-hover-text-color !important;
+            -mfx-color: @dark-button-warning-filled-hover-text-color !important;
+        }
+
+        .mfx-font-icon,
+        .glyph-icon {
+            -mfx-color: @dark-button-warning-filled-text-color !important;
+        }
+    }
+}
+
+
+/* - Danger Buttons - */
+.theme-light .button-danger {
+    &-outlined {
+        -fx-background-color: @light-button-danger-outlined-bg-color !important;
+
+        -fx-border-color: @light-button-danger-outlined-border-color !important;
+        -fx-border-width: @border-width !important;
+        -fx-border-style: solid !important;
+
+        -fx-text-fill: @light-button-danger-outlined-text-color !important;
+        -fx-fill: @light-button-danger-outlined-text-color !important;
+        -mfx-color: @light-button-danger-outlined-text-color !important;
+
+        &:hover,
+        &:focused,
+        &:focus-within {
+            -fx-background-color: @light-button-danger-outlined-hover-bg-color !important;
+            -fx-border-color: @light-button-danger-outlined-hover-border-color !important;
+            -fx-text-fill: @light-button-danger-outlined-hover-text-color !important;
+            -fx-fill: @light-button-danger-outlined-hover-text-color !important;
+            -mfx-color: @light-button-danger-outlined-hover-text-color !important;
+        }
+
+        .mfx-font-icon,
+        .glyph-icon {
+            -mfx-color: @light-button-danger-outlined-text-color !important;
+        }
+    }
+
+    &-filled {
+        -fx-background-color: @light-button-danger-filled-bg-color !important;
+
+        -fx-border-color: @light-button-danger-filled-border-color !important;
+        -fx-border-width: @border-width !important;
+        -fx-border-style: solid !important;
+
+        -fx-text-fill: @light-button-danger-filled-text-color !important;
+        -fx-fill: @light-button-danger-filled-text-color !important;
+        -mfx-color: @light-button-danger-filled-text-color !important;
+
+        &:hover,
+        &:focused,
+        &:focus-within {
+            -fx-background-color: @light-button-danger-filled-hover-bg-color !important;
+            -fx-border-color: @light-button-danger-filled-hover-border-color !important;
+            -fx-text-fill: @light-button-danger-filled-hover-text-color !important;
+            -fx-fill: @light-button-danger-filled-hover-text-color !important;
+            -mfx-color: @light-button-danger-filled-hover-text-color !important;
+        }
+
+        .mfx-font-icon,
+        .glyph-icon {
+            -mfx-color: @light-button-danger-filled-text-color !important;
+        }
+    }
+}
+
+.theme-dark .button-danger {
+    &-outlined {
+        -fx-background-color: @dark-button-danger-outlined-bg-color !important;
+
+        -fx-border-color: @dark-button-danger-outlined-border-color !important;
+        -fx-border-width: @border-width !important;
+        -fx-border-style: solid !important;
+
+        -fx-text-fill: @dark-button-danger-outlined-text-color !important;
+        -fx-fill: @dark-button-danger-outlined-text-color !important;
+        -mfx-color: @dark-button-danger-outlined-text-color !important;
+
+        &:hover,
+        &:focused,
+        &:focus-within {
+            -fx-background-color: @dark-button-danger-outlined-hover-bg-color !important;
+            -fx-border-color: @dark-button-danger-outlined-hover-border-color !important;
+            -fx-text-fill: @dark-button-danger-outlined-hover-text-color !important;
+            -fx-fill: @dark-button-danger-outlined-hover-text-color !important;
+            -mfx-color: @dark-button-danger-outlined-hover-text-color !important;
+        }
+
+        .mfx-font-icon,
+        .glyph-icon {
+            -mfx-color: @dark-button-danger-outlined-text-color !important;
+        }
+    }
+
+    &-filled {
+        -fx-background-color: @dark-button-danger-filled-bg-color !important;
+
+        -fx-border-color: @dark-button-danger-filled-border-color !important;
+        -fx-border-width: @border-width !important;
+        -fx-border-style: solid !important;
+
+        -fx-text-fill: @dark-button-danger-filled-text-color !important;
+        -fx-fill: @dark-button-danger-filled-text-color !important;
+        -mfx-color: @dark-button-danger-filled-text-color !important;
+
+        &:hover,
+        &:focused,
+        &:focus-within {
+            -fx-background-color: @dark-button-danger-filled-hover-bg-color !important;
+            -fx-border-color: @dark-button-danger-filled-hover-border-color !important;
+            -fx-text-fill: @dark-button-danger-filled-hover-text-color !important;
+            -fx-fill: @dark-button-danger-filled-hover-text-color !important;
+            -mfx-color: @dark-button-danger-filled-hover-text-color !important;
+        }
+
+        .mfx-font-icon,
+        .glyph-icon {
+            -mfx-color: @dark-button-danger-filled-text-color !important;
+        }
+    }
+}
+
+
+/* - Primary Buttons - */
+.theme-light .button-primary {
+    &-outlined {
+        -fx-background-color: @light-button-primary-outlined-bg-color !important;
+
+        -fx-border-color: @light-button-primary-outlined-border-color !important;
+        -fx-border-width: @border-width !important;
+        -fx-border-style: solid !important;
+
+        -fx-text-fill: @light-button-primary-outlined-text-color !important;
+        -fx-fill: @light-button-primary-outlined-text-color !important;
+        -mfx-color: @light-button-primary-outlined-text-color !important;
+
+        &:hover,
+        &:focused,
+        &:focus-within {
+            -fx-background-color: @light-button-primary-outlined-hover-bg-color !important;
+            -fx-border-color: @light-button-primary-outlined-hover-border-color !important;
+            -fx-text-fill: @light-button-primary-outlined-hover-text-color !important;
+            -fx-fill: @light-button-primary-outlined-hover-text-color !important;
+            -mfx-color: @light-button-primary-outlined-hover-text-color !important;
+        }
+
+        .mfx-font-icon,
+        .glyph-icon {
+            -mfx-color: @light-button-primary-outlined-text-color !important;
+        }
+    }
+
+    &-filled {
+        -fx-background-color: @light-button-primary-filled-bg-color !important;
+
+        -fx-border-color: @light-button-primary-filled-border-color !important;
+        -fx-border-width: @border-width !important;
+        -fx-border-style: solid !important;
+
+        -fx-text-fill: @light-button-primary-filled-text-color !important;
+        -fx-fill: @light-button-primary-filled-text-color !important;
+        -mfx-color: @light-button-primary-filled-text-color !important;
+
+        &:hover,
+        &:focused,
+        &:focus-within {
+            -fx-background-color: @light-button-primary-filled-hover-bg-color !important;
+            -fx-border-color: @light-button-primary-filled-hover-border-color !important;
+            -fx-text-fill: @light-button-primary-filled-hover-text-color !important;
+            -fx-fill: @light-button-primary-filled-hover-text-color !important;
+            -mfx-color: @light-button-primary-filled-hover-text-color !important;
+        }
+
+        .mfx-font-icon,
+        .glyph-icon {
+            -mfx-color: @light-button-primary-filled-text-color !important;
+        }
+    }
+}
+
+.theme-dark .button-primary {
+    &-outlined {
+        -fx-background-color: @dark-button-primary-outlined-bg-color !important;
+
+        -fx-border-color: @dark-button-primary-outlined-border-color !important;
+        -fx-border-width: @border-width !important;
+        -fx-border-style: solid !important;
+
+        -fx-text-fill: @dark-button-primary-outlined-text-color !important;
+        -fx-fill: @dark-button-primary-outlined-text-color !important;
+        -mfx-color: @dark-button-primary-outlined-text-color !important;
+
+        &:hover,
+        &:focused,
+        &:focus-within {
+            -fx-background-color: @dark-button-primary-outlined-hover-bg-color !important;
+            -fx-border-color: @dark-button-primary-outlined-hover-border-color !important;
+            -fx-text-fill: @dark-button-primary-outlined-hover-text-color !important;
+            -fx-fill: @dark-button-primary-outlined-hover-text-color !important;
+            -mfx-color: @dark-button-primary-outlined-hover-text-color !important;
+        }
+
+        .mfx-font-icon,
+        .glyph-icon {
+            -mfx-color: @dark-button-primary-outlined-text-color !important;
+        }
+    }
+
+    &-filled {
+        -fx-background-color: @dark-button-primary-filled-bg-color !important;
+
+        -fx-border-color: @dark-button-primary-filled-border-color !important;
+        -fx-border-width: @border-width !important;
+        -fx-border-style: solid !important;
+
+        -fx-text-fill: @dark-button-primary-filled-text-color !important;
+        -fx-fill: @dark-button-primary-filled-text-color !important;
+        -mfx-color: @dark-button-primary-filled-text-color !important;
+
+        &:hover,
+        &:focused,
+        &:focus-within {
+            -fx-background-color: @dark-button-primary-filled-hover-bg-color !important;
+            -fx-border-color: @dark-button-primary-filled-hover-border-color !important;
+            -fx-text-fill: @dark-button-primary-filled-hover-text-color !important;
+            -fx-fill: @dark-button-primary-filled-hover-text-color !important;
+            -mfx-color: @dark-button-primary-filled-hover-text-color !important;
+        }
+
+        .mfx-font-icon,
+        .glyph-icon {
+            -mfx-color: @dark-button-primary-filled-text-color !important;
+        }
+    }
+}
+
 
 /* ------------------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------------ */

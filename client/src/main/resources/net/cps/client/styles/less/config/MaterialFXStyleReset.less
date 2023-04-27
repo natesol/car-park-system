@@ -5,60 +5,597 @@
 @import "./ColorSchemes.less";
 
 
-* {
+.theme-light * {
+    -fx-highlight-text-fill: @light-sheet-text-color-emp !important;
+    -fx-highlight-fill: @primary-5 !important;
+
+    -mfx-main: @primary-5 !important;
+    -mfx-text-he: @light-sheet-text-color-emp !important; /* High Emphasis */
+    -mfx-text-me: @light-sheet-text-color-dim !important; /* Medium Emphasis */
+    -mfx-text-disabled: @light-sheet-text-color-disabled !important; /* Disabled */
+
     -mfx-blue: @blue-5 !important;
     -mfx-charcoal: @gray-8 !important;
     -mfx-green: @green-5 !important;
     -mfx-onyx: @dark-base-6 !important;
     -mfx-orange: @orange-5 !important;
-    -mfx-purple: @primary !important;
+    -mfx-purple: @primary-5 !important;
     -mfx-red: @red-5 !important;
     -mfx-yellow: @yellow-5 !important;
-
-    -mfx-text-he: @sheet-text-color-emp !important; /* High Emphasis */
-    -mfx-text-me: @sheet-text-color-dim !important; /* Medium Emphasis */
-    -mfx-text-disabled: @sheet-text-color-disabled !important; /* Disabled */
 }
 
-.mfx-text-field,
+.theme-dark * {
+    -fx-highlight-text-fill: @dark-sheet-text-color-emp !important;
+    -fx-highlight-fill: @primary-5 !important;
+
+    -mfx-main: @primary-5 !important;
+    -mfx-text-he: @dark-sheet-text-color-emp !important; /* High Emphasis */
+    -mfx-text-me: @dark-sheet-text-color-dim !important; /* Medium Emphasis */
+    -mfx-text-disabled: @dark-sheet-text-color-disabled !important; /* Disabled */
+
+    -mfx-blue: @blue-5 !important;
+    -mfx-charcoal: @gray-8 !important;
+    -mfx-green: @green-5 !important;
+    -mfx-onyx: @dark-base-6 !important;
+    -mfx-orange: @orange-5 !important;
+    -mfx-purple: @primary-5 !important;
+    -mfx-red: @red-5 !important;
+    -mfx-yellow: @yellow-5 !important;
+}
+
+
+/* ----- Scrollbars ------------------------ */
+
+/* Remove JavaFX crap */
+.scroll-bar {
+    -fx-pref-width: 0;
+    -fx-pref-height: 0;
+
+    .decrement-arrow,
+    .increment-arrow {
+        -fx-pref-width: 0;
+        -fx-pref-height: 0;
+    }
+
+    &:horizontal .increment-button,
+    &:horizontal .decrement-button {
+        -fx-background-color: transparent;
+        -fx-background-radius: 0.0em;
+        -fx-padding: 0.0 0.0 10.0 0.0;
+    }
+
+    &:vertical .increment-button,
+    &:vertical .decrement-button {
+        -fx-background-color: transparent;
+        -fx-background-radius: 0.0em;
+        -fx-padding: 0.0 10.0 0.0 0.0;
+    }
+
+    .increment-arrow,
+    .decrement-arrow {
+        -fx-shape: " ";
+        -fx-padding: 0.15em 0.0;
+    }
+
+    &:horizontal .increment-arrow,
+    &:horizontal .decrement-arrow {
+        -fx-shape: " ";
+        -fx-padding: 0.0 0.05em;
+    }
+
+    &:vertical .increment-arrow,
+    &:vertical .decrement-arrow {
+        -fx-shape: " ";
+        -fx-padding: 0.0 0.05em;
+    }
+}
+
+/* Customize ScrollBars */
+.scroll-bar {
+    .decrement-arrow,
+    .increment-arrow {
+        -fx-pref-width: 0;
+        -fx-pref-height: 0;
+    }
+
+    &:horizontal .track {
+        -fx-border-color: transparent;
+        -fx-background-radius: 2.0em;
+        -fx-border-radius: 2.0em;
+        -fx-background-insets: 3;
+    }
+
+    &:vertical .track {
+        -fx-border-color: transparent;
+        -fx-background-radius: 2.0em;
+        -fx-border-radius: 2.0em;
+        -fx-background-insets: 3;
+    }
+
+    &:vertical {
+        -fx-background-color: transparent;
+        -fx-pref-width: 12;
+        -fx-pref-height: 12;
+        -fx-padding: 5 0.5 5 0.5;
+    }
+
+    &:horizontal {
+        -fx-background-color: transparent;
+        -fx-pref-width: 12;
+        -fx-pref-height: 12;
+        -fx-padding: 0.5 5 0.5 5;
+    }
+
+    &:horizontal .thumb,
+    &:vertical .thumb {
+        -fx-background-insets: 2.0, 0.0, 0.0;
+        -fx-background-radius: 2.0em;
+    }
+
+    &:horizontal .thumb:hover,
+    &:vertical .thumb:hover {
+        -fx-background-insets: 1.5, 0.0, 0.0;
+        -fx-background-radius: 2.0em;
+    }
+}
+
+.theme-light .scroll-bar {
+    &:horizontal .track {
+        -fx-background-color: @light-root-scroll-track-color;
+    }
+
+    &:vertical .track {
+        -fx-background-color: @light-root-scroll-track-color;
+    }
+
+    &:horizontal .thumb,
+    &:vertical .thumb {
+        -fx-background-color: @light-root-scroll-thumb-color;
+    }
+
+    &:horizontal .thumb:hover,
+    &:vertical .thumb:hover {
+        -fx-background-color: @light-root-scroll-thumb-hover-color;
+    }
+}
+
+.theme-dark .scroll-bar {
+    &:horizontal .track {
+        -fx-background-color: @dark-root-scroll-track-color;
+    }
+
+    &:vertical .track {
+        -fx-background-color: @dark-root-scroll-track-color;
+    }
+
+    &:horizontal .thumb,
+    &:vertical .thumb {
+        -fx-background-color: @dark-root-scroll-thumb-color;
+    }
+
+    &:horizontal .thumb:hover,
+    &:vertical .thumb:hover {
+        -fx-background-color: @dark-root-scroll-thumb-hover-color;
+    }
+}
+
+
+/* ----- Virtual Flow ---------------------- */
+
+.virtual-flow {
+    -fx-background-radius: @radius-base;
+    -fx-border-radius: @radius-base;
+}
+
+.theme-light .virtual-flow {
+    -fx-background-color: @light-sheet-bg-color;
+}
+
+.theme-dark .virtual-flow {
+    -fx-background-color: @dark-sheet-bg-color;
+}
+
+
+/* ----- Text Fields ----------------------- */
+
+.mfx-text-field {
+    -fx-background-radius: @radius-base !important;
+    -fx-border-radius: @radius-base !important;
+    -fx-padding: 0.4em 0.8em !important;
+
+    .floating-text {
+        -fx-padding: 0 2 0 2;
+    }
+}
+
 .mfx-password-field {
     -fx-background-radius: @radius-base !important;
     -fx-border-radius: @radius-base !important;
-
     -fx-padding: 0.4em 0.8em !important;
 
-    //&:floating .floating-text {
-    //    -fx-padding: 0 !important;
-    //    -fx-translate-x: -0.8em !important;
-    //}
+    .floating-text {
+        -fx-padding: 0 2 0 2;
+    }
+
+    .mfx-icon-wrapper {
+        -fx-cursor: hand;
+    }
 }
 
-.mfx-text-field .floating-text,
-.mfx-password-field .floating-text {
-    -fx-padding: 0 2 0 2;
+.theme-light .mfx-text-field,
+.theme-light .mfx-password-field {
+    -fx-background-color: @light-input-field-bg-color;
+    -fx-border-color: @light-input-field-border-color;
+    -fx-text-fill: @light-input-field-text-color;
+    -fx-fill: @light-input-field-text-color;
+
+    .floating-text {
+        -fx-text-fill: @light-input-field-text-color;
+        -fx-fill: @light-input-field-text-color;
+        -fx-background-color: @light-input-field-bg-color;
+    }
+
+    &:focus,
+    &:focus-within {
+        -fx-background-color: @light-input-field-focus-bg-color;
+        -fx-border-color: @light-input-field-focus-border-color;
+        -fx-text-fill: @light-input-field-focus-text-color;
+        -fx-fill: @light-input-field-focus-text-color;
+
+        .floating-text {
+            -fx-background-color: @light-input-field-bg-color;
+        }
+    }
 }
 
-.mfx-password-field .mfx-icon-wrapper {
-    -fx-cursor: hand;
+.theme-dark .mfx-text-field,
+.theme-dark .mfx-password-field {
+    -fx-background-color: @dark-input-field-bg-color;
+    -fx-border-color: @dark-input-field-border-color;
+    -fx-text-fill: @dark-input-field-text-color;
+    -fx-fill: @dark-input-field-text-color;
+
+    .floating-text {
+        -fx-text-fill: @dark-input-field-text-color;
+        -fx-fill: @dark-input-field-text-color;
+        -fx-background-color: @dark-input-field-bg-color;
+    }
+
+    &:focus,
+    &:focus-within {
+        -fx-background-color: @dark-input-field-focus-bg-color;
+        -fx-border-color: @dark-input-field-focus-border-color;
+        -fx-text-fill: @dark-input-field-focus-text-color;
+        -fx-fill: @dark-input-field-focus-text-color;
+
+        .floating-text {
+            -fx-background-color: @dark-input-field-bg-color;
+        }
+    }
 }
 
 
-.mfx-checkbox {
-    -mfx-main: @primary-5 !important;
-    -mfx-secondary: @sheet-text-color-dim !important;
-    -fx-font-family: @font-family-body-normal !important;
-    -fx-text-fill: @sheet-text-color !important;
-    -fx-cursor: hand !important;
+/* ----- Text Areas ------------------------ */
 
-    .box {
+.text-area {
+    -fx-background-radius: @radius-base !important;
+    -fx-border-radius: @radius-base !important;
+    -fx-padding: 0.4em 0.8em !important;
 
-        .mark {
-            -mfx-color: white;
+    &:focus,
+    &:focus-within {
+        -fx-background-insets: 2;
+        -fx-border-width: 1.5;
+        -fx-border-insets: -0.5;
+    }
+
+    .scroll-pane {
+        -fx-background-color: transparent !important;
+
+        .viewport {
+            -fx-background-color: transparent !important;
+
+            .content {
+                -fx-text-box-border: transparent !important;
+                -fx-background-color: transparent !important;
+                -fx-backrgound-insets: 0;
+                -fx-padding: 0;
+
+                &:focus,
+                &:focus-within,
+                &:focused {
+                    -fx-focus-color: transparent !important;
+                    -fx-faint-focus-color: transparent !important;
+                }
+            }
         }
     }
 
-    .ripple-container .mfx-ripple-generator {
-        -mfx-ripple-color: @button-ripple-color;
+}
+
+.theme-light .text-area {
+    -fx-background-color: @light-input-field-bg-color;
+    -fx-border-color: @light-input-field-border-color;
+    -fx-text-fill: @light-input-field-text-color;
+    -fx-fill: @light-input-field-text-color;
+
+    &:focus,
+    &:focus-within {
+        -fx-background-color: @light-input-field-focus-bg-color;
+        -fx-border-color: @light-input-field-focus-border-color;
+        -fx-text-fill: @light-input-field-focus-text-color;
+        -fx-fill: @light-input-field-focus-text-color;
+    }
+}
+
+.theme-dark .text-area {
+    -fx-background-color: @dark-input-field-bg-color;
+    -fx-border-color: @dark-input-field-border-color;
+    -fx-text-fill: @dark-input-field-text-color;
+    -fx-fill: @dark-input-field-text-color;
+
+    &:focus,
+    &:focus-within {
+        -fx-background-color: @dark-input-field-focus-bg-color;
+        -fx-border-color: @dark-input-field-focus-border-color;
+        -fx-text-fill: @dark-input-field-focus-text-color;
+        -fx-fill: @dark-input-field-focus-text-color;
+    }
+}
+
+
+/* ----- Combo Boxes ----------------------- */
+
+.mfx-combo-box {
+    -mfx-gap: 0;
+    -fx-padding: 3px 5px 3px 5px;
+
+    .caret {
+        -fx-cursor: hand;
+    }
+
+    .combo-popup {
+        -mfx-ripple-radius-inset: 0 !important;
+        -mfx-ripple-radius-outset: 0 !important;
+        -mfx-auto-clip: true !important;
+        -fx-padding: 3px 5px 3px 5px !important;
+
+        .virtual-flow {
+            -fx-background-radius: @radius-base;
+            -fx-border-radius: @radius-base;
+            -fx-max-height: @screen-xs;
+        }
+    }
+
+    &-cell {
+        -mfx-main: @primary-5;
+        -mfx-hover: @primary-1;
+        -mfx-selected: @primary-3;
+        -fx-background-color: transparent;
+        -fx-background-radius: @radius-base;
+        -fx-padding: 5;
+    }
+
+    &-cell:hover {
+        -fx-background-color: -mfx-hover;
+    }
+
+    &-cell:selected {
+        -fx-background-color: -mfx-selected;
+    }
+
+    &-cell .data-label {
+        -fx-font-family: @font-family-body;
+    }
+
+    &:focus,
+    &:focus-within {
+        & .caret .mfx-font-icon {
+            -fx-rotate: 180;
+        }
+    }
+}
+
+.theme-light .mfx-combo-box {
+    -mfx-track-color: @light-root-scroll-track-color;
+    -mfx-thumb-color: @light-root-scroll-thumb-color;
+    -mfx-thumb-hover-color: @light-root-scroll-thumb-hover-color;
+
+    .caret {
+        .mfx-font-icon {
+            -mfx-color: @light-input-field-text-color;
+        }
+
+        .mfx-ripple-generator {
+            -mfx-ripple-color: @light-button-ripple-color;
+        }
+    }
+
+    &:disabled .caret .mfx-font-icon {
+        -mfx-color: @light-body-text-color-disabled;
+    }
+
+    .combo-popup .virtual-flow {
+        -fx-border-color: @light-input-field-border-color;
+    }
+
+    &-cell {
+        -mfx-main: @primary-5;
+        -mfx-hover: fade(@primary-3, 40%);
+        -mfx-selected: @primary-3;
+        -fx-background-color: transparent;
+    }
+
+    &-cell:hover {
+        -fx-background-color: -mfx-hover;
+    }
+
+    &-cell:selected {
+        -fx-background-color: -mfx-selected;
+    }
+
+    &-cell .data-label {
+        -fx-text-fill: @light-sheet-text-color-emp;
+    }
+
+    .floating-text {
+        -fx-text-fill: @light-input-field-text-color;
+        -fx-fill: @light-input-field-text-color;
+        -fx-background-color: @light-input-field-bg-color;
+    }
+
+    &:focus,
+    &:focus-within {
+        -fx-border-color: @primary-5;
+
+        & .caret .mfx-font-icon {
+            -mfx-color: @primary-5;
+        }
+
+        .floating-text {
+            -fx-text-fill: @light-input-field-text-color;
+            -fx-fill: @light-input-field-text-color;
+            -fx-background-color: @light-input-field-bg-color;
+        }
+    }
+}
+
+.theme-dark .mfx-combo-box {
+    -mfx-track-color: @dark-root-scroll-track-color;
+    -mfx-thumb-color: @dark-root-scroll-thumb-color;
+    -mfx-thumb-hover-color: @dark-root-scroll-thumb-hover-color;
+
+    .caret {
+        .mfx-font-icon {
+            -mfx-color: @dark-input-field-text-color;
+        }
+
+        .mfx-ripple-generator {
+            -mfx-ripple-color: @dark-button-ripple-color;
+        }
+    }
+
+    .combo-popup .virtual-flow {
+        -fx-border-color: @dark-input-field-border-color;
+    }
+
+    &:disabled .caret .mfx-font-icon {
+        -mfx-color: @dark-body-text-color-disabled;
+    }
+
+    &-cell {
+        -mfx-main: @primary-6;
+        -mfx-hover: fade(@primary-8, 40%);
+        -mfx-selected: @primary-8;
+        -fx-background-color: transparent;
+    }
+
+    &-cell:hover {
+        -fx-background-color: -mfx-hover;
+    }
+
+    &-cell:selected {
+        -fx-background-color: -mfx-selected;
+    }
+
+    &-cell .data-label {
+        -fx-text-fill: @dark-sheet-text-color-emp;
+    }
+
+    .floating-text {
+        -fx-text-fill: @dark-input-field-text-color;
+        -fx-fill: @dark-input-field-text-color;
+        -fx-background-color: @dark-input-field-bg-color;
+    }
+
+    &:focus,
+    &:focus-within {
+        -fx-border-color: @primary-5;
+
+        & .caret .mfx-font-icon {
+            -mfx-color: @primary-5;
+        }
+
+        .floating-text {
+            -fx-text-fill: @dark-input-field-text-color;
+            -fx-fill: @dark-input-field-text-color;
+            -fx-background-color: @dark-input-field-bg-color;
+        }
+    }
+}
+
+
+/* ----- Filter Combo Boxes ---------------- */
+
+.mfx-filter-combo-box {
+    -mfx-caret-visible: true;
+
+    &:popup {
+        -mfx-caret-visible: false;
+        -mfx-editable: false;
+    }
+
+    .combo-popup .virtual-flow {
+        -fx-background-color: transparent;
+        -fx-background-radius: 0;
+        -fx-max-height: @screen-xs;
+    }
+
+    .combo-popup .search-container {
+        -fx-background-radius: @radius-base;
+        -fx-border-radius: @radius-base;
+        -fx-padding: 10 5 5 5;
+    }
+
+    .combo-popup .search-field {
+        -mfx-gap: 0;
+        -mfx-float-mode: disabled;
+        -fx-padding: 5;
+        -fx-display-caret: false;
+    }
+
+    .combo-popup .search-field,
+    .combo-popup .search-field:focus-within {
+        -fx-border-width: 1;
+        -fx-background-insets: 0;
+    }
+}
+
+.theme-light .mfx-filter-combo-box {
+    .combo-popup .search-container {
+        -fx-background-color: @light-sheet-bg-color;
+        -fx-border-color: @light-sheet-bg-color;
+    }
+
+    .combo-popup .search-field,
+    .combo-popup .search-field:focus-within {
+        -fx-border-color: @light-sheet-border-color;
+    }
+}
+
+.theme-dark .mfx-filter-combo-box {
+    .combo-popup .search-container {
+        -fx-background-color: @dark-sheet-bg-color;
+        -fx-border-color: @dark-sheet-bg-color;
+    }
+
+    .combo-popup .search-field,
+    .combo-popup .search-field:focus-within {
+        -fx-border-color: @dark-sheet-border-color;
+    }
+}
+
+
+/* ----- Check Boxes ----------------------- */
+
+.mfx-checkbox {
+    -fx-font-family: @font-family-body-normal !important;
+    -fx-cursor: hand !important;
+
+    .box {
+        .mark {
+            -mfx-color: white;
+        }
     }
 
     &:selected .box,
@@ -66,14 +603,327 @@
         -fx-background-color: -mfx-main;
         -fx-border-color: -mfx-main;
     }
+}
+
+.theme-light .mfx-checkbox {
+    -mfx-secondary: @light-sheet-text-color-dim !important;
+    -fx-text-fill: @light-sheet-text-color !important;
+
+    .ripple-container .mfx-ripple-generator {
+        -mfx-ripple-color: @light-button-ripple-color;
+    }
 
     &:selected:disabled .box,
     &:indeterminate:disabled .box {
-        -fx-background-color: @sheet-text-color-disabled;
-        -fx-border-color: @sheet-text-color-disabled;
+        -fx-background-color: @light-sheet-text-color-disabled;
+        -fx-border-color: @light-sheet-text-color-disabled;
     }
 }
 
+.theme-dark .mfx-checkbox {
+    -mfx-secondary: @dark-sheet-text-color-dim !important;
+    -fx-text-fill: @dark-sheet-text-color !important;
+
+    .ripple-container .mfx-ripple-generator {
+        -mfx-ripple-color: @dark-button-ripple-color;
+    }
+
+    &:selected:disabled .box,
+    &:indeterminate:disabled .box {
+        -fx-background-color: @dark-sheet-text-color-disabled;
+        -fx-border-color: @dark-sheet-text-color-disabled;
+    }
+}
+
+
+/* ----- Tables ---------------------------- */
+
+/* Legacy Table View */
+.mfx-legacy-table-view {
+    -mfx-selection-bar: transparent;
+    -mfx-selection-bar-non-focused: transparent;
+    -mfx-box-border: transparent;
+    -fx-table-cell-border-color: transparent;
+
+    -fx-selection-bar: -mfx-selection-bar;
+    -fx-selection-bar-non-focused: -mfx-selection-bar;
+    -fx-box-border: -mfx-box-border;
+
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+
+    .column-header,
+    .column-header-background,
+    .column-header-background .filler {
+        -fx-background-color: transparent;
+        -fx-border-color: transparent;
+    }
+
+
+}
+
+.theme-light .mfx-legacy-table-view {
+    -mfx-track-color: @light-root-scroll-track-color;
+    -mfx-thumb-color: @light-root-scroll-thumb-color;
+    -mfx-thumb-hover-color: @light-root-scroll-thumb-hover-color;
+
+    -fx-border-color: @light-sheet-border-color;
+
+    .column-header {
+        -fx-border-color: @light-sheet-border-color @light-sheet-border-color @light-sheet-border-color transparent;
+
+        .label {
+            -fx-text-fill: @light-sheet-text-color-emp;
+        }
+
+        .arrow,
+        .sort-order-dot {
+            -fx-background-color: @light-sheet-text-color;
+        }
+
+        &-background {
+            -fx-border-color: @light-sheet-border-color;
+        }
+    }
+
+    .column-overlay {
+        -fx-background-color: @light-sheet-bg-color-emp;
+    }
+
+    .column-resize-line,
+    .column-drag-header {
+        -fx-background-color: @light-sheet-bg-color-emp;
+    }
+
+    .mfx-legacy-table-row {
+        -fx-text-fill: @light-sheet-text-color;
+        -mfx-hover-color: @light-sheet-border-color;
+        -mfx-ripple-color: @light-button-ripple-color;
+
+        .mfx-ripple-generator {
+            -mfx-ripple-color: @light-button-ripple-color !important;
+        }
+
+        &:odd,
+        &:even {
+            -fx-background-color: transparent;
+        }
+
+        &:filled:hover,
+        &:selected .label {
+            -fx-text-fill: @light-sheet-text-color-emp;
+        }
+
+        &:selected {
+            -fx-background-color: @neutral-light-2 !important;
+        }
+    }
+
+    .mfx-table-row {
+        .mfx-ripple-generator {
+            -mfx-ripple-color: @light-button-ripple-color !important;
+        }
+
+        &:selected .mfx-table-row-cell {
+            -fx-background-color: @neutral-light-2 !important;
+        }
+    }
+
+    .table-row-cell {
+        .text {
+            -fx-fill: @light-sheet-text-color !important;
+        }
+
+        &:selected {
+            -fx-background-color: @primary-4 !important;
+
+            .text {
+                -fx-fill: @light-sheet-bg-color !important;
+            }
+        }
+    }
+}
+
+.theme-dark .mfx-legacy-table-view {
+    -mfx-track-color: @dark-root-scroll-track-color;
+    -mfx-thumb-color: @dark-root-scroll-thumb-color;
+    -mfx-thumb-hover-color: @dark-root-scroll-thumb-hover-color;
+
+    -fx-border-color: @dark-sheet-border-color;
+
+    .column-header {
+        -fx-border-color: @dark-sheet-border-color @dark-sheet-border-color @dark-sheet-border-color transparent;
+
+        .label {
+            -fx-text-fill: @dark-sheet-text-color-emp;
+        }
+
+        .arrow,
+        .sort-order-dot {
+            -fx-background-color: @dark-sheet-text-color;
+        }
+
+        &-background {
+            -fx-border-color: @dark-sheet-border-color;
+        }
+    }
+
+    .column-overlay {
+        -fx-background-color: @dark-sheet-bg-color-emp;
+    }
+
+    .column-resize-line,
+    .column-drag-header {
+        -fx-background-color: @dark-sheet-bg-color-emp;
+    }
+
+    .mfx-legacy-table-row {
+        -fx-text-fill: @dark-sheet-text-color;
+        -mfx-hover-color: @dark-sheet-border-color;
+        -mfx-ripple-color: @dark-button-ripple-color;
+
+        .mfx-ripple-generator {
+            -mfx-ripple-color: @dark-button-ripple-color !important;
+        }
+
+        &:odd,
+        &:even {
+            -fx-background-color: transparent;
+        }
+
+        &:filled:hover,
+        &:selected .label {
+            -fx-text-fill: @dark-sheet-text-color-emp;
+        }
+
+        &:selected {
+            -fx-background-color: @neutral-dark-2 !important;
+        }
+    }
+
+    .mfx-table-row {
+        .mfx-ripple-generator {
+            -mfx-ripple-color: @dark-button-ripple-color !important;
+        }
+
+        &:selected .mfx-table-row-cell {
+            -fx-background-color: @neutral-dark-2 !important;
+        }
+    }
+
+    .table-row-cell {
+        .text {
+            -fx-fill: @dark-sheet-text-color !important;
+        }
+
+        &:selected {
+            -fx-background-color: @primary-6 !important;
+
+            .text {
+                -fx-fill: @dark-sheet-bg-color !important;
+            }
+        }
+    }
+}
+
+
+/* ----- Context Menus ---------------------------- */
+
+.mfx-context-menu {
+    .line-separator {
+        -fx-stroke-width: 0.5;
+    }
+
+    .mfx-scroll-pane {
+        -fx-background-radius: @radius-md;
+        -fx-border-radius: @radius-md;
+        -fx-padding: @spacing-xs;
+
+        .viewport {
+            -fx-background-color: transparent;
+        }
+    }
+
+    .mfx-menu-item {
+        -fx-background-color: transparent;
+        -fx-background-radius: @radius-sm;
+        -fx-min-height: 24;
+        -fx-padding: 0 2 0 2;
+
+        -fx-font-family: @font-family-body;
+
+        & .label {
+            -fx-padding: 8 0 8 -8;
+            -fx-font-family: @font-family-body;
+        }
+
+        & .label .text {
+            -fx-font-smoothing-type: lcd;
+        }
+
+        & .accelerator {
+            -fx-padding: 0 8 0 16;
+        }
+    }
+}
+
+.theme-light .mfx-context-menu {
+    .line-separator {
+        -fx-stroke: @neutral-light-2;
+    }
+
+    .mfx-scroll-pane {
+        -fx-background-color: @light-sheet-bg-color;
+        -fx-border-color: @light-sheet-border-color;
+    }
+
+    .mfx-menu-item {
+        -fx-background-color: transparent;
+        -fx-text-fill: @light-sheet-text-color-emp;
+
+        &:hover {
+            -fx-background-color: @neutral-light-2;
+        }
+
+        & .label {
+            -fx-font-family: @font-family-body;
+            -fx-text-fill: @light-sheet-text-color-emp;
+        }
+
+        &:disabled .mfx-font-icon {
+            -mfx-color: @neutral-light-6;
+        }
+    }
+}
+
+.theme-dark .mfx-context-menu {
+    .line-separator {
+        -fx-stroke: @neutral-dark-6;
+    }
+
+    .mfx-scroll-pane {
+        -fx-background-color: @dark-sheet-bg-color;
+        -fx-border-color: @dark-sheet-border-color;
+    }
+
+    .mfx-menu-item {
+        -fx-background-color: transparent;
+        -fx-text-fill: @dark-sheet-text-color-emp;
+
+        &:hover {
+            -fx-background-color: @neutral-dark-6;
+        }
+
+        & .label {
+            -fx-font-family: @font-family-body;
+            -fx-text-fill: @dark-sheet-text-color-emp;
+        }
+
+        &:disabled .mfx-font-icon {
+            -mfx-color: @neutral-dark-5;
+        }
+    }
+}
 
 
 /* ------------------------------------------------------------------------------------------------ */

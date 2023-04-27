@@ -42,7 +42,7 @@
         <dependency>
             <groupId>io.github.palexdev</groupId>
             <artifactId>materialfx</artifactId>
-            <version>11.13.5</version>
+            <version>11.13.9</version>
         </dependency>
         <dependency>
             <groupId>org.greenrobot</groupId>
@@ -73,7 +73,7 @@
         <dependency>
             <groupId>org.apache.pdfbox</groupId>
             <artifactId>pdfbox</artifactId>
-            <version>3.0.0-RC1</version>
+            <version>3.0.0-alpha2</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>

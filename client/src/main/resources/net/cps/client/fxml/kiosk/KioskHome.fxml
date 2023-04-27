@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.*?>
+<?import io.github.palexdev.materialfx.controls.*?>
+<?import io.github.palexdev.materialfx.dialogs.MFXGenericDialog?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.net.URL?>
+<AnchorPane fx:id="root" maxHeight="800.0" maxWidth="1024.0" minHeight="400.0" minWidth="800.0" prefWidth="1024.0"
+            xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="net.cps.client.controllers.kiosk.KioskHomeController">
+    <stylesheets>
+        <URL value="@../../styles/css/pages/KioskPages.css"/>
+    </stylesheets>
+    <styleClass>
+        <String fx:value="root"/>
+        <String fx:value="theme-light"/>
+    </styleClass>
+
+    <Hyperlink maxHeight="0.0" maxWidth="0.0" text="focus-fix" textFill="TRANSPARENT"/>
+
+    <MFXScrollPane fx:id="rootScroll" fitToHeight="true" fitToWidth="true" AnchorPane.bottomAnchor="0.0"
+                   AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <styleClass>
+            <String fx:value="root-scroll"/>
+        </styleClass>
+
+        <VBox fx:id="body" alignment="TOP_CENTER" styleClass="body">
+            <VBox alignment="TOP_CENTER" styleClass="body-container">
+                <HBox>
+                    <VBox.margin>
+                        <Insets bottom="20.0"/>
+                    </VBox.margin>
+                    <VBox alignment="CENTER">
+                        <AnchorPane prefWidth="77.0" styleClass="logo">
+                            <VBox styleClass="logo-wrapper">
+                                <Text styleClass="logo-top" text="CITY" textAlignment="CENTER">
+                                </Text>
+                                <Text styleClass="logo-bottom" text="PARK" textAlignment="CENTER">
+                                </Text>
+                            </VBox>
+                        </AnchorPane>
+                        <HBox.margin>
+                            <Insets right="-16.0"/>
+                        </HBox.margin>
+                    </VBox>
+                    <VBox alignment="CENTER" HBox.hgrow="ALWAYS">
+                        <TextFlow prefHeight="17.0" prefWidth="697.0" textAlignment="CENTER">
+                            <Text fx:id="parkingLotNameTitle" strokeType="OUTSIDE" strokeWidth="0.0"
+                                  styleClass="kiosk-title" text="Parking Lot Name"/>
+                        </TextFlow>
+                    </VBox>
+                    <HBox alignment="CENTER">
+                        <MFXButton fx:id="toggleThemeBtn" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false"
+                                   onAction="#toggleThemeBtnClickHandler" text=" ">
+                            <graphic>
+                                <FontAwesomeIconView glyphName="MOON_ALT" textAlignment="CENTER"
+                                                     wrappingWidth="20.0"/>
+                            </graphic>
+                            <styleClass>
+                                <String fx:value="button"/>
+                                <String fx:value="button-icon"/>
+                            </styleClass>
+                            <tooltip>
+                                <Tooltip anchorLocation="CONTENT_TOP_RIGHT" text="Switch To Dark Theme"/>
+                            </tooltip>
+                        </MFXButton>
+                    </HBox>
+                </HBox>
+                <HBox>
+                    <VBox fx:id="kioskMenu" alignment="CENTER" fillWidth="false" maxWidth="100.0" minWidth="100.0"
+                          prefWidth="100.0">
+                        <MFXButton fx:id="homeMenuBtn" contentDisplay="TOP" graphicTextGap="0.0"
+                                   onAction="#homeMenuBtnClickHandler" text="Home">
+                            <styleClass>
+                                <String fx:value="kiosk-menu-button"/>
+                                <String fx:value="active"/>
+                            </styleClass>
+                            <graphic>
+                                <FontAwesomeIconView glyphName="HOME"/>
+                            </graphic>
+                        </MFXButton>
+                        <MFXButton fx:id="bookNowMenuBtn" contentDisplay="TOP" graphicTextGap="0.0"
+                                   onAction="#bookNowMenuBtnClickHandler" styleClass="kiosk-menu-button"
+                                   text="Book Now">
+                            <graphic>
+                                <FontAwesomeIconView glyphName="PENCIL_SQUARE">
+                                    <font>
+                                        <Font size="36.0"/>
+                                    </font>
+                                </FontAwesomeIconView>
+                            </graphic>
+                        </MFXButton>
+                        <MFXButton fx:id="subscriptionMenuBtn" contentDisplay="TOP" graphicTextGap="0.0"
+                                   onAction="#subscriptionMenuBtnClickHandler" styleClass="kiosk-menu-button"
+                                   text="Subscription">
+                            <graphic>
+                                <FontAwesomeIconView glyphName="DRIVERS_LICENSE">
+                                    <font>
+                                        <Font size="36.0"/>
+                                    </font>
+                                </FontAwesomeIconView>
+                            </graphic>
+                        </MFXButton>
+                        <MFXButton fx:id="reservationMenuBtn" contentDisplay="TOP" graphicTextGap="0.0"
+                                   onAction="#reservationMenuBtnClickHandler" styleClass="kiosk-menu-button"
+                                   text="Reservation">
+                            <graphic>
+                                <FontAwesomeIconView glyphName="AUTOMOBILE">
+                                    <font>
+                                        <Font size="36.0"/>
+                                    </font>
+                                </FontAwesomeIconView>
+                            </graphic>
+                        </MFXButton>
+                        <MFXButton fx:id="exitMenuBtn" contentDisplay="TOP" graphicTextGap="0.0"
+                                   onAction="#exitMenuBtnClickHandler" styleClass="kiosk-menu-button" text="Exit Now">
+                            <graphic>
+                                <FontAwesomeIconView glyphName="SIGN_OUT">
+                                    <font>
+                                        <Font size="36.0"/>
+                                    </font>
+                                </FontAwesomeIconView>
+                            </graphic>
+                        </MFXButton>
+                        <styleClass>
+                            <String fx:value="kiosk-menu"/>
+                            <String fx:value="sheet"/>
+                        </styleClass>
+                    </VBox>
+                    <VBox prefWidth="1000.0" BorderPane.alignment="CENTER">
+                        <padding>
+                            <Insets left="20.0"/>
+                        </padding>
+                        <VBox alignment="TOP_CENTER" maxWidth="1024.0" minHeight="400.0" minWidth="600.0"
+                              prefHeight="600" prefWidth="1024.0" styleClass="sheet">
+                            <HBox>
+                                <TextFlow>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sub-page-title"
+                                          text="Home">
+                                    </Text>
+                                </TextFlow>
+                            </HBox>
+                            <VBox>
+                                <VBox.margin>
+                                    <Insets top="20.0"/>
+                                </VBox.margin>
+                                <TextFlow>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text"
+                                          text="Welcome to 'CityPark' - "/>
+                                    <Text fx:id="parkingLotName" strokeType="OUTSIDE" strokeWidth="0.0"
+                                          styleClass="sheet-text" text="Parking Lot Name"/>
+                                    <Text styleClass="sheet-text" text="."/>
+                                </TextFlow>
+                                <TextFlow>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sheet-text"
+                                          text="You can choose an action from the menu on the left - and continue from there."/>
+                                </TextFlow>
+                            </VBox>
+                        </VBox>
+                    </VBox>
+                </HBox>
+            </VBox> <!-- /body-container -->
+        </VBox> <!-- /body -->
+    </MFXScrollPane> <!-- /(root)scrollPane -->
+
+    <VBox fx:id="dialogRoot" alignment="CENTER" disable="true" styleClass="dialog-root" visible="false"
+          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+          AnchorPane.topAnchor="0.0">
+        <MFXGenericDialog fx:id="dialogControl" actionsOrientation="VERTICAL" contentText="..."
+                          headerText="Dialog Title" onClose="#closeDialog" showAlwaysOnTop="false" showMinimize="false">
+            <styleClass>
+                <String fx:value="dialog"/>
+                <String fx:value="dialog-w-xs"/>
+            </styleClass>
+            <center>
+                <MFXScrollPane fitToHeight="true" fitToWidth="true" styleClass="dialog-content-scroll"
+                               BorderPane.alignment="CENTER">
+                    <VBox>
+                        <VBox fx:id="dialogContent" styleClass="dialog-content"/>
+                        <VBox fx:id="dialogCustomContent"/>
+                    </VBox>
+                </MFXScrollPane>
+            </center>
+            <bottom>
+                <HBox fx:id="dialogAction" alignment="CENTER_RIGHT" styleClass="dialog-action"
+                      BorderPane.alignment="CENTER"/>
+            </bottom>
+        </MFXGenericDialog>
+    </VBox>
+
+    <VBox fx:id="loaderRoot" alignment="CENTER" disable="true" styleClass="loader-root" visible="false"
+          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+          AnchorPane.topAnchor="0.0">
+        <StackPane>
+            <MFXProgressSpinner disable="true" prefHeight="92.0" prefWidth="92.0" styleClass="loader-spinner"/>
+            <MFXProgressSpinner fx:id="loaderSpinner" prefHeight="92.0" prefWidth="92.0" styleClass="loader-spinner"/>
+        </StackPane>
+    </VBox>
+
+</AnchorPane>

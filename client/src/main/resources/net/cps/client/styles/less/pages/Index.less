@@ -1,32 +1,36 @@
 /* ------------------------------------------------------------------------------------------------ */
-/* ---- Index (Application Main Page) Page Styles ------------------------------------------------- */
+/* ---- Page Styles - Index (Application Start Page) ---------------------------------------------- */
 
-@import "../config/Config.less";
-
+@import "../utils/GlobalStyles.less";
+@import "../utils/UtilityClasses.less";
 @import "../components/Logo.less";
 @import "../components/Button.less";
 
 
-.root {
+.body {
 
-    .body {
+    .header-buttons-bar {
+        -fx-padding: 0 0 0 0;
+        -fx-spacing: 0;
+    }
 
-        .logo {
-            -fx-font-size: @font-size-5xl;
-        }
+    .logo {
+        -fx-font-size: @font-size-5xl;
+    }
 
-        .main-text {
-            -fx-min-width: 300px;
-            -fx-pref-width: 300px;
-            -fx-max-width: 300px;
-            -fx-alignment: center;
-            -fx-text-alignment: center;
+    .main-text {
+        -fx-min-width: 300px;
+        -fx-pref-width: 300px;
+        -fx-max-width: 300px;
+        -fx-alignment: center;
+        -fx-text-alignment: center;
 
-            -fx-font-family: @font-family-body-normal;
-            -fx-font-weight: @font-weight-normal;
-            -fx-font-size: @font-size-md;
-        }
+        -fx-font-family: @font-family-body-normal;
+        -fx-font-weight: @font-weight-normal;
+        -fx-font-size: @font-size-md;
+    }
 
+    .main {
         .button {
             -fx-min-width: 250px;
             -fx-font-size: @font-size-lg;
